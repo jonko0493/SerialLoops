@@ -4,6 +4,7 @@ using SerialLoops.Utility;
 using System;
 using System.Windows.Controls;
 using Application = Eto.Forms.Application;
+using WpfUi = Wpf.Ui;
 
 namespace SerialLoops.Wpf
 {
@@ -41,6 +42,21 @@ namespace SerialLoops.Wpf
                 stackPanel.Children.Add(image);
                 stackPanel.Children.Add(textBlock);
                 button.Control.Content = stackPanel;
+            });
+
+            Eto.Wpf.Forms.ApplicationHandler.EnableCustomThemes = false;
+            Eto.Wpf.Forms.ApplicationHandler.EnableVisualStyles = false;
+            Eto.Style.Add<Eto.Wpf.Forms.ApplicationHandler>(null, handler =>
+            {
+                handler.Control.Startup += (sender, args) =>
+                {
+                    foreach (System.Windows.Window window in handler.Control.Windows)
+                    {
+
+                        WpfUi.Appearance.Background.Apply(window, WpfUi.Appearance.BackgroundType.Mica);
+                        WpfUi.Appearance.Theme.ApplyDarkThemeToWindow(window);
+                    }
+                };
             });
 
             new Application(platform).Run(new MainForm());
