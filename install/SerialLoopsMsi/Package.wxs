@@ -1,0 +1,9 @@
+﻿<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package Name="SerialLoopsMsi" Manufacturer="TODO Manufacturer" Version="1.0.0.0" UpgradeCode="ccb7effb-7e5a-49a6-8e7f-e7c00f209ec7">
+    <MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeError)" />
+
+    <Feature Id="Main">
+      <ComponentGroupRef Id="ExampleComponents" />
+    </Feature>
+  </Package>
+</Wix>
