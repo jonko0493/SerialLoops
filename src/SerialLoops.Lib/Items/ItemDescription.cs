@@ -72,6 +72,9 @@ namespace SerialLoops.Lib.Items
                 case ItemType.Character_Sprite:
                     CharacterSpriteItem sprite = (CharacterSpriteItem)this;
                     return project.Items.Where(i => sprite.ScriptUses.Select(s => s.ScriptName).Contains(i.Name)).ToList();
+                case ItemType.Character:
+                    references.AddRange(((CharacterItem)this).ScriptUses);
+                    return references;
                 case ItemType.Chibi:
                     ChibiItem chibi = (ChibiItem)this;
                     int chibiIndex = project.Items.Where(i => i.Type == ItemType.Chibi).ToList().IndexOf(chibi) + 1;

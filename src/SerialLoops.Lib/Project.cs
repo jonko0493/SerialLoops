@@ -314,12 +314,12 @@ namespace SerialLoops.Lib
                 tracker.Finished++;
             }
 
-            tracker.Focus("Dialogue Configs", 1);
+            tracker.Focus("Characters", 1);
             Items.AddRange(Dat.Files.First(d => d.Name == "MESSINFOS").CastTo<MessageInfoFile>()
                 .MessageInfos.Where(m => (int)m.Character > 0).Select(m => new CharacterItem(m, Characters[(int)m.Character], this)));
             tracker.Finished++;
 
-            tracker.Focus("Event Files", 1);
+            tracker.Focus("Scripts", 1);
             Items.AddRange(Evt.Files
                 .Where(e => !new string[] { "CHESSS", "EVTTBLS", "TOPICS", "SCENARIOS", "TUTORIALS", "VOICEMAPS" }.Contains(e.Name))
                 .Select(e => new ScriptItem(e, log)));
@@ -417,6 +417,8 @@ namespace SerialLoops.Lib
                 Items.Add(new GroupSelectionItem(scenarioFile.Scenario.Selects[i], i, this));
                 tracker.Finished++;
             }
+
+            //Items.Where(i => i.Type == ItemDescription.ItemType.Character).Cast<CharacterItem>().ToList().ForEach(c => c.PopulateScriptUses(this, log));
 
             if (ItemNames is null)
             {

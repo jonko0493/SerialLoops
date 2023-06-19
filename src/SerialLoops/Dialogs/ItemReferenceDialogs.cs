@@ -49,8 +49,8 @@ namespace SerialLoops.Dialogs
     public class OrphanedItemsDialog : FindItemsWindow
     {
         private static readonly ItemDescription.ItemType[] IGNORED_ORPHAN_TYPES = {
+            ItemDescription.ItemType.Chess,
             ItemDescription.ItemType.Scenario,
-            ItemDescription.ItemType.Character
         };
 
         public OrphanedItemsDialog(Project project, ItemExplorerPanel explorer, EditorTabsPanel tabs, ILogger log)
@@ -68,7 +68,7 @@ namespace SerialLoops.Dialogs
             MinimumSize = new Size(400, 275);
             Padding = 10;
 
-            List<ItemDescription> results = Project.Items.FindAll(i => !IGNORED_ORPHAN_TYPES.Contains(i.Type) && i.GetReferencesTo(Project).Count == 0);
+            List<ItemDescription> results = Project.Items.FindAll(i => !IGNORED_ORPHAN_TYPES.Contains(i.Type) && !i.GetReferencesTo(Project).Any());
             Content = new StackLayout
             {
                 Orientation = Orientation.Vertical,

@@ -1,6 +1,9 @@
 ﻿using HaruhiChokuretsuLib.Archive.Data;
+using HaruhiChokuretsuLib.Archive.Event;
 using HaruhiChokuretsuLib.Font;
 using HaruhiChokuretsuLib.Util;
+using SerialLoops.Lib.Script;
+using SerialLoops.Lib.Script.Parameters;
 using SerialLoops.Lib.Util;
 using SkiaSharp;
 using System.Collections.Generic;
@@ -12,6 +15,7 @@ namespace SerialLoops.Lib.Items
     {
         public MessageInfo MessageInfo { get; set; }
         public NameplateProperties NameplateProperties { get; set; }
+        public ScriptItem[] ScriptUses { get; set; }
 
         public CharacterItem(MessageInfo character, NameplateProperties nameplateProperties, Project project) : base($"CHR_{project.Characters[(int)character.Character].Name}", ItemType.Character)
         {
@@ -22,6 +26,16 @@ namespace SerialLoops.Lib.Items
 
         public override void Refresh(Project project, ILogger log)
         {
+            PopulateScriptUses(project, log);
+        }
+
+        public void PopulateScriptUses(Project project, ILogger log)
+        {
+            ScriptUses = project.Items.Where(i => i.Type == ItemType.Script &&
+                ((ScriptItem)i).GetScriptCommandTree(project, log).SelectMany(s => s.Value)
+                .Where(c => c.Verb == EventFile.CommandVerb.DIALOGUE &&
+                    ((DialogueScriptParameter)c.Parameters[0]).Line.Speaker == MessageInfo.Character)
+                .Select(c => (i, c)).Any()).Cast<ScriptItem>().ToArray();
         }
 
         public static readonly Dictionary<string, SKColor> BuiltInColors = new()
