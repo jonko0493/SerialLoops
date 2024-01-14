@@ -26,7 +26,7 @@ jobs:
       projects: $(Build.SourcesDirectory)/test/ui/SerialLoops.Gtk.Tests/SerialLoops.Gtk.Tests.csproj
   - pwsh: |
       mkdir $env:AGENT_BUILDDIRECTORY/devkitpro
-      Invoke-WebRequest -Uri $env:DOWNLOAD_URI -OutFile devkitpro.zip
+      Invoke-WebRequest -Uri $env:DOWNLOAD_URI -OutFile devkitpro.tar.gz
       tar -xvzf devkitpro.tar.gz -C $env:AGENT_BUILDDIRECTORY/devkitpro
     displayName: Bootstrap devkitARM
     env:
