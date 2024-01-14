@@ -56,9 +56,9 @@ jobs:
   - task: PublishBuildArtifacts@1
     inputs:
       PathtoPublish: $(Build.ArtifactStagingDirectory)
-      ArtifactName: MacTestArtifacts
+      ArtifactName: LinuxTestArtifacts
       publishLocation: Container
-    displayName: Publish macOS Test Artifacts
+    displayName: Publish Linux Test Artifacts
     condition: always()
 # - job:
 #   displayName: UI Tests (macOS)
