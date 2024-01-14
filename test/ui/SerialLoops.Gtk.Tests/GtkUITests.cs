@@ -51,14 +51,12 @@ namespace SerialLoops.Gtk.Tests
             }
             _logger.Log(JsonSerializer.Serialize(_uiVals, new JsonSerializerOptions { WriteIndented = true }));
 
-            AppiumOptions appiumOptions = new()
-            {
-                PlatformName = "linux",
-            };
+            AppiumOptions appiumOptions = new();
+            appiumOptions.AddAdditionalCapability("platformName", "linux");
             appiumOptions.AddAdditionalCapability("automationName", "atspi2");
             appiumOptions.AddAdditionalCapability("appium:appName", _uiVals.AppLoc);
 
-            _driver = new(new Uri("http://127.0.0.1:4723"), appiumOptions);
+            _driver = new(new Uri("http://127.0.0.1:4723/wd/hub"), appiumOptions);
             _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(1.5);
 
             Thread.Sleep(TimeSpan.FromSeconds(5));
