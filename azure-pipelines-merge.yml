@@ -40,6 +40,26 @@ jobs:
       wget https://github.com/fantonglang/appium-linux-driver/raw/main/installers/stdspalinux-ubuntu_18_04.deb
       sudo apt install -y gdebi-core
       sudo gdebi -n stdspalinux-ubuntu_18_04.deb
+      node . &
+    displayName: Install & run Appium, Yaoshi's automation framework
+  - task: DotNetCoreCLI@2
+    displayName: Run Linux UI tests
+    inputs:
+      command: 'test'
+      projects: $(Build.SourcesDirectory)/test/ui/SerialLoops.Gtk.Tests/SerialLoops.Gtk.Tests.csproj
+    env:
+      APP_LOCATION: "$(Build.SourcesDirectory)/src/SerialLoops.Gtk/bin/Debug/net8.0/SerialLoops"
+      PROJECT_NAME: LinuxUITest
+      ROM_URI: $(ChokuRomUri)
+      LOG_FILE: $(Build.ArtifactStagingDirectory)/TestConsole.log
+      DEVKITARM: $(Agent.BuildDirectory)/devkitpro/devkitARM
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: $(Build.ArtifactStagingDirectory)
+      ArtifactName: MacTestArtifacts
+      publishLocation: Container
+    displayName: Publish macOS Test Artifacts
+    condition: always()
 # - job:
 #   displayName: UI Tests (macOS)
 #   pool:
