@@ -21,4 +21,8 @@
     <PackageReference Include="coverlet.collector" Version="6.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\SerialLoops.Tests.Shared\SerialLoops.Tests.Shared.csproj" />
+  </ItemGroup>
+
 </Project>
