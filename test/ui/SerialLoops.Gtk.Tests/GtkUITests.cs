@@ -58,7 +58,7 @@ namespace SerialLoops.Gtk.Tests
             appiumOptions.AddAdditionalCapability("automationName", "atspi2");
             appiumOptions.AddAdditionalCapability("appium:appName", _uiVals.AppLoc);
 
-            _driver = new(appiumOptions);
+            _driver = new(new Uri("http://127.0.0.1:4723"), appiumOptions);
             _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(1.5);
 
             Thread.Sleep(TimeSpan.FromSeconds(5));
