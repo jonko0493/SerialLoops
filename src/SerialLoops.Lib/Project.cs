@@ -122,7 +122,7 @@ namespace SerialLoops.Lib
                 Directory.CreateDirectory(BaseDirectory);
                 Directory.CreateDirectory(IterativeDirectory);
                 Directory.CreateDirectory(Path.Combine(MainDirectory, "font"));
-                File.Copy(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Sources", "charset.json"), Path.Combine(MainDirectory, "font", "charset.json"));
+                File.Copy(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Sources", "gen_charset.json"), Path.Combine(MainDirectory, "font", "charset.json"));
             }
             catch (Exception ex)
             {

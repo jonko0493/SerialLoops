@@ -78,6 +78,15 @@ namespace SerialLoops.Lib.Util
             }
         }
 
+        public static string ToTitleCase(this string text)
+        {
+            if (!string.IsNullOrEmpty(text))
+            {
+                return $"{text[0].ToString().ToUpperInvariant()}{text[1..]}";
+            }
+            return text;
+        }
+
         public static void CollectGarbage(this EventFile evt)
         {
             IEnumerable<string> conditionalContainingCommands = new CommandVerb[] { CommandVerb.VGOTO, CommandVerb.SCENE_GOTO, CommandVerb.SCENE_GOTO2 }.Select(c => c.ToString());

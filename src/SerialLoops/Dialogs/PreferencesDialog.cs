@@ -2,6 +2,7 @@
 using Eto.Forms;
 using HaruhiChokuretsuLib.Util;
 using SerialLoops.Lib;
+using SerialLoops.Lib.Util;
 using SerialLoops.Utility;
 using System;
 using System.Globalization;
@@ -117,13 +118,13 @@ namespace SerialLoops.Dialogs
                         [
                             new DropDownOption(
                                 [
-                                    ("de", "Deutsch"),
-                                    ("en-GB", "English (United Kingdom)"),
-                                    ("en-US", "English (United States)"),
-                                    ("it", "Italiano"),
-                                    ("pt-BR", "Português brasileiro"),
-                                    ("ja", "日本語"),
-                                    ("zh-Hans", "中文（简化字）"),
+                                    GetLanguageDropDownOption("de"),
+                                    GetLanguageDropDownOption("en-GB"),
+                                    GetLanguageDropDownOption("en-US"),
+                                    GetLanguageDropDownOption("it"),
+                                    GetLanguageDropDownOption("pt-BR"),
+                                    GetLanguageDropDownOption("ja"),
+                                    GetLanguageDropDownOption("zh-Hans"),
                                 ])
                             {
                                 Name = Application.Instance.Localize(this, "Language"),
@@ -131,6 +132,7 @@ namespace SerialLoops.Dialogs
                                 OnChange = (value) =>
                                 {
                                     CultureInfo.CurrentCulture = new(value);
+                                    CultureInfo.CurrentUICulture = CultureInfo.CurrentCulture;
                                     Configuration.CurrentCultureName = value;
                                     RequireRestart = true;
                                 }
@@ -157,6 +159,11 @@ namespace SerialLoops.Dialogs
         {
             Configuration.Save(_log);
             Close();
+        }
+
+        private static (string Culture, string Language) GetLanguageDropDownOption(string culture)
+        {
+            return (culture, new CultureInfo(culture).NativeName.ToTitleCase());
         }
     }
 }
