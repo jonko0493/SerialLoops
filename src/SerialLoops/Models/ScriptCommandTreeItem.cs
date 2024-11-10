@@ -2,7 +2,6 @@
 using Avalonia.Controls;
 using Avalonia.Layout;
 using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
 using SerialLoops.Lib.Script;
 
 namespace SerialLoops.Models
@@ -26,6 +25,7 @@ namespace SerialLoops.Models
         {
             ViewModel = command;
             this.OneWayBind(ViewModel, vm => vm.Display, v => v._textBlock.Text);
+            this.OneWayBind(ViewModel, vm => vm.Color, v => v._textBlock.Foreground);
             _panel.Children.Add(_textBlock);
         }
 

@@ -705,9 +705,26 @@ namespace SerialLoops.Lib.Script
         [Reactive]
         public string Display { get; set; }
 
+        [Reactive]
+        public string Color { get; set; }
+
         public void UpdateDisplay()
         {
             Display = ToString();
+            Color = DetermineColor();
+        }
+
+        private string DetermineColor()
+        {
+            return Verb switch
+            {
+                CommandVerb.NOOP1 => "Gray",
+                CommandVerb.NOOP2 => "Gray",
+                CommandVerb.NOOP3 => "Gray",
+                CommandVerb.BACK => "Pink",
+                CommandVerb.DIALOGUE => "LightBlue",
+                _ => "White"
+            };
         }
 
         public override string ToString()
