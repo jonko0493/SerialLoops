@@ -11,6 +11,7 @@ using ReactiveUI.Fody.Helpers;
 using SerialLoops.Lib.Items;
 using SerialLoops.Lib.Script.Parameters;
 using SerialLoops.Lib.Util;
+using SkiaSharp;
 using static HaruhiChokuretsuLib.Archive.Event.EventFile;
 
 namespace SerialLoops.Lib.Script
@@ -708,10 +709,14 @@ namespace SerialLoops.Lib.Script
         [Reactive]
         public string Color { get; set; }
 
+        [Reactive]
+        public SKBitmap Image { get; set; }
+
         public void UpdateDisplay()
         {
             Display = ToString();
             Color = DetermineColor();
+            Image = DetermineImage();
         }
 
         private string DetermineColor()
@@ -724,6 +729,25 @@ namespace SerialLoops.Lib.Script
                 CommandVerb.BACK => "Pink",
                 CommandVerb.DIALOGUE => "LightBlue",
                 _ => "White"
+            };
+        }
+
+        private SKBitmap DetermineImage()
+        {
+            if (Verb != CommandVerb.DIALOGUE)
+            {
+                return new SKBitmap(0, 0);
+            }
+            var speaker = ((DialogueScriptParameter)Parameters[0]).Line.Speaker;
+            return speaker switch
+            {
+                Speaker.HARUHI => GraphicsUtil.GetCharacterIcon(Project, CharacterIcon.Haruhi),
+                Speaker.KOIZUMI => GraphicsUtil.GetCharacterIcon(Project, CharacterIcon.Koizumi),
+                Speaker.NAGATO => GraphicsUtil.GetCharacterIcon(Project, CharacterIcon.Nagato),
+                Speaker.MIKURU => GraphicsUtil.GetCharacterIcon(Project, CharacterIcon.Mikuru),
+                Speaker.TSURUYA => GraphicsUtil.GetCharacterIcon(Project, CharacterIcon.Tsuruya),
+                Speaker.KYON => new SKBitmap(0, 0),
+                _ => GraphicsUtil.GetCharacterIcon(Project, CharacterIcon.Unknown)
             };
         }
 

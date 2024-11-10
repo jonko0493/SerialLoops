@@ -9,6 +9,7 @@ using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using Avalonia.Skia;
 using HaruhiChokuretsuLib.Archive.Event;
+using ReactiveUI;
 using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
 using SerialLoops.Lib.Util;
@@ -28,6 +29,29 @@ namespace SerialLoops.Utility
         public static FuncValueConverter<bool, IImmutableSolidColorBrush> BooleanBrushConverter => new((val) => val ? Brushes.Transparent : Brushes.LightGreen);
         public static FuncValueConverter<string, string> CharacterNameCropConverter => new((name) => name[4..]);
         public static FuncValueConverter<List<Speaker>, string> ListDisplayConverter => new((strs) => string.Join(", ", strs.Select(s => s.ToString())));
+    }
+
+    public class SKBitmapToAvaloniaConverter : IBindingTypeConverter
+    {
+        public int GetAffinityForObjects(Type fromType, Type toType)
+        {
+            return fromType == typeof(SKBitmap) && toType == typeof(IImage) ? 1 : -1;
+        }
+
+        public bool TryConvert(object from, Type toType, object conversionHint, out object result)
+        {
+            try
+            {
+                result = (SKBitmap)SLConverters.SKBitmapToAvaloniaConverter.Convert(from, typeof(SKBitmap), null,
+                    CultureInfo.CurrentCulture);
+                return true;
+            }
+            catch
+            {
+                result = null;
+                return false;
+            }
+        }
     }
 
     public class DisplayNameConverter : IMultiValueConverter

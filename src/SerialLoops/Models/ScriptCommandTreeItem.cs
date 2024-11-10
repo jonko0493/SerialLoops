@@ -3,11 +3,16 @@ using Avalonia.Controls;
 using Avalonia.Layout;
 using ReactiveUI;
 using SerialLoops.Lib.Script;
+using SerialLoops.Utility;
 
 namespace SerialLoops.Models
 {
     public class ScriptCommandTreeItem : ITreeItem, IViewFor<ScriptItemCommand>
     {
+        private Image _image = new()
+        {
+            Width = 24, Height = 24
+        };
         private TextBlock _textBlock = new();
         StackPanel _panel = new()
         {
@@ -26,6 +31,9 @@ namespace SerialLoops.Models
             ViewModel = command;
             this.OneWayBind(ViewModel, vm => vm.Display, v => v._textBlock.Text);
             this.OneWayBind(ViewModel, vm => vm.Color, v => v._textBlock.Foreground);
+            this.OneWayBind(ViewModel, vm => vm.Image, v => v._image.Source,
+                vmToViewConverterOverride: new SKBitmapToAvaloniaConverter());
+            _panel.Children.Add(_image);
             _panel.Children.Add(_textBlock);
         }
 
@@ -41,5 +49,6 @@ namespace SerialLoops.Models
         }
 
         public ScriptItemCommand ViewModel { get; set; }
+
     }
 }
