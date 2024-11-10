@@ -3,6 +3,13 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# Archive files used for testing
+bgm/
+vce/
+dat.bin
+evt.bin
+grp.bin
+
 # User-specific files
 *.rsuser
 *.suo
@@ -30,6 +37,12 @@ bld/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
+
+# Python venv
+.venv/
+
+# Rider solution directory
+.idea/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/

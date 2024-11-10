@@ -1,15 +1,24 @@
-﻿using Eto.Drawing;
-using Eto.Forms;
-using System;
+﻿using System;
+using Avalonia;
+using Avalonia.ReactiveUI;
 
 namespace SerialLoops
 {
-    internal class Program
+    internal sealed class Program
     {
+        // Initialization code. Don't use any Avalonia, third-party APIs or any
+        // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
+        // yet and stuff might break.
         [STAThread]
-        static void Main(string[] args)
-        {
-            new Application(Eto.Platform.Detect).Run(new MainForm());
-        }
+        public static void Main(string[] args) => BuildAvaloniaApp()
+            .StartWithClassicDesktopLifetime(args);
+
+        // Avalonia configuration, don't remove; also used by visual designer.
+        public static AppBuilder BuildAvaloniaApp()
+            => AppBuilder.Configure<App>()
+                .UsePlatformDetect()
+                .UseReactiveUI()
+                .WithInterFont()
+                .LogToTrace();
     }
 }
