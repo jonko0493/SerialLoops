@@ -103,6 +103,8 @@ public partial class Project
     [JsonIgnore]
     public Dictionary<int, GraphicsFile> LayoutFiles { get; set; } = [];
 
+    private Dictionary<Speaker, SKBitmap> _characterIcons { get; } = [];
+
     // Localization function to make localizing accessible from the lib
     [JsonIgnore]
     public Func<string, string> Localize { get; set; }
@@ -869,6 +871,21 @@ public partial class Project
             return new(LoadProjectState.FAILED);
         }
 
+        try
+        {
+            tracker.Focus("Character Icons", 5);
+            foreach (Speaker speaker in new[] { Speaker.KYON, Speaker.HARUHI, Speaker.MIKURU, Speaker.NAGATO, Speaker.KOIZUMI })
+            {
+                _characterIcons.Add(speaker, GraphicsUtil.GetCharacterIcon(Grp, speaker));
+            }
+            _characterIcons.Add(Speaker.UNKNOWN, new SKBitmap(16, 16));
+        }
+        catch (Exception ex)
+        {
+            log.LogException("Failed to load character icons", ex);
+            return new(LoadProjectState.FAILED);
+        }
+
         if (ItemNames is null)
         {
             try
@@ -1158,6 +1175,12 @@ public partial class Project
     public CharacterItem GetCharacterBySpeaker(Speaker speaker)
     {
         return (CharacterItem)Items.First(i => i.Type == ItemType.Character && i.DisplayName == $"CHR_{Characters[(int)speaker].Name}");
+    }
+
+    public SKBitmap GetCharacterIcon(Speaker speaker)
+    {
+        _characterIcons.TryGetValue(speaker, out SKBitmap icon);
+        return icon;
     }
 
     private bool ItemMatches(ItemDescription item, string term, SearchQuery.DataHolder scope, ILogger logger)

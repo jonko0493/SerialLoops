@@ -42,12 +42,18 @@ public class SKBitmapToAvaloniaConverter : IBindingTypeConverter
     {
         try
         {
+            if (from is null)
+            {
+                result = null;
+                return false;
+            }
             result = (SKBitmap)SLConverters.SKBitmapToAvaloniaConverter.Convert(from, typeof(SKBitmap), null,
                 CultureInfo.CurrentCulture);
             return true;
         }
-        catch
+        catch (Exception ex)
         {
+            
             result = null;
             return false;
         }

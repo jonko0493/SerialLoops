@@ -734,20 +734,10 @@ namespace SerialLoops.Lib.Script
 
         private SKBitmap DetermineImage()
         {
-            if (Verb != CommandVerb.DIALOGUE)
+            return Verb switch
             {
-                return new SKBitmap(0, 0);
-            }
-            var speaker = ((DialogueScriptParameter)Parameters[0]).Line.Speaker;
-            return speaker switch
-            {
-                Speaker.HARUHI => GraphicsUtil.GetCharacterIcon(Project, CharacterIcon.Haruhi),
-                Speaker.KOIZUMI => GraphicsUtil.GetCharacterIcon(Project, CharacterIcon.Koizumi),
-                Speaker.NAGATO => GraphicsUtil.GetCharacterIcon(Project, CharacterIcon.Nagato),
-                Speaker.MIKURU => GraphicsUtil.GetCharacterIcon(Project, CharacterIcon.Mikuru),
-                Speaker.TSURUYA => GraphicsUtil.GetCharacterIcon(Project, CharacterIcon.Tsuruya),
-                Speaker.KYON => new SKBitmap(0, 0),
-                _ => GraphicsUtil.GetCharacterIcon(Project, CharacterIcon.Unknown)
+                CommandVerb.DIALOGUE => Project.GetCharacterIcon(((DialogueScriptParameter)Parameters[0]).Line.Speaker),
+                _ => null,
             };
         }
 

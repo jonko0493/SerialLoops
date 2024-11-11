@@ -1,35 +1,29 @@
-using SerialLoops.Lib.Items;
+using System.Linq;
+using HaruhiChokuretsuLib.Archive;
+using HaruhiChokuretsuLib.Archive.Event;
+using HaruhiChokuretsuLib.Archive.Graphics;
 using SkiaSharp;
 
 namespace SerialLoops.Lib.Util;
 
 public static class GraphicsUtil
 {
-    public static SKBitmap GetCharacterIcon(Project project, CharacterIcon character)
+    public static SKBitmap GetCharacterIcon(ArchiveFile<GraphicsFile> grp, Speaker character)
     {
-        ItemDescription id = project.Items.Find(i => i.Name.Equals("SYSTEX_XTR_PRG_T08"));
-        if (id is not SystemTextureItem tex)
-        {
-            return null;
-        }
-        SKBitmap bitmap = tex.Grp.GetImage(transparentIndex: 0, width: 16);
+        SKBitmap bitmap = grp.GetFileByName("SYS_CMN_B36DNX").GetImage(transparentIndex: 0);
 
         // Crop a 16x16 bitmap portrait
         SKBitmap portrait = new(16, 16);
-        int z = (4 + (int) character) * 16;
-
-        SKRectI cropRect = new(0, z, 16, z + 16);
-        bitmap.ExtractSubset(portrait, cropRect);
+        if (new[] { Speaker.KYON, Speaker.HARUHI, Speaker.MIKURU, Speaker.NAGATO, Speaker.KOIZUMI }.Contains(character))
+        {
+            SKCanvas canvas = new(portrait);
+            int characterOffset = (int)character - 1;
+            canvas.DrawBitmap(bitmap,
+                new SKRect((float)((characterOffset * 32) % 128), (characterOffset * 32 / 128) * 32f,
+                    ((characterOffset * 32) % 128) + 32f, (characterOffset * 32 / 128) * 32f + 32f),
+                new SKRect(0f, 0f, 0f, 0f));
+            canvas.Flush();
+        }
         return portrait;
     }
-}
-
-public enum CharacterIcon
-{
-    Haruhi = 1,
-    Mikuru = 2,
-    Nagato = 3,
-    Koizumi = 4,
-    Tsuruya = 5,
-    Unknown = 6,
 }
