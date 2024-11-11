@@ -877,8 +877,8 @@ public partial class Project
             foreach (Speaker speaker in new[] { Speaker.KYON, Speaker.HARUHI, Speaker.MIKURU, Speaker.NAGATO, Speaker.KOIZUMI })
             {
                 _characterIcons.Add(speaker, GraphicsUtil.GetCharacterIcon(Grp, speaker));
+                tracker.Finished++;
             }
-            _characterIcons.Add(Speaker.UNKNOWN, new SKBitmap(16, 16));
         }
         catch (Exception ex)
         {

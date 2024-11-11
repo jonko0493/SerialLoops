@@ -9,10 +9,7 @@ namespace SerialLoops.Models;
 
 public class ScriptCommandTreeItem : ITreeItem, IViewFor<ScriptItemCommand>
 {
-    private Image _image = new()
-    {
-        Width = 24, Height = 24
-    };
+    private Image _image = new();
     private TextBlock _textBlock = new();
     StackPanel _panel = new()
     {
@@ -33,6 +30,8 @@ public class ScriptCommandTreeItem : ITreeItem, IViewFor<ScriptItemCommand>
         this.OneWayBind(ViewModel, vm => vm.Color, v => v._textBlock.Foreground);
         this.OneWayBind(ViewModel, vm => vm.Image, v => v._image.Source,
             vmToViewConverterOverride: new SKBitmapToAvaloniaConverter());
+        this.OneWayBind(ViewModel, vm => vm.Image.Width, v => v._image.Width);
+        this.OneWayBind(ViewModel, vm => vm.Image.Height, v => v._image.Height);
         _panel.Children.Add(_image);
         _panel.Children.Add(_textBlock);
     }
