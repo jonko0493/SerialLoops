@@ -874,9 +874,9 @@ public partial class Project
         try
         {
             tracker.Focus("Character Icons", 5);
-            foreach (Speaker speaker in new[] { Speaker.KYON, Speaker.HARUHI, Speaker.MIKURU, Speaker.NAGATO, Speaker.KOIZUMI })
+            foreach (Speaker speaker in new[] { Speaker.HARUHI, Speaker.MIKURU, Speaker.NAGATO, Speaker.KOIZUMI, Speaker.TSURUYA })
             {
-                _characterIcons.Add(speaker, GraphicsUtil.GetCharacterIcon(Grp, speaker));
+                _characterIcons.Add(speaker, GraphicsUtil.GetCharacterIcon(this, speaker));
                 tracker.Finished++;
             }
         }

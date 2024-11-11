@@ -68,6 +68,7 @@ public partial class DialogueScriptCommandEditorViewModel : ScriptCommandEditorV
             _specialPredicate = i => i.Name != "NONE" && ((CharacterSpriteItem)i).Sprite.Character == _speaker.MessageInfo.Character;
             Script.UnsavedChanges = true;
             ScriptEditor.UpdatePreview();
+            Command.UpdateDisplay();
         }
     }
 
