@@ -1,39 +1,62 @@
-using System;
+using System.Windows.Input;
+using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Interactivity;
+using Avalonia.Threading;
 
-namespace SerialLoops.Controls
+namespace SerialLoops.Controls;
+
+public partial class LinkButton : UserControl
 {
-    public partial class LinkButton : UserControl
+    public static readonly AvaloniaProperty<ICommand> CommandProperty = AvaloniaProperty.Register<LinkButton, ICommand>(nameof(Command));
+    public static readonly AvaloniaProperty<string> TextProperty = AvaloniaProperty.Register<LinkButton, string>(nameof(Text));
+
+    public string Icon
     {
-        public string Icon
+        get => IconPath.Path;
+        set
         {
-            get => IconPath.Path;
-            set
+            Dispatcher.UIThread.Invoke(() =>
             {
-                IconPath.Path = string.IsNullOrEmpty(value) ? string.Empty : $"avares://SerialLoops/Assets/Icons/{value}.svg";
+                IconPath.Path = string.IsNullOrEmpty(value)
+                    ? null
+                    : $"avares://SerialLoops/Assets/Icons/{value}.svg";
                 IconPath.IsVisible = !string.IsNullOrEmpty(value);
-            }
+            });
         }
-        public string Text
+    }
+    public string Text
+    {
+        get => this.GetValue<string>(TextProperty);
+        set
         {
-            get => LinkText.Text;
-            set => LinkText.Text = value;
+            SetValue(TextProperty, value);
         }
-        public delegate void OnClickDelegate(object sender, EventArgs e);
-        public OnClickDelegate OnClick { get; set; }
+    }
 
-        public LinkButton()
+    public ICommand Command
+    {
+        get => this.GetValue<ICommand>(CommandProperty);
+        set
         {
-            InitializeComponent();
+            SetValue(CommandProperty, value);
         }
+    }
 
-        private void Action_Execute(object? sender, RoutedEventArgs e)
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+    {
+        base.OnPropertyChanged(change);
+        if (change.Property == TextProperty)
         {
-            if (IsEnabled)
-            {
-                OnClick?.Invoke(sender, e);
-            }
+            LinkText.Text = Text;
         }
+        else if (change.Property == CommandProperty)
+        {
+            BackingButton.Command = Command;
+        }
+    }
+
+    public LinkButton()
+    {
+        InitializeComponent();
     }
 }

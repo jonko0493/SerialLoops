@@ -7,8 +7,10 @@
 #define MyAppURL "https://haroohie.club/chokuretsu/serial-loops"
 #define MyAppExeName "SerialLoops.exe"
 #define MyAppAssocName MyAppName + " Project"
-#define MyAppAssocExt ".slproj"
-#define MyAppAssocKey StringChange(MyAppAssocName, " ", "") + MyAppAssocExt
+#define SlprojAssocExt ".slproj"
+#define SlprojAssocKey StringChange(MyAppAssocName, " ", "Project") + SlprojAssocExt
+#define SlzipAssocExt ".slzip"
+#define SlzipAssocKey StringChange(MyAppAssocName, " ", "Exported Project") + SlprojAssocExt
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
@@ -33,6 +35,7 @@ ArchitecturesInstallIn64BitMode=x64compatible
 ChangesAssociations=yes
 DisableProgramGroupPage=yes
 LicenseFile=..\..\LICENSE
+UninstallDisplayIcon={app}\{#MyAppExeName}
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=commandline
@@ -51,17 +54,22 @@ Name: "devkitarm"; Description: "Install devkitARM"; GroupDescription: "Install 
 Name: "dockerdesktop"; Description: "Install Docker Desktop"; GroupDescription: "Install Other Tools"; Flags: checkedonce
 
 [Files]
-Source: "..\..\publish\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\..\publish\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\..\src\SerialLoops\bin\Release\net8.0-windows\win-x64\publish\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\src\SerialLoops\bin\Release\net8.0-windows\win-x64\publish\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "devkitProUpdater-3.0.3.exe"; DestDir: {tmp}; Flags: deleteafterinstall; Tasks: devkitarm
+Source: "wsl-install.bat"; DestDir: {tmp}; Flags: deleteafterinstall; Tasks: dockerdesktop
 Source: "Docker Desktop Installer.exe"; DestDir: {tmp}; Flags: deleteafterinstall; Tasks: dockerdesktop
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Registry]
-Root: HKA; Subkey: "Software\Classes\{#MyAppAssocExt}\OpenWithProgids"; ValueType: string; ValueName: "{#MyAppAssocKey}"; ValueData: ""; Flags: uninsdeletevalue
-Root: HKA; Subkey: "Software\Classes\{#MyAppAssocKey}"; ValueType: string; ValueName: ""; ValueData: "{#MyAppAssocName}"; Flags: uninsdeletekey
-Root: HKA; Subkey: "Software\Classes\{#MyAppAssocKey}\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\{#MyAppExeName},0"
-Root: HKA; Subkey: "Software\Classes\{#MyAppAssocKey}\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#MyAppExeName}"" ""%1"""
+Root: HKA; Subkey: "Software\Classes\{#SlprojAssocExt}\OpenWithProgids"; ValueType: string; ValueName: "{#SlprojAssocKey}"; ValueData: ""; Flags: uninsdeletevalue
+Root: HKA; Subkey: "Software\Classes\{#SlprojAssocKey}"; ValueType: string; ValueName: ""; ValueData: "{#MyAppAssocName}"; Flags: uninsdeletekey
+Root: HKA; Subkey: "Software\Classes\{#SlprojAssocKey}\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\{#MyAppExeName},0"
+Root: HKA; Subkey: "Software\Classes\{#SlprojAssocKey}\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#MyAppExeName}"" ""%1"""
+Root: HKA; Subkey: "Software\Classes\{#SlzipAssocExt}\OpenWithProgids"; ValueType: string; ValueName: "{#SlzipAssocKey}"; ValueData: ""; Flags: uninsdeletevalue
+Root: HKA; Subkey: "Software\Classes\{#SlzipAssocKey}"; ValueType: string; ValueName: ""; ValueData: "{#MyAppAssocName}"; Flags: uninsdeletekey
+Root: HKA; Subkey: "Software\Classes\{#SlzipAssocKey}\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\{#MyAppExeName},0"
+Root: HKA; Subkey: "Software\Classes\{#SlzipAssocKey}\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#MyAppExeName}"" ""%1"""
 Root: HKA; Subkey: "Software\Classes\Applications\{#MyAppExeName}\SupportedTypes"; ValueType: string; ValueName: ".myp"; ValueData: ""
 
 [Icons]
@@ -70,6 +78,7 @@ Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: de
 
 [Run]
 Filename: "{tmp}\devkitProUpdater-3.0.3.exe"; WorkingDir: {tmp}; Tasks: devkitarm
+Filename: "{tmp}\wsl-install.bat"; WorkingDir: {tmp}; Tasks: dockerdesktop
 Filename: "{tmp}\Docker Desktop Installer.exe"; WorkingDir: {tmp}; Tasks: dockerdesktop
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
 

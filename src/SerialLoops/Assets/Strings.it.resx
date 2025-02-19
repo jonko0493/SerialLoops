@@ -966,9 +966,6 @@
   <data name="System_Texture" xml:space="preserve">
     <value>Texture di sistema</value>
   </data>
-  <data name="Error getting script command tree for script {0} ({1})" xml:space="preserve">
-    <value>Errore nell'ottenere command tree per lo script {0} ({1})</value>
-  </data>
   <data name="Sound (Options)" xml:space="preserve">
     <value>Audio (Opzioni)</value>
   </data>
@@ -1041,7 +1038,7 @@
   <data name="Save chibi GIF" xml:space="preserve">
     <value>Salva Chibi come GIF</value>
   </data>
-  <data name="Edit Save File - {0}" xml:space="preserve">
+  <data name="Edit Save File - {0} - {1}" xml:space="preserve">
     <value>Modifica Salvataggio - {0}</value>
   </data>
   <data name="Script Section" xml:space="preserve">
@@ -1324,7 +1321,7 @@
   <data name="Patching ARM9" xml:space="preserve">
     <value>Patchando ARM9</value>
   </data>
-  <data name="Serialized ASM hack" xml:space="preserve">
+  <data name="Serial Loops ASM Hack" xml:space="preserve">
     <value>Hack ASM serializzato</value>
   </data>
   <data name="Number of Singularities" xml:space="preserve">
@@ -1457,7 +1454,7 @@
   <data name="Editor Tabs not provided to project creation dialog" xml:space="preserve">
     <value>Le schede dell'editor non vengono fornite nella finestra di dialogo di creazione del progetto</value>
   </data>
-  <data name="Custom Color" xml:space="preserve">
+  <data name="CUSTOM_COLOR" xml:space="preserve">
     <value>Colore personalizzato</value>
   </data>
   <data name="Outline Color" xml:space="preserve">
@@ -1735,7 +1732,7 @@
   <data name="FLAC files" xml:space="preserve">
     <value>file FLAC</value>
   </data>
-  <data name="Orphaned Items" xml:space="preserve">
+  <data name="Orphaned_Items" xml:space="preserve">
     <value>Oggetti senza collegamenti</value>
   </data>
   <data name="Search for items by name, ID, or type." xml:space="preserve">
@@ -1957,7 +1954,7 @@
   <data name="Group_Selection" xml:space="preserve">
     <value>Divisione gruppo</value>
   </data>
-  <data name="Cross Space {0}&quot;" xml:space="preserve">
+  <data name="Cross Space {0}" xml:space="preserve">
     <value>Cross Spazio {0}"</value>
     <comment>As on a chessboard</comment>
   </data>

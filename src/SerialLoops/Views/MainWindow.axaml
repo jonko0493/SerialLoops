@@ -3,10 +3,7 @@
         xmlns:vm="using:SerialLoops.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:views="using:SerialLoops.Views"
-        xmlns:panels="using:SerialLoops.Views.Panels"
-        xmlns:panelsvm="using:SerialLoops.ViewModels.Panels"
-        xmlns:assets="using:SerialLoops.Assets"
+        xmlns:controls="using:SerialLoops.Controls"
         xmlns:toolbar="using:MiniToolbar.Avalonia"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="SerialLoops.Views.MainWindow"
@@ -19,7 +16,10 @@
         Closing="Window_Closing"
         Closed="Window_Closed"
         Icon="/Assets/serial-loops.ico"
-        Title="{Binding Title}">
+        Title="{Binding Title}"
+        TransparencyLevelHint="AcrylicBlur"
+        Background="{DynamicResource FallbackBackgroundColor}"
+        ExtendClientAreaToDecorationsHint="True">
 
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
@@ -28,20 +28,23 @@
     </Design.DataContext>
 
     <NativeMenu.Menu>
-        <NativeMenu>
-        </NativeMenu>
+        <NativeMenu />
     </NativeMenu.Menu>
 
-    <Grid RowDefinitions="Auto,*">
-        <StackPanel IsVisible="False">
-            <Button Command="{Binding SaveProjectCommand}" HotKey="{Binding SaveHotKey}"/>
-            <Button Command="{Binding CloseProjectCommand}" HotKey="{Binding CloseProjectKey}"/>
-        </StackPanel>
-        <StackPanel Grid.Row="0">
-            <NativeMenuBar Name="MenuBar"/>
-            <toolbar:Toolbar Height="60" Name="ToolBar" HorizontalAlignment="Right"/>
-        </StackPanel>
-        <ContentControl Name="MainContent" Grid.Row="1"/>
-    </Grid>
+    <Panel>
+        <controls:AcrylicBorderHandler/>
+        <Grid RowDefinitions="Auto,*">
+            <StackPanel IsVisible="False">
+                <Button Command="{Binding SaveProjectCommand}" HotKey="{Binding SaveHotKey}"/>
+                <Button Command="{Binding SearchProjectCommand}" HotKey="{Binding SearchHotKey}"/>
+                <Button Command="{Binding CloseProjectCommand}" HotKey="{Binding CloseProjectKey}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="0">
+                <NativeMenuBar Name="MenuBar"/>
+                <toolbar:Toolbar Height="60" Name="ToolBar" HorizontalAlignment="Right"/>
+            </StackPanel>
+            <ContentControl Name="MainContent" Grid.Row="1"/>
+        </Grid>
+    </Panel>
 
 </Window>

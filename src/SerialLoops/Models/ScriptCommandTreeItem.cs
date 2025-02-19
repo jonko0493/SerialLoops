@@ -1,41 +1,43 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using Avalonia.Controls;
 using Avalonia.Layout;
-using ReactiveUI.Fody.Helpers;
+using ReactiveUI;
 using SerialLoops.Lib.Script;
 
-namespace SerialLoops.Models
+namespace SerialLoops.Models;
+
+public class ScriptCommandTreeItem : ITreeItem, IViewFor<ScriptItemCommand>
 {
-    public class ScriptCommandTreeItem(ScriptItemCommand command) : ITreeItem
+    private TextBlock _textBlock = new();
+    StackPanel _panel = new()
     {
-        private ScriptItemCommand _command = command;
-        public ScriptItemCommand Command
-        {
-            get => _command;
-            set
-            {
-                _command = value;
-                Text = _command.ToString();
-            }
-        }
+        Orientation = Orientation.Horizontal,
+        Spacing = 3,
+        Margin = new(2),
+    };
 
-        [Reactive]
-        public string Text { get; set; } = command.ToString();
-        public Avalonia.Svg.Svg Icon { get; set; } = null;
-        public ObservableCollection<ITreeItem> Children { get; set; } = null;
-        public bool IsExpanded { get; set; } = false;
+    public string Text { get; set; }
+    public Avalonia.Svg.Svg Icon { get; set; } = null;
+    public ObservableCollection<ITreeItem> Children { get; set; } = null;
+    public bool IsExpanded { get; set; } = false;
 
-        public Control GetDisplay()
-        {
-            StackPanel panel = new()
-            {
-                Orientation = Orientation.Horizontal,
-                Spacing = 3,
-                Margin = new(2),
-            };
-            panel.Children.Add(new TextBlock { Text = Text });
-            return panel;
-        }
+    public ScriptCommandTreeItem(ScriptItemCommand command)
+    {
+        ViewModel = command;
+        this.OneWayBind(ViewModel, vm => vm.Display, v => v._textBlock.Text);
+        _panel.Children.Add(_textBlock);
     }
+
+    public Control GetDisplay()
+    {
+        return _panel;
+    }
+
+    object IViewFor.ViewModel
+    {
+        get => ViewModel;
+        set => ViewModel = (ScriptItemCommand)value;
+    }
+
+    public ScriptItemCommand ViewModel { get; set; }
 }

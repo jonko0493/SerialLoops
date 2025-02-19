@@ -1,21 +1,30 @@
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
+using SerialLoops.ViewModels.Panels;
 
-namespace SerialLoops.Views.Panels
+namespace SerialLoops.Views.Panels;
+
+public partial class ItemExplorerPanel : Panel
 {
-    public partial class ItemExplorerPanel : Panel
+    public static readonly AvaloniaProperty<bool?> ExpandItemsProperty = AvaloniaProperty.Register<ItemExplorerPanel, bool?>(nameof(ExpandItems));
+
+    public bool? ExpandItems
     {
-        public static readonly AvaloniaProperty<bool?> ExpandItemsProperty = AvaloniaProperty.Register<ItemExplorerPanel, bool?>(nameof(ExpandItems));
+        get => this.GetValue<bool?>(ExpandItemsProperty);
+        set => SetValue(ExpandItemsProperty, value);
+    }
 
-        public bool? ExpandItems
-        {
-            get => this.GetValue<bool?>(ExpandItemsProperty);
-            set => SetValue(ExpandItemsProperty, value);
-        }
+    public ItemExplorerPanel()
+    {
+        InitializeComponent();
+    }
 
-        public ItemExplorerPanel()
+    private void Viewer_OnKeyUp(object sender, KeyEventArgs e)
+    {
+        if (e.Key == Key.Enter)
         {
-            InitializeComponent();
+            ((ItemExplorerPanelViewModel)DataContext)?.OpenItemCommand.Execute(Viewer);
         }
     }
 }

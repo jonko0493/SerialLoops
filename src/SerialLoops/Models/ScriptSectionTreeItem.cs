@@ -1,41 +1,51 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Layout;
-using HaruhiChokuretsuLib.Archive.Event;
+using ReactiveUI;
 using SerialLoops.Lib.Script;
+using SerialLoops.ViewModels.Editors;
 
-namespace SerialLoops.Models
+namespace SerialLoops.Models;
+
+public class ScriptSectionTreeItem : ITreeItem, IViewFor<ReactiveScriptSection>
 {
-    public class ScriptSectionTreeItem(ScriptSection section, List<ScriptItemCommand> commands) : ITreeItem
+    private TextBlock _textBlock = new()
     {
-        private ScriptSection _section = section;
-        public ScriptSection Section
-        {
-            get => _section;
-            set
-            {
-                _section = value;
-                Text = _section.Name;
-            }
-        }
+        VerticalAlignment = VerticalAlignment.Center,
+    };
+    StackPanel _panel = new()
+    {
+        Orientation = Orientation.Horizontal,
+        VerticalAlignment = VerticalAlignment.Center,
+        Spacing = 3,
+        Margin = new(2),
+    };
 
-        public string Text { get; set; } = section.Name;
-        public Avalonia.Svg.Svg Icon { get; set; } = null;
-        public ObservableCollection<ITreeItem> Children { get; set; } = new([.. commands.Select(c => new ScriptCommandTreeItem(c))]);
-        public bool IsExpanded { get; set; } = true;
+    public string Text { get; set; }
+    public Avalonia.Svg.Svg Icon { get; set; } = null;
+    public ObservableCollection<ITreeItem> Children { get; set; }
+    public bool IsExpanded { get; set; } = true;
 
-        public Control GetDisplay()
-        {
-            StackPanel panel = new()
-            {
-                Orientation = Orientation.Horizontal,
-                Spacing = 3,
-                Margin = new(2),
-            };
-            panel.Children.Add(new TextBlock { Text = Text });
-            return panel;
-        }
+    public ScriptSectionTreeItem(ReactiveScriptSection section, List<ScriptItemCommand> commands)
+    {
+        ViewModel = section;
+        this.OneWayBind(ViewModel, vm => vm.Commands, v => v.Children);
+        this.OneWayBind(ViewModel, vm => vm.Name, v => v._textBlock.Text);
+        this.Bind(ViewModel, vm => vm.Name, v => v.Text);
+        _panel.Children.Add(_textBlock);
     }
+
+    public Control GetDisplay()
+    {
+        return _panel;
+    }
+
+    object IViewFor.ViewModel
+    {
+        get => ViewModel;
+        set => ViewModel = (ReactiveScriptSection)value;
+    }
+
+    public ReactiveScriptSection ViewModel { get; set; }
 }
