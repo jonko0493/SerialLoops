@@ -56,8 +56,8 @@ public class SearchDialogViewModel : ViewModelBase
     public ObservableCollection<LocalizedItemScope> ItemScopes { get; } =
         new(Enum.GetValues<ItemDescription.ItemType>().Where(i => i != ItemDescription.ItemType.Save).Select(i => new LocalizedItemScope(i)));
 
-    private ObservableCollection<ItemDescription> _items = [];
-    public ObservableCollection<ItemDescription> Items
+    private ObservableCollection<ItemShim> _items = [];
+    public ObservableCollection<ItemShim> Items
     {
         get => _items;
         set
@@ -87,7 +87,7 @@ public class SearchDialogViewModel : ViewModelBase
             .OrderBy(g => ControlGenerator.LocalizeItemTypes(g.Key))
             .Select(g => new SectionTreeItem(
                 ControlGenerator.LocalizeItemTypes(g.Key),
-                g.Select(i => new ItemDescriptionTreeItem(i)),
+                g.Select(i => new ItemShimTreeItem(i)),
                 ControlGenerator.GetVectorIcon(g.Key.ToString(), _log, size: 16)
             )));
     }
@@ -164,7 +164,7 @@ public class SearchDialogViewModel : ViewModelBase
                 }
 
                 ProgressDialogViewModel tracker = new(string.Format(Strings.Searching__0____, _project.Name));
-                List<ItemDescription> results = [];
+                List<ItemShim> results = [];
                 tracker.InitializeTasks(() => results = _project.GetSearchResults(query, _log, tracker),
                     () =>
                     {

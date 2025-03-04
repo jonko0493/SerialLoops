@@ -19,6 +19,9 @@ public class VoicedLineItem : Item, ISoundItem
     public int Index { get; set; }
     public AdxEncoding AdxType { get; set; }
 
+    public VoicedLineItem()
+    {
+    }
     public VoicedLineItem(string voiceFile, int index, Project project) : base(Path.GetFileNameWithoutExtension(voiceFile), ItemType.Voice)
     {
         VoiceFile = Path.GetRelativePath(project.IterativeDirectory, voiceFile);

@@ -26,7 +26,9 @@ public class ScriptItem : Item
     private readonly Func<string, string> _localize;
 
 
-
+    public ScriptItem()
+    {
+    }
     public ScriptItem(string name) : base(name, ItemType.Script)
     {
     }

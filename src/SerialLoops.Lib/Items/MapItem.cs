@@ -21,6 +21,9 @@ public class MapItem : Item
     [BsonIgnore]
     public SKBitmap ObjBitmap { get; set; }
 
+    public MapItem()
+    {
+    }
     public MapItem(MapFile map, int qmapIndex, Project project) : base(map.Name[..^1], ItemType.Map)
     {
         Map = map;

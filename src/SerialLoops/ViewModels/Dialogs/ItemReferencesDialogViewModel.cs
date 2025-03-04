@@ -26,14 +26,14 @@ public class ItemReferencesDialogViewModel : ViewModelBase
     public KeyGesture CloseHotKey { get; private set; }
 
     [Reactive]
-    public string FoundReferencesLabel { get; private set; } = string.Empty;
+    public string FoundReferencesLabel { get; private set; }
     public EditorTabsPanelViewModel Tabs { get; }
-    public ItemDescription Item { get; }
+    public ItemShim Item { get; }
 
     public string Title { get; }
 
-    private ObservableCollection<ItemDescription> _items;
-    public ObservableCollection<ItemDescription> Items
+    private ObservableCollection<ItemShim> _items;
+    public ObservableCollection<ItemShim> Items
     {
         get => _items;
         set
@@ -44,13 +44,10 @@ public class ItemReferencesDialogViewModel : ViewModelBase
                 Columns =
                 {
                     new HierarchicalExpanderColumn<ITreeItem>(
-                        new TemplateColumn<ITreeItem>(null, new FuncDataTemplate<ITreeItem>((val, namescope) =>
-                        {
-                            return val?.GetDisplay();
-                        })),
+                        new TemplateColumn<ITreeItem>(null, new FuncDataTemplate<ITreeItem>((val, _) => val?.GetDisplay())),
                         i => i.Children
-                    )
-                }
+                    ),
+                },
             };
             Source.ExpandAll();
         }
@@ -59,7 +56,7 @@ public class ItemReferencesDialogViewModel : ViewModelBase
     public ICommand OpenItemCommand { get; }
     public ICommand CloseCommand { get; }
 
-    public ItemReferencesDialogViewModel(ItemDescription item, Project project, EditorTabsPanelViewModel tabs, ILogger log)
+    public ItemReferencesDialogViewModel(ItemShim item, Project project, EditorTabsPanelViewModel tabs, ILogger log)
     {
         _log = log;
         _project = project;
@@ -76,7 +73,7 @@ public class ItemReferencesDialogViewModel : ViewModelBase
 
     public void OpenItem(TreeDataGrid viewer)
     {
-        ItemDescription item = _project.FindItem(((ITreeItem)viewer.RowSelection.SelectedItem)?.Text);
+        ItemDescription item = _project.FindItem(((ITreeItem)viewer.RowSelection?.SelectedItem)?.Text);
         if (item is not null)
         {
             Tabs.OpenTab(item);
@@ -89,7 +86,7 @@ public class ItemReferencesDialogViewModel : ViewModelBase
             .OrderBy(g => ControlGenerator.LocalizeItemTypes(g.Key))
             .Select(g => new SectionTreeItem(
                 ControlGenerator.LocalizeItemTypes(g.Key),
-                g.Select(i => new ItemDescriptionTreeItem(i)),
+                g.Select(i => new ItemShimTreeItem(i)),
                 ControlGenerator.GetVectorIcon(g.Key.ToString(), _log, size: 16)
             )));
     }

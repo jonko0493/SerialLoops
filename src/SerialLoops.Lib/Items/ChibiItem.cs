@@ -19,6 +19,10 @@ public class ChibiItem : Item, IPreviewableGraphic
     public Dictionary<string, bool> ChibiEntryModifications { get; set; } = new();
     public Dictionary<string, List<(SKBitmap Frame, short Timing)>> ChibiAnimations { get; set; } = new();
 
+    public ChibiItem()
+    {
+    }
+
     public ChibiItem(Chibi chibi, int chibiIndex, Project project) : base($"CHIBI{chibi.ChibiEntries[0].Animation}", ItemType.Chibi)
     {
         List<string> chibiIndices = ["", "KYN", "HAL", "MIK", "NAG", "KOI"];

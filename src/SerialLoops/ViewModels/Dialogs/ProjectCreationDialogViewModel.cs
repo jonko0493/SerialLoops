@@ -74,7 +74,7 @@ public partial class ProjectCreationDialogViewModel : ViewModelBase
                 ((IProgressTracker)tracker).Focus(Strings.Creating_Project, 1);
                 Lib.IO.OpenRom(newProject, RomPath, _log, tracker);
                 tracker.Finished++;
-                newProject.Load(_config, _log, tracker);
+                newProject.Load(_config, _log, tracker, loadItems: true);
                 newProject.SetBaseRomHash(RomPath);
             }, () => dialog.Close(newProject));
             await new ProgressDialog { DataContext = tracker }.ShowDialog(_mainWindow.Window);

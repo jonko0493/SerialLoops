@@ -12,6 +12,9 @@ public class ItemItem : Item, IPreviewableGraphic
     public GraphicsFile ItemGraphic { get; set; }
     public int ItemIndex { get; set; }
 
+    public ItemItem()
+    {
+    }
     public ItemItem(string name) : base(name, ItemType.Item)
     {
     }

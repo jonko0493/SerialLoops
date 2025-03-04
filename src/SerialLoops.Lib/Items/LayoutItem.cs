@@ -17,6 +17,9 @@ public class LayoutItem : Item, IPreviewableGraphic
     [BsonIgnore]
     public Dictionary<int, SKBitmap> TilesDict { get; }
 
+    public LayoutItem()
+    {
+    }
     public LayoutItem(int layoutIndex, List<GraphicsFile> grps, int startEntry, int numEntries, string name, Project project) : base(name, ItemType.Layout)
     {
         Layout = project.LayoutFiles[layoutIndex];

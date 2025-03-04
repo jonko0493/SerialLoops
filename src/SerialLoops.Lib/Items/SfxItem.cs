@@ -13,6 +13,9 @@ public class SfxItem : Item
     public string AssociatedBank { get; private set; }
     public List<string> AssociatedGroups { get; set; }
 
+    public SfxItem()
+    {
+    }
     public SfxItem(SfxEntry entry, string name, short index, Project project) : base(name, ItemType.SFX)
     {
         Entry = entry;

@@ -25,6 +25,10 @@ public class BackgroundMusicItem : Item, ISoundItem
     [BsonIgnore]
     public string CachedWaveFile { get; set; }
 
+    public BackgroundMusicItem()
+    {
+    }
+
     public BackgroundMusicItem(string bgmFile, int index, Project project) : base(Path.GetFileNameWithoutExtension(bgmFile), ItemType.BGM)
     {
         BgmFile = Path.GetRelativePath(project.IterativeDirectory, bgmFile);

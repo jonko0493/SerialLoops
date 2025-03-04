@@ -450,7 +450,7 @@ public partial class MainWindowViewModel : ViewModelBase
             {
                 OpenProject.MigrateProject(newRom, CurrentConfig, Log, tracker);
                 OpenProject = new(OpenProject.Name, newLangCode, CurrentConfig, Strings.ResourceManager.GetString, Log);
-                OpenProject.Load(CurrentConfig, Log, tracker);
+                OpenProject.Load(CurrentConfig, Log, tracker, loadItems: true);
                 OpenProject.SetBaseRomHash(newRom);
             }, async void () => await Window.ShowMessageBoxAsync(Strings.Migration_Complete_, Strings.Migrated_to_new_ROM_, ButtonEnum.Ok, Icon.Success, Log));
             await new ProgressDialog() { DataContext = tracker }.ShowDialog(Window);
@@ -609,7 +609,7 @@ public partial class MainWindowViewModel : ViewModelBase
             }
 
             ProgressDialogViewModel thirdTracker = new(string.Format(Strings.Loading_Project____0__, projectFileName));
-            thirdTracker.InitializeTasks(() => OpenProject.LoadArchives(Log, thirdTracker),
+            thirdTracker.InitializeTasks(() => OpenProject.LoadArchives(Log, thirdTracker, loadItems: false),
                 () => { });
             await new ProgressDialog { DataContext = thirdTracker }.ShowDialog(Window);
         }
@@ -767,7 +767,7 @@ public partial class MainWindowViewModel : ViewModelBase
                 ((IProgressTracker)tracker).Focus(Strings.Creating_Project, 1);
                 IO.OpenRom(OpenProject, rom, Log, tracker);
                 tracker.Finished++;
-                OpenProject.Load(CurrentConfig, Log, tracker);
+                OpenProject.Load(CurrentConfig, Log, tracker, loadItems: true);
             }, () =>
             {
                 SaveItem saveItem = new(savePath, Path.GetFileNameWithoutExtension(savePath));

@@ -22,6 +22,9 @@ public class BackgroundItem : Item, IPreviewableGraphic
     public short ExtrasShort { get; set; }
     public byte ExtrasByte { get; set; }
 
+    public BackgroundItem()
+    {
+    }
     public BackgroundItem(string name) : base(name, ItemType.Background)
     {
     }

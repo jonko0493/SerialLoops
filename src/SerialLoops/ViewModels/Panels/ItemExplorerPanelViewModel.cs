@@ -21,8 +21,9 @@ public class ItemExplorerPanelViewModel : ViewModelBase
     private ILogger _log;
     private MainWindowViewModel _window;
 
-    private ObservableCollection<ItemDescription> _items;
-    public ObservableCollection<ItemDescription> Items
+    private ObservableCollection<ItemShim> _items;
+
+    public ObservableCollection<ItemShim> Items
     {
         get => _items;
         set
@@ -33,18 +34,17 @@ public class ItemExplorerPanelViewModel : ViewModelBase
                 Columns =
                 {
                     new HierarchicalExpanderColumn<ITreeItem>(
-                        new TemplateColumn<ITreeItem>(null, new FuncDataTemplate<ITreeItem>((val, namescope) =>
-                        {
-                            return val?.GetDisplay();
-                        }), cellEditingTemplate: new FuncDataTemplate<ITreeItem>((val, namescope) =>
-                        {
-                            if (val is ItemDescriptionTreeItem item)
+                        new TemplateColumn<ITreeItem>(null,
+                            new FuncDataTemplate<ITreeItem>((val, _) => val?.GetDisplay()),
+                            cellEditingTemplate: new FuncDataTemplate<ITreeItem>((val, _) =>
                             {
-                                return item.GetEditableDisplay();
-                            }
+                                if (val is ItemShimTreeItem item)
+                                {
+                                    return item.GetEditableDisplay();
+                                }
 
-                            return val?.GetDisplay();
-                        }), options: new() { BeginEditGestures = BeginEditGestures.F2 }),
+                                return val?.GetDisplay();
+                            }), options: new() { BeginEditGestures = BeginEditGestures.F2 }),
                         i => i.Children
                     ),
                 },
@@ -61,10 +61,8 @@ public class ItemExplorerPanelViewModel : ViewModelBase
         }
     }
 
-    [Reactive]
-    public HierarchicalTreeDataGridSource<ITreeItem> Source { get; private set; }
-    [Reactive]
-    public bool ExpandItems { get; set; }
+    [Reactive] public HierarchicalTreeDataGridSource<ITreeItem> Source { get; private set; }
+    [Reactive] public bool ExpandItems { get; set; }
 
     public ICommand SearchCommand { get; set; }
     public ICommand SearchProjectCommand { get; set; }
@@ -77,7 +75,7 @@ public class ItemExplorerPanelViewModel : ViewModelBase
         _log = window.Log;
         _window = window;
 
-        Items = new(_project.Items);
+        Items = new(_project.ItemShims);
         SearchProjectCommand = searchProjectCommand;
         SearchCommand = ReactiveCommand.Create<string>(Search);
         OpenItemCommand = ReactiveCommand.Create<TreeDataGrid>(OpenItem);
@@ -100,7 +98,7 @@ public class ItemExplorerPanelViewModel : ViewModelBase
             .OrderBy(g => ControlGenerator.LocalizeItemTypes(g.Key))
             .Select(g => new SectionTreeItem(
                 ControlGenerator.LocalizeItemTypes(g.Key),
-                g.Select(i => new ItemDescriptionTreeItem(i, _window)),
+                g.Select(i => new ItemShimTreeItem(i, _window)),
                 ControlGenerator.GetVectorIcon(g.Key.ToString(), _log, size: 16)
             )));
     }
@@ -110,12 +108,13 @@ public class ItemExplorerPanelViewModel : ViewModelBase
         if (string.IsNullOrEmpty(query))
         {
             ExpandItems = false;
-            Items = new(_project.Items);
+            Items = new(_project.ItemShims);
         }
         else
         {
             ExpandItems = true;
-            Items = new(_project.Items.Where(i => i.DisplayName.Contains(query, System.StringComparison.OrdinalIgnoreCase)));
+            Items = new(_project.ItemShims.Where(i =>
+                i.DisplayName.Contains(query, System.StringComparison.OrdinalIgnoreCase)));
         }
     }
 }

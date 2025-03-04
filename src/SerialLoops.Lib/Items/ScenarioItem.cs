@@ -14,6 +14,9 @@ public class ScenarioItem : Item
     private IEnumerable<ScriptItem> _scriptItems;
     private IEnumerable<GroupSelectionItem> _groupSelectionItems;
 
+    public ScenarioItem()
+    {
+    }
     public ScenarioItem(ScenarioStruct scenario, Project project, ILogger log) : base("Scenario", ItemType.Scenario)
     {
         Scenario = scenario;

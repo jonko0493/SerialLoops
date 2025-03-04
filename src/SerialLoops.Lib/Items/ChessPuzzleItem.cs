@@ -12,6 +12,10 @@ public class ChessPuzzleItem : Item
 {
     public ChessFile ChessPuzzle { get; set; }
 
+    public ChessPuzzleItem()
+    {
+    }
+
     public ChessPuzzleItem(ChessFile chessFile) : base(chessFile.Name[..^1], ItemType.Chess_Puzzle)
     {
         ChessPuzzle = chessFile;

@@ -10,13 +10,27 @@ using SkiaSharp;
 
 namespace SerialLoops.Lib.Items;
 
-public class CharacterSpriteItem(CharacterSprite sprite, CharacterDataFile chrdata, Project project, ILogger log) : Item($"SPR_{project.Characters[(int)sprite.Character].Name}_{chrdata.Sprites.IndexOf(sprite):D3}{(sprite.IsLarge ? "_L" : "")}", ItemType.Character_Sprite), IPreviewableGraphic
+public class CharacterSpriteItem : Item, IPreviewableGraphic
 {
-    private readonly ILogger _log = log;
+    private readonly ILogger _log;
 
-    public CharacterSprite Sprite { get; set; } = sprite;
-    public CharacterSpriteGraphics Graphics { get; set; } = new(sprite, project.Grp);
-    public int Index { get; set; } = chrdata.Sprites.IndexOf(sprite);
+    public CharacterSprite Sprite { get; set; }
+    public CharacterSpriteGraphics Graphics { get; set; }
+    public int Index { get; set; }
+
+    public CharacterSpriteItem()
+    {
+    }
+
+    public CharacterSpriteItem(CharacterSprite sprite, CharacterDataFile chrdata, Project project, ILogger log) : base(
+        $"SPR_{project.Characters[(int)sprite.Character].Name}_{chrdata.Sprites.IndexOf(sprite):D3}{(sprite.IsLarge ? "_L" : "")}",
+        ItemType.Character_Sprite)
+    {
+        _log = log;
+        Sprite = sprite;
+        Graphics = new(sprite, project.Grp);
+        Index = chrdata.Sprites.IndexOf(sprite);
+    }
 
     public override void Refresh(Project project, ILogger log)
     {
@@ -57,7 +71,7 @@ public class CharacterSpriteItem(CharacterSprite sprite, CharacterDataFile chrda
         Graphics.MouthAnimation.AnimationX = mouthX;
         Graphics.MouthAnimation.AnimationY = mouthY;
     }
-        
+
     public SKBitmap GetPreview(Project project)
     {
         return GetClosedMouthAnimation(project).First().Frame;
@@ -175,14 +189,28 @@ public class CharacterSpriteItem(CharacterSprite sprite, CharacterDataFile chrda
     }
 }
 
-public class CharacterSpriteGraphics(CharacterSprite sprite, ArchiveFile<GraphicsFile> grp)
+public class CharacterSpriteGraphics
 {
-    public GraphicsFile BodyLayout { get; set; } = grp.GetFileByIndex(sprite.LayoutIndex);
-    public List<GraphicsFile> BodyTextures { get; set; } = [grp.GetFileByIndex(sprite.TextureIndex1), grp.GetFileByIndex(sprite.TextureIndex2), grp.GetFileByIndex(sprite.TextureIndex3)];
-    public GraphicsFile EyeAnimation { get; set; } = grp.GetFileByIndex(sprite.EyeAnimationIndex);
-    public GraphicsFile EyeTexture { get; set; } = grp.GetFileByIndex(sprite.EyeTextureIndex);
-    public GraphicsFile MouthAnimation { get; set; } = grp.GetFileByIndex(sprite.MouthAnimationIndex);
-    public GraphicsFile MouthTexture { get; set; } = grp.GetFileByIndex(sprite.MouthTextureIndex);
+    public GraphicsFile BodyLayout { get; set; }
+    public List<GraphicsFile> BodyTextures { get; set; }
+    public GraphicsFile EyeAnimation { get; set; }
+    public GraphicsFile EyeTexture { get; set; }
+    public GraphicsFile MouthAnimation { get; set; }
+    public GraphicsFile MouthTexture { get; set; }
+
+    public CharacterSpriteGraphics()
+    {
+    }
+
+    public CharacterSpriteGraphics(CharacterSprite sprite, ArchiveFile<GraphicsFile> grp)
+    {
+        BodyLayout = grp.GetFileByIndex(sprite.LayoutIndex);
+        BodyTextures = [grp.GetFileByIndex(sprite.TextureIndex1), grp.GetFileByIndex(sprite.TextureIndex2), grp.GetFileByIndex(sprite.TextureIndex3)];
+        EyeAnimation = grp.GetFileByIndex(sprite.EyeAnimationIndex);
+        EyeTexture = grp.GetFileByIndex(sprite.EyeTextureIndex);
+        MouthAnimation = grp.GetFileByIndex(sprite.MouthAnimationIndex);
+        MouthTexture = grp.GetFileByIndex(sprite.MouthTextureIndex);
+    }
 
     public void Write(Project project, ILogger log)
     {

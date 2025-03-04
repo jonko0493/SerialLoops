@@ -18,7 +18,6 @@ public partial class ProjectCreationDialog : Window
         if (!string.IsNullOrEmpty(e.KeySymbol) && !AllowedCharactersRegex().IsMatch(e.KeySymbol) && e.Key != Key.Back)
         {
             e.Handled = true;
-            return;
         }
     }
 

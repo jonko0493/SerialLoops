@@ -10,6 +10,9 @@ public class TopicItem : Item
     public Topic HiddenMainTopic { get; set; }
     public (string ScriptName, ScriptCommandInvocation command)[] ScriptUses { get; set; }
 
+    public TopicItem()
+    {
+    }
     public TopicItem(Topic topic, Project project) : base($"{topic.Id}", ItemType.Topic)
     {
         DisplayName = $"{topic.Id} - {topic.Title.GetSubstitutedString(project)}";

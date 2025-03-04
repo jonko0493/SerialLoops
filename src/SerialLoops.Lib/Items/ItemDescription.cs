@@ -14,9 +14,13 @@ public partial class ItemDescription : ReactiveObject
     public bool CanRename { get; set; }
     [Reactive]
     public string DisplayName { get; set; }
-    public ItemType Type { get; private set; }
+    public ItemType Type { get; set; }
     [Reactive]
     public bool UnsavedChanges { get; set; }
+
+    public ItemDescription()
+    {
+    }
 
     public ItemDescription(string name, ItemType type, string displayName)
     {
