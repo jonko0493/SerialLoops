@@ -2,6 +2,7 @@
 using HaruhiChokuretsuLib.Archive.Data;
 using HaruhiChokuretsuLib.Archive.Graphics;
 using HaruhiChokuretsuLib.Util;
+using LiteDB;
 using SkiaSharp;
 
 namespace SerialLoops.Lib.Items;
@@ -9,6 +10,7 @@ namespace SerialLoops.Lib.Items;
 public class PuzzleItem : Item
 {
     public PuzzleFile Puzzle { get; set; }
+    [BsonIgnore]
     public SKBitmap SingularityImage { get; set; }
 
     public PuzzleItem(PuzzleFile puzzleFile, Project project, ILogger log) : base(puzzleFile.Name[..^1], ItemType.Puzzle)

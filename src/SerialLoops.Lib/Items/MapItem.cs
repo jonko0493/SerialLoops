@@ -2,6 +2,7 @@
 using HaruhiChokuretsuLib.Archive.Data;
 using HaruhiChokuretsuLib.Archive.Graphics;
 using HaruhiChokuretsuLib.Util;
+using LiteDB;
 using SerialLoops.Lib.Util;
 using SkiaSharp;
 
@@ -13,8 +14,11 @@ public class MapItem : Item
     public int QmapIndex { get; set; }
 
     public GraphicsFile Layout { get; }
+    [BsonIgnore]
     public SKBitmap BgBitmap { get; set; }
+    [BsonIgnore]
     public SKBitmap BgObjBitmap { get; set; }
+    [BsonIgnore]
     public SKBitmap ObjBitmap { get; set; }
 
     public MapItem(MapFile map, int qmapIndex, Project project) : base(map.Name[..^1], ItemType.Map)

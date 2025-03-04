@@ -2,6 +2,7 @@
 using System.Linq;
 using HaruhiChokuretsuLib.Archive.Graphics;
 using HaruhiChokuretsuLib.Util;
+using LiteDB;
 using SkiaSharp;
 
 namespace SerialLoops.Lib.Items;
@@ -13,6 +14,7 @@ public class LayoutItem : Item, IPreviewableGraphic
     public int StartEntry { get; set; }
     public int NumEntries { get; set; }
 
+    [BsonIgnore]
     public Dictionary<int, SKBitmap> TilesDict { get; }
 
     public LayoutItem(int layoutIndex, List<GraphicsFile> grps, int startEntry, int numEntries, string name, Project project) : base(name, ItemType.Layout)

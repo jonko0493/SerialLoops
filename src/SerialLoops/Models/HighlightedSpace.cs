@@ -87,11 +87,11 @@ public class HighlightedSpace : ReactiveObject
         Color = new(Colors.Goldenrod, 0.5);
     }
 
-    public HighlightedSpace(UnknownMapObject3 obj, Point gridZero, bool slgMode)
+    public HighlightedSpace(ObjectMarker obj, Point gridZero, bool slgMode)
     {
         if (slgMode)
         {
-            Point origin = new(gridZero.X - obj.UnknownShort1 * 32 + obj.UnknownShort2 * 32, gridZero.Y + obj.UnknownShort1 * 16 + obj.UnknownShort2 * 16);
+            Point origin = new(gridZero.X - obj.ObjectX * 32 + obj.ObjectY * 32, gridZero.Y + obj.ObjectX * 16 + obj.ObjectY * 16);
             Top = origin;
             Left = new(origin.X - 32, origin.Y + 16);
             Bottom = new(origin.X, origin.Y + 32);
@@ -100,7 +100,7 @@ public class HighlightedSpace : ReactiveObject
         else
         {
             // x & y reversed from SLG mode
-            Point origin = new(gridZero.X - obj.UnknownShort2 * 16 + obj.UnknownShort1 * 16, gridZero.Y + obj.UnknownShort2 * 8 + obj.UnknownShort1 * 8);
+            Point origin = new(gridZero.X - obj.ObjectY * 16 + obj.ObjectX * 16, gridZero.Y + obj.ObjectY * 8 + obj.ObjectX * 8);
             Top = origin;
             Left = new(origin.X - 16, origin.Y + 8);
             Bottom = new(origin.X, origin.Y + 16);

@@ -215,7 +215,7 @@ public class MapEditorViewModel : EditorViewModel
                 }
             }
 
-            if (map.Map.UnknownMapObject3s[..^1].Select(u => u.UnknownShort3).Contains((short)i))
+            if (map.Map.ObjectMarkers[..^1].Select(u => u.LayoutIndex).Contains((short)i))
             {
                 ObjectLayer.Add(new(Layout, i) { Layer = map.Layout.LayoutEntries[i].RelativeShtxIndex });
                 continue;
@@ -314,7 +314,7 @@ public class MapEditorViewModel : EditorViewModel
 
         Unknown2s = new(map.Map.UnknownMapObject2s[..^1].Select(u => new HighlightedSpace(u, gridZero, map.Map.Settings.SlgMode)));
 
-        ObjectPositions = new(map.Map.UnknownMapObject3s[..^1].Select(u => new HighlightedSpace(u, gridZero, map.Map.Settings.SlgMode)));
+        ObjectPositions = new(map.Map.ObjectMarkers[..^1].Select(u => new HighlightedSpace(u, gridZero, map.Map.Settings.SlgMode)));
 
         ExportCommand = ReactiveCommand.CreateFromTask(Export);
     }

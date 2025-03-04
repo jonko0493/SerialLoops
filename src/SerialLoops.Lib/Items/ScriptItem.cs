@@ -5,6 +5,7 @@ using System.Linq;
 using HaruhiChokuretsuLib.Archive.Data;
 using HaruhiChokuretsuLib.Archive.Event;
 using HaruhiChokuretsuLib.Util;
+using LiteDB;
 using QuikGraph;
 using SerialLoops.Lib.Script;
 using SerialLoops.Lib.Script.Parameters;
@@ -20,6 +21,7 @@ public class ScriptItem : Item
     public EventFile Event { get; set; }
     public short StartReadFlag { get; set; }
     public short SfxGroupIndex { get; set; }
+    [BsonIgnore]
     public AdjacencyGraph<ScriptSection, ScriptSectionEdge> Graph { get; set; } = new();
     private readonly Func<string, string> _localize;
 

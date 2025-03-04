@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using HaruhiChokuretsuLib.Audio.ADX;
 using HaruhiChokuretsuLib.Util;
+using LiteDB;
 using NAudio.Flac;
 using NAudio.Vorbis;
 using NAudio.Wave;
@@ -21,6 +22,7 @@ public class BackgroundMusicItem : Item, ISoundItem
     public int Index { get; set; }
     public string BgmName { get; set; }
     public short? Flag { get; set; }
+    [BsonIgnore]
     public string CachedWaveFile { get; set; }
 
     public BackgroundMusicItem(string bgmFile, int index, Project project) : base(Path.GetFileNameWithoutExtension(bgmFile), ItemType.BGM)

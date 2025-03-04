@@ -18,11 +18,13 @@ using HaruhiChokuretsuLib.Audio.SDAT;
 using HaruhiChokuretsuLib.Font;
 using HaruhiChokuretsuLib.Util;
 using HaruhiChokuretsuLib.Util.Exceptions;
+using LiteDB;
 using SerialLoops.Lib.Items;
 using SerialLoops.Lib.Script.Parameters;
 using SerialLoops.Lib.Util;
 using SkiaSharp;
 using static SerialLoops.Lib.Items.ItemDescription;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace SerialLoops.Lib;
 
@@ -47,6 +49,8 @@ public partial class Project
     public string IterativeDirectory => Path.Combine(MainDirectory, "iterative");
     [JsonIgnore]
     public string ProjectFile => Path.Combine(MainDirectory, $"{Name}.{PROJECT_FORMAT}");
+    [JsonIgnore]
+    public string DbFile => Path.Combine(MainDirectory, $"{Name}.db");
     [JsonIgnore]
     public Config Config { get; set; }
     [JsonIgnore]
@@ -1002,6 +1006,18 @@ public partial class Project
         }
 
         Items = [.. Items.OrderBy(i => i.DisplayName)];
+
+        using (LiteDatabase db = new(DbFile))
+        {
+            var itemsCol = db.GetCollection<ItemDescription>("items");
+
+            tracker.Focus("Building database", Items.Count);
+            foreach (ItemDescription item in Items)
+            {
+                itemsCol.Insert(item);
+                tracker.Finished++;
+            }
+        }
 
         return new(LoadProjectState.SUCCESS);
     }
