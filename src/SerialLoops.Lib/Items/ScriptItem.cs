@@ -205,6 +205,9 @@ public class ScriptItem : Item
     public ScriptPreview GetScriptPreview(OrderedDictionary<ScriptSection, List<ScriptItemCommand>> commandTree,
         ScriptItemCommand currentCommand, Project project, ILogger log)
     {
+        using LiteDatabase db = new(project.DbFile);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+
         ScriptPreview preview = new();
 
         if (currentCommand is null)
@@ -249,7 +252,7 @@ public class ScriptItem : Item
                 }
                 if (commands[i].Verb == CommandVerb.OP_MODE)
                 {
-                    preview.Kbg = (BackgroundItem)project.Items.First(k => k.Name == "BG_KBG04");
+                    preview.Kbg = (BackgroundItem)itemsCol.FindById("BG_KBG04");
                 }
             }
 
@@ -275,7 +278,7 @@ public class ScriptItem : Item
             {
                 if (chibi.ChibiIndex > 0)
                 {
-                    chibis.Add((ChibiItem)project.Items.First(i =>
+                    chibis.Add((ChibiItem)itemsCol.FindOne(i =>
                         i.Type == ItemType.Chibi && ((ChibiItem)i).TopScreenIndex == chibi.ChibiIndex));
                 }
             }
@@ -285,8 +288,8 @@ public class ScriptItem : Item
                 if (commands[i].Verb == CommandVerb.OP_MODE)
                 {
                     // Kyon auto-added by OP_MODE command
-                    ChibiItem chibi = (ChibiItem)project.Items.First(i =>
-                        i.Type == ItemType.Chibi && ((ChibiItem)i).TopScreenIndex == 1);
+                    ChibiItem chibi = (ChibiItem)itemsCol.FindOne(c =>
+                        c.Type == ItemType.Chibi && ((ChibiItem)c).TopScreenIndex == 1);
                     if (!chibis.Contains(chibi))
                     {
                         chibis.Add(chibi);
@@ -559,7 +562,7 @@ public class ScriptItem : Item
         ScriptItemCommand lastItemCommand = commands.LastOrDefault(c => c.Verb == CommandVerb.ITEM_DISPIMG);
         if (lastItemCommand is not null)
         {
-            ItemItem item = (ItemItem)project.Items.FirstOrDefault(i =>
+            ItemItem item = (ItemItem)itemsCol.FindOne(i =>
                 i.Type == ItemType.Item && ((ItemScriptParameter)lastItemCommand.Parameters[0]).ItemIndex ==
                 ((ItemItem)i).ItemIndex);
             if (item is not null && ((ItemLocationScriptParameter)lastItemCommand.Parameters[1]).Location !=
@@ -585,7 +588,7 @@ public class ScriptItem : Item
                             [3]; // exits/moves happen _after_ dialogue is advanced, so we check these at this point
                 if (spriteExitMoveParam.ExitTransition != SpriteExitScriptParameter.SpriteExitTransition.NO_EXIT)
                 {
-                    CharacterItem prevCharacter = (CharacterItem)project.Items.First(i =>
+                    CharacterItem prevCharacter = (CharacterItem)itemsCol.FindOne(i =>
                         i.Type == ItemType.Character &&
                         i.Name ==
                         $"CHR_{project.Characters[(int)((DialogueScriptParameter)previousCommand.Parameters[0]).Line.Speaker].Name}");
@@ -661,7 +664,7 @@ public class ScriptItem : Item
                     CharacterItem character;
                     try
                     {
-                        character = (CharacterItem)project.Items.First(i =>
+                        character = (CharacterItem)itemsCol.FindOne(i =>
                             i.Type == ItemType.Character &&
                             i.DisplayName ==
                             $"CHR_{project.Characters[(int)((DialogueScriptParameter)command.Parameters[0]).Line.Speaker].Name}");
@@ -902,7 +905,7 @@ public class ScriptItem : Item
         // Draw the get topic flyout
         if (currentCommand.Verb == CommandVerb.TOPIC_GET)
         {
-            preview.Topic = (TopicItem)project.Items.FirstOrDefault(i =>
+            preview.Topic = (TopicItem)itemsCol.FindOne(i =>
                 i.Type == ItemType.Topic && ((TopicItem)i).TopicEntry.Id ==
                 ((TopicScriptParameter)currentCommand.Parameters[0]).TopicId);
         }

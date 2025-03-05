@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Avalonia;
@@ -16,10 +15,12 @@ using Avalonia.Platform;
 using DynamicData;
 using HaruhiChokuretsuLib.Archive.Event;
 using HaruhiChokuretsuLib.Util;
+using LiteDB;
 using MsBox.Avalonia.Enums;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using SerialLoops.Assets;
+using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
 using SerialLoops.Lib.Script;
 using SerialLoops.Lib.Util;
@@ -31,6 +32,7 @@ using SerialLoops.Views.Dialogs;
 using SkiaSharp;
 using SoftCircuits.Collections;
 using static HaruhiChokuretsuLib.Archive.Event.EventFile;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace SerialLoops.ViewModels.Editors;
 
@@ -128,6 +130,9 @@ public class ScriptEditorViewModel : EditorViewModel
 
     public ScriptEditorViewModel(ScriptItem script, MainWindowViewModel window, ILogger log) : base(script, window, log)
     {
+        using LiteDatabase db = new(_project.DbFile);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+
         _script = script;
         ScriptSections = new(script.Event.ScriptSections.Select(s => new ReactiveScriptSection(s)));
         _project = window.OpenProject;
@@ -139,8 +144,8 @@ public class ScriptEditorViewModel : EditorViewModel
             StartingChibis = [];
             UnusedChibis = [];
             StartingChibis.AddRange(_script.Event.StartingChibisSection.Objects.Where(c => c.ChibiIndex > 0).Select(c => new StartingChibiWithImage(c,
-                ((ChibiItem)_project.Items.First(i => i.Type == ItemDescription.ItemType.Chibi
-                                                      && ((ChibiItem)i).ChibiIndex == c.ChibiIndex)).ChibiAnimations.First().Value[0].Frame,
+                ((ChibiItem)itemsCol.FindOne(i => i.Type == ItemDescription.ItemType.Chibi
+                                          && ((ChibiItem)i).ChibiIndex == c.ChibiIndex)).ChibiAnimations.First().Value[0].Frame,
                 StartingChibis, UnusedChibis, _script)));
             short[] usedIndices = StartingChibis.Select(c => c.StartingChibi.ChibiIndex).ToArray();
             for (short i = 1; i <= 5; i++)
@@ -149,8 +154,8 @@ public class ScriptEditorViewModel : EditorViewModel
                 {
                     continue;
                 }
-                UnusedChibis.Add(new(new StartingChibiEntry() { ChibiIndex = i }, ((ChibiItem)_project.Items.First(c => c.Type == ItemDescription.ItemType.Chibi
-                    && ((ChibiItem)c).ChibiIndex == i)).ChibiAnimations.First().Value[0].Frame, StartingChibis, UnusedChibis, _script));
+                UnusedChibis.Add(new(new() { ChibiIndex = i }, ((ChibiItem)itemsCol.FindOne(c => c.Type == ItemDescription.ItemType.Chibi
+                                                                                                 && ((ChibiItem)c).ChibiIndex == i)).ChibiAnimations.First().Value[0].Frame, StartingChibis, UnusedChibis, _script));
             }
         }
     }

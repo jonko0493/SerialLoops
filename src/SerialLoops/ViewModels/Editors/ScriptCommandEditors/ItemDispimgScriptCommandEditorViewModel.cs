@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using HaruhiChokuretsuLib.Util;
+using LiteDB;
 using ReactiveUI;
 using SerialLoops.Assets;
+using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
 using SerialLoops.Lib.Script;
 using SerialLoops.Lib.Script.Parameters;
@@ -74,9 +76,12 @@ public class ItemDispimgScriptCommandEditorViewModel : ScriptCommandEditorViewMo
     public ItemDispimgScriptCommandEditorViewModel(ScriptItemCommand command, ScriptEditorViewModel scriptEditor, ILogger log, MainWindowViewModel window)
         : base(command, scriptEditor, log)
     {
+        using LiteDatabase db = new(window.OpenProject.DbFile);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+
         _window = window;
         Tabs = _window.EditorTabs;
-        _item = (ItemItem)_window.OpenProject.Items.FirstOrDefault(i =>
+        _item = (ItemItem)itemsCol.FindOne(i =>
             i.Type == ItemDescription.ItemType.Item &&
             ((ItemItem)i).ItemIndex == ((ItemScriptParameter)Command.Parameters[0]).ItemIndex);
         _location = new(((ItemLocationScriptParameter)Command.Parameters[1]).Location);
@@ -87,7 +92,10 @@ public class ItemDispimgScriptCommandEditorViewModel : ScriptCommandEditorViewMo
 
     private async Task ChangeItem()
     {
-        GraphicSelectionDialogViewModel graphicSelectionDialog = new(_window.OpenProject.Items.Where(i => i.Type == ItemDescription.ItemType.Item).Cast<ItemItem>(),
+        using LiteDatabase db = new(_window.OpenProject.DbFile);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+
+        GraphicSelectionDialogViewModel graphicSelectionDialog = new(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Item).Cast<ItemItem>(),
             Item, _window.OpenProject, _window.Log);
         ItemItem item = await new GraphicSelectionDialog { DataContext = graphicSelectionDialog }.ShowDialog<ItemItem>(_window.Window);
         if (item is not null)

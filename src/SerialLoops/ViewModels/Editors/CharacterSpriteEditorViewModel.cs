@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Avalonia.Platform.Storage;
 using HaruhiChokuretsuLib.Util;
+using LiteDB;
 using ReactiveUI;
 using SerialLoops.Assets;
+using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
 using SerialLoops.Utility;
 using SerialLoops.ViewModels.Controls;
@@ -72,10 +74,14 @@ public class CharacterSpriteEditorViewModel : EditorViewModel
 
     public CharacterSpriteEditorViewModel(CharacterSpriteItem item, MainWindowViewModel mainWindow, ILogger log) : base(item, mainWindow, log)
     {
+        using LiteDatabase db = new(mainWindow.OpenProject.DbFile);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+        var charCol = db.GetCollection<ItemCategoryShim<CharacterItem>>(nameof(CharacterItem));
+
         _sprite = item;
         AnimatedImage = new(_sprite.GetLipFlapAnimation(mainWindow.OpenProject));
-        Characters = new(mainWindow.OpenProject.Items.Where(i => i.Type == ItemDescription.ItemType.Character).Cast<CharacterItem>());
-        _character = (CharacterItem)mainWindow.OpenProject.Items.First(i => i.Type == ItemDescription.ItemType.Character && ((CharacterItem)i).MessageInfo.Character == item.Sprite.Character);
+        Characters = new(charCol.FindAll().Select(c => c.GetItem(itemsCol)));
+        _character = Characters.FirstOrDefault(c => c.MessageInfo.Character == item.Sprite.Character);
         _isLarge = _sprite.Sprite.IsLarge;
 
         ReplaceCommand = ReactiveCommand.CreateFromTask(ReplaceSprite);

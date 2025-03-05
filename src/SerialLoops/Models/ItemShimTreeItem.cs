@@ -12,7 +12,7 @@ using SerialLoops.Views.Dialogs;
 
 namespace SerialLoops.Models;
 
-public class ItemShimTreeItem : ITreeItem, IViewFor<ItemShim>
+public class ItemShimTreeItem : ITreeItem, IViewFor<ReactiveItemShim>
 {
     private TextBlock _textBlock = new()
     {
@@ -42,7 +42,7 @@ public class ItemShimTreeItem : ITreeItem, IViewFor<ItemShim>
     public ObservableCollection<ITreeItem> Children { get; set; } = null;
     public bool IsExpanded { get; set; } = false;
 
-    public ItemShimTreeItem(ItemShim item, MainWindowViewModel window = null)
+    public ItemShimTreeItem(ReactiveItemShim item, MainWindowViewModel window = null)
     {
         ViewModel = item;
         _window = window;
@@ -91,7 +91,7 @@ public class ItemShimTreeItem : ITreeItem, IViewFor<ItemShim>
     object IViewFor.ViewModel
     {
         get => ViewModel;
-        set => ViewModel = (ItemShim)value;
+        set => ViewModel = (ReactiveItemShim)value;
     }
 
     private void FindReferences()
@@ -105,5 +105,5 @@ public class ItemShimTreeItem : ITreeItem, IViewFor<ItemShim>
         referencesDialog.Show(_window.Window);
     }
 
-    public ItemShim ViewModel { get; set; }
+    public ReactiveItemShim ViewModel { get; set; }
 }

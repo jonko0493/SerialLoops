@@ -1,5 +1,6 @@
 using System;
 using HaruhiChokuretsuLib.Save;
+using LiteDB;
 using SerialLoops.Lib.Items;
 using SerialLoops.Lib.Script.Parameters;
 using SerialLoops.Lib.Util;
@@ -75,8 +76,9 @@ public class SaveFilePreview(SaveSlotData slotData, Project project)
 
     private void DrawEpisodeNumber(SKCanvas canvas, int number)
     {
-        if (_project.Items.Find(item => item.Type == ItemDescription.ItemType.System_Texture
-                                        && item.Name == "SYSTEX_SYS_CMN_B38") is not SystemTextureItem graphic)
+        using LiteDatabase db = new(_project.DbFile);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+        if (itemsCol.FindById("SYSTEX_SYS_CMN_B38") is not SystemTextureItem graphic)
         {
             DrawText(canvas, string.Format(_project.Localize("EPISODE: {0}"), number));
             return;
@@ -102,10 +104,11 @@ public class SaveFilePreview(SaveSlotData slotData, Project project)
 
     private void DrawSaveTime(SKCanvas canvas, DateTimeOffset saveTime)
     {
+        using LiteDatabase db = new(_project.DbFile);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
         string date = saveTime.ToString("yyyy/MM/dd");
         string time = saveTime.ToString("HH:mm:ss");
-        if (_project.Items.Find(item => item.Type == ItemDescription.ItemType.System_Texture
-                                        && item.Name == "SYSTEX_SYS_MNU_B00") is not SystemTextureItem graphic)
+        if (itemsCol.FindById("SYSTEX_SYS_MNU_B00") is not SystemTextureItem graphic)
         {
             DrawText(canvas, date, 60, 25, DialogueScriptParameter.Paint01);
             DrawText(canvas, time, 180, 25, DialogueScriptParameter.Paint01);

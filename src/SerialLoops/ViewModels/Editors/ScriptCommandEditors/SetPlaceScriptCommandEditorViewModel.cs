@@ -3,7 +3,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using HaruhiChokuretsuLib.Util;
+using LiteDB;
 using ReactiveUI;
+using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
 using SerialLoops.Lib.Script;
 using SerialLoops.Lib.Script.Parameters;
@@ -65,7 +67,10 @@ public class SetPlaceScriptCommandEditorViewModel : ScriptCommandEditorViewModel
 
     private async Task ChangePlace()
     {
-        GraphicSelectionDialogViewModel graphicSelectionDialog = new(new List<IPreviewableGraphic> { NonePreviewableGraphic.PLACE }.Concat(_window.OpenProject.Items.Where(i => i.Type == ItemDescription.ItemType.Place).Cast<IPreviewableGraphic>()),
+        using LiteDatabase db = new(_window.OpenProject.DbFile);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+
+        GraphicSelectionDialogViewModel graphicSelectionDialog = new(new List<IPreviewableGraphic> { NonePreviewableGraphic.PLACE }.Concat(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Place).Cast<IPreviewableGraphic>()),
             Place, _window.OpenProject, _window.Log);
         IPreviewableGraphic place = await new GraphicSelectionDialog { DataContext = graphicSelectionDialog }.ShowDialog<IPreviewableGraphic>(_window.Window);
         if (place is null)

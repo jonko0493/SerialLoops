@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using HaruhiChokuretsuLib.Archive.Event;
+using LiteDB;
 using SerialLoops.Lib.Items;
 
 namespace SerialLoops.Lib.Script.Parameters;
@@ -26,21 +27,23 @@ public class EpisodeHeaderScriptParameter(string name, short epHeaderIndex) : Sc
 
     public static SystemTextureItem GetTexture(Episode episode, Project project)
     {
+        using LiteDatabase db = new(project.DbFile);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
         // We use names here because display names can change but names cannot
         return episode switch
         {
             Episode.EPISODE_1 =>
-                (SystemTextureItem)project.Items.First(i => i.Name == "SYSTEX_SYS_CMN_T60"),
+                (SystemTextureItem)itemsCol.FindById("SYSTEX_SYS_CMN_T60"),
             Episode.EPISODE_2 =>
-                (SystemTextureItem)project.Items.First(i => i.Name == "SYSTEX_SYS_CMN_T61"),
+                (SystemTextureItem)itemsCol.FindById("SYSTEX_SYS_CMN_T61"),
             Episode.EPISODE_3 =>
-                (SystemTextureItem)project.Items.First(i => i.Name == "SYSTEX_SYS_CMN_T62"),
+                (SystemTextureItem)itemsCol.FindById("SYSTEX_SYS_CMN_T62"),
             Episode.EPISODE_4 =>
-                (SystemTextureItem)project.Items.First(i => i.Name == "SYSTEX_SYS_CMN_T63"),
+                (SystemTextureItem)itemsCol.FindById("SYSTEX_SYS_CMN_T63"),
             Episode.EPISODE_5 =>
-                (SystemTextureItem)project.Items.First(i => i.Name == "SYSTEX_SYS_CMN_T64"),
+                (SystemTextureItem)itemsCol.FindById("SYSTEX_SYS_CMN_T64"),
             Episode.EPILOGUE =>
-                (SystemTextureItem)project.Items.First(i => i.Name == "SYSTEX_SYS_CMN_T66"),
+                (SystemTextureItem)itemsCol.FindById("SYSTEX_SYS_CMN_T66"),
             _ => null,
         };
     }

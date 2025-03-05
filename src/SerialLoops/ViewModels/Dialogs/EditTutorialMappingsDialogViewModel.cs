@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Input;
 using HaruhiChokuretsuLib.Archive.Event;
 using HaruhiChokuretsuLib.Util;
+using LiteDB;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using SerialLoops.Lib;
@@ -41,20 +42,28 @@ public class EditTutorialMappingsDialogViewModel : ViewModelBase
     }
 }
 
-public class TutorialMapping(Tutorial tutorial, Project project, EditorTabsPanelViewModel tabs) : ReactiveObject
+public class TutorialMapping : ReactiveObject
 {
-    public EditorTabsPanelViewModel Tabs { get; } = tabs;
+    public EditorTabsPanelViewModel Tabs { get; }
 
-    public ObservableCollection<ScriptItem> Scripts { get; } = new(project.Items
-        .Where(i => i.Type == ItemDescription.ItemType.Script)
-        .Cast<ScriptItem>());
+    public ObservableCollection<ScriptItem> Scripts { get; }
 
     [Reactive]
-    public int Flag { get; set; } = tutorial.Id;
+    public int Flag { get; set; }
 
     public string TutorialName => $"Tutorial {Flag}";
 
     [Reactive]
-    public ScriptItem Script { get; set; } = (ScriptItem)project.Items.First(i =>
-        i.Type == ItemDescription.ItemType.Script && ((ScriptItem)i).Event.Index == tutorial.AssociatedScript);
+    public ScriptItem Script { get; set; }
+
+    public TutorialMapping(Tutorial tutorial, Project project, EditorTabsPanelViewModel tabs)
+    {
+        using LiteDatabase db = new(project.DbFile);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+
+        Tabs = tabs;
+        Scripts = new(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Script).Cast<ScriptItem>());
+        Flag = tutorial.Id;
+        Script = (ScriptItem)itemsCol.FindOne(i => i.Type == ItemDescription.ItemType.Script && ((ScriptItem)i).Event.Index == tutorial.AssociatedScript);
+    }
 }

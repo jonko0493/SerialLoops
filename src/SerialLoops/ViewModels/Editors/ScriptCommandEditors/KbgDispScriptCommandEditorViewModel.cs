@@ -4,7 +4,9 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using HaruhiChokuretsuLib.Archive.Data;
 using HaruhiChokuretsuLib.Util;
+using LiteDB;
 using ReactiveUI;
+using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
 using SerialLoops.Lib.Script;
 using SerialLoops.Lib.Script.Parameters;
@@ -52,8 +54,11 @@ public class KbgDispScriptCommandEditorViewModel : ScriptCommandEditorViewModel
 
     private async Task ReplaceKbg()
     {
+        using LiteDatabase db = new(_window.OpenProject.DbFile);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+
         // Order of the predicate matters here as "NONE" short circuits the NonePreviewableGraphic, preventing it from being cast
-        GraphicSelectionDialogViewModel graphicSelectionDialog = new(new List<IPreviewableGraphic> { NonePreviewableGraphic.BACKGROUND }.Concat(_window.OpenProject.Items.Where(i => i.Type == ItemDescription.ItemType.Background).Cast<IPreviewableGraphic>()),
+        GraphicSelectionDialogViewModel graphicSelectionDialog = new(new List<IPreviewableGraphic> { NonePreviewableGraphic.BACKGROUND }.Concat(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Background).Cast<IPreviewableGraphic>()),
             Kbg, _window.OpenProject, _window.Log, i => i.Name == "NONE" || ((BackgroundItem)i).BackgroundType == BgType.KINETIC_SCREEN);
         IPreviewableGraphic bgItem = await new GraphicSelectionDialog { DataContext = graphicSelectionDialog }.ShowDialog<IPreviewableGraphic>(_window.Window);
         if (bgItem is null || bgItem == Kbg)

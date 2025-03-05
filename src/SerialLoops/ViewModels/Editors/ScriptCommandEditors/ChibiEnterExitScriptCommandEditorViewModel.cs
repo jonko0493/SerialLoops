@@ -2,18 +2,19 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using HaruhiChokuretsuLib.Util;
+using LiteDB;
 using ReactiveUI;
 using SerialLoops.Assets;
+using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
 using SerialLoops.Lib.Script;
 using SerialLoops.Lib.Script.Parameters;
 
 namespace SerialLoops.ViewModels.Editors.ScriptCommandEditors;
 
-public class ChibiEnterExitScriptCommandEditorViewModel(ScriptItemCommand command, ScriptEditorViewModel scriptEditor, ILogger log) : ScriptCommandEditorViewModel(command, scriptEditor, log)
+public class ChibiEnterExitScriptCommandEditorViewModel : ScriptCommandEditorViewModel
 {
-    public ObservableCollection<ChibiItem> Chibis { get; } = new(scriptEditor.Window.OpenProject.Items.Where(
-        i => i.Type == ItemDescription.ItemType.Chibi).Cast<ChibiItem>());
+    public ObservableCollection<ChibiItem> Chibis { get; }
     public ChibiItem Chibi
     {
         get => ((ChibiScriptParameter)Command.Parameters[0]).Chibi;
@@ -55,6 +56,15 @@ public class ChibiEnterExitScriptCommandEditorViewModel(ScriptItemCommand comman
             this.RaisePropertyChanged();
             Script.UnsavedChanges = true;
         }
+    }
+
+    public ChibiEnterExitScriptCommandEditorViewModel(ScriptItemCommand command, ScriptEditorViewModel scriptEditor, ILogger log)
+        : base(command, scriptEditor, log)
+    {
+        using LiteDatabase db = new(scriptEditor.Window.OpenProject.DbFile);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+
+        Chibis = new(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Chibi).Cast<ChibiItem>());
     }
 }
 

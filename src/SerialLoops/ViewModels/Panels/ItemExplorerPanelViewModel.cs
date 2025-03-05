@@ -21,9 +21,9 @@ public class ItemExplorerPanelViewModel : ViewModelBase
     private ILogger _log;
     private MainWindowViewModel _window;
 
-    private ObservableCollection<ItemShim> _items;
+    private ObservableCollection<ReactiveItemShim> _items;
 
-    public ObservableCollection<ItemShim> Items
+    public ObservableCollection<ReactiveItemShim> Items
     {
         get => _items;
         set

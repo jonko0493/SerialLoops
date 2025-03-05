@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using HaruhiChokuretsuLib.Archive.Event;
+using LiteDB;
 using SerialLoops.Lib.Items;
 
 namespace SerialLoops.Lib.Script.Parameters;
@@ -11,7 +12,9 @@ public class ItemScriptParameter(string name, short itemIndex) : ScriptParameter
 
     public override string GetValueString(Project project)
     {
-        return project.Items.FirstOrDefault(i => i.Type == ItemDescription.ItemType.Item &&
+        using LiteDatabase db = new(project.DbFile);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+        return itemsCol.FindOne(i => i.Type == ItemDescription.ItemType.Item &&
                                         ((ItemItem)i).ItemIndex == ItemIndex)?.DisplayName;
     }
 

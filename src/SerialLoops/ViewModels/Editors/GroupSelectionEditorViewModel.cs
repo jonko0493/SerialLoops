@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -6,6 +7,7 @@ using Avalonia;
 using Avalonia.Media;
 using HaruhiChokuretsuLib.Archive.Event;
 using HaruhiChokuretsuLib.Util;
+using LiteDB;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using SerialLoops.Lib;
@@ -35,6 +37,13 @@ public class GroupSelectionEditorViewModel : EditorViewModel
         GroupSelection = groupSelection;
         OpenProject = window.OpenProject;
 
+        using LiteDatabase db = new(OpenProject.DbFile);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+        var scriptsCol = db.GetCollection<ItemCategoryShim<ScriptItem>>(nameof(ScriptItem));
+        var topicsCol = db.GetCollection<ItemCategoryShim<TopicItem>>(nameof(TopicItem));
+        TopicItem[] topics = topicsCol.FindAll().Select(t => t.GetItem(itemsCol)).ToArray();
+        ScriptItem[] scripts = scriptsCol.FindAll().Select(s => s.GetItem(itemsCol)).ToArray();
+
         SKBitmap characterPortraitImage = OpenProject.Grp.GetFileByIndex(0xBAA).GetImage(transparentIndex: 0);
         foreach (Speaker speaker in new[] { Speaker.KYON, Speaker.HARUHI, Speaker.MIKURU, Speaker.NAGATO, Speaker.KOIZUMI })
         {
@@ -51,7 +60,9 @@ public class GroupSelectionEditorViewModel : EditorViewModel
         CharacterPortraits.Add(Speaker.INFO, anyPortrait);
 
         // We don't do the Where in advance because we need the index to be accurate
-        Activities = new(groupSelection.Selection.Activities.Select((a, i) => a is not null ? new ScenarioActivityViewModel(this, a, i) : null)
+        Activities = new(groupSelection.Selection.Activities.Select((a, i) => a is not null
+                ? new ScenarioActivityViewModel(this, a, i, topics, scripts)
+                : null)
             .Where(a => a is not null));
     }
 }
@@ -131,7 +142,7 @@ public class ScenarioActivityViewModel : ViewModelBase
     [Reactive]
     public ObservableCollection<ScenarioRouteViewModel> Routes { get; set; }
 
-    public ScenarioActivityViewModel(GroupSelectionEditorViewModel selection, ScenarioActivity activity, int index)
+    public ScenarioActivityViewModel(GroupSelectionEditorViewModel selection, ScenarioActivity activity, int index, TopicItem[] topics, ScriptItem[] scripts)
     {
         _selection = selection;
         Activity = activity;
@@ -139,7 +150,7 @@ public class ScenarioActivityViewModel : ViewModelBase
         _title = activity.Title;
         _futureDesc = Activity.FutureDesc;
         _pastDesc = Activity.PastDesc;
-        Routes = new(activity.Routes.Select(r => new ScenarioRouteViewModel(selection, r)));
+        Routes = new(activity.Routes.Select(r => new ScenarioRouteViewModel(selection, r, topics, scripts)));
 
         _layoutSource = selection.OpenProject.Grp.GetFileByIndex(0xB98).GetImage(transparentIndex: 0);
         BackgroundColor = GetBackgroundColor(index);
@@ -330,17 +341,14 @@ public class ScenarioRouteViewModel : ViewModelBase
         }
     }
 
-    public ScenarioRouteViewModel(GroupSelectionEditorViewModel selection, ScenarioRoute route)
+    public ScenarioRouteViewModel(GroupSelectionEditorViewModel selection, ScenarioRoute route, TopicItem[] topics, ScriptItem[] scripts)
     {
         _selection = selection;
         Route = route;
         _title = route.Title;
-        KyonlessTopics = new(route.KyonlessTopics.Select(t =>
-                (TopicItem)selection.OpenProject.Items.FirstOrDefault(i =>
-                    i.Type == ItemDescription.ItemType.Topic && ((TopicItem)i).TopicEntry.Id == t))
+        KyonlessTopics = new(route.KyonlessTopics.Select(t => topics.FirstOrDefault(i => i.TopicEntry.Id == t))
             .Where(t => t is not null));
-        _script = (ScriptItem)selection.OpenProject.Items.FirstOrDefault(i =>
-            i.Type == ItemDescription.ItemType.Script && ((ScriptItem)i).Event.Index == route.ScriptIndex);
+        _script = scripts.FirstOrDefault(s => s.Event.Index == route.ScriptIndex);
 
         CharacterIcons = new(Route.CharactersInvolved.Select(s => _selection.CharacterPortraits[s]));
     }

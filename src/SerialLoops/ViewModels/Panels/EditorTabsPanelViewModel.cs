@@ -135,10 +135,8 @@ public class EditorTabsPanelViewModel : ViewModelBase
             {
                 case ButtonResult.Yes:
                     File.WriteAllBytes(saveEditor.Save.SaveLoc, saveEditor.Save.Save.GetBytes());
-                    _project.Items.Remove(saveEditor.Save);
                     break;
                 case ButtonResult.No:
-                    _project.Items.Remove(saveEditor.Save);
                     break;
                 default:
                 case ButtonResult.Cancel:

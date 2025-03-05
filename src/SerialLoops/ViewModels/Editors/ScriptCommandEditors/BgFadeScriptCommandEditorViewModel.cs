@@ -4,7 +4,9 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using HaruhiChokuretsuLib.Archive.Data;
 using HaruhiChokuretsuLib.Util;
+using LiteDB;
 using ReactiveUI;
+using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
 using SerialLoops.Lib.Script;
 using SerialLoops.Lib.Script.Parameters;
@@ -78,7 +80,10 @@ public class BgFadeScriptCommandEditorViewModel : ScriptCommandEditorViewModel
 
     private async Task ReplaceBg()
     {
-        GraphicSelectionDialogViewModel graphicSelectionDialog = new(new List<IPreviewableGraphic> { NonePreviewableGraphic.BACKGROUND }.Concat(_window.OpenProject.Items.Where(i => i.Type == ItemDescription.ItemType.Background).Cast<IPreviewableGraphic>()),
+        using LiteDatabase db = new(_window.OpenProject.DbFile);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+
+        GraphicSelectionDialogViewModel graphicSelectionDialog = new(new List<IPreviewableGraphic> { NonePreviewableGraphic.BACKGROUND }.Concat(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Background).Cast<IPreviewableGraphic>()),
             Bg, _window.OpenProject, _window.Log, i => i.Name == "NONE" || ((BackgroundItem)i).BackgroundType == BgType.TEX_BG);
         IPreviewableGraphic bg = await new GraphicSelectionDialog { DataContext = graphicSelectionDialog }.ShowDialog<IPreviewableGraphic>(_window.Window);
         if (bg is null)
@@ -98,7 +103,10 @@ public class BgFadeScriptCommandEditorViewModel : ScriptCommandEditorViewModel
 
     private async Task ReplaceCg()
     {
-        GraphicSelectionDialogViewModel graphicSelectionDialog = new(new List<IPreviewableGraphic> { NonePreviewableGraphic.BACKGROUND }.Concat(_window.OpenProject.Items.Where(i => i.Type == ItemDescription.ItemType.Background).Cast<IPreviewableGraphic>()),
+        using LiteDatabase db = new(_window.OpenProject.DbFile);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+
+        GraphicSelectionDialogViewModel graphicSelectionDialog = new(new List<IPreviewableGraphic> { NonePreviewableGraphic.BACKGROUND }.Concat(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Background).Cast<IPreviewableGraphic>()),
             Cg, _window.OpenProject, _window.Log, i => i.Name == "NONE" ||
                                                        (((BackgroundItem)i).BackgroundType != BgType.TEX_BG && ((BackgroundItem)i).BackgroundType != BgType.KINETIC_SCREEN));
         IPreviewableGraphic cg = await new GraphicSelectionDialog { DataContext = graphicSelectionDialog }.ShowDialog<IPreviewableGraphic>(_window.Window);

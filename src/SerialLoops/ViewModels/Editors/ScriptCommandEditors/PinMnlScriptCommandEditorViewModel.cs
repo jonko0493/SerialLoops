@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using HaruhiChokuretsuLib.Util;
+using LiteDB;
 using ReactiveUI;
 using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
@@ -11,12 +12,12 @@ using SerialLoops.Lib.Util;
 
 namespace SerialLoops.ViewModels.Editors.ScriptCommandEditors;
 
-public partial class PinMnlScriptCommandEditorViewModel(ScriptItemCommand command, ScriptEditorViewModel scriptEditor, ILogger log, Project project) : ScriptCommandEditorViewModel(command, scriptEditor, log)
+public partial class PinMnlScriptCommandEditorViewModel : ScriptCommandEditorViewModel
 {
-    private Project _project = project;
+    private Project _project;
 
-    public ObservableCollection<CharacterItem> Characters { get; } = new(project.Items.Where(i => i.Type == ItemDescription.ItemType.Character).Cast<CharacterItem>());
-    private CharacterItem _speaker = project.GetCharacterBySpeaker(((DialogueScriptParameter)command.Parameters[0]).Line.Speaker);
+    public ObservableCollection<CharacterItem> Characters { get; }
+    private CharacterItem _speaker;
     public CharacterItem Speaker
     {
         get => _speaker;
@@ -33,7 +34,7 @@ public partial class PinMnlScriptCommandEditorViewModel(ScriptItemCommand comman
         }
     }
 
-    private string _dialogueLine = ((DialogueScriptParameter)command.Parameters[0]).Line.Text;
+    private string _dialogueLine;
     public string DialogueLine
     {
         get => _dialogueLine.GetSubstitutedString(_project);
@@ -69,6 +70,19 @@ public partial class PinMnlScriptCommandEditorViewModel(ScriptItemCommand comman
             ScriptEditor.UpdatePreview();
             Script.UnsavedChanges = true;
         }
+    }
+
+    public PinMnlScriptCommandEditorViewModel(ScriptItemCommand command, ScriptEditorViewModel scriptEditor, ILogger log, Project project)
+        : base(command, scriptEditor, log)
+    {
+        _project = project;
+        using (LiteDatabase db = new(scriptEditor.Window.OpenProject.DbFile))
+        {
+            var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+            Characters = new(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Character).Cast<CharacterItem>());
+        }
+        _speaker = project.GetCharacterBySpeaker(((DialogueScriptParameter)command.Parameters[0]).Line.Speaker);
+        _dialogueLine = ((DialogueScriptParameter)command.Parameters[0]).Line.Text;
     }
 
     [GeneratedRegex(@"^""")]

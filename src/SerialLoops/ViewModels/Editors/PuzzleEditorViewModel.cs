@@ -1,9 +1,11 @@
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using AvaloniaEdit.Utils;
 using HaruhiChokuretsuLib.Archive.Data;
 using HaruhiChokuretsuLib.Archive.Event;
 using HaruhiChokuretsuLib.Util;
+using LiteDB;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using SerialLoops.Lib;
@@ -171,13 +173,16 @@ public class PuzzleEditorViewModel : EditorViewModel
 
     public PuzzleEditorViewModel(PuzzleItem puzzle, MainWindowViewModel window, ILogger log) : base(puzzle, window, log)
     {
+        using LiteDatabase db = new(Window.OpenProject.DbFile);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+
         _puzzle = puzzle;
         Tabs = Window.EditorTabs;
         AssociatedMainTopics.AddRange(_puzzle.Puzzle.AssociatedTopics[..^1].Select(
-            tu => new TopicWithUnknown(tu.Topic, tu.Unknown, Window.OpenProject)));
+            tu => new TopicWithUnknown(tu.Topic, tu.Unknown, itemsCol)));
         HaruhiRoutes.AddRange(_puzzle.Puzzle.HaruhiRoutes.Select(r => r.ToString()));
-        _map = (MapItem)Window.OpenProject.Items.FirstOrDefault(m => m.Type == ItemDescription.ItemType.Map
-            && m.Name == Window.OpenProject.Dat.GetFileByName("QMAPS").CastTo<QMapFile>().QMaps[_puzzle.Puzzle.Settings.MapId].Name[..^2]);
+        IEnumerable<MapItem> maps = itemsCol.Find(m => m.Type == ItemDescription.ItemType.Map).Cast<MapItem>();
+        _map = maps.FirstOrDefault(m => m.Name == Window.OpenProject.Dat.GetFileByName("QMAPS").CastTo<QMapFile>().QMaps[_puzzle.Puzzle.Settings.MapId].Name[..^2]);
 
         Characters = new(
         [
@@ -194,10 +199,10 @@ public class PuzzleEditorViewModel : EditorViewModel
     }
 }
 
-public class TopicWithUnknown(int topicId, int unknown, Project project) : ReactiveObject
+public class TopicWithUnknown(int topicId, int unknown, ILiteCollection<ItemDescription> itemsCol) : ReactiveObject
 {
     [Reactive]
-    public TopicItem Topic { get; set; } = (TopicItem)project.Items.FirstOrDefault(t => t.Type == ItemDescription.ItemType.Topic &&
+    public TopicItem Topic { get; set; } = (TopicItem)itemsCol.FindOne(t => t.Type == ItemDescription.ItemType.Topic &&
                                                                              ((TopicItem)t).TopicEntry.Id == (short)topicId);
     [Reactive]
     public int Unknown { get; set; } = unknown;

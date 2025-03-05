@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using HaruhiChokuretsuLib.Archive.Event;
 using HaruhiChokuretsuLib.Util;
+using LiteDB;
 using SerialLoops.Lib.Items;
 using SerialLoops.Lib.Script.Parameters;
 using SerialLoops.Lib.Util;
@@ -300,6 +301,9 @@ public class TemplateScriptParameter
     {
         try
         {
+            using LiteDatabase db = new(project.DbFile);
+            var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+
             string value = Value;
             string localizedName = project.Localize(ParameterName);
             switch (ParameterType)
@@ -308,10 +312,10 @@ public class TemplateScriptParameter
                     return new BgmModeScriptParameter(localizedName, short.Parse(value));
 
                 case ScriptParameter.ParameterType.BGM:
-                    return new BgmScriptParameter(localizedName, (BackgroundMusicItem)project.Items.FirstOrDefault(i => i.Name == value));
+                    return new BgmScriptParameter(localizedName, (BackgroundMusicItem)itemsCol.FindOne(i => i.Name == value));
 
                 case ScriptParameter.ParameterType.BG:
-                    return new BgScriptParameter(localizedName, (BackgroundItem)project.Items.FirstOrDefault(i => i.Name == value), value.Contains("KBG"));
+                    return new BgScriptParameter(localizedName, (BackgroundItem)itemsCol.FindOne(i => i.Name == value), value.Contains("KBG"));
 
                 case ScriptParameter.ParameterType.BG_SCROLL_DIRECTION:
                     return new BgScrollDirectionScriptParameter(localizedName, short.Parse(value));
@@ -321,7 +325,7 @@ public class TemplateScriptParameter
                     return new BoolScriptParameter(localizedName, bool.Parse(boolValues[0]), short.Parse(boolValues[1]), short.Parse(boolValues[2]));
 
                 case ScriptParameter.ParameterType.CHESS_FILE:
-                    return new ChessPuzzleScriptParameter(localizedName, (ChessPuzzleItem)project.Items.FirstOrDefault(i => i.Type == ItemDescription.ItemType.Chess_Puzzle && ((ChessPuzzleItem)i).ChessPuzzle.Index == short.Parse(value)));
+                    return new ChessPuzzleScriptParameter(localizedName, (ChessPuzzleItem)itemsCol.FindOne(i => i.Type == ItemDescription.ItemType.Chess_Puzzle && ((ChessPuzzleItem)i).ChessPuzzle.Index == short.Parse(value)));
 
                 case ScriptParameter.ParameterType.CHESS_PIECE:
                     return new ChessPieceScriptParameter(localizedName, short.Parse(value));
@@ -336,7 +340,7 @@ public class TemplateScriptParameter
                     return new ChibiEnterExitScriptParameter(localizedName, short.Parse(value));
 
                 case ScriptParameter.ParameterType.CHIBI:
-                    return new ChibiScriptParameter(localizedName, (ChibiItem)project.Items.FirstOrDefault(i => i.Name == value));
+                    return new ChibiScriptParameter(localizedName, (ChibiItem)itemsCol.FindOne(i => i.Name == value));
 
                 case ScriptParameter.ParameterType.COLOR_MONOCHROME:
                     return new ColorMonochromeScriptParameter(localizedName, short.Parse(value));
@@ -352,13 +356,13 @@ public class TemplateScriptParameter
                     return new ConditionalScriptParameter(localizedName, value);
 
                 case ScriptParameter.ParameterType.CHARACTER:
-                    return new DialoguePropertyScriptParameter(localizedName, (CharacterItem)project.Items.First(i => i.Type == ItemDescription.ItemType.Character && (short)((CharacterItem)i).MessageInfo.Character == short.Parse(value)));
+                    return new DialoguePropertyScriptParameter(localizedName, (CharacterItem)itemsCol.FindOne(i => i.Type == ItemDescription.ItemType.Character && (short)((CharacterItem)i).MessageInfo.Character == short.Parse(value)));
 
                 case ScriptParameter.ParameterType.DIALOGUE:
                     string[] dialogueValues = value.Split("||");
                     DialogueLine line = new(dialogueValues[1].GetOriginalString(project), evt)
                     {
-                        Speaker = ((CharacterItem)project.Items.First(i => i.Type == ItemDescription.ItemType.Character && (short)((CharacterItem)i).MessageInfo.Character == short.Parse(dialogueValues[0]))).MessageInfo.Character
+                        Speaker = ((CharacterItem)itemsCol.FindOne(i => i.Type == ItemDescription.ItemType.Character && (short)((CharacterItem)i).MessageInfo.Character == short.Parse(dialogueValues[0]))).MessageInfo.Character
                     };
                     evt.DialogueSection.Objects.Add(line);
                     evt.DialogueLines.Add(line);
@@ -383,7 +387,7 @@ public class TemplateScriptParameter
                     return new ItemTransitionScriptParameter(localizedName, short.Parse(value));
 
                 case ScriptParameter.ParameterType.MAP:
-                    return new MapScriptParameter(localizedName, (MapItem)project.Items.FirstOrDefault(i => i.Name == value));
+                    return new MapScriptParameter(localizedName, (MapItem)itemsCol.FindOne(i => i.Name == value));
 
                 case ScriptParameter.ParameterType.OPTION:
                     if (evt.ChoicesSection.Objects.Any(c => c.Text == value))
@@ -401,7 +405,7 @@ public class TemplateScriptParameter
                     return new PaletteEffectScriptParameter(localizedName, short.Parse(value));
 
                 case ScriptParameter.ParameterType.PLACE:
-                    return new PlaceScriptParameter(localizedName, (PlaceItem)project.Items.FirstOrDefault(i => i.Type == ItemDescription.ItemType.Place && ((PlaceItem)i).Index == short.Parse(value)));
+                    return new PlaceScriptParameter(localizedName, (PlaceItem)itemsCol.FindOne(i => i.Type == ItemDescription.ItemType.Place && ((PlaceItem)i).Index == short.Parse(value)));
 
                 case ScriptParameter.ParameterType.SCREEN:
                     return new ScreenScriptParameter(localizedName, short.Parse(value));
@@ -413,7 +417,7 @@ public class TemplateScriptParameter
                     return new SfxModeScriptParameter(localizedName, short.Parse(value));
 
                 case ScriptParameter.ParameterType.SFX:
-                    return new SfxScriptParameter(localizedName, (SfxItem)project.Items.FirstOrDefault(s => s.Name == value));
+                    return new SfxScriptParameter(localizedName, (SfxItem)itemsCol.FindOne(s => s.Name == value));
 
                 case ScriptParameter.ParameterType.SHORT:
                     return new ShortScriptParameter(localizedName, short.Parse(value));
@@ -425,7 +429,7 @@ public class TemplateScriptParameter
                     return new SpriteExitScriptParameter(localizedName, short.Parse(value));
 
                 case ScriptParameter.ParameterType.SPRITE:
-                    return new SpriteScriptParameter(localizedName, (CharacterSpriteItem)project.Items.FirstOrDefault(i => i.Type == ItemDescription.ItemType.Character_Sprite && ((CharacterSpriteItem)i).Index == short.Parse(value)));
+                    return new SpriteScriptParameter(localizedName, (CharacterSpriteItem)itemsCol.FindOne(i => i.Type == ItemDescription.ItemType.Character_Sprite && ((CharacterSpriteItem)i).Index == short.Parse(value)));
 
                 case ScriptParameter.ParameterType.SPRITE_SHAKE:
                     return new SpriteShakeScriptParameter(localizedName, short.Parse(value));
@@ -440,7 +444,7 @@ public class TemplateScriptParameter
                     return new TransitionScriptParameter(localizedName, short.Parse(value));
 
                 case ScriptParameter.ParameterType.VOICE_LINE:
-                    return new VoicedLineScriptParameter(localizedName, (VoicedLineItem)project.Items.FirstOrDefault(i => i.Name == value));
+                    return new VoicedLineScriptParameter(localizedName, (VoicedLineItem)itemsCol.FindOne(i => i.Name == value));
 
                 default:
                     return null;

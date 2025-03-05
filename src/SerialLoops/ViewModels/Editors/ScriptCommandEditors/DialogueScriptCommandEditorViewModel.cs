@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Input;
 using HaruhiChokuretsuLib.Util;
+using LiteDB;
 using ReactiveUI;
 using SerialLoops.Assets;
+using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
 using SerialLoops.Lib.Script;
 using SerialLoops.Lib.Script.Parameters;
@@ -28,9 +30,12 @@ public partial class DialogueScriptCommandEditorViewModel : ScriptCommandEditorV
 
     public DialogueScriptCommandEditorViewModel(ScriptItemCommand command, ScriptEditorViewModel scriptEditor, ILogger log, MainWindowViewModel window) : base(command, scriptEditor, log)
     {
+        using LiteDatabase db = new(scriptEditor.Window.OpenProject.DbFile);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+
         _window = window;
         Tabs = _window.EditorTabs;
-        Characters = new(_window.OpenProject.Items.Where(i => i.Type == ItemDescription.ItemType.Character).Cast<CharacterItem>());
+        Characters = new(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Character).Cast<CharacterItem>());
         _speaker = _window.OpenProject.GetCharacterBySpeaker(((DialogueScriptParameter)Command.Parameters[0]).Line.Speaker);
         _specialPredicate = i => i.Name == "NONE" || ((CharacterSpriteItem)i).Sprite.Character == _speaker.MessageInfo.Character;
         _dialogueLine = ((DialogueScriptParameter)command.Parameters[0]).Line.Text;
@@ -39,7 +44,7 @@ public partial class DialogueScriptCommandEditorViewModel : ScriptCommandEditorV
         _spriteEntranceTransition = new(((SpriteEntranceScriptParameter)command.Parameters[2]).EntranceTransition);
         _spriteExitTransition = new(((SpriteExitScriptParameter)command.Parameters[3]).ExitTransition);
         _spriteShakeEffect = new(((SpriteShakeScriptParameter)command.Parameters[4]).ShakeEffect);
-        VoicedLines = new(_window.OpenProject.Items.Where(i => i.Type == ItemDescription.ItemType.Voice).Cast<VoicedLineItem>());
+        VoicedLines = new(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Voice).Cast<VoicedLineItem>());
         _voicedLine = ((VoicedLineScriptParameter)command.Parameters[5]).VoiceLine;
         _textVoiceFont = ((DialoguePropertyScriptParameter)command.Parameters[6]).Character;
         _textSpeed = ((DialoguePropertyScriptParameter)command.Parameters[7]).Character;
@@ -143,7 +148,10 @@ public partial class DialogueScriptCommandEditorViewModel : ScriptCommandEditorV
 
     private async Task SelectCharacterSpriteCommand_Executed()
     {
-        GraphicSelectionDialogViewModel graphicSelectionDialog = new(new List<IPreviewableGraphic> { NonePreviewableGraphic.CHARACTER_SPRITE }.Concat(_window.OpenProject.Items.Where(i => i.Type == ItemDescription.ItemType.Character_Sprite).Cast<IPreviewableGraphic>()),
+        using LiteDatabase db = new(_window.OpenProject.DbFile);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+
+        GraphicSelectionDialogViewModel graphicSelectionDialog = new(new List<IPreviewableGraphic> { NonePreviewableGraphic.CHARACTER_SPRITE }.Concat(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Character_Sprite).Cast<IPreviewableGraphic>()),
             CharacterSprite, _window.OpenProject, _window.Log, _specialPredicate);
         IPreviewableGraphic sprite = await new GraphicSelectionDialog { DataContext = graphicSelectionDialog }.ShowDialog<IPreviewableGraphic>(_window.Window);
         if (sprite?.Text == "NONE")

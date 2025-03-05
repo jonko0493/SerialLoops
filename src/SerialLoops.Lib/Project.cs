@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -20,7 +19,6 @@ using HaruhiChokuretsuLib.Util;
 using HaruhiChokuretsuLib.Util.Exceptions;
 using LiteDB;
 using SerialLoops.Lib.Items;
-using SerialLoops.Lib.Script.Parameters;
 using SerialLoops.Lib.Util;
 using SkiaSharp;
 using static SerialLoops.Lib.Items.ItemDescription;
@@ -33,6 +31,9 @@ public partial class Project
     public const string PROJECT_FORMAT = "slproj";
     public const string EXPORT_FORMAT = "slzip";
     public static readonly JsonSerializerOptions SERIALIZER_OPTIONS = new() { Converters = { new SKColorJsonConverter() } };
+
+    public const string ItemsTableName = "items";
+    public const string ShimsTableName = "shims";
 
     public string Name { get; set; }
     public string LangCode { get; set; }
@@ -56,9 +57,7 @@ public partial class Project
     [JsonIgnore]
     public ProjectSettings Settings { get; set; }
     [JsonIgnore]
-    public List<ItemDescription> Items { get; set; } = [];
-    [JsonIgnore]
-    public List<ItemShim> ItemShims { get; set; } = [];
+    public List<ReactiveItemShim> ItemShims { get; set; } = [];
 
     // Archives
     [JsonIgnore]
@@ -523,13 +522,13 @@ public partial class Project
         try
         {
             using LiteDatabase db = new(DbFile);
-            var itemsCol = db.GetCollection<Item>("items");
-            tracker.Focus("Loading Items", itemsCol.Count());
-            ItemShims = itemsCol.Find(i => true).Select(i =>
+            var shimsCol = db.GetCollection<ItemShim>(ShimsTableName);
+            tracker.Focus("Loading Items", shimsCol.Count());
+            ItemShims = shimsCol.FindAll().AsParallel().Select(s =>
             {
                 tracker.Finished++;
-                return new ItemShim(i.Name, i.DisplayName, i.Type, i.CanRename);
-            }).ToList();
+                return s;
+            }).OrderBy(s => s.DisplayName).Select(s => new ReactiveItemShim(s)).ToList();
 
             return new(LoadProjectState.SUCCESS);
         }
@@ -543,12 +542,14 @@ public partial class Project
 
     private LoadProjectResult LoadItems(IProgressTracker tracker, ILogger log)
     {
+        List<ItemDescription> items = [];
+
         try
         {
             BgTableFile bgTable = Dat.GetFileByName("BGTBLS").CastTo<BgTableFile>();
             tracker.Focus("Backgrounds", bgTable.BgTableEntries.Count);
             List<string> names = [];
-            Items.AddRange(bgTable.BgTableEntries.AsParallel().Select((entry, i) =>
+            items.AddRange(bgTable.BgTableEntries.AsParallel().Select((entry, i) =>
             {
                 if (entry.BgIndex1 > 0)
                 {
@@ -601,7 +602,7 @@ public partial class Project
             string[] bgmFiles = SoundDS.BgmSection.AsParallel().Where(bgm => bgm is not null).Select(bgm => Path.Combine(IterativeDirectory, "rom", "data", bgm)).ToArray();
             tracker.Focus("BGM Tracks", bgmFiles.Length);
             List<float> maxes = [];
-            Items.AddRange(bgmFiles.AsParallel().Select((bgm, i) =>
+            items.AddRange(bgmFiles.AsParallel().Select((bgm, i) =>
             {
                 tracker.Finished++;
                 BackgroundMusicItem bgmItem = new(bgm, i, this);
@@ -620,7 +621,7 @@ public partial class Project
         {
             string[] voiceFiles = SoundDS.VoiceSection.AsParallel().Where(vce => vce is not null).Select(vce => Path.Combine(IterativeDirectory, "rom", "data", vce)).ToArray();
             tracker.Focus("Voiced Lines", voiceFiles.Length);
-            Items.AddRange(voiceFiles.AsParallel().Select((vce, i) =>
+            items.AddRange(voiceFiles.AsParallel().Select((vce, i) =>
             {
                 tracker.Finished++;
                 return new VoicedLineItem(vce, i + 1, this);
@@ -642,7 +643,7 @@ public partial class Project
                     string name = Snd.SequenceArchives[SoundDS.SfxSection[i].SequenceArchive].File.Sequences[SoundDS.SfxSection[i].Index].Name;
                     if (!name.Equals("SE_DUMMY"))
                     {
-                        Items.Add(new SfxItem(SoundDS.SfxSection[i], name, i, this));
+                        items.Add(new SfxItem(SoundDS.SfxSection[i], name, i, this));
                     }
                 }
                 tracker.Finished++;
@@ -657,7 +658,7 @@ public partial class Project
         try
         {
             tracker.Focus("Chess Puzzles", Dat.Files.Count(f => f.Name.StartsWith("CHS")));
-            Items.AddRange(Dat.Files.AsParallel()
+            items.AddRange(Dat.Files.AsParallel()
                 .Where(f => f.Name.StartsWith("CHS"))
                 .Select(f =>
                 {
@@ -675,7 +676,7 @@ public partial class Project
         {
             ItemFile itemFile = Dat.GetFileByName("ITEMS").CastTo<ItemFile>();
             tracker.Focus("Items", itemFile.Items.Count);
-            Items.AddRange(itemFile.Items.AsParallel().Where(i => i > 0).Select((i, idx) =>
+            items.AddRange(itemFile.Items.AsParallel().Where(i => i > 0).Select((i, idx) =>
             {
                 tracker.Finished++;
                 return new ItemItem(Grp.GetFileByIndex(i).Name, idx, i, this);
@@ -690,7 +691,7 @@ public partial class Project
         try
         {
             tracker.Focus("Characters", MessInfo.MessageInfos.Count);
-            Items.AddRange(MessInfo.MessageInfos.AsParallel().Where(m => (int)m.Character > 0).Select(m =>
+            items.AddRange(MessInfo.MessageInfos.AsParallel().Where(m => (int)m.Character > 0).Select(m =>
             {
                 tracker.Finished++;
                 return new CharacterItem(m, Characters[(int)m.Character], this);
@@ -705,7 +706,7 @@ public partial class Project
         try
         {
             tracker.Focus("Character Sprites", ChrData.Sprites.Count);
-            Items.AddRange(ChrData.Sprites.AsParallel().Where(s => (int)s.Character > 0).Select(s =>
+            items.AddRange(ChrData.Sprites.AsParallel().Where(s => (int)s.Character > 0).Select(s =>
             {
                 tracker.Finished++;
                 return new CharacterSpriteItem(s, ChrData, this, log);
@@ -721,7 +722,7 @@ public partial class Project
         {
             ChibiFile chibiFile = Dat.GetFileByName("CHIBIS").CastTo<ChibiFile>();
             tracker.Focus("Chibis", chibiFile.Chibis.Count);
-            Items.AddRange(chibiFile.Chibis.AsParallel().Select((c, i) =>
+            items.AddRange(chibiFile.Chibis.AsParallel().Select((c, i) =>
             {
                 tracker.Finished++;
                 return new ChibiItem(c, i, this);
@@ -736,7 +737,7 @@ public partial class Project
         try
         {
             tracker.Focus("Scripts", Evt.Files.Count - NON_SCRIPT_EVT_FILES.Length);
-            Items.AddRange(Evt.Files.AsParallel()
+            items.AddRange(Evt.Files.AsParallel()
                 .Where(e => !NON_SCRIPT_EVT_FILES.Contains(e?.Name))
                 .Select(e =>
                 {
@@ -765,7 +766,7 @@ public partial class Project
         {
             QMapFile qmap = Dat.GetFileByName("QMAPS").CastTo<QMapFile>();
             tracker.Focus("Maps", qmap.QMaps.Count);
-            Items.AddRange(Dat.Files.AsParallel()
+            items.AddRange(Dat.Files.AsParallel()
                 .Where(d => qmap.QMaps.Select(q => q.Name.Replace(".", "")).Contains(d.Name))
                 .Select(m =>
                 {
@@ -783,7 +784,7 @@ public partial class Project
         {
             PlaceFile placeFile = Dat.GetFileByName("PLACES").CastTo<PlaceFile>();
             tracker.Focus("Places", placeFile.PlaceGraphicIndices.Count);
-            Items.AddRange(placeFile.PlaceGraphicIndices.Select((pidx, i) =>
+            items.AddRange(placeFile.PlaceGraphicIndices.Select((pidx, i) =>
             {
                 tracker.Finished++;
                 return new PlaceItem(i, Grp.GetFileByIndex(pidx));
@@ -800,7 +801,7 @@ public partial class Project
         {
             var puzzleDats = Dat.Files.AsParallel().Where(d => d.Name.StartsWith("SLG"));
             tracker.Focus("Puzzles", puzzleDats.Count());
-            Items.AddRange(puzzleDats.Select(d =>
+            items.AddRange(puzzleDats.Select(d =>
             {
                 tracker.Finished++;
                 return new PuzzleItem(d.CastTo<PuzzleFile>(), this, log);
@@ -822,13 +823,13 @@ public partial class Project
                 // Main topics have shadow topics that are located at ID + 40 (this is actually how the game finds them)
                 // So if we're a main topic and we see another topic 40 back, we know we're one of these shadow topics and should really be
                 // rolled into the original main topic
-                if (topic.Type == TopicType.Main && Items.AsParallel().Any(i => i.Type == ItemType.Topic && ((TopicItem)i).TopicEntry.Id == topic.Id - 40))
+                if (topic.Type == TopicType.Main && items.AsParallel().Any(i => i.Type == ItemType.Topic && ((TopicItem)i).TopicEntry.Id == topic.Id - 40))
                 {
-                    ((TopicItem)Items.AsParallel().First(i => i.Type == ItemType.Topic && ((TopicItem)i).TopicEntry.Id == topic.Id - 40)).HiddenMainTopic = topic;
+                    ((TopicItem)items.AsParallel().First(i => i.Type == ItemType.Topic && ((TopicItem)i).TopicEntry.Id == topic.Id - 40)).HiddenMainTopic = topic;
                 }
                 else
                 {
-                    Items.Add(new TopicItem(topic, this));
+                    items.Add(new TopicItem(topic, this));
                 }
                 tracker.Finished++;
             }
@@ -844,23 +845,23 @@ public partial class Project
             SystemTextureFile systemTextureFile = Dat.GetFileByName("SYSTEXS").CastTo<SystemTextureFile>();
             tracker.Focus("System Textures",
                 5 + systemTextureFile.SystemTextures.Count(s => Grp.Files.AsParallel().Where(g => g.Name.StartsWith("XTR") || g.Name.StartsWith("SYS") && !g.Name.Contains("_SPC_") && g.Name != "SYS_CMN_B12DNX" && g.Name != "SYS_PPT_001DNX").Select(g => g.Index).Distinct().Contains(s.GrpIndex)));
-            Items.Add(new SystemTextureItem(systemTextureFile.SystemTextures.First(s => s.GrpIndex == Grp.GetFileByName("LOGO_CO_SEGDNX").Index), this, "SYSTEX_LOGO_SEGA", height: 192));
+            items.Add(new SystemTextureItem(systemTextureFile.SystemTextures.First(s => s.GrpIndex == Grp.GetFileByName("LOGO_CO_SEGDNX").Index), this, "SYSTEX_LOGO_SEGA", height: 192));
             tracker.Finished++;
-            Items.Add(new SystemTextureItem(systemTextureFile.SystemTextures.First(s => s.GrpIndex == Grp.GetFileByName("LOGO_CO_AQIDNX").Index), this, "SYSTEX_LOGO_AQI", height: 192));
+            items.Add(new SystemTextureItem(systemTextureFile.SystemTextures.First(s => s.GrpIndex == Grp.GetFileByName("LOGO_CO_AQIDNX").Index), this, "SYSTEX_LOGO_AQI", height: 192));
             tracker.Finished++;
-            Items.Add(new SystemTextureItem(systemTextureFile.SystemTextures.First(s => s.GrpIndex == Grp.GetFileByName("LOGO_MW_ACTDNX").Index), this, "SYSTEX_LOGO_MOBICLIP", height: 192));
+            items.Add(new SystemTextureItem(systemTextureFile.SystemTextures.First(s => s.GrpIndex == Grp.GetFileByName("LOGO_MW_ACTDNX").Index), this, "SYSTEX_LOGO_MOBICLIP", height: 192));
             tracker.Finished++;
             string criLogoName = Grp.Files.AsParallel().Any(f => f.Name == "CREDITS") ? "SYSTEX_LOGO_HAROOHIE" : "SYSTEX_LOGO_CRIWARE";
-            Items.Add(new SystemTextureItem(systemTextureFile.SystemTextures.First(s => s.GrpIndex == Grp.GetFileByName("LOGO_MW_CRIDNX").Index), this, criLogoName, height: 192));
+            items.Add(new SystemTextureItem(systemTextureFile.SystemTextures.First(s => s.GrpIndex == Grp.GetFileByName("LOGO_MW_CRIDNX").Index), this, criLogoName, height: 192));
             tracker.Finished++;
             if (Grp.Files.Any(f => f.Name == "CREDITS"))
             {
-                Items.Add(new SystemTextureItem(systemTextureFile.SystemTextures.First(s => s.GrpIndex == Grp.GetFileByName("CREDITS").Index), this, "SYSTEX_LOGO_CREDITS", height: 192));
+                items.Add(new SystemTextureItem(systemTextureFile.SystemTextures.First(s => s.GrpIndex == Grp.GetFileByName("CREDITS").Index), this, "SYSTEX_LOGO_CREDITS", height: 192));
             }
             tracker.Finished++;
             foreach (SystemTexture extraSysTex in systemTextureFile.SystemTextures.Where(s => Grp.Files.AsParallel().Where(g => g.Name.StartsWith("XTR")).Distinct().Select(g => g.Index).Contains(s.GrpIndex)))
             {
-                Items.Add(new SystemTextureItem(extraSysTex, this, $"SYSTEX_{Grp.GetFileByIndex(extraSysTex.GrpIndex).Name[..^3]}"));
+                items.Add(new SystemTextureItem(extraSysTex, this, $"SYSTEX_{Grp.GetFileByIndex(extraSysTex.GrpIndex).Name[..^3]}"));
                 tracker.Finished++;
             }
             // Exclude B12 as that's the nameplates we replace in the character items and PPT_001 as that's the puzzle phase singularity we'll be replacing in the puzzle items
@@ -870,11 +871,11 @@ public partial class Project
                 if (Grp.GetFileByIndex(sysSysTex.GrpIndex).Name[..^4].EndsWith("T6"))
                 {
                     // special case the ep headers
-                    Items.Add(new SystemTextureItem(sysSysTex, this, $"SYSTEX_{Grp.GetFileByIndex(sysSysTex.GrpIndex).Name[..^3]}", height: 192));
+                    items.Add(new SystemTextureItem(sysSysTex, this, $"SYSTEX_{Grp.GetFileByIndex(sysSysTex.GrpIndex).Name[..^3]}", height: 192));
                 }
                 else
                 {
-                    Items.Add(new SystemTextureItem(sysSysTex, this, $"SYSTEX_{Grp.GetFileByIndex(sysSysTex.GrpIndex).Name[..^3]}"));
+                    items.Add(new SystemTextureItem(sysSysTex, this, $"SYSTEX_{Grp.GetFileByIndex(sysSysTex.GrpIndex).Name[..^3]}"));
                 }
                 tracker.Finished++;
             }
@@ -918,47 +919,47 @@ public partial class Project
                 Grp.GetFileByIndex(0xC67),
             ];
 
-            Items.Add(new LayoutItem(0xC45, puzzlePhaseGraphics, 54, 13, "LYT_ACCIDENT_OUTBREAK", this));
+            items.Add(new LayoutItem(0xC45, puzzlePhaseGraphics, 54, 13, "LYT_ACCIDENT_OUTBREAK", this));
             tracker.Finished++;
-            Items.Add(new LayoutItem(0xC45, puzzlePhaseGraphics, 67, 5, "LYT_MAIN_TOPIC_DELAYED", this));
+            items.Add(new LayoutItem(0xC45, puzzlePhaseGraphics, 67, 5, "LYT_MAIN_TOPIC_DELAYED", this));
             tracker.Finished++;
-            Items.Add(new LayoutItem(0xC45, puzzlePhaseGraphics, 72, 12, "LYT_DELAY_CHANCE", this));
+            items.Add(new LayoutItem(0xC45, puzzlePhaseGraphics, 72, 12, "LYT_DELAY_CHANCE", this));
             tracker.Finished++;
-            Items.Add(new LayoutItem(0xC45, puzzlePhaseGraphics, 84, 2, "LYT_TOPIC_CHOOSE", this));
+            items.Add(new LayoutItem(0xC45, puzzlePhaseGraphics, 84, 2, "LYT_TOPIC_CHOOSE", this));
             tracker.Finished++;
-            Items.Add(new LayoutItem(0xC45, puzzlePhaseGraphics, 122, 8, "LYT_READY", this));
+            items.Add(new LayoutItem(0xC45, puzzlePhaseGraphics, 122, 8, "LYT_READY", this));
             tracker.Finished++;
-            Items.Add(new LayoutItem(0xC45, puzzlePhaseGraphics, 130, 3, "LYT_GO", this));
+            items.Add(new LayoutItem(0xC45, puzzlePhaseGraphics, 130, 3, "LYT_GO", this));
             tracker.Finished++;
-            Items.Add(new LayoutItem(0xC45, puzzlePhaseGraphics, 134, 4, "LYT_TIME_RESULT", this));
+            items.Add(new LayoutItem(0xC45, puzzlePhaseGraphics, 134, 4, "LYT_TIME_RESULT", this));
             tracker.Finished++;
-            Items.Add(new LayoutItem(0xC45, puzzlePhaseGraphics, 138, 2, "LYT_ACCIDENT_RESULT", this));
+            items.Add(new LayoutItem(0xC45, puzzlePhaseGraphics, 138, 2, "LYT_ACCIDENT_RESULT", this));
             tracker.Finished++;
-            Items.Add(new LayoutItem(0xC45, puzzlePhaseGraphics, 140, 2, "LYT_POWER_UP_RESULT", this));
+            items.Add(new LayoutItem(0xC45, puzzlePhaseGraphics, 140, 2, "LYT_POWER_UP_RESULT", this));
             tracker.Finished++;
-            Items.Add(new LayoutItem(0xC45, puzzlePhaseGraphics, 142, 2, "LYT_BASE_TIME_LIMIT", this));
+            items.Add(new LayoutItem(0xC45, puzzlePhaseGraphics, 142, 2, "LYT_BASE_TIME_LIMIT", this));
             tracker.Finished++;
-            Items.Add(new LayoutItem(0xC45, puzzlePhaseGraphics, 148, 2, "LYT_HRH_DISTRACTION_BONUS", this));
+            items.Add(new LayoutItem(0xC45, puzzlePhaseGraphics, 148, 2, "LYT_HRH_DISTRACTION_BONUS", this));
             tracker.Finished++;
-            Items.Add(new LayoutItem(0xC45, puzzlePhaseGraphics, 154, 5, "LYT_TOTAL_SCORE", this));
+            items.Add(new LayoutItem(0xC45, puzzlePhaseGraphics, 154, 5, "LYT_TOTAL_SCORE", this));
             tracker.Finished++;
-            Items.Add(new LayoutItem(0xC45, puzzlePhaseGraphics, 163, 3, "LYT_MAIN_TOPICS_OBTAINED", this));
+            items.Add(new LayoutItem(0xC45, puzzlePhaseGraphics, 163, 3, "LYT_MAIN_TOPICS_OBTAINED", this));
             tracker.Finished++;
-            Items.Add(new LayoutItem(0xC45, puzzlePhaseGraphics, 163, 3, "LYT_ACCIDENT_BUTTON", this));
+            items.Add(new LayoutItem(0xC45, puzzlePhaseGraphics, 163, 3, "LYT_ACCIDENT_BUTTON", this));
             tracker.Finished++;
-            Items.Add(new LayoutItem(0xC45, puzzlePhaseGraphics, 175, 2, "LYT_MAIN_TOPIC", this));
+            items.Add(new LayoutItem(0xC45, puzzlePhaseGraphics, 175, 2, "LYT_MAIN_TOPIC", this));
             tracker.Finished++;
-            Items.Add(new LayoutItem(0xC45, puzzlePhaseGraphics, 177, 1, "LYT_COUNTER", this));
+            items.Add(new LayoutItem(0xC45, puzzlePhaseGraphics, 177, 1, "LYT_COUNTER", this));
             tracker.Finished++;
-            Items.Add(new LayoutItem(0xC45, puzzlePhaseGraphics, 199, 27, "LYT_CHARACTER_TOPICS_OBTAINED", this));
+            items.Add(new LayoutItem(0xC45, puzzlePhaseGraphics, 199, 27, "LYT_CHARACTER_TOPICS_OBTAINED", this));
             tracker.Finished++;
-            Items.Add(new LayoutItem(0xC45, puzzlePhaseGraphics, 226, 4, "LYT_TIME_LIMIT", this));
+            items.Add(new LayoutItem(0xC45, puzzlePhaseGraphics, 226, 4, "LYT_TIME_LIMIT", this));
             tracker.Finished++;
-            Items.Add(new LayoutItem(0xC45, puzzlePhaseGraphics, 235, 2, "LYT_ACCIDENT_AVOIDED", this));
+            items.Add(new LayoutItem(0xC45, puzzlePhaseGraphics, 235, 2, "LYT_ACCIDENT_AVOIDED", this));
             tracker.Finished++;
-            Items.Add(new LayoutItem(0xC45, puzzlePhaseGraphics, 286, 2, "LYT_SEARCH_BUTTON", this));
+            items.Add(new LayoutItem(0xC45, puzzlePhaseGraphics, 286, 2, "LYT_SEARCH_BUTTON", this));
             tracker.Finished++;
-            Items.Add(new LayoutItem(0xC45, puzzlePhaseGraphics, 307, 1, "LYT_MIN_ERASED_GOAL", this));
+            items.Add(new LayoutItem(0xC45, puzzlePhaseGraphics, 307, 1, "LYT_MIN_ERASED_GOAL", this));
             tracker.Finished++;
         }
         catch (Exception ex)
@@ -974,7 +975,7 @@ public partial class Project
             tracker.Focus("Scenario", 1);
             scenarioFile = Evt.GetFileByName("SCENARIOS");
             scenarioFile.InitializeScenarioFile();
-            Items.Add(new ScenarioItem(scenarioFile.Scenario, this, log));
+            items.Add(new ScenarioItem(scenarioFile.Scenario, this, log));
             tracker.Finished++;
         }
         catch (Exception ex)
@@ -986,12 +987,12 @@ public partial class Project
         try
         {
             tracker.Focus("Group Selections", scenarioFile.Scenario.Selects.Count);
-            Items.AddRange(scenarioFile.Scenario.Selects.Select((s, i) =>
+            items.AddRange(scenarioFile.Scenario.Selects.Select((s, i) =>
             {
                 tracker.Finished++;
                 return new GroupSelectionItem(s, i, this);
             }));
-            ((ScenarioItem)Items.First(i => i.Type == ItemType.Scenario)).Refresh(this, log);
+            ((ScenarioItem)items.First(i => i.Type == ItemType.Scenario)).Refresh(this, log);
         }
         catch (Exception ex)
         {
@@ -1004,7 +1005,7 @@ public partial class Project
             try
             {
                 ItemNames = JsonSerializer.Deserialize<Dictionary<string, string>>(File.ReadAllText(Extensions.GetLocalizedFilePath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Defaults", "DefaultNames"), "json")));
-                foreach (ItemDescription item in Items)
+                foreach (ItemDescription item in items)
                 {
                     if (!ItemNames.ContainsKey(item.Name) && item.CanRename)
                     {
@@ -1019,36 +1020,89 @@ public partial class Project
             }
         }
 
-        for (int i = 0; i < Items.Count; i++)
+        for (int i = 0; i < items.Count; i++)
         {
-            if (Items[i].CanRename || Items[i].Type == ItemType.Place) // We don't want to manually rename places, but they do use the display name pattern
+            if (items[i].CanRename || items[i].Type == ItemType.Place) // We don't want to manually rename places, but they do use the display name pattern
             {
-                if (ItemNames.TryGetValue(Items[i].Name, out string value))
+                if (ItemNames.TryGetValue(items[i].Name, out string value))
                 {
-                    Items[i].DisplayName = value;
+                    items[i].DisplayName = value;
                 }
                 else
                 {
-                    ItemNames.Add(Items[i].Name, Items[i].DisplayName);
+                    ItemNames.Add(items[i].Name, items[i].DisplayName);
                 }
             }
         }
 
-        Items = [.. Items.OrderBy(i => i.DisplayName)];
+        items = [.. items.OrderBy(i => i.DisplayName)];
 
         using (LiteDatabase db = new(DbFile))
         {
-            var itemsCol = db.GetCollection<ItemDescription>("items");
+            var itemsCol = db.GetCollection<ItemDescription>(ItemsTableName);
+            var shimsCol = db.GetCollection<ItemShim>(ShimsTableName);
 
-            tracker.Focus("Building database", Items.Count);
-            foreach (ItemDescription item in Items)
+            tracker.Focus("Building database", items.Count);
+            foreach (ItemDescription item in items.DistinctBy(i => i.Name))
             {
                 itemsCol.Insert(item);
+                shimsCol.Insert(new ItemShim(item.Name, item.DisplayName, item.Type, item.CanRename));
                 tracker.Finished++;
             }
+            db.GetCollection<ItemCategoryShim<BackgroundItem>>(nameof(BackgroundItem))
+                .InsertBulk(items.Where(i => i.Type == ItemType.Background)
+                    .Select(i => new ItemCategoryShim<BackgroundItem>((BackgroundItem)i)));
+            db.GetCollection<ItemCategoryShim<BackgroundMusicItem>>(nameof(BackgroundMusicItem))
+                .InsertBulk(items.Where(i => i.Type == ItemType.BGM)
+                    .Select(i => new ItemCategoryShim<BackgroundMusicItem>((BackgroundMusicItem)i)));
+            db.GetCollection<ItemCategoryShim<CharacterItem>>(nameof(CharacterItem))
+                .InsertBulk(items.Where(i => i.Type == ItemType.Character)
+                    .Select(i => new ItemCategoryShim<CharacterItem>((CharacterItem)i)));
+            db.GetCollection<ItemCategoryShim<CharacterSpriteItem>>(nameof(CharacterSpriteItem))
+                .InsertBulk(items.Where(i => i.Type == ItemType.Character_Sprite)
+                    .Select(i => new ItemCategoryShim<CharacterSpriteItem>((CharacterSpriteItem)i)));
+            db.GetCollection<ItemCategoryShim<ChessPuzzleItem>>(nameof(ChessPuzzleItem))
+                .InsertBulk(items.Where(i => i.Type == ItemType.Chess_Puzzle)
+                    .Select(i => new ItemCategoryShim<ChessPuzzleItem>((ChessPuzzleItem)i)));
+            db.GetCollection<ItemCategoryShim<ChibiItem>>(nameof(ChibiItem))
+                .InsertBulk(items.Where(i => i.Type == ItemType.Chibi)
+                    .Select(i => new ItemCategoryShim<ChibiItem>((ChibiItem)i)));
+            db.GetCollection<ItemCategoryShim<GroupSelectionItem>>(nameof(GroupSelectionItem))
+                .InsertBulk(items.Where(i => i.Type == ItemType.Group_Selection)
+                    .Select(i => new ItemCategoryShim<GroupSelectionItem>((GroupSelectionItem)i)));
+            db.GetCollection<ItemCategoryShim<ItemItem>>(nameof(ItemItem))
+                .InsertBulk(items.Where(i => i.Type == ItemType.Item)
+                    .Select(i => new ItemCategoryShim<ItemItem>((ItemItem)i)));
+            db.GetCollection<ItemCategoryShim<LayoutItem>>(nameof(LayoutItem))
+                .InsertBulk(items.Where(i => i.Type == ItemType.Layout)
+                    .Select(i => new ItemCategoryShim<LayoutItem>((LayoutItem)i)));
+            db.GetCollection<ItemCategoryShim<MapItem>>(nameof(MapItem))
+                .InsertBulk(items.Where(i => i.Type == ItemType.Map)
+                    .Select(i => new ItemCategoryShim<MapItem>((MapItem)i)));
+            db.GetCollection<ItemCategoryShim<PlaceItem>>(nameof(PlaceItem))
+                .InsertBulk(items.Where(i => i.Type == ItemType.Place)
+                    .Select(i => new ItemCategoryShim<PlaceItem>((PlaceItem)i)));
+            db.GetCollection<ItemCategoryShim<PuzzleItem>>(nameof(PuzzleItem))
+                .InsertBulk(items.Where(i => i.Type == ItemType.Puzzle)
+                    .Select(i => new ItemCategoryShim<PuzzleItem>((PuzzleItem)i)));
+            db.GetCollection<ItemCategoryShim<ScriptItem>>(nameof(ScriptItem))
+                .InsertBulk(items.Where(i => i.Type == ItemType.Script)
+                    .Select(i => new ItemCategoryShim<ScriptItem>((ScriptItem)i)));
+            db.GetCollection<ItemCategoryShim<SfxItem>>(nameof(SfxItem))
+                .InsertBulk(items.Where(i => i.Type == ItemType.SFX)
+                    .Select(i => new ItemCategoryShim<SfxItem>((SfxItem)i)));
+            db.GetCollection<ItemCategoryShim<SystemTextureItem>>(nameof(SystemTextureItem))
+                .InsertBulk(items.Where(i => i.Type == ItemType.System_Texture)
+                    .Select(i => new ItemCategoryShim<SystemTextureItem>((SystemTextureItem)i)));
+            db.GetCollection<ItemCategoryShim<TopicItem>>(nameof(TopicItem))
+                .InsertBulk(items.Where(i => i.Type == ItemType.Topic)
+                    .Select(i => new ItemCategoryShim<TopicItem>((TopicItem)i)));
+            db.GetCollection<ItemCategoryShim<VoicedLineItem>>(nameof(VoicedLineItem))
+                .InsertBulk(items.Where(i => i.Type == ItemType.Voice)
+                    .Select(i => new ItemCategoryShim<VoicedLineItem>((VoicedLineItem)i)));
         }
 
-        Items.Clear();
+        items.Clear();
         LoadShims(tracker, log);
 
         return new(LoadProjectState.SUCCESS);
@@ -1082,7 +1136,12 @@ public partial class Project
                 prevScriptIndex = entry.EventFileIndex;
             }
         }
-        Items.Where(i => i.Type == ItemType.Script).Cast<ScriptItem>().ToList().ForEach(s => s.UpdateEventTableInfo(EventTableFile.EvtTbl));
+
+        using LiteDatabase db = new(DbFile);
+        var itemsCol = db.GetCollection<ItemDescription>(ItemsTableName);
+        List<ScriptItem> scripts = itemsCol.Find(i => i.Type == ItemType.Script).Cast<ScriptItem>().ToList();
+        scripts.ForEach(s => s.UpdateEventTableInfo(EventTableFile.EvtTbl));
+        itemsCol.Update(scripts);
     }
 
     public void MigrateProject(string newRom, Config config, ILogger log, IProgressTracker tracker)
@@ -1129,9 +1188,11 @@ public partial class Project
         }
 
         using LiteDatabase db = new(DbFile);
-        var itemsCol = db.GetCollection<ItemDescription>("items");
+        var itemsCol = db.GetCollection<ItemDescription>(ItemsTableName);
 
-        return itemsCol.FindOne(i => i.DisplayName == name);
+        ItemDescription item = itemsCol.FindById(ItemShims.FirstOrDefault(s => s.DisplayName == name)?.Name ?? string.Empty);
+        item?.InitializeAfterDbLoad(this);
+        return item;
     }
 
     public static (Project Project, LoadProjectResult Result) OpenProject(string projFile, Config config, Func<string, string> localize, ILogger log, IProgressTracker tracker)
@@ -1289,12 +1350,12 @@ public partial class Project
         BaseRomHash = string.Join("", SHA1.HashData(File.ReadAllBytes(romPath)).Select(b => $"{b:X2}"));
     }
 
-    public List<ItemShim> GetSearchResults(string query, ILogger logger)
+    public List<ReactiveItemShim> GetSearchResults(string query, ILogger logger)
     {
         return GetSearchResults(SearchQuery.Create(query), logger);
     }
 
-    public List<ItemShim> GetSearchResults(SearchQuery query, ILogger log, IProgressTracker tracker = null)
+    public List<ReactiveItemShim> GetSearchResults(SearchQuery query, ILogger log, IProgressTracker tracker = null)
     {
         var term = query.Term.Trim();
         var searchable = ItemShims.Where(i => query.Types.Contains(i.Type)).ToList();
@@ -1322,10 +1383,12 @@ public partial class Project
 
     public CharacterItem GetCharacterBySpeaker(Speaker speaker)
     {
-        return (CharacterItem)Items.First(i => i.Type == ItemType.Character && i.DisplayName == $"CHR_{Characters[(int)speaker].Name}");
+        using LiteDatabase db = new(DbFile);
+        var itemsCol = db.GetCollection<ItemDescription>(ItemsTableName);
+        return (CharacterItem)itemsCol.FindOne(i => i.Type == ItemType.Character && i.DisplayName == $"CHR_{Characters[(int)speaker].Name}");
     }
 
-    private bool ItemMatches(ItemShim item, string term, SearchQuery.DataHolder scope, ILogger logger)
+    private bool ItemMatches(ReactiveItemShim item, string term, SearchQuery.DataHolder scope, ILogger logger)
     {
         switch (scope)
         {

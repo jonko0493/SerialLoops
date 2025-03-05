@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using HaruhiChokuretsuLib.Util;
+using LiteDB;
 using SerialLoops.Assets;
 using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
@@ -47,7 +48,10 @@ public static class Shared
 
     public static SKBitmap GetCharacterVoicePortrait(Project project, ILogger log, CharacterItem character)
     {
-        ItemDescription id = project.Items.Find(i => i.Name.Equals("SYSTEX_SYS_CMN_B46"));
+        using LiteDatabase db = new(project.DbFile);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+
+        ItemDescription id = itemsCol.FindById("SYSTEX_SYS_CMN_B46");
         if (id is not SystemTextureItem tex)
         {
             log.LogError(string.Format(Strings.Failed_to_load_character_progress_voice_for__0__, character.DisplayName));

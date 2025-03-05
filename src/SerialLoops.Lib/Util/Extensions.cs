@@ -11,12 +11,14 @@ using HaruhiChokuretsuLib.Archive.Event;
 using HaruhiChokuretsuLib.Archive.Graphics;
 using HaruhiChokuretsuLib.Font;
 using HaruhiChokuretsuLib.Util;
+using LiteDB;
 using NAudio.Wave;
 using SerialLoops.Lib.Items;
 using SerialLoops.Lib.Script.Parameters;
 using SkiaSharp;
 using static HaruhiChokuretsuLib.Archive.Event.EventFile;
 using static SerialLoops.Lib.Script.SpritePositioning;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace SerialLoops.Lib.Util;
 
@@ -121,17 +123,20 @@ public static class Extensions
 
     public static void InitializeWithDefaultValues(this ScriptCommandInvocation invocation, EventFile eventFile, Project project)
     {
+        using LiteDatabase db = new(project.DbFile);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+
         switch (Enum.Parse<CommandVerb>(invocation.Command.Mnemonic))
         {
             case CommandVerb.BG_DISP:
             case CommandVerb.BG_DISP2:
-                invocation.Parameters[0] = (short)((BackgroundItem)project.Items.First(i =>
+                invocation.Parameters[0] = (short)((BackgroundItem)itemsCol.FindOne(i =>
                     i.Type == ItemDescription.ItemType.Background &&
                     ((BackgroundItem)i).BackgroundType == BgType.TEX_BG)).Id;
                 break;
 
             case CommandVerb.BG_DISPCG:
-                invocation.Parameters[0] = (short)((BackgroundItem)project.Items.First(i =>
+                invocation.Parameters[0] = (short)((BackgroundItem)itemsCol.FindOne(i =>
                     i.Type == ItemDescription.ItemType.Background &&
                     ((BackgroundItem)i).BackgroundType != BgType.KINETIC_SCREEN &&
                     ((BackgroundItem)i).BackgroundType != BgType.TEX_BG)).Id;
@@ -149,7 +154,7 @@ public static class Extensions
             case CommandVerb.CHIBI_ENTEREXIT:
             case CommandVerb.CHIBI_EMOTE:
                 invocation.Parameters[0] =
-                    (short)((ChibiItem)project.Items.First(i => i.Type == ItemDescription.ItemType.Chibi))
+                    (short)((ChibiItem)itemsCol.FindOne(i => i.Type == ItemDescription.ItemType.Chibi))
                     .TopScreenIndex;
                 break;
 
@@ -170,14 +175,14 @@ public static class Extensions
                 break;
 
             case CommandVerb.KBG_DISP:
-                invocation.Parameters[0] = (short)((BackgroundItem)project.Items.First(i =>
+                invocation.Parameters[0] = (short)((BackgroundItem)itemsCol.FindOne(i =>
                     i.Type == ItemDescription.ItemType.Background &&
                     ((BackgroundItem)i).BackgroundType == BgType.KINETIC_SCREEN)).Id;
                 break;
 
             case CommandVerb.LOAD_ISOMAP:
                 invocation.Parameters[0] =
-                    (short)((MapItem)project.Items.First(i => i.Type == ItemDescription.ItemType.Map)).Map.Index;
+                    (short)((MapItem)itemsCol.FindOne(i => i.Type == ItemDescription.ItemType.Map)).Map.Index;
                 break;
 
             case CommandVerb.INVEST_START:
@@ -220,7 +225,7 @@ public static class Extensions
 
             case CommandVerb.VCE_PLAY:
                 invocation.Parameters[0] =
-                    (short)((VoicedLineItem)project.Items.First(i => i.Type == ItemDescription.ItemType.Voice)).Index;
+                    (short)((VoicedLineItem)itemsCol.FindOne(i => i.Type == ItemDescription.ItemType.Voice)).Index;
                 break;
 
             case CommandVerb.VGOTO:

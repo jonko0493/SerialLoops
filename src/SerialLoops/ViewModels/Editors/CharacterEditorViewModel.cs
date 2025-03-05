@@ -5,8 +5,10 @@ using Avalonia.Controls;
 using Avalonia.Media;
 using Avalonia.Platform;
 using HaruhiChokuretsuLib.Util;
+using LiteDB;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
 using SerialLoops.Utility;
 using SerialLoops.ViewModels.Panels;
@@ -114,12 +116,15 @@ public class CharacterEditorViewModel : EditorViewModel
 
     public CharacterEditorViewModel(CharacterItem character, MainWindowViewModel window, ILogger log) : base(character, window, log)
     {
+        using LiteDatabase db = new(window.OpenProject.DbFile);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+        var sfxCol = db.GetCollection<ItemCategoryShim<SfxItem>>(nameof(SfxItem));
+
         _character = character;
         Tabs = window.EditorTabs;
 
-        Sfxs = new(window.OpenProject.Items.Where(i => i.Type == ItemDescription.ItemType.SFX).Cast<SfxItem>());
-        _voiceFont = (SfxItem)window.OpenProject.Items.First(i =>
-            i.Type == ItemDescription.ItemType.SFX && ((SfxItem)i).Index == _character.MessageInfo.VoiceFont);
+        Sfxs = new(sfxCol.FindAll().Select(s => s.GetItem(itemsCol)));
+        _voiceFont = Sfxs.FirstOrDefault(s => s.Index == _character.MessageInfo.VoiceFont);
 
         using Stream blankNameplateStream = AssetLoader.Open(new("avares://SerialLoops/Assets/Graphics/BlankNameplate.png"));
         _blankNameplateBitmap = SKBitmap.Decode(blankNameplateStream);

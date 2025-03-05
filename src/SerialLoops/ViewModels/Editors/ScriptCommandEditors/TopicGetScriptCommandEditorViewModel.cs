@@ -2,8 +2,10 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using HaruhiChokuretsuLib.Util;
+using LiteDB;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
 using SerialLoops.Lib.Script;
 using SerialLoops.Lib.Script.Parameters;
@@ -39,10 +41,13 @@ public class TopicGetScriptCommandEditorViewModel : ScriptCommandEditorViewModel
     public TopicGetScriptCommandEditorViewModel(ScriptItemCommand command, ScriptEditorViewModel scriptEditor, ILogger log, MainWindowViewModel window)
         : base(command, scriptEditor, log)
     {
+        using LiteDatabase db = new(window.OpenProject.DbFile);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+
         Tabs = window.EditorTabs;
-        Topics = new(window.OpenProject.Items.Where(i => i.Type == ItemDescription.ItemType.Topic).Cast<TopicItem>());
+        Topics = new(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Topic).Cast<TopicItem>());
         TopicId = ((TopicScriptParameter)Command.Parameters[0]).TopicId;
-        _selectedTopic = (TopicItem)window.OpenProject.Items.FirstOrDefault(i => i.Type == ItemDescription.ItemType.Topic && ((TopicItem)i).TopicEntry.Id == TopicId);
+        _selectedTopic = (TopicItem)itemsCol.FindOne(i => i.Type == ItemDescription.ItemType.Topic && ((TopicItem)i).TopicEntry.Id == TopicId);
         SelectTopicCommand = ReactiveCommand.Create(() => SelectedTopic = Topics.FirstOrDefault());
     }
 }

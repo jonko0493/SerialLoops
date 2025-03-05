@@ -7,6 +7,7 @@ using AvaloniaEdit.Utils;
 using HaruhiChokuretsuLib.Archive.Event;
 using HaruhiChokuretsuLib.Save;
 using HaruhiChokuretsuLib.Util;
+using LiteDB;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using SerialLoops.Assets;
@@ -66,11 +67,14 @@ public class SaveSlotEditorDialogViewModel : ViewModelBase
         _project = project;
         Tabs = tabs;
 
+        using LiteDatabase db = new(_project.DbFile);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+
         if (SaveSection is QuickSaveSlotData quickSave)
         {
             IsQuickSave = true;
             _quickSave = quickSave;
-            ScriptItems = new(_project.Items.Where(i => i.Type == ItemDescription.ItemType.Script).Cast<ScriptItem>());
+            ScriptItems = new(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Script).Cast<ScriptItem>());
             _selectedScriptItem = ScriptItems.FirstOrDefault(i => i.Event.Index == _quickSave.CurrentScript);
             if (_selectedScriptItem is not null)
             {
@@ -91,34 +95,34 @@ public class SaveSlotEditorDialogViewModel : ViewModelBase
                     continue;
                 }
 
-                ChibiItem chibi = (ChibiItem)_project.Items.First(it => it.Type == ItemDescription.ItemType.Chibi && ((ChibiItem)it).TopScreenIndex == i);
+                ChibiItem chibi = (ChibiItem)itemsCol.FindOne(it => it.Type == ItemDescription.ItemType.Chibi && ((ChibiItem)it).TopScreenIndex == i);
                 topScreenChibis.Add((chibi, chibiCurrentX, chibiY));
                 chibiCurrentX += chibi.ChibiAnimations.First().Value.ElementAt(0).Frame.Width - 16;
             }
 
             _scriptPreview = new()
             {
-                Background = (BackgroundItem)_project.Items.First(i => i.Type == ItemDescription.ItemType.Background && ((BackgroundItem)i).Id == (_quickSave.CgIndex != 0 ? _quickSave.CgIndex : _quickSave.BgIndex)),
+                Background = (BackgroundItem)itemsCol.FindOne(i => i.Type == ItemDescription.ItemType.Background && ((BackgroundItem)i).Id == (_quickSave.CgIndex != 0 ? _quickSave.CgIndex : _quickSave.BgIndex)),
                 BgPalEffect = (PaletteEffectScriptParameter.PaletteEffect)_quickSave.BgPalEffect,
                 EpisodeHeader = _quickSave.EpisodeHeader,
-                Kbg = (BackgroundItem)_project.Items.First(i => i.Type == ItemDescription.ItemType.Background && ((BackgroundItem)i).Id == _quickSave.KbgIndex),
-                Place = (PlaceItem)_project.Items.First(i => i.Type == ItemDescription.ItemType.Place && ((PlaceItem)i).Index == _quickSave.Place),
+                Kbg = (BackgroundItem)itemsCol.FindOne(i => i.Type == ItemDescription.ItemType.Background && ((BackgroundItem)i).Id == _quickSave.KbgIndex),
+                Place = (PlaceItem)itemsCol.FindOne(i => i.Type == ItemDescription.ItemType.Place && ((PlaceItem)i).Index == _quickSave.Place),
                 TopScreenChibis = topScreenChibis,
                 Sprites =
                 [
                     new()
                     {
-                        Sprite = (CharacterSpriteItem)_project.Items.FirstOrDefault(i => i.Type == ItemDescription.ItemType.Character_Sprite && ((CharacterSpriteItem)i).Index == _quickSave.FirstCharacterSprite),
+                        Sprite = (CharacterSpriteItem)itemsCol.FindOne(i => i.Type == ItemDescription.ItemType.Character_Sprite && ((CharacterSpriteItem)i).Index == _quickSave.FirstCharacterSprite),
                         Positioning = new() { X = _quickSave.Sprite1XOffset, Layer = 2 },
                     },
                     new()
                     {
-                        Sprite = (CharacterSpriteItem)_project.Items.FirstOrDefault(i => i.Type == ItemDescription.ItemType.Character_Sprite && ((CharacterSpriteItem)i).Index == _quickSave.SecondCharacterSprite),
+                        Sprite = (CharacterSpriteItem)itemsCol.FindOne(i => i.Type == ItemDescription.ItemType.Character_Sprite && ((CharacterSpriteItem)i).Index == _quickSave.SecondCharacterSprite),
                         Positioning = new() { X = _quickSave.Sprite2XOffset, Layer = 1 },
                     },
                     new()
                     {
-                        Sprite = (CharacterSpriteItem)_project.Items.FirstOrDefault(i => i.Type == ItemDescription.ItemType.Character_Sprite && ((CharacterSpriteItem)i).Index == _quickSave.ThirdCharacterSprite),
+                        Sprite = (CharacterSpriteItem)itemsCol.FindOne(i => i.Type == ItemDescription.ItemType.Character_Sprite && ((CharacterSpriteItem)i).Index == _quickSave.ThirdCharacterSprite),
                         Positioning = new() { X = _quickSave.Sprite3XOffset, Layer = 0 },
                     },
                 ],
@@ -134,7 +138,7 @@ public class SaveSlotEditorDialogViewModel : ViewModelBase
 
             SaveDate = _saveSlot.SaveTime.Date;
             SaveTime = _saveSlot.SaveTime.TimeOfDay;
-            ScenarioCommandPickerVm = new(_saveSlot.ScenarioPosition, (ScenarioItem)_project.Items.First(s => s.Type == ItemDescription.ItemType.Scenario));
+            ScenarioCommandPickerVm = new(_saveSlot.ScenarioPosition, (ScenarioItem)itemsCol.FindById("Scenario"));
             Episode = _saveSlot.EpisodeNumber;
             HaruhiFriendshipLevel = _saveSlot.HaruhiFriendshipLevel;
             AsahinaFriendshipLevel = _saveSlot.MikuruFriendshipLevel;

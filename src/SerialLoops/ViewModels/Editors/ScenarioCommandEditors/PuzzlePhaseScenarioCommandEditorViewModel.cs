@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
+using LiteDB;
 using ReactiveUI;
 using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
@@ -28,7 +29,10 @@ public class PuzzlePhaseScenarioCommandEditorViewModel : ScenarioCommandEditorVi
 
     public PuzzlePhaseScenarioCommandEditorViewModel(PrettyScenarioCommand command, Project project, EditorTabsPanelViewModel tabs) : base(command, tabs)
     {
-        Puzzles = new(project.Items.Where(i => i.Type == ItemDescription.ItemType.Puzzle).Cast<PuzzleItem>());
+        using LiteDatabase db = new(project.DbFile);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+
+        Puzzles = new(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Puzzle).Cast<PuzzleItem>());
         _puzzle = Puzzles.FirstOrDefault(s => s.DisplayName == command.Parameter);
         _parameter = _puzzle.Puzzle.Index;
     }

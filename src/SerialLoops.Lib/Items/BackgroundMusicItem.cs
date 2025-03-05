@@ -29,6 +29,11 @@ public class BackgroundMusicItem : Item, ISoundItem
     {
     }
 
+    public override void InitializeAfterDbLoad(Project project)
+    {
+        _bgmFile = Path.Combine(project.IterativeDirectory, BgmFile);
+    }
+
     public BackgroundMusicItem(string bgmFile, int index, Project project) : base(Path.GetFileNameWithoutExtension(bgmFile), ItemType.BGM)
     {
         BgmFile = Path.GetRelativePath(project.IterativeDirectory, bgmFile);

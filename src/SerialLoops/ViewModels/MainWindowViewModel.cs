@@ -302,8 +302,8 @@ public partial class MainWindowViewModel : ViewModelBase
             }
 
             // Warn against unsaved items
-            IEnumerable<ItemDescription> unsavedItems = OpenProject.Items.Where(i => i.UnsavedChanges);
-            if (unsavedItems.Any())
+            ItemDescription[] unsavedItems = EditorTabs.Tabs.Select(t => t.Description).Where(i => i.UnsavedChanges).ToArray();
+            if (unsavedItems.Length != 0)
             {
                 ButtonResult result;
                 bool skipBuild = false;
@@ -726,7 +726,6 @@ public partial class MainWindowViewModel : ViewModelBase
         if (OpenProject is not null)
         {
             SaveItem saveItem = new(savePath, Path.GetFileNameWithoutExtension(savePath));
-            OpenProject.Items.Add(saveItem);
             EditorTabs.OpenTab(saveItem);
         }
         else
@@ -771,7 +770,6 @@ public partial class MainWindowViewModel : ViewModelBase
             }, () =>
             {
                 SaveItem saveItem = new(savePath, Path.GetFileNameWithoutExtension(savePath));
-                OpenProject.Items.Add(saveItem);
                 Window.MainContent.Content = new SaveEditorView
                 {
                     DataContext =
@@ -823,7 +821,7 @@ public partial class MainWindowViewModel : ViewModelBase
             return;
         }
 
-        IEnumerable<ItemDescription> unsavedItems = OpenProject.Items.Where(i => i.UnsavedChanges);
+        ItemDescription[] unsavedItems = EditorTabs.Tabs.Select(t => t.Description).Where(i => i.UnsavedChanges).ToArray();
         bool savedEventTable = false;
         bool savedChrData = false;
         bool savedExtra = false;

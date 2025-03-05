@@ -2,9 +2,11 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using HaruhiChokuretsuLib.Archive.Event;
 using HaruhiChokuretsuLib.Util;
+using LiteDB;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using SerialLoops.Assets;
+using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
 using SerialLoops.Lib.Util;
 using SerialLoops.ViewModels.Panels;
@@ -157,12 +159,15 @@ public class TopicEditorViewModel : EditorViewModel
 
     public TopicEditorViewModel(TopicItem topic, MainWindowViewModel window, ILogger log) : base(topic, window, log)
     {
+        using LiteDatabase db = new(window.OpenProject.DbFile);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+
         Tabs = window.EditorTabs;
         Topic = topic;
         _title = Topic.TopicEntry.Title;
-        Scripts = new(window.OpenProject.Items.Where(i => i.Type == ItemDescription.ItemType.Script).Cast<ScriptItem>());
+        Scripts = new(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Script).Cast<ScriptItem>());
         short associatedScriptIndex = (short)(Topic.TopicEntry.Type == TopicType.Main ? Topic.HiddenMainTopic?.EventIndex ?? Topic.TopicEntry.EventIndex : Topic.TopicEntry.EventIndex);
-        _associatedScript = (ScriptItem)window.OpenProject.Items.FirstOrDefault(i =>
+        _associatedScript = (ScriptItem)itemsCol.FindOne(i =>
             i.Type == ItemDescription.ItemType.Script && ((ScriptItem)i).Event.Index == associatedScriptIndex);
         EpisodeGroups = [Strings.Episode_1, Strings.Episode_2, Strings.Episode_3, Strings.Episode_4, Strings.Episode_5];
         _episodeGroup = Topic.TopicEntry.EpisodeGroup;

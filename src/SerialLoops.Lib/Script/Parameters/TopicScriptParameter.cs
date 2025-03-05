@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using HaruhiChokuretsuLib.Archive.Event;
+using LiteDB;
 using SerialLoops.Lib.Items;
 
 namespace SerialLoops.Lib.Script.Parameters;
@@ -11,8 +12,10 @@ public class TopicScriptParameter : ScriptParameter
 
     public override string GetValueString(Project project)
     {
-        return project.Localize(project.Items.FirstOrDefault(i => i.Type == ItemDescription.ItemType.Topic &&
-                                                           ((TopicItem)i).TopicEntry.Id == TopicId)?.DisplayName ?? TopicId.ToString());
+        using LiteDatabase db = new(project.DbFile);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+        return project.Localize(itemsCol.FindOne(i => i.Type == ItemDescription.ItemType.Topic &&
+                                                      ((TopicItem)i).TopicEntry.Id == TopicId)?.DisplayName ?? TopicId.ToString());
     }
 
     public TopicScriptParameter(string name, short topic) : base(name, ParameterType.TOPIC)

@@ -2,9 +2,11 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using HaruhiChokuretsuLib.Util;
+using LiteDB;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using SerialLoops.Assets;
+using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
 using SerialLoops.Lib.Script;
 using SerialLoops.Lib.Script.Parameters;
@@ -111,8 +113,11 @@ public class SndPlayScriptCommandEditorViewModel : ScriptCommandEditorViewModel
     public SndPlayScriptCommandEditorViewModel(ScriptItemCommand command, ScriptEditorViewModel scriptEditor, ILogger log, MainWindowViewModel window) :
         base(command, scriptEditor, log)
     {
+        using LiteDatabase db = new(window.OpenProject.DbFile);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+
         Tabs = window.EditorTabs;
-        SfxChoices = new(window.OpenProject.Items.Where(i => i.Type == ItemDescription.ItemType.SFX && ((SfxItem)i).AssociatedGroups.Contains(window.OpenProject.Snd.Groups[Script.SfxGroupIndex].Name)).Cast<SfxItem>());
+        SfxChoices = new(itemsCol.Find(i => i.Type == ItemDescription.ItemType.SFX && ((SfxItem)i).AssociatedGroups.Contains(window.OpenProject.Snd.Groups[Script.SfxGroupIndex].Name)).Cast<SfxItem>());
         _selectedSfx = ((SfxScriptParameter)Command.Parameters[0]).Sfx;
         _sfxMode = new(((SfxModeScriptParameter)Command.Parameters[1]).Mode);
         _volume = ((ShortScriptParameter)Command.Parameters[2]).Value;

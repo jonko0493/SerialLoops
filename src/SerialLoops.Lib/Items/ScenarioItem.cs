@@ -2,6 +2,7 @@
 using System.Linq;
 using HaruhiChokuretsuLib.Archive.Event;
 using HaruhiChokuretsuLib.Util;
+using LiteDB;
 
 namespace SerialLoops.Lib.Items;
 
@@ -26,9 +27,12 @@ public class ScenarioItem : Item
 
     public override void Refresh(Project project, ILogger log)
     {
-        _puzzleItems = project.Items.Where(i => i.Type == ItemType.Puzzle).Cast<PuzzleItem>();
-        _scriptItems = project.Items.Where(i => i.Type == ItemType.Script).Cast<ScriptItem>();
-        _groupSelectionItems = project.Items.Where(i => i.Type == ItemType.Group_Selection).Cast<GroupSelectionItem>();
+        using LiteDatabase db = new(project.DbFile);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+
+        _puzzleItems = itemsCol.Find(i => i.Type == ItemType.Puzzle).Cast<PuzzleItem>();
+        _scriptItems = itemsCol.Find(i => i.Type == ItemType.Script).Cast<ScriptItem>();
+        _groupSelectionItems = itemsCol.Find(i => i.Type == ItemType.Group_Selection).Cast<GroupSelectionItem>();
 
         if (_groupSelectionItems.Any())
         {

@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using LiteDB;
 
 namespace SerialLoops.Lib.Items;
 
@@ -9,8 +11,14 @@ public class ItemShim(string name, string displayName, ItemDescription.ItemType 
     public ItemDescription.ItemType Type { get; set; } = type;
     public bool CanRename { get; set; } = canRename;
 
-    public List<ItemShim> GetReferencesTo(Project project)
+    public List<ReactiveItemShim> GetReferencesTo(Project project)
     {
-        return [];
+        ItemDescription item = null;
+        using (LiteDatabase db = new(project.DbFile))
+        {
+            var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+            item = itemsCol.FindById(Name);
+        }
+        return item?.GetReferencesTo(project).Select(i => new ReactiveItemShim(new(i.Name, i.DisplayName, i.Type, i.CanRename))).ToList();
     }
 }

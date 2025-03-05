@@ -1,7 +1,9 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
 using HaruhiChokuretsuLib.Util;
+using LiteDB;
 using ReactiveUI;
+using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
 using SerialLoops.Lib.Script;
 using SerialLoops.Lib.Script.Parameters;
@@ -32,7 +34,10 @@ public class ChessLoadScriptCommandEditorViewModel : ScriptCommandEditorViewMode
     public ChessLoadScriptCommandEditorViewModel(ScriptItemCommand command, ScriptEditorViewModel scriptEditor, MainWindowViewModel window, ILogger log)
         : base(command, scriptEditor, log)
     {
-        ChessPuzzles = new(window.OpenProject.Items.Where(c => c.Type == ItemDescription.ItemType.Chess_Puzzle).Cast<ChessPuzzleItem>());
+        using LiteDatabase db = new(window.OpenProject.DbFile);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+
+        ChessPuzzles = new(itemsCol.Find(c => c.Type == ItemDescription.ItemType.Chess_Puzzle).Cast<ChessPuzzleItem>());
         _chessPuzzle = ((ChessPuzzleScriptParameter)command.Parameters[0]).ChessPuzzle;
         Tabs = window.EditorTabs;
     }

@@ -1,21 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using HaruhiChokuretsuLib.Archive.Event;
+using LiteDB;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
 namespace SerialLoops.Lib.Items;
 
-public partial class ItemDescription : ReactiveObject
+public partial class ItemDescription
 {
-    [Reactive]
+    [BsonId]
     public string Name { get; set; }
-    [Reactive]
     public bool CanRename { get; set; }
-    [Reactive]
     public string DisplayName { get; set; }
     public ItemType Type { get; set; }
-    [Reactive]
+    [BsonIgnore]
     public bool UnsavedChanges { get; set; }
 
     public ItemDescription()
@@ -41,6 +40,10 @@ public partial class ItemDescription : ReactiveObject
     {
         DisplayName = newName;
         project.ItemNames[Name] = DisplayName;
+    }
+
+    public virtual void InitializeAfterDbLoad(Project project)
+    {
     }
 
     // Enum with values for each type of item
@@ -70,8 +73,11 @@ public partial class ItemDescription : ReactiveObject
 
     public List<ItemDescription> GetReferencesTo(Project project)
     {
+        using LiteDatabase db = new(project.DbFile);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+
         List<ItemDescription> references = [];
-        ScenarioItem scenario = (ScenarioItem)project.Items.First(i => i.Name == "Scenario");
+        ScenarioItem scenario = (ScenarioItem)itemsCol.FindById("Scenario");
         switch (Type)
         {
             case ItemType.Background:
@@ -88,7 +94,7 @@ public partial class ItemDescription : ReactiveObject
                         e.ScriptSections.SelectMany(sec =>
                             sec.Objects.Where(c => bgCommands.Contains(c.Command.Mnemonic)).Select(c => (e.Name[..^1], c))))
                     .Where(t => t.c.Parameters[0] == bg.Id || t.c.Command.Mnemonic == EventFile.CommandVerb.BG_FADE.ToString() && t.c.Parameters[1] == bg.Id).ToArray();
-                return project.Items.Where(i => bgScriptUses.Select(s => s.ScriptName).Contains(i.Name)).ToList();
+                return itemsCol.Find(i => bgScriptUses.Select(s => s.ScriptName).Contains(i.Name)).ToList();
 
             case ItemType.BGM:
                 BackgroundMusicItem bgm = (BackgroundMusicItem)this;
@@ -96,11 +102,11 @@ public partial class ItemDescription : ReactiveObject
                         e.ScriptSections.SelectMany(sec =>
                             sec.Objects.Where(c => c.Command.Mnemonic == EventFile.CommandVerb.BGM_PLAY.ToString()).Select(c => (e.Name[..^1], c))))
                     .Where(t => t.c.Parameters[0] == bgm.Index).ToArray();
-                return project.Items.Where(i => bgmScriptUses.Select(s => s.ScriptName).Contains(i.Name)).ToList();
+                return itemsCol.Find(i => bgmScriptUses.Select(s => s.ScriptName).Contains(i.Name)).ToList();
 
             case ItemType.Character:
                 CharacterItem character = (CharacterItem)this;
-                return project.Items.Where(i => i.Type == ItemType.Script && ((ScriptItem)i).Event.DialogueSection.Objects.Any(l => l.Speaker == character.MessageInfo.Character)).ToList();
+                return itemsCol.Find(i => i.Type == ItemType.Script && ((ScriptItem)i).Event.DialogueSection.Objects.Any(l => l.Speaker == character.MessageInfo.Character)).ToList();
 
             case ItemType.Character_Sprite:
                 CharacterSpriteItem sprite = (CharacterSpriteItem)this;
@@ -108,7 +114,7 @@ public partial class ItemDescription : ReactiveObject
                         e.ScriptSections.SelectMany(sec =>
                             sec.Objects.Where(c => c.Command.Mnemonic == EventFile.CommandVerb.DIALOGUE.ToString()).Select(c => (e.Name[..^1], c))))
                     .Where(t => t.c.Parameters[1] == sprite.Index).ToArray();
-                return project.Items.Where(i => spriteScriptUses.Select(s => s.ScriptName).Contains(i.Name)).ToList();
+                return itemsCol.Find(i => spriteScriptUses.Select(s => s.ScriptName).Contains(i.Name)).ToList();
 
             case ItemType.Chess_Puzzle:
                 ChessPuzzleItem chessPuzzle = (ChessPuzzleItem)this;
@@ -116,17 +122,18 @@ public partial class ItemDescription : ReactiveObject
                     e.ScriptSections.SelectMany((sec =>
                             sec.Objects.Where(c => c.Command.Mnemonic == EventFile.CommandVerb.CHESS_LOAD.ToString()).Select(c => (e.Name[..^1], c)))))
                     .Where(t => t.c.Parameters[0] == chessPuzzle.ChessPuzzle.Index).ToArray();
-                return project.Items.Where(i => chessPuzzleScriptUses.Select(s => s.ScriptName).Contains(i.Name)).ToList();
+                return itemsCol.Find(i => chessPuzzleScriptUses.Select(s => s.ScriptName).Contains(i.Name)).ToList();
 
             case ItemType.Chibi:
                 ChibiItem chibi = (ChibiItem)this;
-                references.AddRange(project.Items.Where(i => i.Type == ItemType.Script && project.Evt.Files.Where(e =>
-                    e.MapCharactersSection?.Objects?.Any(t => t.CharacterIndex == chibi.ChibiIndex) ?? false).Select(e => e.Index).Contains(((ScriptItem)i).Event.Index)));
+                IEnumerable<ScriptItem> scripts = itemsCol.Find(i => i.Type == ItemType.Script).Cast<ScriptItem>();
+                    references.AddRange(scripts.Where(s => project.Evt.Files.Where(e =>
+                    e.MapCharactersSection?.Objects?.Any(t => t.CharacterIndex == chibi.ChibiIndex) ?? false).Select(e => e.Index).Contains(s.Event.Index)));
                 (string ScriptName, ScriptCommandInvocation command)[] chibiScriptUses = project.Evt.Files.AsParallel().SelectMany(e =>
                         e.ScriptSections.SelectMany(sec =>
                             sec.Objects.Where(c => c.Command.Mnemonic == EventFile.CommandVerb.CHIBI_ENTEREXIT.ToString()).Select(c => (e.Name[..^1], c))))
                     .Where(t => t.c.Parameters[0] == chibi.TopScreenIndex).ToArray();
-                references.AddRange(project.Items.Where(i => chibiScriptUses.Select(s => s.ScriptName).Contains(i.Name)));
+                references.AddRange(itemsCol.Find(i => chibiScriptUses.Select(s => s.ScriptName).Contains(i.Name)));
                 return references.Distinct().ToList();
 
             case ItemType.Group_Selection:
@@ -143,8 +150,8 @@ public partial class ItemDescription : ReactiveObject
                         e.ScriptSections.SelectMany(sec =>
                             sec.Objects.Where(c => c.Command.Mnemonic == EventFile.CommandVerb.LOAD_ISOMAP.ToString()).Select(c => (e.Name[..^1], c))))
                     .Where(t => t.c.Parameters[0] == map.Map.Index).ToArray();
-                return project.Items.Where(i => i.Type == ItemType.Puzzle && ((PuzzleItem)i).Puzzle.Settings.MapId == map.QmapIndex)
-                    .Concat(project.Items.Where(i => mapScriptUses.Select(s => s.ScriptName).Contains(i.Name))).ToList();
+                return itemsCol.Find(i => i.Type == ItemType.Puzzle && ((PuzzleItem)i).Puzzle.Settings.MapId == map.QmapIndex)
+                    .Concat(itemsCol.Find(i => mapScriptUses.Select(s => s.ScriptName).Contains(i.Name))).ToList();
 
             case ItemType.Place:
                 PlaceItem place = (PlaceItem)this;
@@ -152,7 +159,7 @@ public partial class ItemDescription : ReactiveObject
                         e.ScriptSections.SelectMany(sec =>
                             sec.Objects.Where(c => c.Command.Mnemonic == EventFile.CommandVerb.SET_PLACE.ToString()).Select(c => (e.Name[..^1], c))))
                     .Where(t => t.c.Parameters[1] == place.Index).ToArray();
-                return project.Items.Where(i => placeScriptUses.Select(s => s.ScriptName).Contains(i.Name)).ToList();
+                return itemsCol.Find(i => placeScriptUses.Select(s => s.ScriptName).Contains(i.Name)).ToList();
 
             case ItemType.Puzzle:
                 PuzzleItem puzzle = (PuzzleItem)this;
@@ -168,11 +175,13 @@ public partial class ItemDescription : ReactiveObject
                 {
                     references.Add(scenario);
                 }
-                references.AddRange(project.Items.Where(i => i.Type == ItemType.Group_Selection && ((GroupSelectionItem)i).Selection.Activities.Where(s => s is not null).Any(s => s.Routes.Any(r => r.ScriptIndex == script.Event.Index))));
-                references.AddRange(project.Items.Where(i => i.Type == ItemType.Topic &&
-                                                             (((TopicItem)i).TopicEntry.CardType != TopicCardType.Main && ((TopicItem)i).TopicEntry.EventIndex == script.Event.Index ||
-                                                              (((TopicItem)i).HiddenMainTopic?.EventIndex ?? -1) == script.Event.Index)));
-                references.AddRange(project.Items.Where(i => i.Type == ItemType.Script && ((ScriptItem)i).Event.ConditionalsSection.Objects.Contains(Name)));
+
+                IEnumerable<GroupSelectionItem> groupSelections = itemsCol.Find(i => i.Type == ItemType.Group_Selection).Cast<GroupSelectionItem>();
+                references.AddRange(groupSelections.Where(g => g.Selection.Activities.Where(s => s is not null).Any(s => s.Routes.Any(r => r.ScriptIndex == script.Event.Index))));
+                IEnumerable<TopicItem> topics = itemsCol.Find(i => i.Type == ItemType.Topic).Cast<TopicItem>();
+                references.AddRange(topics.Where(t => t.TopicEntry.CardType != TopicCardType.Main && t.TopicEntry.EventIndex == script.Event.Index ||
+                                                        (t.HiddenMainTopic?.EventIndex ?? -1) == script.Event.Index));
+                references.AddRange(itemsCol.Find(i => i.Type == ItemType.Script && ((ScriptItem)i).Event.ConditionalsSection.Objects.Contains(Name)));
                 return references;
 
             case ItemType.SFX:
@@ -181,8 +190,8 @@ public partial class ItemDescription : ReactiveObject
                         e.ScriptSections.SelectMany(sec =>
                             sec.Objects.Where(c => c.Command.Mnemonic == EventFile.CommandVerb.SND_PLAY.ToString()).Select(c => (e.Name[..^1], c))))
                     .Where(t => t.c.Parameters[0] == sfx.Index).ToArray();
-                references.AddRange(project.Items.Where(i => sfxScriptUses.Select(s => s.ScriptName).Contains(i.Name)));
-                references.AddRange(project.Items.Where(c => c.Type == ItemType.Character && ((CharacterItem)c).MessageInfo.VoiceFont == sfx.Index));
+                references.AddRange(itemsCol.Find(i => sfxScriptUses.Select(s => s.ScriptName).Contains(i.Name)));
+                references.AddRange(itemsCol.Find(c => c.Type == ItemType.Character && ((CharacterItem)c).MessageInfo.VoiceFont == sfx.Index));
                 return references;
 
             case ItemType.Topic:
@@ -191,7 +200,7 @@ public partial class ItemDescription : ReactiveObject
                         e.ScriptSections.SelectMany(sec =>
                             sec.Objects.Where(c => c.Command.Mnemonic == EventFile.CommandVerb.TOPIC_GET.ToString()).Select(c => (e.Name[..^1], c))))
                     .Where(t => t.c.Parameters[0] == topic.TopicEntry.Id).ToArray();
-                return project.Items.Where(i => topicScriptUses.Select(s => s.ScriptName).Contains(i.Name)).ToList();
+                return itemsCol.Find(i => topicScriptUses.Select(s => s.ScriptName).Contains(i.Name)).ToList();
 
             case ItemType.Voice:
                 VoicedLineItem voicedLine = (VoicedLineItem)this;
@@ -204,7 +213,7 @@ public partial class ItemDescription : ReactiveObject
                                 sec.Objects.Where(c => c.Command.Mnemonic == EventFile.CommandVerb.VCE_PLAY.ToString()).Select(c => (e.Name[..^1], c))))
                         .Where(t => t.c.Parameters[0] == voicedLine.Index))
                     .ToArray();
-                return project.Items.Where(i => vceScriptUses.Select(s => s.ScriptName).Contains(i.Name)).ToList();
+                return itemsCol.Find(i => vceScriptUses.Select(s => s.ScriptName).Contains(i.Name)).ToList();
 
             default:
                 return references;

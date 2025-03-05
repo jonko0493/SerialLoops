@@ -1,7 +1,9 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
 using HaruhiChokuretsuLib.Util;
+using LiteDB;
 using ReactiveUI;
+using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
 using SerialLoops.Lib.Script;
 using SerialLoops.Lib.Script.Parameters;
@@ -43,10 +45,13 @@ public class SceneGotoScriptCommandEditorViewModel : ScriptCommandEditorViewMode
     public SceneGotoScriptCommandEditorViewModel(ScriptItemCommand command, ScriptEditorViewModel scriptEditor, ILogger log, MainWindowViewModel window) :
         base(command, scriptEditor, log)
     {
+        using LiteDatabase db = new(scriptEditor.Window.OpenProject.DbFile);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+
         Tabs = window.EditorTabs;
-        Scripts = new(window.OpenProject.Items.Where(i => i.Type == ItemDescription.ItemType.Script)
+        Scripts = new(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Script)
             .Cast<ScriptItem>());
-        _selectedScript = (ScriptItem)(window.OpenProject.Items.FirstOrDefault(i => i.Type == ItemDescription.ItemType.Script && ((ScriptItem)i).Name.Equals(((ConditionalScriptParameter)Command.Parameters[0]).Conditional))
-            ?? window.OpenProject.Items.First(i => i.Type == ItemDescription.ItemType.Script));
+        _selectedScript = (ScriptItem)(itemsCol.FindOne(i => i.Type == ItemDescription.ItemType.Script && ((ScriptItem)i).Name.Equals(((ConditionalScriptParameter)Command.Parameters[0]).Conditional))
+            ?? itemsCol.FindOne(i => i.Type == ItemDescription.ItemType.Script));
     }
 }

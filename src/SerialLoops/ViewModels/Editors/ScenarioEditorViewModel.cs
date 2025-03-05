@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using HaruhiChokuretsuLib.Archive.Event;
 using HaruhiChokuretsuLib.Util;
+using LiteDB;
 using MsBox.Avalonia.Enums;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using SerialLoops.Assets;
+using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
 using SerialLoops.Models;
 using SerialLoops.Utility;
@@ -64,6 +66,9 @@ public class ScenarioEditorViewModel : EditorViewModel
 
     private async void Add()
     {
+        using LiteDatabase db = new(Window.OpenProject.DbFile);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+
         int selectedIndex = Math.Min(_scenario.Scenario.Commands.Count - 1, Commands.IndexOf(SelectedCommand));
         ScenarioVerb? newVerb = await new AddScenarioCommandDialog { DataContext = new AddScenarioCommandDialogViewModel() }.ShowDialog<ScenarioVerb?>(Window.Window);
         if (newVerb is not null)
@@ -71,8 +76,8 @@ public class ScenarioEditorViewModel : EditorViewModel
             int param = newVerb switch
             {
                 ScenarioVerb.NEW_GAME => 1,
-                ScenarioVerb.PUZZLE_PHASE => ((PuzzleItem)Window.OpenProject.Items.First(i => i.Type == ItemDescription.ItemType.Puzzle)).Puzzle.Index,
-                ScenarioVerb.LOAD_SCENE => ((ScriptItem)Window.OpenProject.Items.First(i => i.Type == ItemDescription.ItemType.Script)).Event.Index,
+                ScenarioVerb.PUZZLE_PHASE => ((PuzzleItem)itemsCol.FindOne(i => i.Type == ItemDescription.ItemType.Puzzle)).Puzzle.Index,
+                ScenarioVerb.LOAD_SCENE => ((ScriptItem)itemsCol.FindOne(i => i.Type == ItemDescription.ItemType.Script)).Event.Index,
                 _ => 0,
             };
             ScenarioCommand newCommand = new(newVerb ?? ScenarioVerb.LOAD_SCENE, param);

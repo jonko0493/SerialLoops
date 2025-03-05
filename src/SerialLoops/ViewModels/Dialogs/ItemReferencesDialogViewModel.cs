@@ -28,12 +28,12 @@ public class ItemReferencesDialogViewModel : ViewModelBase
     [Reactive]
     public string FoundReferencesLabel { get; private set; }
     public EditorTabsPanelViewModel Tabs { get; }
-    public ItemShim Item { get; }
+    public ReactiveItemShim Item { get; }
 
     public string Title { get; }
 
-    private ObservableCollection<ItemShim> _items;
-    public ObservableCollection<ItemShim> Items
+    private ObservableCollection<ReactiveItemShim> _items;
+    public ObservableCollection<ReactiveItemShim> Items
     {
         get => _items;
         set
@@ -56,7 +56,7 @@ public class ItemReferencesDialogViewModel : ViewModelBase
     public ICommand OpenItemCommand { get; }
     public ICommand CloseCommand { get; }
 
-    public ItemReferencesDialogViewModel(ItemShim item, Project project, EditorTabsPanelViewModel tabs, ILogger log)
+    public ItemReferencesDialogViewModel(ReactiveItemShim item, Project project, EditorTabsPanelViewModel tabs, ILogger log)
     {
         _log = log;
         _project = project;
@@ -64,7 +64,7 @@ public class ItemReferencesDialogViewModel : ViewModelBase
         Tabs = tabs;
         Item = item;
         Title = string.Format(Strings.References_to__0_, Item.DisplayName);
-        Items = new(item.GetReferencesTo(project));
+        Items = new(item.Shim.GetReferencesTo(project));
         FoundReferencesLabel = string.Format(Strings._0__results_found, Items.Count);
         OpenItemCommand = ReactiveCommand.Create<TreeDataGrid>(OpenItem);
         CloseCommand = ReactiveCommand.Create<ItemReferencesDialog>(dialog => dialog.Close());

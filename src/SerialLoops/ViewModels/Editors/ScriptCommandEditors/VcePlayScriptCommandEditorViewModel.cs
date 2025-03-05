@@ -1,7 +1,9 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using HaruhiChokuretsuLib.Util;
+using LiteDB;
 using ReactiveUI;
+using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
 using SerialLoops.Lib.Script;
 using SerialLoops.Lib.Script.Parameters;
@@ -31,8 +33,11 @@ public class VcePlayScriptCommandEditorViewModel : ScriptCommandEditorViewModel
     public VcePlayScriptCommandEditorViewModel(ScriptItemCommand command, ScriptEditorViewModel scriptEditor, ILogger log, MainWindowViewModel window) :
         base(command, scriptEditor, log)
     {
+        using LiteDatabase db = new(window.OpenProject.DbFile);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+
         Tabs = window.EditorTabs;
-        Vces = new(window.OpenProject.Items.Where(i => i.Type == ItemDescription.ItemType.Voice).Cast<VoicedLineItem>());
+        Vces = new(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Voice).Cast<VoicedLineItem>());
         _vce = ((VoicedLineScriptParameter)Command.Parameters[0]).VoiceLine;
     }
 }

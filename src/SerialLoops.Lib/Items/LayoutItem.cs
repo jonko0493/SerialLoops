@@ -15,7 +15,7 @@ public class LayoutItem : Item, IPreviewableGraphic
     public int NumEntries { get; set; }
 
     [BsonIgnore]
-    public Dictionary<int, SKBitmap> TilesDict { get; }
+    public Dictionary<int, SKBitmap> TilesDict { get; private set; }
 
     public LayoutItem()
     {
@@ -36,6 +36,11 @@ public class LayoutItem : Item, IPreviewableGraphic
         StartEntry = startEntry;
         NumEntries = numEntries;
         TilesDict = grps.Select((g, i) => (i, g.GetImage(transparentIndex: 0))).ToDictionary();
+    }
+
+    public override void InitializeAfterDbLoad(Project project)
+    {
+        TilesDict = GraphicsFiles.Select((g, i) => (i, g.GetImage(transparentIndex: 0))).ToDictionary();
     }
 
     public override void Refresh(Project project, ILogger log)
