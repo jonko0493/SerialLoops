@@ -134,19 +134,19 @@ public class ScriptEditorViewModel : EditorViewModel
         _script = (ScriptItem)item.Item;
         ScriptSections = new(_script.Event.ScriptSections.Select(s => new ReactiveScriptSection(s)));
         _project = window.OpenProject;
-        PopulateScriptCommands();
+        PopulateScriptCommands(refresh: true);
         _script.CalculateGraphEdges(_commands, _log);
 
         using LiteDatabase db = new(_project.DbFile);
         var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
+        var chibiCol = db.GetCollection<ChibiItemShim>(nameof(ChibiItem));
 
         if (_script.Event.StartingChibisSection is not null)
         {
             StartingChibis = [];
             UnusedChibis = [];
             StartingChibis.AddRange(_script.Event.StartingChibisSection.Objects.Where(c => c.ChibiIndex > 0).Select(c => new StartingChibiWithImage(c,
-                ((ChibiItem)itemsCol.FindOne(i => i.Type == ItemDescription.ItemType.Chibi
-                                          && ((ChibiItem)i).ChibiIndex == c.ChibiIndex)).ChibiAnimations.First().Value[0].Frame,
+                ((ChibiItem)chibiCol.FindOne(i => i.ChibiIndex == c.ChibiIndex).GetItem(itemsCol)).ChibiAnimations.First().Value[0].Frame,
                 StartingChibis, UnusedChibis, _script, this)));
             short[] usedIndices = StartingChibis.Select(c => c.StartingChibi.ChibiIndex).ToArray();
             for (short i = 1; i <= 5; i++)
@@ -155,8 +155,8 @@ public class ScriptEditorViewModel : EditorViewModel
                 {
                     continue;
                 }
-                UnusedChibis.Add(new(new() { ChibiIndex = i }, ((ChibiItem)itemsCol.FindOne(c => c.Type == ItemDescription.ItemType.Chibi
-                                                                                                 && ((ChibiItem)c).ChibiIndex == i)).ChibiAnimations.First().Value[0].Frame, StartingChibis, UnusedChibis, _script, this));
+                UnusedChibis.Add(new(new() { ChibiIndex = i }, ((ChibiItem)chibiCol.FindOne(c => c.ChibiIndex == i).GetItem(itemsCol))
+                    .ChibiAnimations.First().Value[0].Frame, StartingChibis, UnusedChibis, _script, this));
             }
         }
     }
@@ -398,7 +398,6 @@ public class ScriptEditorViewModel : EditorViewModel
                     0,
                     _script.Event,
                     _project,
-                    Strings.ResourceManager.GetString,
                     _log
                 );
             SelectedSection.InsertCommand(newCommand.Index, newCommand, Commands);
@@ -412,7 +411,6 @@ public class ScriptEditorViewModel : EditorViewModel
                     SelectedCommand.Index + 1,
                     _script.Event,
                     _project,
-                    Strings.ResourceManager.GetString,
                     _log
                 );
             ScriptSections[_script.Event.ScriptSections.IndexOf(SelectedCommand.Section)].InsertCommand(newCommand.Index, newCommand, Commands);

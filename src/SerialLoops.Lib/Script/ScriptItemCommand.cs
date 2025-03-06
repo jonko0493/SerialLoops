@@ -10,6 +10,7 @@ using QuikGraph.Algorithms.Search;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using SerialLoops.Lib.Items;
+using SerialLoops.Lib.Items.Shims;
 using SerialLoops.Lib.Script.Parameters;
 using SerialLoops.Lib.Util;
 using SoftCircuits.Collections;
@@ -27,13 +28,13 @@ public class ScriptItemCommand : ReactiveObject
     public int Index { get; set; }
     public Project Project { get; set; }
 
-    public static ScriptItemCommand FromInvocation(ScriptCommandInvocation invocation, ScriptSection section, int index, EventFile eventFile, Project project, Func<string, string> localize, ILogger log)
+    public static ScriptItemCommand FromInvocation(ScriptCommandInvocation invocation, ScriptSection section, int index, EventFile eventFile, Project project, ILogger log)
     {
         ScriptItemCommand command = new()
         {
             Invocation = invocation,
             Verb = (CommandVerb)Enum.Parse(typeof(CommandVerb), invocation.Command.Mnemonic),
-            Parameters = GetScriptParameters(invocation, section, eventFile, project, localize, log),
+            Parameters = GetScriptParameters(invocation, section, eventFile, project, log),
             Section = section,
             Index = index,
             Script = eventFile,
@@ -107,10 +108,20 @@ public class ScriptItemCommand : ReactiveObject
         return commands;
     }
 
-    private static List<ScriptParameter> GetScriptParameters(ScriptCommandInvocation invocation, ScriptSection section, EventFile eventFile, Project project, Func<string, string> localize, ILogger log)
+    private static List<ScriptParameter> GetScriptParameters(ScriptCommandInvocation invocation, ScriptSection section, EventFile eventFile, Project project, ILogger log)
     {
         using LiteDatabase db = new(project.DbFile);
         var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
+        var bgCol = db.GetCollection<BackgroundItemShim>(nameof(BackgroundItem));
+        var bgmCol = db.GetCollection<BackgroundMusicItemShim>(nameof(BackgroundMusicItem));
+        var charCol = db.GetCollection<CharacterItemShim>(nameof(CharacterItem));
+        var chrSpriteCol = db.GetCollection<CharacterSpriteItemShim>(nameof(CharacterSpriteItem));
+        var chessCol = db.GetCollection<ChessPuzzleItemShim>(nameof(ChessPuzzleItem));
+        var chibiCol = db.GetCollection<ChibiItemShim>(nameof(ChibiItem));
+        var mapCol = db.GetCollection<MapItemShim>(nameof(MapItem));
+        var placeCol = db.GetCollection<PlaceItemShim>(nameof(PlaceItem));
+        var sfxCol = db.GetCollection<SfxItemShim>(nameof(SfxItem));
+        var vceCol = db.GetCollection<VoicedLineItemShim>(nameof(VoicedLineItem));
 
         List<ScriptParameter> parameters = [];
 
@@ -123,40 +134,40 @@ public class ScriptItemCommand : ReactiveObject
                     switch (i)
                     {
                         case 0:
-                            parameters.Add(new DialogueScriptParameter(localize("Dialogue"), GetDialogueLine(parameter, eventFile)));
+                            parameters.Add(new DialogueScriptParameter("Dialogue", GetDialogueLine(parameter, eventFile)));
                             break;
                         case 1:
-                            parameters.Add(new SpriteScriptParameter(localize("Sprite"), (CharacterSpriteItem)itemsCol.FindOne(item => item.Type == ItemDescription.ItemType.Character_Sprite && parameter == ((CharacterSpriteItem)item).Index)));
+                            parameters.Add(new SpriteScriptParameter("Sprite", (CharacterSpriteItem)chrSpriteCol.FindOne(c => parameter == c.Index)?.GetItem(itemsCol)));
                             break;
                         case 2:
-                            parameters.Add(new SpriteEntranceScriptParameter(localize("Sprite Entrance Transition"), parameter));
+                            parameters.Add(new SpriteEntranceScriptParameter("Sprite Entrance Transition", parameter));
                             break;
                         case 3:
-                            parameters.Add(new SpriteExitScriptParameter(localize("Sprite Exit/Move Transition"), parameter));
+                            parameters.Add(new SpriteExitScriptParameter("Sprite Exit/Move Transition", parameter));
                             break;
                         case 4:
-                            parameters.Add(new SpriteShakeScriptParameter(localize("Sprite Shake"), parameter));
+                            parameters.Add(new SpriteShakeScriptParameter("Sprite Shake", parameter));
                             break;
                         case 5:
-                            parameters.Add(new VoicedLineScriptParameter(localize("Voice Line"), (VoicedLineItem)itemsCol.FindOne(item => item.Type == ItemDescription.ItemType.Voice && parameter == ((VoicedLineItem)item).Index)));
+                            parameters.Add(new VoicedLineScriptParameter("Voice Line", (VoicedLineItem)vceCol.FindOne(v => parameter == v.Index)?.GetItem(itemsCol)));
                             break;
                         case 6:
-                            parameters.Add(new DialoguePropertyScriptParameter(localize("Text Voice Font"), (CharacterItem)itemsCol.FindOne(item => item.Type == ItemDescription.ItemType.Character && ((CharacterItem)item).MessageInfo.Character == project.MessInfo.MessageInfos[parameter].Character)));
+                            parameters.Add(new DialoguePropertyScriptParameter("Text Voice Font", (CharacterItem)charCol.FindOne(c => c.Character == project.MessInfo.MessageInfos[parameter].Character)?.GetItem(itemsCol)));
                             break;
                         case 7:
-                            parameters.Add(new DialoguePropertyScriptParameter(localize("Text Speed"), (CharacterItem)itemsCol.FindOne(item => item.Type == ItemDescription.ItemType.Character && ((CharacterItem)item).MessageInfo.Character == project.MessInfo.MessageInfos[parameter].Character)));
+                            parameters.Add(new DialoguePropertyScriptParameter("Text Speed", (CharacterItem)charCol.FindOne(c => c.Character == project.MessInfo.MessageInfos[parameter].Character)?.GetItem(itemsCol)));
                             break;
                         case 8:
-                            parameters.Add(new TextEntranceEffectScriptParameter(localize("Text Entrance Effect"), parameter));
+                            parameters.Add(new TextEntranceEffectScriptParameter("Text Entrance Effect", parameter));
                             break;
                         case 9:
-                            parameters.Add(new ShortScriptParameter(localize("Sprite Layer"), parameter));
+                            parameters.Add(new ShortScriptParameter("Sprite Layer", parameter));
                             break;
                         case 10:
-                            parameters.Add(new BoolScriptParameter(localize("Don't Clear Text"), parameter == 1));
+                            parameters.Add(new BoolScriptParameter("Don't Clear Text", parameter == 1));
                             break;
                         case 11:
-                            parameters.Add(new BoolScriptParameter(localize("Disable Lip Flap"), parameter == 1));
+                            parameters.Add(new BoolScriptParameter("Disable Lip Flap", parameter == 1));
                             break;
 
                     }
@@ -164,38 +175,38 @@ public class ScriptItemCommand : ReactiveObject
                 case CommandVerb.KBG_DISP:
                     if (i == 0)
                     {
-                        parameters.Add(new BgScriptParameter(localize("\"Kinetic\" Background"), (BackgroundItem)itemsCol.FindOne(item => item.Type == ItemDescription.ItemType.Background && ((BackgroundItem)item).Id == parameter), kinetic: true));
+                        parameters.Add(new BgScriptParameter("\"Kinetic\" Background", (BackgroundItem)bgCol.FindOne(b => b.Id == parameter)?.GetItem(itemsCol), kinetic: true));
                     }
                     break;
                 case CommandVerb.PIN_MNL:
                     if (i == 0)
                     {
-                        parameters.Add(new DialogueScriptParameter(localize("Dialogue"), GetDialogueLine(parameter, eventFile)));
+                        parameters.Add(new DialogueScriptParameter("Dialogue", GetDialogueLine(parameter, eventFile)));
                     }
                     break;
                 case CommandVerb.BG_DISP:
                 case CommandVerb.BG_DISP2:
                     if (i == 0)
                     {
-                        ItemDescription bgItem = itemsCol.FindOne(item => item.Type == ItemDescription.ItemType.Background && ((BackgroundItem)item).Id == parameter)
-                                                 ?? itemsCol.FindOne(item => item.Type == ItemDescription.ItemType.Background && ((BackgroundItem)item).BackgroundType == HaruhiChokuretsuLib.Archive.Data.BgType.TEX_BG);
-                        parameters.Add(new BgScriptParameter(localize("Background"), (BackgroundItem)bgItem, kinetic: false));
+                        ItemDescription bgItem = (bgCol.FindOne(b => b.Id == parameter)
+                                                 ?? bgCol.FindOne(b => b.BackgroundType == HaruhiChokuretsuLib.Archive.Data.BgType.TEX_BG))?.GetItem(itemsCol);
+                        parameters.Add(new BgScriptParameter("Background", (BackgroundItem)bgItem, kinetic: false));
                     }
                     break;
                 case CommandVerb.SCREEN_FADEIN:
                     switch (i)
                     {
                         case 0:
-                            parameters.Add(new ShortScriptParameter(localize("Fade Time (Frames)"), parameter));
+                            parameters.Add(new ShortScriptParameter("Fade Time (Frames)", parameter));
                             break;
                         case 1:
-                            parameters.Add(new ShortScriptParameter(localize("Fade In Percentage"), parameter));
+                            parameters.Add(new ShortScriptParameter("Fade In Percentage", parameter));
                             break;
                         case 2:
-                            parameters.Add(new ScreenScriptParameter(localize("Location"), parameter));
+                            parameters.Add(new ScreenScriptParameter("Location", parameter));
                             break;
                         case 3:
-                            parameters.Add(new ColorMonochromeScriptParameter(localize("Color"), parameter));
+                            parameters.Add(new ColorMonochromeScriptParameter("Color", parameter));
                             break;
                     }
                     break;
@@ -203,13 +214,13 @@ public class ScriptItemCommand : ReactiveObject
                     switch (i)
                     {
                         case 0:
-                            parameters.Add(new ShortScriptParameter(localize("Fade Time (Frames)"), parameter));
+                            parameters.Add(new ShortScriptParameter("Fade Time (Frames)", parameter));
                             break;
                         case 1:
-                            parameters.Add(new ShortScriptParameter(localize("Fade Out Percentage"), parameter));
+                            parameters.Add(new ShortScriptParameter("Fade Out Percentage", parameter));
                             break;
                         case 2:
-                            parameters.Add(new ColorScriptParameter(localize("Custom Color"), parameter));
+                            parameters.Add(new ColorScriptParameter("Custom Color", parameter));
                             break;
                         case 3:
                             ((ColorScriptParameter)parameters.Last()).SetGreen(parameter);
@@ -218,10 +229,10 @@ public class ScriptItemCommand : ReactiveObject
                             ((ColorScriptParameter)parameters.Last()).SetBlue(parameter);
                             break;
                         case 5:
-                            parameters.Add(new ScreenScriptParameter(localize("Location"), parameter));
+                            parameters.Add(new ScreenScriptParameter("Location", parameter));
                             break;
                         case 6:
-                            parameters.Add(new ColorMonochromeScriptParameter(localize("Color"), parameter));
+                            parameters.Add(new ColorMonochromeScriptParameter("Color", parameter));
                             break;
                     }
                     break;
@@ -229,16 +240,16 @@ public class ScriptItemCommand : ReactiveObject
                     switch (i)
                     {
                         case 0:
-                            parameters.Add(new ShortScriptParameter(localize("Fade In Time (Frames)"), parameter));
+                            parameters.Add(new ShortScriptParameter("Fade In Time (Frames)", parameter));
                             break;
                         case 1:
-                            parameters.Add(new ShortScriptParameter(localize("Hold Time (Frames)"), parameter));
+                            parameters.Add(new ShortScriptParameter("Hold Time (Frames)", parameter));
                             break;
                         case 2:
-                            parameters.Add(new ShortScriptParameter(localize("Fade Out Time (Frames)"), parameter));
+                            parameters.Add(new ShortScriptParameter("Fade Out Time (Frames)", parameter));
                             break;
                         case 3:
-                            parameters.Add(new ColorScriptParameter(localize("Color"), parameter));
+                            parameters.Add(new ColorScriptParameter("Color", parameter));
                             break;
                         case 4:
                             ((ColorScriptParameter)parameters.Last()).SetGreen(parameter);
@@ -252,19 +263,19 @@ public class ScriptItemCommand : ReactiveObject
                     switch (i)
                     {
                         case 0:
-                            parameters.Add(new SfxScriptParameter(localize("Sound"), (SfxItem)itemsCol.FindOne(s => s.Type == ItemDescription.ItemType.SFX && ((SfxItem)s).Index == parameter)));
+                            parameters.Add(new SfxScriptParameter("Sound", (SfxItem)sfxCol.FindOne(s => s.Index == parameter)?.GetItem(itemsCol)));
                             break;
                         case 1:
-                            parameters.Add(new SfxModeScriptParameter(localize("Mode"), parameter));
+                            parameters.Add(new SfxModeScriptParameter("Mode", parameter));
                             break;
                         case 2:
-                            parameters.Add(new ShortScriptParameter(localize("Volume"), parameter));
+                            parameters.Add(new ShortScriptParameter("Volume", parameter));
                             break;
                         case 3:
-                            parameters.Add(new BoolScriptParameter(localize("Load Sound"), parameter == -1, trueValue: -1));
+                            parameters.Add(new BoolScriptParameter("Load Sound", parameter == -1, trueValue: -1));
                             break;
                         case 4:
-                            parameters.Add(new ShortScriptParameter(localize("Crossfade Time (Frames)"), parameter));
+                            parameters.Add(new ShortScriptParameter("Crossfade Time (Frames)", parameter));
                             break;
                     }
                     break;
@@ -272,77 +283,77 @@ public class ScriptItemCommand : ReactiveObject
                     switch (i)
                     {
                         case 0:
-                            parameters.Add(new BgmScriptParameter(localize("Music"), (BackgroundMusicItem)itemsCol.FindOne(item => item.Type == ItemDescription.ItemType.BGM && ((BackgroundMusicItem)item).Index == parameter)));
+                            parameters.Add(new BgmScriptParameter("Music", (BackgroundMusicItem)bgmCol.FindOne(b => b.Index == parameter)?.GetItem(itemsCol)));
                             break;
                         case 1:
-                            parameters.Add(new BgmModeScriptParameter(localize("Mode"), parameter));
+                            parameters.Add(new BgmModeScriptParameter("Mode", parameter));
                             break;
                         case 2:
-                            parameters.Add(new ShortScriptParameter(localize("Volume"), parameter));
+                            parameters.Add(new ShortScriptParameter("Volume", parameter));
                             break;
                         case 3:
-                            parameters.Add(new ShortScriptParameter(localize("Fade In Time (Frames)"), parameter));
+                            parameters.Add(new ShortScriptParameter("Fade In Time (Frames)", parameter));
                             break;
                         case 4:
-                            parameters.Add(new ShortScriptParameter(localize("Fade Out Time (Frames)"), parameter));
+                            parameters.Add(new ShortScriptParameter("Fade Out Time (Frames)", parameter));
                             break;
                     }
                     break;
                 case CommandVerb.VCE_PLAY:
                     if (i == 0)
                     {
-                        parameters.Add(new VoicedLineScriptParameter(localize("Voice Line"), (VoicedLineItem)itemsCol.FindOne(item => item.Type == ItemDescription.ItemType.Voice && parameter == ((VoicedLineItem)item).Index)));
+                        parameters.Add(new VoicedLineScriptParameter("Voice Line", (VoicedLineItem)vceCol.FindOne(v => parameter == v.Index)?.GetItem(itemsCol)));
                     }
                     break;
                 case CommandVerb.FLAG:
                     switch (i)
                     {
                         case 0:
-                            parameters.Add(new FlagScriptParameter(localize("Flag"), parameter));
+                            parameters.Add(new FlagScriptParameter("Flag", parameter));
                             break;
                         case 1:
-                            parameters.Add(new BoolScriptParameter(localize("Set/Clear"), parameter == 1));
+                            parameters.Add(new BoolScriptParameter("Set/Clear", parameter == 1));
                             break;
                     }
                     break;
                 case CommandVerb.TOPIC_GET:
                     if (i == 0)
                     {
-                        parameters.Add(new TopicScriptParameter(localize("Topic"), parameter));
+                        parameters.Add(new TopicScriptParameter("Topic", parameter));
                     }
                     break;
                 case CommandVerb.TOGGLE_DIALOGUE:
                     if (i == 0)
                     {
-                        parameters.Add(new BoolScriptParameter(localize("Show"), parameter == 1));
+                        parameters.Add(new BoolScriptParameter("Show", parameter == 1));
                     }
                     break;
                 case CommandVerb.SELECT:
                     switch (i)
                     {
                         case 0:
-                            parameters.Add(new OptionScriptParameter(localize("Option 1"), eventFile.ChoicesSection.Objects[parameter]));
+                            parameters.Add(new OptionScriptParameter("Option 1", eventFile.ChoicesSection.Objects[parameter]));
                             break;
                         case 1:
-                            parameters.Add(new OptionScriptParameter(localize("Option 2"), eventFile.ChoicesSection.Objects[parameter]));
+                            parameters.Add(new OptionScriptParameter("Option 2", eventFile.ChoicesSection.Objects[parameter]));
                             break;
                         case 2:
-                            parameters.Add(new OptionScriptParameter(localize("Option 3"), eventFile.ChoicesSection.Objects[parameter]));
+                            parameters.Add(new OptionScriptParameter("Option 3", eventFile.ChoicesSection.Objects[parameter]));
                             break;
                         case 3:
-                            parameters.Add(new OptionScriptParameter(localize("Option 4"), eventFile.ChoicesSection.Objects[parameter]));
+                            parameters.Add(new OptionScriptParameter("Option 4", eventFile.ChoicesSection.Objects[parameter]));
                             break;
                         case 4:
-                            parameters.Add(new ShortScriptParameter(localize("Display Flag 1"), parameter));
+                            parameters.Add(new ShortScriptParameter("Display Flag 1", parameter));
                             break;
                         case 5:
-                            parameters.Add(new ShortScriptParameter(localize("Display Flag 2"), parameter));
+                            parameters.Add(new ShortScriptParameter("Display Flag 2", parameter));
                             break;
                         case 6:
-                            parameters.Add(new ShortScriptParameter(localize("Display Flag 3"), parameter));
+                            parameters.Add(new ShortScriptParameter("Display Flag 3", parameter));
                             break;
                         case 7:
-                            parameters.Add(new ShortScriptParameter(localize("Display Flag 4"), parameter));
+                            parameters.Add(new ShortScriptParameter("Display Flag 4", parameter));
                             break;
                     }
                     break;
@@ -350,13 +361,13 @@ public class ScriptItemCommand : ReactiveObject
                     switch (i)
                     {
                         case 0:
-                            parameters.Add(new ShortScriptParameter(localize("Duration (Frames)"), parameter));
+                            parameters.Add(new ShortScriptParameter("Duration (Frames)", parameter));
                             break;
                         case 1:
-                            parameters.Add(new ShortScriptParameter(localize("Horizontal Intensity"), parameter));
+                            parameters.Add(new ShortScriptParameter("Horizontal Intensity", parameter));
                             break;
                         case 2:
-                            parameters.Add(new ShortScriptParameter(localize("Vertical Intensity"), parameter));
+                            parameters.Add(new ShortScriptParameter("Vertical Intensity", parameter));
                             break;
                     }
                     break;
@@ -373,7 +384,7 @@ public class ScriptItemCommand : ReactiveObject
                         }
                         try
                         {
-                            parameters.Add(new ScriptSectionScriptParameter(localize("Script Section"), eventFile.ScriptSections.First(s => s.Name == eventFile.LabelsSection.Objects.First(l => l.Id == parameter).Name.Replace("/", ""))));
+                            parameters.Add(new ScriptSectionScriptParameter("Script Section", eventFile.ScriptSections.First(s => s.Name == eventFile.LabelsSection.Objects.First(l => l.Id == parameter).Name.Replace("/", ""))));
                         }
                         catch (InvalidOperationException)
                         {
@@ -385,7 +396,7 @@ public class ScriptItemCommand : ReactiveObject
                             }
                             else
                             {
-                                parameters.Add(new ScriptSectionScriptParameter(localize("Script Section"), eventFile.ScriptSections.First(s => s.Name == eventFile.LabelsSection.Objects.First(l => l.Id == parameter).Name.Replace("/", ""))));
+                                parameters.Add(new ScriptSectionScriptParameter("Script Section", eventFile.ScriptSections.First(s => s.Name == eventFile.LabelsSection.Objects.First(l => l.Id == parameter).Name.Replace("/", ""))));
                             }
                         }
                     }
@@ -394,20 +405,20 @@ public class ScriptItemCommand : ReactiveObject
                 case CommandVerb.SCENE_GOTO_CHESS:
                     if (i == 0)
                     {
-                        parameters.Add(new ConditionalScriptParameter(localize("Scene"), eventFile.ConditionalsSection.Objects[parameter]));
+                        parameters.Add(new ConditionalScriptParameter("Scene", eventFile.ConditionalsSection.Objects[parameter]));
                     }
                     break;
                 case CommandVerb.WAIT:
                     if (i == 0)
                     {
-                        parameters.Add(new ShortScriptParameter(localize("Wait Time (Frames)"), parameter));
+                        parameters.Add(new ShortScriptParameter("Wait Time (Frames)", parameter));
                     }
                     break;
                 case CommandVerb.VGOTO:
                     switch (i)
                     {
                         case 0:
-                            parameters.Add(new ConditionalScriptParameter(localize("Conditional"), eventFile.ConditionalsSection.Objects[parameter]));
+                            parameters.Add(new ConditionalScriptParameter("Conditional", eventFile.ConditionalsSection.Objects[parameter]));
                             break;
                         // 1 is unused
                         case 2:
@@ -421,7 +432,7 @@ public class ScriptItemCommand : ReactiveObject
                             }
                             try
                             {
-                                parameters.Add(new ScriptSectionScriptParameter(localize("Script Section"), eventFile.ScriptSections.First(s => s.Name == eventFile.LabelsSection.Objects.First(l => l.Id == parameter).Name.Replace("/", ""))));
+                                parameters.Add(new ScriptSectionScriptParameter("Script Section", eventFile.ScriptSections.First(s => s.Name == eventFile.LabelsSection.Objects.First(l => l.Id == parameter).Name.Replace("/", ""))));
                             }
                             catch (InvalidOperationException)
                             {
@@ -433,7 +444,7 @@ public class ScriptItemCommand : ReactiveObject
                                 }
                                 else
                                 {
-                                    parameters.Add(new ScriptSectionScriptParameter(localize("Script Section"), eventFile.ScriptSections.First(s => s.Name == eventFile.LabelsSection.Objects.First(l => l.Id == parameter).Name.Replace("/", ""))));
+                                    parameters.Add(new ScriptSectionScriptParameter("Script Section", eventFile.ScriptSections.First(s => s.Name == eventFile.LabelsSection.Objects.First(l => l.Id == parameter).Name.Replace("/", ""))));
                                 }
                             }
                             break;
@@ -444,30 +455,30 @@ public class ScriptItemCommand : ReactiveObject
                     {
                         // 0 is unused
                         case 1:
-                            parameters.Add(new ShortScriptParameter(localize("Add"), parameter));
+                            parameters.Add(new ShortScriptParameter("Add", parameter));
                             break;
                         case 2:
-                            parameters.Add(new ShortScriptParameter(localize("Set"), parameter));
+                            parameters.Add(new ShortScriptParameter("Set", parameter));
                             break;
                     }
                     break;
                 case CommandVerb.HARUHI_METER_NOSHOW:
                     if (i == 0)
                     {
-                        parameters.Add(new ShortScriptParameter(localize("Add"), parameter));
+                        parameters.Add(new ShortScriptParameter("Add", parameter));
                     }
                     break;
                 case CommandVerb.PALEFFECT:
                     switch (i)
                     {
                         case 0:
-                            parameters.Add(new PaletteEffectScriptParameter(localize("Mode"), parameter));
+                            parameters.Add(new PaletteEffectScriptParameter("Mode", parameter));
                             break;
                         case 1:
-                            parameters.Add(new ShortScriptParameter(localize("Time (Frames)"), parameter));
+                            parameters.Add(new ShortScriptParameter("Time (Frames)", parameter));
                             break;
                         case 2:
-                            parameters.Add(new BoolScriptParameter(localize("Unknown"), parameter > 0));
+                            parameters.Add(new BoolScriptParameter("Unknown", parameter > 0));
                             break;
                     }
                     break;
@@ -475,13 +486,13 @@ public class ScriptItemCommand : ReactiveObject
                     switch (i)
                     {
                         case 0:
-                            parameters.Add(new BgScriptParameter(localize("Background"), (BackgroundItem)itemsCol.FindOne(item => item.Type == ItemDescription.ItemType.Background && ((BackgroundItem)item).Id == parameter), kinetic: false));
+                            parameters.Add(new BgScriptParameter("Background", (BackgroundItem)bgCol.FindOne(b => b.Id == parameter)?.GetItem(itemsCol), kinetic: false));
                             break;
                         case 1:
-                            parameters.Add(new BgScriptParameter(localize("Background (CG)"), (BackgroundItem)itemsCol.FindOne(item => item.Type == ItemDescription.ItemType.Background && ((BackgroundItem)item).Id == parameter), kinetic: false));
+                            parameters.Add(new BgScriptParameter("Background (CG)", (BackgroundItem)bgCol.FindOne(b => b.Id == parameter)?.GetItem(itemsCol), kinetic: false));
                             break;
                         case 2:
-                            parameters.Add(new ShortScriptParameter(localize("Fade Time (Frames)"), parameter));
+                            parameters.Add(new ShortScriptParameter("Fade Time (Frames)", parameter));
                             break;
                     }
                     break;
@@ -489,17 +500,17 @@ public class ScriptItemCommand : ReactiveObject
                 case CommandVerb.TRANS_IN:
                     if (i == 0)
                     {
-                        parameters.Add(new TransitionScriptParameter(localize("Transition"), parameter));
+                        parameters.Add(new TransitionScriptParameter("Transition", parameter));
                     }
                     break;
                 case CommandVerb.SET_PLACE:
                     switch (i)
                     {
                         case 0:
-                            parameters.Add(new BoolScriptParameter(localize("Display?"), parameter == 1));
+                            parameters.Add(new BoolScriptParameter("Display?", parameter == 1));
                             break;
                         case 1:
-                            parameters.Add(new PlaceScriptParameter(localize("Place"), (PlaceItem)itemsCol.FindOne(item => item.Type == ItemDescription.ItemType.Place && ((PlaceItem)item).Index == parameter)));
+                            parameters.Add(new PlaceScriptParameter("Place", (PlaceItem)placeCol.FindOne(p => p.Index == parameter)?.GetItem(itemsCol)));
                             break;
                     }
                     break;
@@ -507,35 +518,35 @@ public class ScriptItemCommand : ReactiveObject
                     switch (i)
                     {
                         case 0:
-                            parameters.Add(new ItemScriptParameter(localize("Item"), parameter));
+                            parameters.Add(new ItemScriptParameter("Item", parameter));
                             break;
                         case 1:
-                            parameters.Add(new ItemLocationScriptParameter(localize("Location"), parameter));
+                            parameters.Add(new ItemLocationScriptParameter("Location", parameter));
                             break;
                         case 2:
-                            parameters.Add(new ItemTransitionScriptParameter(localize("Transition"), parameter));
+                            parameters.Add(new ItemTransitionScriptParameter("Transition", parameter));
                             break;
                     }
                     break;
                 case CommandVerb.LOAD_ISOMAP:
                     if (i == 0)
                     {
-                        parameters.Add(new MapScriptParameter(localize("Map"), (MapItem)itemsCol.FindOne(item => item.Type == ItemDescription.ItemType.Map && (parameter) == ((MapItem)item).Map.Index)));
+                        parameters.Add(new MapScriptParameter("Map", (MapItem)mapCol.FindOne(m => m.MapIndex == parameter)?.GetItem(itemsCol)));
                     }
                     break;
                 case CommandVerb.INVEST_START:
                     switch (i)
                     {
                         case 0:
-                            parameters.Add(new ShortScriptParameter(localize($"Map Character Set"), parameter));
+                            parameters.Add(new ShortScriptParameter($"Map Character Set", parameter));
                             break;
                         case 1:
                         case 2:
                         case 3:
-                            parameters.Add(new ShortScriptParameter(localize($"unknown0{i}"), parameter));
+                            parameters.Add(new ShortScriptParameter($"unknown0{i}", parameter));
                             break;
                         case 4:
-                            parameters.Add(new ScriptSectionScriptParameter(localize("End Script Section"), eventFile.ScriptSections.First(s => s.Name == eventFile.LabelsSection.Objects.First(l => l.Id == parameter).Name.Replace("/", ""))));
+                            parameters.Add(new ScriptSectionScriptParameter("End Script Section", eventFile.ScriptSections.First(s => s.Name == eventFile.LabelsSection.Objects.First(l => l.Id == parameter).Name.Replace("/", ""))));
                             break;
                     }
                     break;
@@ -543,27 +554,27 @@ public class ScriptItemCommand : ReactiveObject
                     switch (i)
                     {
                         case 0:
-                            parameters.Add(new ChibiScriptParameter(localize("Chibi"), (ChibiItem)itemsCol.FindOne(item => item.Type == ItemDescription.ItemType.Chibi && (parameter) == ((ChibiItem)item).TopScreenIndex)));
+                            parameters.Add(new ChibiScriptParameter("Chibi", (ChibiItem)chibiCol.FindOne(c => c.TopScreenIndex == parameter)?.GetItem(itemsCol)));
                             break;
                         case 1:
-                            parameters.Add(new ChibiEmoteScriptParameter(localize("Emote"), parameter));
+                            parameters.Add(new ChibiEmoteScriptParameter("Emote", parameter));
                             break;
                     }
                     break;
                 case CommandVerb.SKIP_SCENE:
                     if (i == 0)
                     {
-                        parameters.Add(new ShortScriptParameter(localize("Scenes to Skip"), parameter));
+                        parameters.Add(new ShortScriptParameter("Scenes to Skip", parameter));
                     }
                     break;
                 case CommandVerb.MODIFY_FRIENDSHIP:
                     switch (i)
                     {
                         case 0:
-                            parameters.Add(new FriendshipLevelScriptParameter(localize("Character"), parameter));
+                            parameters.Add(new FriendshipLevelScriptParameter("Character", parameter));
                             break;
                         case 1:
-                            parameters.Add(new ShortScriptParameter(localize("Modify by"), parameter));
+                            parameters.Add(new ShortScriptParameter("Modify by", parameter));
                             break;
                     }
                     break;
@@ -571,39 +582,39 @@ public class ScriptItemCommand : ReactiveObject
                     switch (i)
                     {
                         case 0:
-                            parameters.Add(new ChibiScriptParameter(localize("Chibi"), (ChibiItem)itemsCol.FindOne(item => item.Type == ItemDescription.ItemType.Chibi && (parameter) == ((ChibiItem)item).TopScreenIndex)));
+                            parameters.Add(new ChibiScriptParameter("Chibi", (ChibiItem)chibiCol.FindOne(c => c.TopScreenIndex == parameter)?.GetItem(itemsCol)));
                             break;
                         case 1:
-                            parameters.Add(new ChibiEnterExitScriptParameter(localize("Enter/Exit"), parameter));
+                            parameters.Add(new ChibiEnterExitScriptParameter("Enter/Exit", parameter));
                             break;
                         case 2:
-                            parameters.Add(new ShortScriptParameter(localize("Delay (Frames)"), parameter));
+                            parameters.Add(new ShortScriptParameter("Delay (Frames)", parameter));
                             break;
                     }
                     break;
                 case CommandVerb.GLOBAL2D:
                     if (i == 0)
                     {
-                        parameters.Add(new ShortScriptParameter(localize("Value"), parameter));
+                        parameters.Add(new ShortScriptParameter("Value", parameter));
                     }
                     break;
                 case CommandVerb.CHESS_LOAD:
                     if (i == 0)
                     {
-                        parameters.Add(new ChessPuzzleScriptParameter(localize("Chess File"), (ChessPuzzleItem)itemsCol.FindOne(item => item.Type == ItemDescription.ItemType.Chess_Puzzle && ((ChessPuzzleItem)item).ChessPuzzle.Index ==  parameter)));
+                        parameters.Add(new ChessPuzzleScriptParameter("Chess File", (ChessPuzzleItem)chessCol.FindOne(c => c.Index ==  parameter)?.GetItem(itemsCol)));
                     }
                     break;
                 case CommandVerb.CHESS_VGOTO:
                     switch (i)
                     {
                         case 0:
-                            parameters.Add(new ScriptSectionScriptParameter(localize("Clear Block"), eventFile.ScriptSections.FirstOrDefault(s => s.Name == eventFile.LabelsSection.Objects.FirstOrDefault(l => l.Id == parameter)?.Name.Replace("/", ""))));
+                            parameters.Add(new ScriptSectionScriptParameter("Clear Block", eventFile.ScriptSections.FirstOrDefault(s => s.Name == eventFile.LabelsSection.Objects.FirstOrDefault(l => l.Id == parameter)?.Name.Replace("/", ""))));
                             break;
                         case 1:
-                            parameters.Add(new ScriptSectionScriptParameter(localize("Miss Block"), eventFile.ScriptSections.FirstOrDefault(s => s.Name == eventFile.LabelsSection.Objects.FirstOrDefault(l => l.Id == parameter)?.Name.Replace("/", ""))));
+                            parameters.Add(new ScriptSectionScriptParameter("Miss Block", eventFile.ScriptSections.FirstOrDefault(s => s.Name == eventFile.LabelsSection.Objects.FirstOrDefault(l => l.Id == parameter)?.Name.Replace("/", ""))));
                             break;
                         case 2:
-                            parameters.Add(new ScriptSectionScriptParameter(localize("Miss 2 Block"), eventFile.ScriptSections.FirstOrDefault(s => s.Name == eventFile.LabelsSection.Objects.FirstOrDefault(l => l.Id == parameter)?.Name.Replace("/", ""))));
+                            parameters.Add(new ScriptSectionScriptParameter("Miss 2 Block", eventFile.ScriptSections.FirstOrDefault(s => s.Name == eventFile.LabelsSection.Objects.FirstOrDefault(l => l.Id == parameter)?.Name.Replace("/", ""))));
                             break;
                     }
                     break;
@@ -611,16 +622,16 @@ public class ScriptItemCommand : ReactiveObject
                     switch (i)
                     {
                         case 0:
-                            parameters.Add(new ChessSpaceScriptParameter(localize("Move 1 Space Begin"), parameter));
+                            parameters.Add(new ChessSpaceScriptParameter("Move 1 Space Begin", parameter));
                             break;
                         case 1:
-                            parameters.Add(new ChessSpaceScriptParameter(localize("Move 1 Space End"), parameter));
+                            parameters.Add(new ChessSpaceScriptParameter("Move 1 Space End", parameter));
                             break;
                         case 2:
-                            parameters.Add(new ChessSpaceScriptParameter(localize("Move 2 Space Begin"), parameter));
+                            parameters.Add(new ChessSpaceScriptParameter("Move 2 Space Begin", parameter));
                             break;
                         case 3:
-                            parameters.Add(new ChessSpaceScriptParameter(localize("Move 2 Space End"), parameter));
+                            parameters.Add(new ChessSpaceScriptParameter("Move 2 Space End", parameter));
                             break;
                     }
                     break;
@@ -628,55 +639,55 @@ public class ScriptItemCommand : ReactiveObject
                     switch (i)
                     {
                         case 0:
-                            parameters.Add(new ChessSpaceScriptParameter(localize("Piece 1"), parameter));
+                            parameters.Add(new ChessSpaceScriptParameter("Piece 1", parameter));
                             break;
                         case 1:
-                            parameters.Add(new ChessSpaceScriptParameter(localize("Piece 2"), parameter));
+                            parameters.Add(new ChessSpaceScriptParameter("Piece 2", parameter));
                             break;
                         case 2:
-                            parameters.Add(new ChessSpaceScriptParameter(localize("Piece 3"), parameter));
+                            parameters.Add(new ChessSpaceScriptParameter("Piece 3", parameter));
                             break;
                         case 3:
-                            parameters.Add(new ChessSpaceScriptParameter(localize("Piece 4"), parameter));
+                            parameters.Add(new ChessSpaceScriptParameter("Piece 4", parameter));
                             break;
                     }
                     break;
                 case CommandVerb.CHESS_TOGGLE_HIGHLIGHT:
                     if (parameter != -1)
                     {
-                        parameters.Add(new ChessSpaceScriptParameter(string.Format(localize("Highlight Space {0}"), i), parameter));
+                        parameters.Add(new ChessSpaceScriptParameter($"Highlight Space {i}", parameter));
                     }
                     break;
                 case CommandVerb.CHESS_TOGGLE_CROSS:
                     if (parameter != -1)
                     {
-                        parameters.Add(new ChessSpaceScriptParameter(string.Format(localize("Cross Space {0}"), i), parameter));
+                        parameters.Add(new ChessSpaceScriptParameter($"Cross Space {i}", parameter));
                     }
                     break;
                 case CommandVerb.EPHEADER:
                     if (i == 0)
                     {
-                        parameters.Add(new EpisodeHeaderScriptParameter(localize("Episode Header"), parameter));
+                        parameters.Add(new EpisodeHeaderScriptParameter("Episode Header", parameter));
                     }
                     break;
                 case CommandVerb.CONFETTI:
                     if (i == 0)
 
                     {
-                        parameters.Add(new BoolScriptParameter(localize("Visible?"), parameter == 1));
+                        parameters.Add(new BoolScriptParameter("Visible?", parameter == 1));
                     }
                     break;
                 case CommandVerb.BG_DISPCG:
                     switch (i)
                     {
                         case 0:
-                            ItemDescription cgItem = itemsCol.FindOne(item => item.Type == ItemDescription.ItemType.Background && ((BackgroundItem)item).Id == parameter)
-                                                     ?? itemsCol.FindOne(item => item.Type == ItemDescription.ItemType.Background && ((BackgroundItem)item).BackgroundType == HaruhiChokuretsuLib.Archive.Data.BgType.TEX_CG);
+                            ItemDescription cgItem = (bgCol.FindOne(b => b.Id == parameter)
+                                                     ?? bgCol.FindOne(b => b.BackgroundType == HaruhiChokuretsuLib.Archive.Data.BgType.TEX_CG))?.GetItem(itemsCol);
 
-                            parameters.Add(new BgScriptParameter(localize("Background"), (BackgroundItem)cgItem, kinetic: false));
+                            parameters.Add(new BgScriptParameter("Background", (BackgroundItem)cgItem, kinetic: false));
                             break;
                         case 1:
-                            parameters.Add(new BoolScriptParameter(localize("Display from Bottom"), parameter == 1));
+                            parameters.Add(new BoolScriptParameter("Display from Bottom", parameter == 1));
                             break;
                     }
                     break;
@@ -684,17 +695,17 @@ public class ScriptItemCommand : ReactiveObject
                     switch (i)
                     {
                         case 0:
-                            parameters.Add(new BgScrollDirectionScriptParameter(localize("Scroll Direction"), parameter));
+                            parameters.Add(new BgScrollDirectionScriptParameter("Scroll Direction", parameter));
                             break;
                         case 1:
-                            parameters.Add(new ShortScriptParameter(localize("Scroll Speed"), parameter));
+                            parameters.Add(new ShortScriptParameter("Scroll Speed", parameter));
                             break;
                     }
                     break;
                 case CommandVerb.WAIT_CANCEL:
                     if (i == 0)
                     {
-                        parameters.Add(new ShortScriptParameter(localize("Wait Time (Frames)"), parameter));
+                        parameters.Add(new ShortScriptParameter("Wait Time (Frames)", parameter));
                     }
                     break;
             }

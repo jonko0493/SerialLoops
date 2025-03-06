@@ -22,7 +22,6 @@ public class ScriptItem : Item
     public short SfxGroupIndex { get; set; }
     [BsonIgnore]
     public AdjacencyGraph<ScriptSection, ScriptSectionEdge> Graph { get; set; } = new();
-    private readonly Func<string, string> _localize;
 
 
     public ScriptItem()
@@ -32,11 +31,10 @@ public class ScriptItem : Item
     {
     }
 
-    public ScriptItem(EventFile evt, EventTable evtTbl, Func<string, string> localize, ILogger log) : base(
+    public ScriptItem(EventFile evt, EventTable evtTbl, ILogger log) : base(
         evt.Name[..^1], ItemType.Script)
     {
         Event = evt;
-        _localize = localize;
 
         PruneLabelsSection(log);
         Graph.AddVertexRange(Event.ScriptSections);
@@ -56,7 +54,7 @@ public class ScriptItem : Item
                 {
                     currentCommand = command;
                     commands[section].Add(ScriptItemCommand.FromInvocation(command, section,
-                        commands[section].Count, Event, project, _localize, log));
+                        commands[section].Count, Event, project, log));
                 }
             }
 

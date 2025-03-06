@@ -860,7 +860,7 @@ public partial class Project
                 .Select(e =>
                 {
                     tracker.Finished++;
-                    return new ScriptItem(e, EventTableFile.EvtTbl, Localize, log);
+                    return new ScriptItem(e, EventTableFile.EvtTbl, log);
                 }).ToArray();
             items.AddRange(scripts);
             var scriptCol = db.GetCollection<ScriptItemShim>(nameof(ScriptItem));
