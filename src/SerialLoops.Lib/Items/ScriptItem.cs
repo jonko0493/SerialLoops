@@ -42,6 +42,12 @@ public class ScriptItem : Item
         UpdateEventTableInfo(evtTbl);
     }
 
+    public override void InitializeAfterDbLoad(Project project)
+    {
+        base.InitializeAfterDbLoad(project);
+        Graph.AddVertexRange(Event.ScriptSections);
+    }
+
     public OrderedDictionary<ScriptSection, List<ScriptItemCommand>> GetScriptCommandTree(Project project, ILogger log, LiteDatabase db = null)
     {
         ScriptCommandInvocation currentCommand = null;
@@ -280,6 +286,7 @@ public class ScriptItem : Item
                 if (chibi.ChibiIndex > 0)
                 {
                     chibis.Add((ChibiItem)chibiCol.FindOne(c => c.TopScreenIndex == chibi.ChibiIndex).GetItem(itemsCol));
+                    chibis[^1].InitializeAfterDbLoad(project);
                 }
             }
 
@@ -291,6 +298,7 @@ public class ScriptItem : Item
                     ChibiItem chibi = (ChibiItem)chibiCol.FindOne(c => c.TopScreenIndex == 1).GetItem(itemsCol);
                     if (!chibis.Contains(chibi))
                     {
+                        chibi.InitializeAfterDbLoad(project);
                         chibis.Add(chibi);
                     }
                 }
@@ -301,6 +309,7 @@ public class ScriptItem : Item
                         ChibiEnterExitScriptParameter.ChibiEnterExitType.Enter)
                     {
                         ChibiItem chibi = ((ChibiScriptParameter)commands[i].Parameters[0]).GetChibi(itemsCol);
+                        chibi?.InitializeAfterDbLoad(project);
                         if (!chibis.Contains(chibi))
                         {
                             if (chibi.TopScreenIndex < 1 || chibis.Count == 0)

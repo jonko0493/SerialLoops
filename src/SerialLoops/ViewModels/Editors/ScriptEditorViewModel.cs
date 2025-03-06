@@ -157,7 +157,6 @@ public class ScriptEditorViewModel : EditorViewModel
             section.SetCommands(_commands[section.Section]);
         }
         Source.ExpandAll();
-        _script.CalculateGraphEdges(_commands, _log);
 
         using LiteDatabase db = new(_project.DbFile);
         var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
@@ -176,8 +175,10 @@ public class ScriptEditorViewModel : EditorViewModel
                 {
                     continue;
                 }
-                UnusedChibis.Add(new(new() { ChibiIndex = i }, ((ChibiItem)chibiCol.FindOne(c => c.ChibiIndex == i).GetItem(itemsCol))
-                    .ChibiAnimations.First().Value[0].Frame, StartingChibis, UnusedChibis, _script, this));
+
+                ChibiItem chibi = ((ChibiItem)chibiCol.FindOne(c => c.ChibiIndex == i).GetItem(itemsCol));
+                chibi.InitializeAfterDbLoad(_project);
+                UnusedChibis.Add(new(new() { ChibiIndex = i }, chibi.ChibiAnimations.First().Value[0].Frame, StartingChibis, UnusedChibis, _script, this));
             }
         }
         else
@@ -187,11 +188,14 @@ public class ScriptEditorViewModel : EditorViewModel
 
         MapCharactersSubEditorVm = new(_script, this, db);
 
-        InteractableObjects.AddRange(_script.Event.InteractableObjectsSection.Objects.Where(o => o.ObjectId > 0).Select(o => new ReactiveInteractableObject(o,
-            MapCharactersSubEditorVm.Maps.ToArray(), _script, this)));
-        UnusedInteractableObjects.AddRange(MapCharactersSubEditorVm.Maps.SelectMany(m => m.Map.InteractableObjects)
-            .Where(o => o.ObjectId > 0 && InteractableObjects.All(i => i.InteractableObject.ObjectId != o.ObjectId))
-            .Select(o => new ReactiveInteractableObject(new() { ObjectId = (short)o.ObjectId },  MapCharactersSubEditorVm.Maps.ToArray(), _script, this)));
+        if (_script.Event.InteractableObjectsSection is not null)
+        {
+            InteractableObjects.AddRange(_script.Event.InteractableObjectsSection.Objects.Where(o => o.ObjectId > 0).Select(o => new ReactiveInteractableObject(o,
+                MapCharactersSubEditorVm.Maps.ToArray(), _script, this)));
+            UnusedInteractableObjects.AddRange(MapCharactersSubEditorVm.Maps.SelectMany(m => m.Map.InteractableObjects)
+                .Where(o => o.ObjectId > 0 && InteractableObjects.All(i => i.InteractableObject.ObjectId != o.ObjectId))
+                .Select(o => new ReactiveInteractableObject(new() { ObjectId = (short)o.ObjectId },  MapCharactersSubEditorVm.Maps.ToArray(), _script, this)));
+        }
 
         AddScriptCommandCommand = ReactiveCommand.CreateFromTask(AddCommand);
         AddScriptSectionCommand = ReactiveCommand.CreateFromTask(AddSection);
