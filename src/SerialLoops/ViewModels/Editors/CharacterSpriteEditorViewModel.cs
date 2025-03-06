@@ -5,9 +5,11 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Avalonia.Input;
 using Avalonia.Platform.Storage;
 using HaruhiChokuretsuLib.Util;
 using LiteDB;
+using ReactiveHistory;
 using ReactiveUI;
 using SerialLoops.Assets;
 using SerialLoops.Lib;
@@ -69,12 +71,21 @@ public class CharacterSpriteEditorViewModel : EditorViewModel
         }
     }
 
-    public ICommand ReplaceCommand { get; }
-    public ICommand ExportFramesCommand { get; }
+    private StackHistory _history;
+
+    public ICommand ReplaceCommand { get; set; }
+    public ICommand ExportFramesCommand { get; set; }
     public ICommand ExportGifCommand { get; }
+
+    public ICommand UndoCommand { get; }
+    public ICommand RedoCommand { get; }
+    public KeyGesture UndoGesture { get; }
+    public KeyGesture RedoGesture { get; }
 
     public CharacterSpriteEditorViewModel(ReactiveItemDescription item, MainWindowViewModel mainWindow, ILogger log) : base(item, mainWindow, log)
     {
+        _history = new();
+
         using LiteDatabase db = new(mainWindow.OpenProject.DbFile);
         var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
         var charCol = db.GetCollection<CharacterItemShim>(nameof(CharacterItem));
@@ -85,9 +96,17 @@ public class CharacterSpriteEditorViewModel : EditorViewModel
         _character = Characters.FirstOrDefault(c => c.MessageInfo.Character == _sprite.Sprite.Character);
         _isLarge = _sprite.Sprite.IsLarge;
 
+        this.WhenAnyValue(c => c.Character).ObserveWithHistory(c => Character = c, Character, _history);
+        this.WhenAnyValue(c => c.IsLarge).ObserveWithHistory(l => IsLarge = l, IsLarge, _history);
+
         ReplaceCommand = ReactiveCommand.CreateFromTask(ReplaceSprite);
         ExportFramesCommand = ReactiveCommand.CreateFromTask(ExportFrames);
         ExportGifCommand = ReactiveCommand.CreateFromTask(ExportGIF);
+
+        UndoCommand = ReactiveCommand.Create(() => _history.Undo());
+        RedoCommand = ReactiveCommand.Create(() => _history.Redo());
+        UndoGesture = GuiExtensions.CreatePlatformAgnosticCtrlGesture(Key.Z);
+        RedoGesture = GuiExtensions.CreatePlatformAgnosticCtrlGesture(Key.Y);
     }
 
     private async Task ReplaceSprite()

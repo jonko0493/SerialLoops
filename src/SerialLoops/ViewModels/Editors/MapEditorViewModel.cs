@@ -6,12 +6,16 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Avalonia;
 using Avalonia.Platform.Storage;
+using DynamicData;
+using HaruhiChokuretsuLib.Archive.Data;
+using HaruhiChokuretsuLib.Archive.Event;
 using HaruhiChokuretsuLib.Util;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
 using SerialLoops.Lib.Items.Shims;
+using SerialLoops.Lib.Util;
 using SerialLoops.Models;
 using SerialLoops.Utility;
 using SkiaSharp;
@@ -25,7 +29,7 @@ public class MapEditorViewModel : EditorViewModel
     public LayoutItem Layout { get; }
     public ObservableCollection<LayoutEntryWithImage> InfoLayer { get; } = [];
     public ObservableCollection<LayoutEntryWithImage> BgLayer { get; } = [];
-    public ObservableCollection<LayoutEntryWithImage> BgOcclusionLayer { get; } = [];
+    public ObservableCollection<LayoutEntryWithImage> OcclusionLayer { get; } = [];
     public ObservableCollection<LayoutEntryWithImage> ObjectLayer { get; } = [];
     public ObservableCollection<LayoutEntryWithImage> ScrollingBg { get; } = [];
     public ObservableCollection<LayoutEntryWithImage> CameraTruckingDefinitions { get; } = [];
@@ -33,6 +37,7 @@ public class MapEditorViewModel : EditorViewModel
     public ObservableCollection<LayoutEntryWithImage> ObjectJunkLayer { get; } = [];
 
     public ObservableCollection<HighlightedSpace> InteractableObjects { get; } = [];
+    public ObservableCollection<LayoutEntryWithImage> InteractableObjectsHiglightLayer { get; } = [];
     public ObservableCollection<HighlightedSpace> Unknown2s { get; } = [];
     public ObservableCollection<HighlightedSpace> ObjectPositions { get; } = [];
 
@@ -200,6 +205,13 @@ public class MapEditorViewModel : EditorViewModel
         CanvasHeight = _map.Layout.LayoutEntries.Max(l => l.ScreenY + l.ScreenH);
         for (int i = 0; i < _map.Layout.LayoutEntries.Count; i++)
         {
+            InteractableObject matchingIo =
+                _map.Map.InteractableObjects[..^1].FirstOrDefault(io => io.ObjectId == i);
+            if (matchingIo is not null)
+            {
+                InteractableObjectsHiglightLayer.Add(new(Description, Layout, i, matchingIo.ObjectName.GetSubstitutedString(window.OpenProject)));
+            }
+
             if (_map.Map.Settings.IntroCameraTruckingDefsStartIndex > 0 && i >= _map.Map.Settings.IntroCameraTruckingDefsStartIndex
                 && i <= _map.Map.Settings.IntroCameraTruckingDefsEndIndex)
             {
@@ -241,7 +253,7 @@ public class MapEditorViewModel : EditorViewModel
                 case 1:
                     if (_map.Map.Settings.LayoutOcclusionLayerStartIndex > 0 && i >= _map.Map.Settings.LayoutOcclusionLayerStartIndex && i <= _map.Map.Settings.LayoutOcclusionLayerEndIndex)
                     {
-                        BgOcclusionLayer.Add(new(Description, Layout, i) { Layer = _map.Layout.LayoutEntries[i].RelativeShtxIndex });
+                        OcclusionLayer.Add(new(Description, Layout, i) { Layer = _map.Layout.LayoutEntries[i].RelativeShtxIndex });
                     }
                     else if (_map.Map.Settings.LayoutOcclusionLayerStartIndex > 0 && i > _map.Map.Settings.LayoutOcclusionLayerStartIndex
                              || _map.Map.Settings.LayoutOcclusionLayerStartIndex == 0 && i > _map.Map.Settings.LayoutBgLayerEndIndex)
@@ -311,11 +323,11 @@ public class MapEditorViewModel : EditorViewModel
             StartingPointY = (int)gridZero.Y + _map.Map.Settings.StartingPosition.x * 8 + _map.Map.Settings.StartingPosition.y * 8 + 8;
         }
 
-        InteractableObjects = new(_map.Map.InteractableObjects[..^1].Select(io => new HighlightedSpace(io, gridZero, window.OpenProject)));
+        InteractableObjects = new(_map.Map.InteractableObjects[..^1].Select(io => new HighlightedSpace(io, gridZero)));
 
         Unknown2s = new(_map.Map.UnknownMapObject2s[..^1].Select(u => new HighlightedSpace(u, gridZero, _map.Map.Settings.SlgMode)));
 
-        ObjectPositions = new(_map.Map.ObjectMarkers[..^1].Select(u => new HighlightedSpace(u, gridZero, _map.Map.Settings.SlgMode)));
+        ObjectPositions = new(_map.Map.ObjectMarkers[..^1].Select(o => new HighlightedSpace(o, gridZero, _map.Map.Settings.SlgMode)));
 
         ExportCommand = ReactiveCommand.CreateFromTask(Export);
     }

@@ -12,7 +12,7 @@
     <Grid ColumnDefinitions="Auto,Auto" RowDefinitions="Auto">
         <TextBlock Grid.Column="0" Grid.Row="0" Margin="0,7,0,0" Text="{x:Static assets:Strings.Voice_Line}"/>
         <StackPanel Grid.Column="1" Grid.Row="0" Margin="10,0,0,0" Orientation="Horizontal" Spacing="3">
-            <ComboBox ItemsSource="{Binding Vces}" SelectedItem="{Binding Vce}">
+            <ComboBox ItemsSource="{Binding Vces}" SelectedItem="{Binding VceShim}">
                 <ComboBox.ItemTemplate>
                     <DataTemplate DataType="items:VoicedLineItem">
                         <TextBlock Text="{Binding DisplayName}"/>
@@ -24,7 +24,7 @@
                     </ControlTheme>
                 </ComboBox.ItemContainerTheme>
             </ComboBox>
-            <controls:ItemLink Item="{Binding Vce}" Tabs="{Binding Tabs}"
+            <controls:ItemLink Item="{Binding VceShim}" Tabs="{Binding Tabs}"
                                Project="{Binding ScriptEditor.Window.OpenProject}"/>
         </StackPanel>
     </Grid>

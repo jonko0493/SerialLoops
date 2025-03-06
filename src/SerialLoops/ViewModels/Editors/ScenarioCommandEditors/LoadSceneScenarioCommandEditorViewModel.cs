@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
 using LiteDB;
+using ReactiveHistory;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using SerialLoops.Lib;
@@ -37,8 +38,8 @@ public class LoadSceneScenarioCommandEditorViewModel : ScenarioCommandEditorView
     [Reactive]
     public ScriptItem Script { get; set; }
 
-    public LoadSceneScenarioCommandEditorViewModel(ScenarioEditorViewModel scenarioEditor, PrettyScenarioCommand command, Project project, EditorTabsPanelViewModel tabs)
-        : base(scenarioEditor, command, tabs)
+    public LoadSceneScenarioCommandEditorViewModel(ScenarioEditorViewModel scenarioEditor, PrettyScenarioCommand command, Project project, EditorTabsPanelViewModel tabs, StackHistory history)
+        : base(scenarioEditor, command, tabs, history)
     {
         _project = project;
         using LiteDatabase db = new(project.DbFile);
@@ -49,5 +50,7 @@ public class LoadSceneScenarioCommandEditorViewModel : ScenarioCommandEditorView
         _scriptShim = ScriptShims.FirstOrDefault(s => s.DisplayName == command.Parameter);
         _parameter = _scriptShim?.EventIndex ?? 0;
         Script = (ScriptItem)_scriptShim?.GetItem(itemsCol);
+
+        this.WhenAnyValue(e => e.ScriptShim).ObserveWithHistory(s => ScriptShim = s, ScriptShim, history);
     }
 }

@@ -3,10 +3,12 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Avalonia.Input;
 using HaruhiChokuretsuLib.Archive.Event;
 using HaruhiChokuretsuLib.Util;
 using LiteDB;
 using MsBox.Avalonia.Enums;
+using ReactiveHistory;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using SerialLoops.Assets;
@@ -48,21 +50,36 @@ public class ScenarioEditorViewModel : EditorViewModel
     [Reactive]
     public ScenarioCommandEditorViewModel CurrentCommandViewModel { get; set; }
 
+    private StackHistory _history;
+
     public ICommand AddCommand { get; set; }
     public ICommand DeleteCommand { get; set; }
     public ICommand ClearCommand { get; set; }
     public ICommand UpCommand { get; set; }
     public ICommand DownCommand { get; set; }
 
+    public ICommand UndoCommand { get; }
+    public ICommand RedoCommand { get; }
+    public KeyGesture UndoGesture { get; }
+    public KeyGesture RedoGesture { get; }
+
     public ScenarioEditorViewModel(ReactiveItemDescription item, MainWindowViewModel window, ILogger log) : base(item, window, log)
     {
         _scenario = (ScenarioItem)item.Item;
+        Commands = new(_scenario.ScenarioCommands.Select((s, i) => new PrettyScenarioCommand(s, i, _scenario)));
+        _history = new();
+
         Commands = new(_scenario.ScenarioCommands.Select((s, i) => new PrettyScenarioCommand(s, i, _scenario)));
         AddCommand = ReactiveCommand.Create(Add);
         DeleteCommand = ReactiveCommand.Create(Delete);
         ClearCommand = ReactiveCommand.CreateFromTask(Clear);
         UpCommand = ReactiveCommand.Create(Up);
         DownCommand = ReactiveCommand.Create(Down);
+
+        UndoCommand = ReactiveCommand.Create(() => _history.Undo());
+        RedoCommand = ReactiveCommand.Create(() => _history.Redo());
+        UndoGesture = GuiExtensions.CreatePlatformAgnosticCtrlGesture(Key.Z);
+        RedoGesture = GuiExtensions.CreatePlatformAgnosticCtrlGesture(Key.Y);
     }
 
     private async void Add()
@@ -94,6 +111,16 @@ public class ScenarioEditorViewModel : EditorViewModel
             SelectedCommand.CommandIndex = Commands.IndexOf(SelectedCommand);
         }
         Description.UnsavedChanges = true;
+
+        _history.Snapshot(() =>
+        {
+            _scenario.Scenario.Commands.RemoveAt(selectedIndex + 1);
+            Commands.RemoveAt(selectedIndex + 1);
+        }, () =>
+        {
+            _scenario.Scenario.Commands.Insert(selectedIndex + 1, newCommand);
+            Commands.Insert(selectedIndex + 1, new(_scenario.GetCommandMacro(newCommand), selectedIndex + 1, _scenario));
+        });
     }
     private void Delete()
     {
@@ -103,10 +130,23 @@ public class ScenarioEditorViewModel : EditorViewModel
             return;
         }
 
+        PrettyScenarioCommand prettyCommand = Commands[selectedIndex];
+        ScenarioCommand command = _scenario.Scenario.Commands[selectedIndex];
+
         Commands.RemoveAt(selectedIndex);
         _scenario.Scenario.Commands.RemoveAt(selectedIndex);
 
         Description.UnsavedChanges = true;
+
+        _history.Snapshot(() =>
+        {
+            Commands.Insert(selectedIndex, prettyCommand);
+            _scenario.Scenario.Commands.Insert(selectedIndex, command);
+        }, () =>
+        {
+            Commands.RemoveAt(selectedIndex);
+            _scenario.Scenario.Commands.RemoveAt(selectedIndex);
+        });
     }
     private async Task Clear()
     {
@@ -132,6 +172,16 @@ public class ScenarioEditorViewModel : EditorViewModel
         SelectedCommand = Commands.ElementAt(selectedIndex - 1);
 
         Description.UnsavedChanges = true;
+
+        _history.Snapshot(() =>
+        {
+            Commands.Swap(selectedIndex, selectedIndex - 1);
+            _scenario.Scenario.Commands.Swap(selectedIndex, selectedIndex - 1);
+        }, () =>
+        {
+            Commands.Swap(selectedIndex, selectedIndex - 1);
+            _scenario.Scenario.Commands.Swap(selectedIndex, selectedIndex - 1);
+        });
     }
     private void Down()
     {
@@ -146,15 +196,26 @@ public class ScenarioEditorViewModel : EditorViewModel
         SelectedCommand = Commands.ElementAt(selectedIndex + 1);
 
         Description.UnsavedChanges = true;
+
+        _history.Snapshot(() =>
+        {
+            Commands.Swap(selectedIndex, selectedIndex + 1);
+            _scenario.Scenario.Commands.Swap(selectedIndex, selectedIndex + 1);
+        }, () =>
+        {
+            Commands.Swap(selectedIndex, selectedIndex + 1);
+            _scenario.Scenario.Commands.Swap(selectedIndex, selectedIndex + 1);
+        });
     }
-    public ScenarioCommandEditorViewModel GetScenarioCommandEditor(PrettyScenarioCommand command)
+
+    private ScenarioCommandEditorViewModel GetScenarioCommandEditor(PrettyScenarioCommand command)
     {
         return command.Verb switch
         {
-            ScenarioVerb.LOAD_SCENE => new LoadSceneScenarioCommandEditorViewModel(this, command, Window.OpenProject, Window.EditorTabs),
-            ScenarioVerb.PUZZLE_PHASE => new PuzzlePhaseScenarioCommandEditorViewModel(this, command, Window.OpenProject, Window.EditorTabs),
-            ScenarioVerb.ROUTE_SELECT => new RouteSelectScenarioCommandEditorViewModel(this, command, Window.OpenProject, Window.EditorTabs),
-            _ => new(this, command, Window.EditorTabs),
+            ScenarioVerb.LOAD_SCENE => new LoadSceneScenarioCommandEditorViewModel(this, command, Window.OpenProject, Window.EditorTabs, _history),
+            ScenarioVerb.PUZZLE_PHASE => new PuzzlePhaseScenarioCommandEditorViewModel(this, command, Window.OpenProject, Window.EditorTabs, _history),
+            ScenarioVerb.ROUTE_SELECT => new RouteSelectScenarioCommandEditorViewModel(this, command, Window.OpenProject, Window.EditorTabs, _history),
+            _ => new(this, command, Window.EditorTabs, _history),
         };
     }
 }

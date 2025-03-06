@@ -24,10 +24,10 @@ namespace SerialLoops.ViewModels.Editors.ScriptCommandEditors;
 
 public partial class DialogueScriptCommandEditorViewModel : ScriptCommandEditorViewModel
 {
-    private MainWindowViewModel _window;
+    private readonly MainWindowViewModel _window;
     public EditorTabsPanelViewModel Tabs { get; set; }
     private Func<ItemDescription, bool> _specialPredicate;
-    private Timer _dialogueUpdateTimer;
+    private readonly Timer _dialogueUpdateTimer;
 
     public DialogueScriptCommandEditorViewModel(ScriptItemCommand command, ScriptEditorViewModel scriptEditor, ILogger log, MainWindowViewModel window) : base(command, scriptEditor, log)
     {
@@ -55,7 +55,7 @@ public partial class DialogueScriptCommandEditorViewModel : ScriptCommandEditorV
         _disableLipFlap = ((BoolScriptParameter)command.Parameters[11]).Value;
 
         _dialogueUpdateTimer = new(TimeSpan.FromMilliseconds(250));
-        _dialogueUpdateTimer.Elapsed += (sender, args) =>
+        _dialogueUpdateTimer.Elapsed += (_, _) =>
         {
             ScriptEditor.UpdatePreview();
             _dialogueUpdateTimer.Stop();
@@ -72,11 +72,11 @@ public partial class DialogueScriptCommandEditorViewModel : ScriptCommandEditorV
             if (value is null)
                 return;
 
-            if (_speaker == TextVoiceFont)
+            if (_speaker.MessageInfo.Character == TextVoiceFont.MessageInfo.Character)
             {
                 TextVoiceFont = value;
             }
-            if (_speaker == TextSpeed)
+            if (_speaker.MessageInfo.Character == TextSpeed.MessageInfo.Character)
             {
                 TextSpeed = value;
             }
@@ -238,7 +238,7 @@ public partial class DialogueScriptCommandEditorViewModel : ScriptCommandEditorV
             this.RaiseAndSetIfChanged(ref _textVoiceFont, value);
             ((DialoguePropertyScriptParameter)Command.Parameters[6]).Character = new(_textVoiceFont);
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
-                .Objects[Command.Index].Parameters[6] = (short)_textVoiceFont.MessageInfo.Character;
+                    .Objects[Command.Index].Parameters[6] = (short)ScriptEditor.Window.OpenProject.MessInfo.MessageInfos.IndexOf(_textVoiceFont.MessageInfo);
             ScriptEditor.Description.UnsavedChanges = true;
         }
     }
@@ -252,7 +252,7 @@ public partial class DialogueScriptCommandEditorViewModel : ScriptCommandEditorV
             this.RaiseAndSetIfChanged(ref _textSpeed, value);
             ((DialoguePropertyScriptParameter)Command.Parameters[7]).Character = new(_textSpeed);
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
-                .Objects[Command.Index].Parameters[7] = (short)_textSpeed.MessageInfo.Character;
+                .Objects[Command.Index].Parameters[7] = (short)ScriptEditor.Window.OpenProject.MessInfo.MessageInfos.IndexOf(_textSpeed.MessageInfo);
             ScriptEditor.Description.UnsavedChanges = true;
         }
     }

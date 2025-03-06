@@ -677,7 +677,7 @@ public partial class Project
             }).Where(b => b is not null).ToArray();
             items.AddRange(bgs);
             var bgCol = db.GetCollection<BackgroundItemShim>(nameof(BackgroundItem));
-            bgCol.InsertBulk(bgs.Select(bg => new BackgroundItemShim(bg, this)));
+            bgCol.InsertBulk(bgs.Select(bg => new BackgroundItemShim(bg)));
         }
         catch (Exception ex)
         {
@@ -694,7 +694,10 @@ public partial class Project
             {
                 tracker.Finished++;
                 BackgroundMusicItem bgmItem = new(bgm, i, this);
-                maxes.Add(bgmItem.GetWaveProvider(log, false).GetMaxAmplitude(log));
+                if (AverageBgmMaxAmplitude == 0)
+                {
+                    maxes.Add(bgmItem.GetWaveProvider(log, false).GetMaxAmplitude(log));
+                }
                 return bgmItem;
             }).ToArray();
 
@@ -702,7 +705,7 @@ public partial class Project
 
             items.AddRange(bgms);
             var bgmCol = db.GetCollection<BackgroundMusicItemShim>(nameof(BackgroundMusicItem));
-            bgmCol.InsertBulk(bgms.Select(bgm => new BackgroundMusicItemShim(bgm, this)));
+            bgmCol.InsertBulk(bgms.Select(bgm => new BackgroundMusicItemShim(bgm)));
         }
         catch (Exception ex)
         {
@@ -1301,6 +1304,7 @@ public partial class Project
             {
                 NdsProjectFile.ConvertProjectFile(Path.Combine(config.ProjectsDirectory, project.Name, "base", "rom", $"{project.Name}.xml"));
                 NdsProjectFile.ConvertProjectFile(Path.Combine(config.ProjectsDirectory, project.Name, "iterative", "rom", $"{project.Name}.xml"));
+                NdsProjectFile.ConvertProjectFile(Path.Combine(config.ProjectsDirectory, project.Name, "base", "original", $"{project.Name}.xml"));
             }
 
             LoadProjectResult result = project.Load(config, log, tracker, loadItems: false);

@@ -8,6 +8,7 @@ using ReactiveUI.Fody.Helpers;
 using SerialLoops.Assets;
 using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
+using SerialLoops.Lib.Items.Shims;
 using SerialLoops.Lib.Script;
 using SerialLoops.Lib.Script.Parameters;
 using SerialLoops.ViewModels.Panels;
@@ -19,20 +20,26 @@ public class SndPlayScriptCommandEditorViewModel : ScriptCommandEditorViewModel
     public EditorTabsPanelViewModel Tabs { get; }
 
     [Reactive]
-    public ObservableCollection<SfxItem> SfxChoices { get; set; }
-    private SfxItem _selectedSfx;
-    public SfxItem SelectedSfx
+    public ObservableCollection<SfxItemShim> SfxChoices { get; set; }
+    private SfxItemShim _selectedSfxShim;
+    public SfxItemShim SelectedSfxShim
     {
-        get => _selectedSfx;
+        get => _selectedSfxShim;
         set
         {
-            this.RaiseAndSetIfChanged(ref _selectedSfx, value);
-            ((SfxScriptParameter)Command.Parameters[0]).Sfx = _selectedSfx;
+            this.RaiseAndSetIfChanged(ref _selectedSfxShim, value);
+            ((SfxScriptParameter)Command.Parameters[0]).Sfx = _selectedSfxShim;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
-                .Objects[Command.Index].Parameters[0] = _selectedSfx.Index;
+                .Objects[Command.Index].Parameters[0] = _selectedSfxShim.Index;
             ScriptEditor.Description.UnsavedChanges = true;
+
+            using LiteDatabase db = new(ScriptEditor.Window.OpenProject.DbFile);
+            var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
+            SelectedSfx = (SfxItem)_selectedSfxShim.GetItem(itemsCol);
         }
     }
+    [Reactive]
+    public SfxItem SelectedSfx { get; set; }
 
     public ObservableCollection<SfxModeLocalized> SfxPlayModes { get; } =
         new(Enum.GetValues<SfxModeScriptParameter.SfxMode>().Select(m => new SfxModeLocalized(m)));
@@ -115,10 +122,12 @@ public class SndPlayScriptCommandEditorViewModel : ScriptCommandEditorViewModel
     {
         using LiteDatabase db = new(window.OpenProject.DbFile);
         var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
+        var sfxCol = db.GetCollection<SfxItemShim>(nameof(SfxItem));
 
         Tabs = window.EditorTabs;
-        SfxChoices = new(itemsCol.Find(i => i.Type == ItemDescription.ItemType.SFX && ((SfxItem)i).AssociatedGroups.Contains(window.OpenProject.Snd.Groups[Script.SfxGroupIndex].Name)).Cast<SfxItem>());
-        _selectedSfx = ((SfxScriptParameter)Command.Parameters[0]).Sfx;
+        SfxChoices = new(sfxCol.FindAll());
+        _selectedSfxShim = ((SfxScriptParameter)Command.Parameters[0]).Sfx;
+        SelectedSfx = (SfxItem)_selectedSfxShim.GetItem(itemsCol);
         _sfxMode = new(((SfxModeScriptParameter)Command.Parameters[1]).Mode);
         _volume = ((ShortScriptParameter)Command.Parameters[2]).Value;
         _crossfadeTime = ((ShortScriptParameter)Command.Parameters[4]).Value;

@@ -84,7 +84,7 @@ public class SetPlaceScriptCommandEditorViewModel : ScriptCommandEditorViewModel
         }
         else
         {
-            Place = (PlaceItem)place;
+            Place = new((PlaceItem)place);
         }
     }
 }

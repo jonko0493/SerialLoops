@@ -396,7 +396,7 @@ public partial class MainWindowViewModel : ViewModelBase
 
         string hackSaveFile = (await Window.ShowSaveFilePickerAsync(Strings.Export_Hack,
             [new(Strings.Serial_Loops_ASM_Hack) { Patterns = ["*.slhack"] }],
-            $"{asmHack.Name}.slhack")).TryGetLocalPath();
+            $"{asmHack.Name}.slhack"))?.TryGetLocalPath();
         if (!string.IsNullOrEmpty(hackSaveFile))
         {
             string tempDir = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
@@ -908,7 +908,7 @@ public partial class MainWindowViewModel : ViewModelBase
                     BackgroundItem backgroundItem = (BackgroundItem)reactiveItem.Item;
                     backgroundItem.Write(OpenProject, Log);
                     var bgCol = db.GetCollection<BackgroundItemShim>(nameof(BackgroundItem));
-                    bgCol.Update(backgroundItem.Name, new(backgroundItem, OpenProject));
+                    bgCol.Update(backgroundItem.Name, new(backgroundItem));
                     break;
                 case ItemDescription.ItemType.BGM:
                     if (!savedExtra)
@@ -918,7 +918,7 @@ public partial class MainWindowViewModel : ViewModelBase
                         savedExtra = true;
                     }
                     var bgmCol = db.GetCollection<BackgroundMusicItemShim>(nameof(BackgroundMusicItem));
-                    bgmCol.Update(reactiveItem.Item.Name, new((BackgroundMusicItem)reactiveItem.Item, OpenProject));
+                    bgmCol.Update(reactiveItem.Item.Name, new((BackgroundMusicItem)reactiveItem.Item));
 
                     OpenProject.ItemShims.First(s => s.Name == reactiveItem.Item.Name).DisplayName =
                         reactiveItem.DisplayName;

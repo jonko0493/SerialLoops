@@ -8,12 +8,13 @@ using NAudio.Vorbis;
 using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
 using NLayer.NAudioSupport;
+using VCDiff.Decoders;
 
 namespace SerialLoops.Lib.Items;
 
 public class VoicedLineItem : Item, ISoundItem
 {
-    private readonly string _vceFile;
+    private string _vceFile;
 
     public string VoiceFile { get; set; }
     public int Index { get; set; }
@@ -27,6 +28,12 @@ public class VoicedLineItem : Item, ISoundItem
         VoiceFile = Path.GetRelativePath(project.IterativeDirectory, voiceFile);
         _vceFile = voiceFile;
         Index = index;
+    }
+
+    public override void InitializeAfterDbLoad(Project project)
+    {
+        base.InitializeAfterDbLoad(project);
+        _vceFile = Path.Combine(project.IterativeDirectory, VoiceFile);
     }
 
     public IWaveProvider GetWaveProvider(ILogger log, bool loop = false)

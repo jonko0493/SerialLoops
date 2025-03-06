@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
 using LiteDB;
+using ReactiveHistory;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using SerialLoops.Lib;
@@ -36,8 +37,8 @@ public class PuzzlePhaseScenarioCommandEditorViewModel : ScenarioCommandEditorVi
     [Reactive]
     public PuzzleItem Puzzle { get; set; }
 
-    public PuzzlePhaseScenarioCommandEditorViewModel(ScenarioEditorViewModel scenarioEditor, PrettyScenarioCommand command, Project project, EditorTabsPanelViewModel tabs)
-        : base(scenarioEditor, command, tabs)
+    public PuzzlePhaseScenarioCommandEditorViewModel(ScenarioEditorViewModel scenarioEditor, PrettyScenarioCommand command, Project project, EditorTabsPanelViewModel tabs, StackHistory history)
+        : base(scenarioEditor, command, tabs, history)
     {
         _project = project;
         using LiteDatabase db = new(project.DbFile);
@@ -48,5 +49,7 @@ public class PuzzlePhaseScenarioCommandEditorViewModel : ScenarioCommandEditorVi
         _puzzleShim = Puzzles.FirstOrDefault(s => s.DisplayName == command.Parameter);
         _parameter = _puzzleShim?.PuzzleIndex ?? 0;
         Puzzle = (PuzzleItem)_puzzleShim?.GetItem(itemsCol);
+
+        this.WhenAnyValue(e => e.Puzzle).ObserveWithHistory(p => Puzzle = p, Puzzle, history);
     }
 }

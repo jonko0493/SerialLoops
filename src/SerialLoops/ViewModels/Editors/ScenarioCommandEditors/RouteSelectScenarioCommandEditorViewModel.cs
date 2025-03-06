@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
 using LiteDB;
+using ReactiveHistory;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using SerialLoops.Lib;
@@ -36,17 +37,17 @@ public class RouteSelectScenarioCommandEditorViewModel : ScenarioCommandEditorVi
     [Reactive]
     public GroupSelectionItem GroupSelection { get; set; }
 
-    public RouteSelectScenarioCommandEditorViewModel(ScenarioEditorViewModel scenarioEditor, PrettyScenarioCommand command, Project project, EditorTabsPanelViewModel tabs)
-        : base(scenarioEditor, command, tabs)
+    public RouteSelectScenarioCommandEditorViewModel(ScenarioEditorViewModel scenarioEditor, PrettyScenarioCommand command, Project project, EditorTabsPanelViewModel tabs, StackHistory history)
+        : base(scenarioEditor, command, tabs, history)
     {
         _project = project;
         using LiteDatabase db = new(project.DbFile);
-        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
         var gsCol = db.GetCollection<GroupSelectionItemShim>(nameof(GroupSelectionItem));
 
         GroupSelections = new(gsCol.FindAll());
         _groupSelectionShim = GroupSelections.FirstOrDefault(g => g.DisplayName == command.Parameter);
         _parameter = _groupSelectionShim?.Index ?? -1;
-        GroupSelection = (GroupSelectionItem)_groupSelectionShim?.GetItem(itemsCol);
+
+        this.WhenAnyValue(e => e.GroupSelection).ObserveWithHistory(g => GroupSelection = g, GroupSelection, history);
     }
 }
