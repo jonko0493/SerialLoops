@@ -43,7 +43,7 @@ public class ScriptItem : Item
         UpdateEventTableInfo(evtTbl);
     }
 
-    public OrderedDictionary<ScriptSection, List<ScriptItemCommand>> GetScriptCommandTree(Project project, ILogger log)
+    public OrderedDictionary<ScriptSection, List<ScriptItemCommand>> GetScriptCommandTree(Project project, ILogger log, LiteDatabase db = null)
     {
         ScriptCommandInvocation currentCommand = null;
         try

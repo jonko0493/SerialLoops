@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
+using DynamicData;
 using HaroohieClub.NitroPacker;
 using HaruhiChokuretsuLib.Archive;
 using HaruhiChokuretsuLib.Archive.Data;
@@ -20,6 +22,7 @@ using HaruhiChokuretsuLib.Util.Exceptions;
 using LiteDB;
 using SerialLoops.Lib.Items;
 using SerialLoops.Lib.Items.Shims;
+using SerialLoops.Lib.Script.Parameters;
 using SerialLoops.Lib.Util;
 using SkiaSharp;
 using static SerialLoops.Lib.Items.ItemDescription;
@@ -33,7 +36,7 @@ public partial class Project
     public const string EXPORT_FORMAT = "slzip";
     public static readonly JsonSerializerOptions SERIALIZER_OPTIONS = new() { Converters = { new SKColorJsonConverter() } };
 
-    public const int DbVersion = 2;
+    public const int DbVersion = 1;
     public const string ItemsCollectionName = "items";
     public const string ShimsCollectionName = "shims";
 
@@ -190,11 +193,18 @@ public partial class Project
             IO.CopyFileToDirectories(this, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Sources", "Makefile_overlay"), Path.Combine("src", "overlays", "Makefile"), log);
         }
 
-        using (LiteDatabase db = new(DbFile))
+        if (!loadItems) // if we're loading items, we're obviously going to be making a new DB
         {
-            if (db.UserVersion != DbVersion)
+            using (LiteDatabase db = new(DbFile))
             {
-                return new(LoadProjectState.DB_OUTDATED);
+                if (db.UserVersion < DbVersion)
+                {
+                    return new(LoadProjectState.DB_OUTDATED);
+                }
+                else if (db.UserVersion > DbVersion)
+                {
+                    return new(LoadProjectState.SL_OUTDATED);
+                }
             }
         }
 
@@ -667,7 +677,7 @@ public partial class Project
             }).Where(b => b is not null).ToArray();
             items.AddRange(bgs);
             var bgCol = db.GetCollection<BackgroundItemShim>(nameof(BackgroundItem));
-            bgCol.InsertBulk(bgs.Select(bg => new BackgroundItemShim(bg)));
+            bgCol.InsertBulk(bgs.Select(bg => new BackgroundItemShim(bg, this)));
         }
         catch (Exception ex)
         {
@@ -692,7 +702,7 @@ public partial class Project
 
             items.AddRange(bgms);
             var bgmCol = db.GetCollection<BackgroundMusicItemShim>(nameof(BackgroundMusicItem));
-            bgmCol.InsertBulk(bgms.Select(bgm => new BackgroundMusicItemShim(bgm)));
+            bgmCol.InsertBulk(bgms.Select(bgm => new BackgroundMusicItemShim(bgm, this)));
         }
         catch (Exception ex)
         {
@@ -854,7 +864,7 @@ public partial class Project
                 }).ToArray();
             items.AddRange(scripts);
             var scriptCol = db.GetCollection<ScriptItemShim>(nameof(ScriptItem));
-            scriptCol.InsertBulk(scripts.Select(scr => new ScriptItemShim(scr, this)));
+            scriptCol.InsertBulk(scripts.Select(scr => new ScriptItemShim(scr, this, log)));
         }
         catch (Exception ex)
         {
@@ -1433,22 +1443,20 @@ public partial class Project
 
     public List<ReactiveItemShim> GetSearchResults(SearchQuery query, ILogger log, IProgressTracker tracker = null)
     {
-        var term = query.Term.Trim();
-        var searchable = ItemShims.Where(i => query.Types.Contains(i.Type)).ToList();
-        tracker?.Focus($"{searchable.Count} Items", searchable.Count);
+        string term = query.Term.Trim();
+        tracker?.Focus("Searching", query.Scopes.Count);
 
         try
         {
-            return searchable.Where(item =>
+            using LiteDatabase db = new(DbFile);
+            return query.Scopes.SelectMany(s =>
+            {
+                if (tracker is not null)
                 {
-                    bool hit = query.Scopes.Aggregate(
-                        false,
-                        (current, scope) => current || ItemMatches(item, term, scope, log)
-                    );
-                    if (tracker is not null) tracker.Finished++;
-                    return hit;
-                })
-                .ToList();
+                    tracker.Finished++;
+                }
+                return GetQueryResults(term, s, db, log);
+            }).ToList();
         }
         catch (Exception ex)
         {
@@ -1466,70 +1474,71 @@ public partial class Project
         return (CharacterItem)charactersCol.FindOne(c => c.DisplayName == displayName)?.GetItem(itemsCol);
     }
 
-    private bool ItemMatches(ReactiveItemShim item, string term, SearchQuery.DataHolder scope, ILogger logger)
+    private IEnumerable<ReactiveItemShim> GetQueryResults(string term, SearchQuery.DataHolder scope, LiteDatabase db, ILogger logger)
     {
+        var bgCol = db.GetCollection<BackgroundItemShim>(nameof(BackgroundItem));
+        var bgmCol =  db.GetCollection<BackgroundMusicItemShim>(nameof(BackgroundMusicItem));
+        var charCol =  db.GetCollection<CharacterItemShim>(nameof(CharacterItem));
+        var chrSprCol =  db.GetCollection<CharacterSpriteItemShim>(nameof(CharacterSpriteItem));
+        var chessCol =  db.GetCollection<ChessPuzzleItemShim>(nameof(ChessPuzzleItem));
+        var chibiCol =  db.GetCollection<ChibiItemShim>(nameof(ChibiItem));
+        var gsCol =  db.GetCollection<GroupSelectionItemShim>(nameof(GroupSelectionItem));
+        var itemItemCol =  db.GetCollection<ItemItemShim>(nameof(ItemItem));
+        var layoutCol =  db.GetCollection<LayoutItemShim>(nameof(LayoutItem));
+        var mapCol = db.GetCollection<MapItemShim>(nameof(MapItem));
+        var placeCol = db.GetCollection<PlaceItemShim>(nameof(PlaceItem));
+        var puzzleCol = db.GetCollection<PuzzleItemShim>(nameof(PuzzleItem));
+        var scriptCol = db.GetCollection<ScriptItemShim>(nameof(ScriptItem));
+        var sysTexCol = db.GetCollection<SystemTextureItemShim>(nameof(SystemTextureItem));
+        var topicCol = db.GetCollection<TopicItemShim>(nameof(TopicItem));
+        var vceCol = db.GetCollection<VoicedLineItemShim>(nameof(VoicedLineItem));
+
+        List<ReactiveItemShim> results = [];
+
         switch (scope)
         {
-            default:
-                return false;
-            // case SearchQuery.DataHolder.Title:
-            //     return item.Name.Contains(term, StringComparison.OrdinalIgnoreCase) ||
-            //            item.DisplayName.Contains(term, StringComparison.OrdinalIgnoreCase);
-            //
-            // case SearchQuery.DataHolder.Background_ID:
-            //     if (int.TryParse(term, out int backgroundId))
-            //     {
-            //         return item.Type == ItemType.Background && ((BackgroundItem)item).Id == backgroundId;
-            //     }
-            //     return false;
-            //
-            // case SearchQuery.DataHolder.Archive_Index:
-            //     if (int.TryParse(term, out int archiveIdx) || ((term?.StartsWith("0x") ?? false) && int.TryParse(term[2..], NumberStyles.HexNumber, CultureInfo.CurrentCulture.NumberFormat, out archiveIdx)))
-            //     {
-            //         switch (item.Type)
-            //         {
-            //             case ItemType.Background:
-            //                 return ((BackgroundItem)item).Graphic1.Index == archiveIdx || (((BackgroundItem)item).Graphic2?.Index ?? -1) == archiveIdx;
-            //             case ItemType.Character:
-            //                 return MessInfo.Index == archiveIdx;
-            //             case ItemType.Character_Sprite:
-            //                 CharacterSpriteItem sprite = (CharacterSpriteItem)item;
-            //                 return new[]
-            //                            {
-            //                                sprite.Sprite.TextureIndex1, sprite.Sprite.TextureIndex2,
-            //                                sprite.Sprite.TextureIndex3, sprite.Sprite.LayoutIndex,
-            //                                sprite.Sprite.EyeAnimationIndex, sprite.Sprite.MouthAnimationIndex,
-            //                                sprite.Sprite.EyeTextureIndex, sprite.Sprite.MouthTextureIndex
-            //                            }
-            //                            .Contains((short)archiveIdx);
-            //             case ItemType.Chess_Puzzle:
-            //                 return ((ChessPuzzleItem)item).ChessPuzzle.Index == archiveIdx;
-            //             case ItemType.Chibi:
-            //                 return ((ChibiItem)item).Chibi.ChibiEntries.Select(c => c.Texture)
-            //                     .Contains((short)archiveIdx) || ((ChibiItem)item).Chibi.ChibiEntries
-            //                     .Select(c => c.Animation).Contains((short)archiveIdx);
-            //             case ItemType.Group_Selection:
-            //             case ItemType.Scenario:
-            //                 return archiveIdx == Evt.GetFileByName("SCENARIOS").Index;
-            //             case ItemType.Item:
-            //                 return ((ItemItem)item).ItemGraphic.Index == archiveIdx;
-            //             case ItemType.Layout:
-            //                 return ((LayoutItem)item).Layout.Index == archiveIdx;
-            //             case ItemType.Map:
-            //                 return ((MapItem)item).Map.Index == archiveIdx;
-            //             case ItemType.Place:
-            //                 return ((PlaceItem)item).PlaceGraphic.Index == archiveIdx;
-            //             case ItemType.Puzzle:
-            //                 return ((PuzzleItem)item).Puzzle.Index == archiveIdx;
-            //             case ItemType.Script:
-            //                 return ((ScriptItem)item).Event.Index == archiveIdx;
-            //             case ItemType.System_Texture:
-            //                 return ((SystemTextureItem)item).SysTex.GrpIndex == archiveIdx;
-            //             case ItemType.Topic:
-            //                 return archiveIdx == Evt.GetFileByName("TOPICS").Index;
-            //         }
-            //     }
-            //     return false;
+            case SearchQuery.DataHolder.Title:
+                return ItemShims.Where(s => s.Name.Contains(term, StringComparison.OrdinalIgnoreCase) ||
+                       s.DisplayName.Contains(term, StringComparison.OrdinalIgnoreCase));
+
+            case SearchQuery.DataHolder.Background_ID:
+                if (int.TryParse(term, out int backgroundId))
+                {
+                    return bgCol.Find(b => b.Id == backgroundId).Select(b => new ReactiveItemShim(b, this));
+                }
+                return [];
+
+            case SearchQuery.DataHolder.Archive_Index:
+                if (int.TryParse(term, out int archiveIdx) || ((term?.StartsWith("0x") ?? false) && int.TryParse(term[2..], NumberStyles.HexNumber, CultureInfo.CurrentCulture.NumberFormat, out archiveIdx)))
+                {
+                    results.AddRange(bgCol.Find(b => b.ArchiveIndices.Contains(archiveIdx)).Select(s => new ReactiveItemShim(s, this)));
+                    if (MessInfo.Index == archiveIdx)
+                    {
+                        results.AddRange(charCol.FindAll().Select(s => new ReactiveItemShim(s, this)));
+                    }
+                    results.AddRange(chrSprCol.Find(b => b.ArchiveIndices.Contains(archiveIdx)).Select(s => new ReactiveItemShim(s, this)));
+                    results.AddRange(chessCol.Find(c => c.Index == archiveIdx).Select(s => new ReactiveItemShim(s, this)));
+                    results.AddRange(chibiCol.Find(c => c.ArchiveIndices.Contains(archiveIdx)).Select(s => new ReactiveItemShim(s, this)));
+                    if (archiveIdx == Evt.GetFileByName("SCENARIOS").Index)
+                    {
+                        results.AddRange(gsCol.FindAll().Select(g => new ReactiveItemShim(g, this)));
+                        results.Add(ItemShims.First(s => s.Type == ItemType.Scenario));
+                    }
+                    results.AddRange(itemItemCol.Find(i => i.GraphicIndex == archiveIdx).Select(s => new ReactiveItemShim(s, this)));
+                    results.AddRange(layoutCol.Find(l => l.ArchiveIndices.Contains(archiveIdx)).Select(s => new ReactiveItemShim(s, this)));
+                    results.AddRange(mapCol.Find(m => m.ArchiveIndices.Contains(archiveIdx)).Select(s => new ReactiveItemShim(s, this)));
+                    results.AddRange(placeCol.Find(p => p.GraphicIndex == archiveIdx).Select(s => new ReactiveItemShim(s, this)));
+                    results.AddRange(puzzleCol.Find(p => p.PuzzleIndex == archiveIdx).Select(s => new ReactiveItemShim(s, this)));
+                    results.AddRange(scriptCol.Find(s => s.EventIndex == archiveIdx).Select(s => new ReactiveItemShim(s, this)));
+                    results.AddRange(sysTexCol.Find(s => s.GraphicIndex == archiveIdx).Select(s => new ReactiveItemShim(s, this)));
+                    if (Evt.GetFileByName("TOPICS").Index == archiveIdx)
+                    {
+                        results.AddRange(topicCol.FindAll().Select(s => new ReactiveItemShim(s, this)));
+                    }
+
+                    return results;
+                }
+                return [];
             //
             // case SearchQuery.DataHolder.Archive_Filename:
             //     switch (item.Type)
@@ -1576,29 +1585,10 @@ public partial class Project
             //             return "TOPICS".Contains(term, StringComparison.OrdinalIgnoreCase);
             //     }
             //     return false;
-            //
-            // case SearchQuery.DataHolder.Dialogue_Text:
-            //     if (item is ScriptItem dialogueScript)
-            //     {
-            //         if (LangCode.Equals("ja", StringComparison.OrdinalIgnoreCase))
-            //         {
-            //             return dialogueScript.GetScriptCommandTree(this, logger)
-            //                 .Any(s => s.Value.Any(c => c.Parameters
-            //                     .Where(p => p.Type == ScriptParameter.ParameterType.DIALOGUE)
-            //                     .Any(p => ((DialogueScriptParameter)p).Line.Text
-            //                         .Contains(term, StringComparison.OrdinalIgnoreCase))));
-            //         }
-            //         else
-            //         {
-            //             return dialogueScript.GetScriptCommandTree(this, logger)
-            //                 .Any(s => s.Value.Any(c => c.Parameters
-            //                     .Where(p => p.Type == ScriptParameter.ParameterType.DIALOGUE)
-            //                     .Any(p => ((DialogueScriptParameter)p).Line.Text
-            //                         .GetSubstitutedString(this).Contains(term, StringComparison.OrdinalIgnoreCase))));
-            //         }
-            //     }
-            //     return false;
-            //
+
+            case SearchQuery.DataHolder.Dialogue_Text:
+                return scriptCol.Find(s => s.DialogueLines.Contains(term)).Select(s => new ReactiveItemShim(s, this));
+
             // case SearchQuery.DataHolder.Command:
             //     if (item is ScriptItem commandScript)
             //     {
@@ -1624,97 +1614,68 @@ public partial class Project
             //                                                      (z.First?.GetValueString(this)?.Contains(z.Second, StringComparison.OrdinalIgnoreCase) ?? false))));
             //     }
             //     return false;
-            //
-            // case SearchQuery.DataHolder.Flag:
-            //     if (item is ScriptItem flagScript)
-            //     {
-            //         return flagScript.GetScriptCommandTree(this, logger)
-            //             .Any(s => s.Value.Any(c => c.Parameters
-            //                 .Where(p => p.Type == ScriptParameter.ParameterType.FLAG)
-            //                 .Any(p => ((FlagScriptParameter)p).FlagName
-            //                     .Contains(term, StringComparison.OrdinalIgnoreCase))));
-            //     }
-            //     else if (short.TryParse(term, out short flagTerm))
-            //     {
-            //         if (item is BackgroundMusicItem flagBgm)
-            //         {
-            //             return flagBgm.Flag == flagTerm;
-            //         }
-            //         else if (item is BackgroundItem flagBg)
-            //         {
-            //             return flagBg.Flag == flagTerm;
-            //         }
-            //         else if (item is TopicItem flagTopic)
-            //         {
-            //             return flagTopic.TopicEntry.Id == flagTerm;
-            //         }
-            //         else if (item is PuzzleItem flagPuzzle)
-            //         {
-            //             return flagPuzzle.Puzzle.Settings.Unknown15 == flagTerm || flagPuzzle.Puzzle.Settings.Unknown16 == flagTerm;
-            //         }
-            //         else if (item is GroupSelectionItem flagGroupSelection)
-            //         {
-            //             return flagGroupSelection.Selection.Activities.Any(a => a?.Routes.Any(r => r?.Flag == flagTerm) ?? false);
-            //         }
-            //     }
-            //     return false;
-            //
-            // case SearchQuery.DataHolder.Conditional:
-            //     if (item is ScriptItem conditionalScript)
-            //     {
-            //         return conditionalScript.Event.ConditionalsSection?.Objects?
-            //             .Any(c => !string.IsNullOrEmpty(c) && c.Contains(term, StringComparison.OrdinalIgnoreCase)) ?? false;
-            //     }
-            //     return false;
-            //
-            // case SearchQuery.DataHolder.Speaker_Name:
-            //     if (item is ScriptItem speakerScript)
-            //     {
-            //         return speakerScript.GetScriptCommandTree(this, logger)
-            //             .Any(s => s.Value.Any(c => c.Parameters
-            //                 .Where(p => p.Type == ScriptParameter.ParameterType.DIALOGUE)
-            //                 .Any(p => Characters[(int)((DialogueScriptParameter)p).Line.Speaker].Name
-            //                     .Contains(term, StringComparison.OrdinalIgnoreCase))));
-            //     }
-            //     return false;
-            //
-            // case SearchQuery.DataHolder.Background_Type:
-            //     if (item is BackgroundItem bg)
-            //     {
-            //         return bg.BackgroundType.ToString().Contains(term, StringComparison.OrdinalIgnoreCase);
-            //     }
-            //     return false;
-            //
+
+            case SearchQuery.DataHolder.Flag:
+                short flag = -1;
+                short.TryParse(term, out flag);
+                results.AddRange(scriptCol.Find(s => s.FlagIds.Contains(flag)
+                                                     || s.FlagNames.Contains(term, StringComparer.OrdinalIgnoreCase)
+                                                     || s.FlagNicknames.Contains(term, StringComparison.OrdinalIgnoreCase))
+                    .Select(s => new ReactiveItemShim(s, this)));
+                results.AddRange(bgCol.Find(b => b.Flag == flag
+                                                 || b.FlagName.Equals(term, StringComparison.OrdinalIgnoreCase)
+                                                 || b.FlagNickname.Contains(term, StringComparison.OrdinalIgnoreCase))
+                    .Select(s => new ReactiveItemShim(s, this)));
+                results.AddRange(bgmCol.Find(b => b.Flag == flag
+                                                 || b.FlagName.Equals(term, StringComparison.OrdinalIgnoreCase)
+                                                 || b.FlagNickname.Contains(term, StringComparison.OrdinalIgnoreCase))
+                    .Select(s => new ReactiveItemShim(s, this)));
+                results.AddRange(puzzleCol.Find(p => p.Flags.Contains(flag)
+                                                  || p.FlagNames.Contains(term, StringComparison.OrdinalIgnoreCase))
+                    .Select(s => new ReactiveItemShim(s, this)));
+                results.AddRange(gsCol.Find(g => g.RouteFlags.Contains(flag)
+                                                     || g.RouteFlagNames.Contains(term, StringComparison.OrdinalIgnoreCase))
+                    .Select(s => new ReactiveItemShim(s, this)));
+                return results;
+
+            case SearchQuery.DataHolder.Conditional:
+                return scriptCol.Find(s => s.Conditionals.Contains(term, StringComparison.OrdinalIgnoreCase))
+                    .Select(s => new ReactiveItemShim(s, this));
+
+            case SearchQuery.DataHolder.Speaker_Name:
+                return scriptCol.Find(s => s.SpeakerStrings.Any(sp => sp.Contains(term, StringComparison.OrdinalIgnoreCase)))
+                    .Select(s => new ReactiveItemShim(s, this));
+
+            case SearchQuery.DataHolder.Background_Type:
+                return bgCol.Find(b => b.BackgroundType.ToString().Contains(term, StringComparison.OrdinalIgnoreCase))
+                    .Select(s => new ReactiveItemShim(s, this));
+
             // case SearchQuery.DataHolder.Episode_Number:
-            //     if (int.TryParse(term, out int episodeNum))
+            //     if (int.TryParse(term, out int episodeNumber))
             //     {
-            //         return ItemIsInEpisode(item, episodeNum, unique: false);
+            //         return ItemShims.Where(i => ItemIsInEpisode(i.Shim, episodeNumber, unique: false, db));
             //     }
-            //     return false;
+            //     return [];
             //
             // case SearchQuery.DataHolder.Episode_Unique:
             //     if (int.TryParse(term, out int episodeNumUnique))
             //     {
-            //         return ItemIsInEpisode(item, episodeNumUnique, unique: true);
+            //         return ItemShims.Where(i => ItemIsInEpisode(i.Shim, episodeNumUnique, unique: true, db));
             //     }
-            //     return false;
+            //     return [];
             //
             // case SearchQuery.DataHolder.Orphaned_Items:
-            //     if (IGNORED_ORPHAN_TYPES.Contains(item.Type)
-            //         // assume SFX that are in groups are referenced in code. william doesn't quite know what jonko means here but he trusts the process
-            //         || (item is SfxItem sfx && sfx.Name.Contains("SSE") && sfx.AssociatedGroups.Count > 0))
-            //     {
-            //         return false;
-            //     }
-            //     return item.GetReferencesTo(this).Count == 0;
-            //
-            // default:
-            //     logger.LogError($"Unimplemented search scope: {scope}");
-            //     return false;
+            //     // assume SFX that are in groups are referenced in code. william doesn't quite know what jonko means here but he trusts the process
+            //     return ItemShims.Where(i => !IGNORED_ORPHAN_TYPES.Contains(i.Type) && i.Type != ItemType.SFX)
+            //         .Where(i => i.Shim.GetReferencesTo(this).Count == 0);
+
+            default:
+                logger.LogError($"Unimplemented search scope: {scope}");
+                return [];
         }
     }
 
-    private bool ItemIsInEpisode(ItemShim item, int episodeNum, bool unique)
+    private bool ItemIsInEpisode(ItemShim item, int episodeNum, bool unique, LiteDatabase db)
     {
         int scenarioEpIndex = Scenario.Commands.FindIndex(c => c.Verb == ScenarioCommand.ScenarioVerb.NEW_GAME && c.Parameter == episodeNum);
         if (scenarioEpIndex >= 0)
@@ -1722,33 +1683,32 @@ public partial class Project
             int scenarioNextEpIndex = Scenario.Commands.FindIndex(c => c.Verb == ScenarioCommand.ScenarioVerb.NEW_GAME && c.Parameter == episodeNum + 1);
             if (item is ScriptItemShim script)
             {
-                return ScriptIsInEpisode(script, scenarioEpIndex, scenarioNextEpIndex);
+                return ScriptIsInEpisode(script, scenarioEpIndex, scenarioNextEpIndex, db);
             }
             else
             {
-                List<ItemShim> references = item.GetReferencesTo(this).Select(r => r.Shim).ToList();
+                List<ItemShim> references = item.GetReferencesTo(this, db).Select(r => r.Shim).ToList();
                 if (unique)
                 {
-
                     return references.Any(r => r.Type == ItemType.Script) &&
                            references.Where(r => r.Type == ItemType.Script)
-                               .All(r => ScriptIsInEpisode((ScriptItemShim)r, scenarioEpIndex, scenarioNextEpIndex));
+                               .All(r => ScriptIsInEpisode((ScriptItemShim)r, scenarioEpIndex, scenarioNextEpIndex, db));
                 }
                 else
                 {
-                    return references.Any(r => r.Type == ItemType.Script && ScriptIsInEpisode((ScriptItemShim)r, scenarioEpIndex, scenarioNextEpIndex));
+                    return references.Any(r => r.Type == ItemType.Script && ScriptIsInEpisode((ScriptItemShim)r, scenarioEpIndex, scenarioNextEpIndex, db));
                 }
             }
         }
         return false;
     }
 
-    private bool ScriptIsInEpisode(ScriptItemShim script, int scenarioEpIndex, int scenarioNextEpIndex)
+    private bool ScriptIsInEpisode(ScriptItemShim script, int scenarioEpIndex, int scenarioNextEpIndex, LiteDatabase db)
     {
         int scriptFileScenarioIndex = Scenario.Commands.FindIndex(c => c.Verb == ScenarioCommand.ScenarioVerb.LOAD_SCENE && c.Parameter == script.EventIndex);
         if (scriptFileScenarioIndex < 0)
         {
-            List<ItemShim> references = script.GetReferencesTo(this).Select(r => r.Shim).ToList();
+            List<ItemShim> references = script.GetReferencesTo(this, db).Select(r => r.Shim).ToList();
             ItemShim groupSelection = references.Find(r => r.Type == ItemType.Group_Selection);
             if (groupSelection is not null)
             {

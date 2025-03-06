@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using HaruhiChokuretsuLib.Archive.Event;
 using LiteDB;
@@ -62,9 +63,8 @@ public partial class ItemDescription
         Save, // Not a real item so I'm not adhering to alpha order here; should never show up in a project
     }
 
-    public List<ItemShim> GetReferencesTo(Project project)
+    public List<ItemShim> GetReferencesTo(Project project, LiteDatabase db)
     {
-        using LiteDatabase db = new(project.DbFile);
         var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
         var shimsCol = db.GetCollection<ItemShim>(Project.ShimsCollectionName);
         var scriptsCol = db.GetCollection<ScriptItemShim>(nameof(ScriptItem));

@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.Linq;
 using HaruhiChokuretsuLib.Archive.Data;
 using HaruhiChokuretsuLib.Archive.Event;
+using SerialLoops.Lib.Script.Parameters;
 
 namespace SerialLoops.Lib.Items.Shims;
 
@@ -12,6 +14,9 @@ public class PuzzleItemShim : ItemShim
     public Speaker AccompanyingCharacter { get; set; }
     public Speaker PowerCharacter1 { get; set; }
     public Speaker PowerCharacter2 { get; set; }
+
+    public int[] Flags { get; set; }
+    public string FlagNames { get; set; }
 
     public PuzzleItemShim()
     {
@@ -25,5 +30,7 @@ public class PuzzleItemShim : ItemShim
         AccompanyingCharacter = puzzle.Puzzle.Settings.AccompanyingCharacter;
         PowerCharacter1 = puzzle.Puzzle.Settings.PowerCharacter1;
         PowerCharacter2 = puzzle.Puzzle.Settings.PowerCharacter2;
+        Flags = [puzzle.Puzzle.Settings.Unknown15, puzzle.Puzzle.Settings.Unknown16];
+        FlagNames = string.Join(' ', Flags.Select(f => new FlagScriptParameter("Flag", (short)f).FlagName));
     }
 }

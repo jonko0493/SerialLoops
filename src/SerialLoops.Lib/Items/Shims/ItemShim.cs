@@ -29,15 +29,22 @@ public class ItemShim
         return itemsCol.FindById(Name);
     }
 
-    public List<ReactiveItemShim> GetReferencesTo(Project project)
+    public List<ReactiveItemShim> GetReferencesTo(Project project, LiteDatabase db = null)
     {
+        bool dbWasNull = db is null;
         ItemDescription item = null;
-        using (LiteDatabase db = new(project.DbFile))
+        if (dbWasNull)
         {
-            var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
-            item = itemsCol.FindById(Name);
+            db = new(project.DbFile);
         }
-        return item?.GetReferencesTo(project)?.Select(s => new ReactiveItemShim(s, project)).ToList();
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
+        item = itemsCol.FindById(Name);
+        List<ReactiveItemShim> references = item?.GetReferencesTo(project, db)?.Select(s => new ReactiveItemShim(s, project)).ToList();
+        if (dbWasNull)
+        {
+            db.Dispose();
+        }
+        return references;
     }
 
     public void CommitRename(Project project)

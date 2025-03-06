@@ -908,7 +908,7 @@ public partial class MainWindowViewModel : ViewModelBase
                     BackgroundItem backgroundItem = (BackgroundItem)reactiveItem.Item;
                     backgroundItem.Write(OpenProject, Log);
                     var bgCol = db.GetCollection<BackgroundItemShim>(nameof(BackgroundItem));
-                    bgCol.Update(backgroundItem.Name, new(backgroundItem));
+                    bgCol.Update(backgroundItem.Name, new(backgroundItem, OpenProject));
                     break;
                 case ItemDescription.ItemType.BGM:
                     if (!savedExtra)
@@ -918,7 +918,7 @@ public partial class MainWindowViewModel : ViewModelBase
                         savedExtra = true;
                     }
                     var bgmCol = db.GetCollection<BackgroundMusicItemShim>(nameof(BackgroundMusicItem));
-                    bgmCol.Update(reactiveItem.Item.Name, new((BackgroundMusicItem)reactiveItem.Item));
+                    bgmCol.Update(reactiveItem.Item.Name, new((BackgroundMusicItem)reactiveItem.Item, OpenProject));
 
                     OpenProject.ItemShims.First(s => s.Name == reactiveItem.Item.Name).DisplayName =
                         reactiveItem.DisplayName;
@@ -1033,7 +1033,7 @@ public partial class MainWindowViewModel : ViewModelBase
                     scriptItem.Event.CollectGarbage();
                     IO.WriteStringFile(Path.Combine("assets", "events", $"{scriptItem.Event.Index:X3}.s"), scriptItem.Event.GetSource(includes), OpenProject, Log);
                     var scriptCol = db.GetCollection<ScriptItemShim>(nameof(ScriptItem));
-                    scriptCol.Update(scriptItem.Name, new(scriptItem, OpenProject));
+                    scriptCol.Update(scriptItem.Name, new(scriptItem, OpenProject, Log));
                     break;
                 case ItemDescription.ItemType.System_Texture:
                     SystemTextureItem sysTexItem = (SystemTextureItem)reactiveItem.Item;

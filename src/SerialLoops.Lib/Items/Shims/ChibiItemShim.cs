@@ -1,9 +1,12 @@
+using System.Linq;
+
 namespace SerialLoops.Lib.Items.Shims;
 
 public class ChibiItemShim : ItemShim
 {
     public int TopScreenIndex { get; set; }
     public int ChibiIndex { get; set; }
+    public int[] ArchiveIndices { get; set; }
 
     public ChibiItemShim()
     {
@@ -13,5 +16,10 @@ public class ChibiItemShim : ItemShim
     {
         TopScreenIndex = chibi.TopScreenIndex;
         ChibiIndex = chibi.ChibiIndex;
+        ArchiveIndices =
+        [
+            .. chibi.Chibi.ChibiEntries.Select(c => c.Texture),
+            .. chibi.Chibi.ChibiEntries.Select(c => c.Animation),
+        ];
     }
 }

@@ -7,6 +7,7 @@ public class CharacterSpriteItemShim : ItemShim
     public bool IsLarge { get; set; }
     public Speaker Character { get; set; }
     public int Index { get; set; }
+    public int[] ArchiveIndices { get; set; }
 
     public CharacterSpriteItemShim()
     {
@@ -17,5 +18,12 @@ public class CharacterSpriteItemShim : ItemShim
         IsLarge = sprite.Sprite.IsLarge;
         Character = sprite.Sprite.Character;
         Index = sprite.Index;
+        ArchiveIndices =
+        [
+            sprite.Sprite.TextureIndex1, sprite.Sprite.TextureIndex2,
+            sprite.Sprite.TextureIndex3, sprite.Sprite.LayoutIndex,
+            sprite.Sprite.EyeAnimationIndex, sprite.Sprite.MouthAnimationIndex,
+            sprite.Sprite.EyeTextureIndex, sprite.Sprite.MouthTextureIndex,
+        ];
     }
 }

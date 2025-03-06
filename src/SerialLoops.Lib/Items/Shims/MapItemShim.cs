@@ -4,6 +4,7 @@ public class MapItemShim : ItemShim
 {
     public int QmapIndex { get; set; }
     public int MapIndex { get; set; }
+    public int[] ArchiveIndices { get; set; }
 
     public MapItemShim()
     {
@@ -13,5 +14,11 @@ public class MapItemShim : ItemShim
     {
         QmapIndex = map.QmapIndex;
         MapIndex = map.Map.Index;
+        ArchiveIndices =
+        [
+            MapIndex,
+            map.Layout.Index,
+            .. map.Map.Settings.TextureFileIndices
+        ];
     }
 }
