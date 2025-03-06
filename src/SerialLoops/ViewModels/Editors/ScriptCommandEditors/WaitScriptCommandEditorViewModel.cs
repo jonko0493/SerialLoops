@@ -17,7 +17,7 @@ public class WaitScriptCommandEditorViewModel(ScriptItemCommand command, ScriptE
             ((ShortScriptParameter)Command.Parameters[0]).Value = _waitTime;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[0] = _waitTime;
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
             Command.UpdateDisplay();
         }
     }

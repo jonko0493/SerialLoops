@@ -14,14 +14,14 @@ namespace SerialLoops.ViewModels.Editors;
 public class SaveEditorViewModel : EditorViewModel
 {
     public SaveItem Save { get; }
-    public SaveSlotPreviewViewModel Slot1ViewModel => new(Save, Save.Save.CheckpointSaveSlots[0], 1, Window);
-    public SaveSlotPreviewViewModel Slot2ViewModel => new(Save, Save.Save.CheckpointSaveSlots[1], 2, Window);
-    public SaveSlotPreviewViewModel QuickSaveViewModel => new(Save, Save.Save.QuickSaveSlot, 3, Window);
+    public SaveSlotPreviewViewModel Slot1ViewModel => new(Description, Save, Save.Save.CheckpointSaveSlots[0], 1, Window);
+    public SaveSlotPreviewViewModel Slot2ViewModel => new(Description, Save, Save.Save.CheckpointSaveSlots[1], 2, Window);
+    public SaveSlotPreviewViewModel QuickSaveViewModel => new(Description, Save, Save.Save.QuickSaveSlot, 3, Window);
 
     public ICommand EditCommonSaveDataCommand { get; }
 
     public SaveEditorViewModel(SaveItem save, MainWindowViewModel window, ILogger log, EditorTabsPanelViewModel tabs = null) :
-        base(save, window, log, tabs: tabs)
+        base(new(save), window, log, tabs: tabs)
     {
         Save = save;
 
@@ -32,7 +32,7 @@ public class SaveEditorViewModel : EditorViewModel
     {
         await new SaveSlotEditorDialog()
         {
-            DataContext = new SaveSlotEditorDialogViewModel(Save, Save.Save.CommonData, Save.DisplayName,
+            DataContext = new SaveSlotEditorDialogViewModel(Description, Save, Save.Save.CommonData, Save.DisplayName,
                 Strings.Common_Save_Data, Window.OpenProject, _log, _tabs),
         }.ShowDialog(Window.Window);
     }

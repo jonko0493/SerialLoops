@@ -32,7 +32,7 @@ public class TopicGetScriptCommandEditorViewModel : ScriptCommandEditorViewModel
             TopicId = _selectedTopic.TopicEntry.Id;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[0] = _selectedTopic.TopicEntry.Id;
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -42,7 +42,7 @@ public class TopicGetScriptCommandEditorViewModel : ScriptCommandEditorViewModel
         : base(command, scriptEditor, log)
     {
         using LiteDatabase db = new(window.OpenProject.DbFile);
-        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
 
         Tabs = window.EditorTabs;
         Topics = new(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Topic).Cast<TopicItem>());

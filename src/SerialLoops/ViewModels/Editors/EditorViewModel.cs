@@ -2,12 +2,13 @@
 using HaruhiChokuretsuLib.Util;
 using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
+using SerialLoops.Lib.Items.Shims;
 using SerialLoops.Models;
 using SerialLoops.ViewModels.Panels;
 
 namespace SerialLoops.ViewModels.Editors;
 
-public class EditorViewModel(ItemDescription item, MainWindowViewModel window, ILogger log, Project project = null, EditorTabsPanelViewModel tabs = null, ItemExplorerPanelViewModel explorer = null) : ViewModelBase
+public class EditorViewModel(ReactiveItemDescription item, MainWindowViewModel window, ILogger log, Project project = null, EditorTabsPanelViewModel tabs = null, ItemExplorerPanelViewModel explorer = null) : ViewModelBase
 {
     public MainWindowViewModel Window { get; protected set; } = window;
     protected ILogger _log = log;
@@ -15,8 +16,7 @@ public class EditorViewModel(ItemDescription item, MainWindowViewModel window, I
     protected EditorTabsPanelViewModel _tabs = tabs;
     protected ItemExplorerPanelViewModel _explorer = explorer;
 
-    public ItemDescription Description { get; set; } = item;
-    public List<EditorCommand> EditorCommands { get; }
+    public ReactiveItemDescription Description { get; set; } = item;
 
-    public string IconSource => $"avares://SerialLoops/Assets/Icons/{Description.Type.ToString().Replace(' ', '_')}.png";
+    public string IconSource => $"avares://SerialLoops/Assets/Icons/{Description.Item.Type.ToString().Replace(' ', '_')}.png";
 }

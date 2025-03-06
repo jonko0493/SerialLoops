@@ -30,7 +30,7 @@ public class VgotoScriptCommandEditorViewModel(ScriptItemCommand command, Script
                     (short)(Script.Event.ConditionalsSection.Objects.Count - 1);
                 Script.Event.ConditionalsSection.Objects.Insert(Script.Event.ConditionalsSection.Objects.Count - 1, _conditional);
             }
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
             Command.UpdateDisplay();
         }
     }
@@ -46,7 +46,7 @@ public class VgotoScriptCommandEditorViewModel(ScriptItemCommand command, Script
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[1] = Script.Event.LabelsSection.Objects
                 .FirstOrDefault(l => l.Name.Replace("/", "").Equals(_sectionToJumpTo.Name))?.Id ?? 0;
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
             Command.UpdateDisplay();
         }
     }

@@ -17,7 +17,7 @@ public class Flags
     public static string GetFlagNickname(int flag, Project project)
     {
         using LiteDatabase db = new(project.DbFile);
-        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
 
         if (_names.TryGetValue(flag, out string value))
         {

@@ -28,9 +28,9 @@ public class SfxEditorViewModel : EditorViewModel
 
     public ICommand ExtractCommand { get; }
 
-    public SfxEditorViewModel(ItemDescription item, MainWindowViewModel window, ILogger log) : base(item, window, log, window.OpenProject)
+    public SfxEditorViewModel(ItemDescription item, MainWindowViewModel window, ILogger log) : base(new(item), window, log, window.OpenProject)
     {
-        Sfx = (SfxItem)Description;
+        Sfx = (SfxItem)Description.Item;
         _archive = _project.Snd.SequenceArchives[Sfx.Entry.SequenceArchive].File;
         _sequence = _archive.Sequences[Sfx.Entry.Index];
 
@@ -46,7 +46,7 @@ public class SfxEditorViewModel : EditorViewModel
     private async Task Extract()
     {
         _player.Stop();
-        IStorageFile wavFile = await GuiExtensions.ShowSaveFilePickerAsync(Window.Window, Strings.Export_SFX, [new(Strings.WAV_File) { Patterns = ["*.wav"] }], $"{Sfx.DisplayName}.wav");
+        IStorageFile wavFile = await Window.Window.ShowSaveFilePickerAsync(Strings.Export_SFX, [new(Strings.WAV_File) { Patterns = ["*.wav"] }], $"{Sfx.DisplayName}.wav");
         if (wavFile is not null)
         {
             _player.Record(wavFile.TryGetLocalPath());

@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Avalonia;
@@ -19,6 +18,7 @@ using HaruhiChokuretsuLib.Archive;
 using HaruhiChokuretsuLib.Archive.Data;
 using HaruhiChokuretsuLib.Archive.Event;
 using HaruhiChokuretsuLib.Archive.Graphics;
+using LiteDB;
 using MiniToolbar.Avalonia;
 using MsBox.Avalonia.Enums;
 using ReactiveUI;
@@ -28,6 +28,7 @@ using SerialLoops.Lib;
 using SerialLoops.Lib.Factories;
 using SerialLoops.Lib.Hacks;
 using SerialLoops.Lib.Items;
+using SerialLoops.Lib.Items.Shims;
 using SerialLoops.Lib.SaveFile;
 using SerialLoops.Lib.Util;
 using SerialLoops.Utility;
@@ -39,6 +40,7 @@ using SerialLoops.Views.Dialogs;
 using SerialLoops.Views.Editors;
 using SerialLoops.Views.Panels;
 using SkiaSharp;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace SerialLoops.ViewModels;
 
@@ -271,7 +273,7 @@ public partial class MainWindowViewModel : ViewModelBase
             {
                 if (item is not null)
                 {
-                    Dispatcher.UIThread.Invoke(() => EditorTabs.OpenTab(item));
+                    Dispatcher.UIThread.Invoke(() => EditorTabs.OpenTab(new(item)));
                 }
             }
 
@@ -302,7 +304,7 @@ public partial class MainWindowViewModel : ViewModelBase
             }
 
             // Warn against unsaved items
-            ItemDescription[] unsavedItems = EditorTabs.Tabs.Select(t => t.Description).Where(i => i.UnsavedChanges).ToArray();
+            ReactiveItemDescription[] unsavedItems = EditorTabs.Tabs.Select(t => t.Description).Where(i => i.UnsavedChanges).ToArray();
             if (unsavedItems.Length != 0)
             {
                 ButtonResult result;
@@ -595,7 +597,34 @@ public partial class MainWindowViewModel : ViewModelBase
         tracker.InitializeTasks(() => (OpenProject, result) = Project.OpenProject(path, CurrentConfig, Strings.ResourceManager.GetString, Log, tracker),
             () => { });
         await new ProgressDialog { DataContext = tracker }.ShowDialog(Window);
-        if (OpenProject is not null && result.State == Project.LoadProjectState.LOOSELEAF_FILES)
+        bool sameDb = true;
+        if (result.State == Project.LoadProjectState.SL_OUTDATED)
+        {
+            await Window.ShowMessageBoxAsync(
+                Strings.NewerProjectVersionDetected,
+                Strings.NewerProjectVersionMessage,
+                ButtonEnum.Ok, Icon.Stop, Log);
+            OpenProject = null;
+        }
+        else if (OpenProject is not null && result.State == Project.LoadProjectState.DB_OUTDATED)
+        {
+            if (await Window.ShowMessageBoxAsync(
+                    Strings.OutdatedDatabaseDetected,
+                    Strings.OutdatedDatabaseMessage,
+                    ButtonEnum.YesNo, Icon.Question, Log) == ButtonResult.Yes)
+            {
+                ProgressDialogViewModel secondTracker = new(string.Format(Strings.Loading_Project____0__, projectFileName));
+                secondTracker.InitializeTasks(() => OpenProject.LoadArchives(Log, secondTracker, loadItems: true),
+                    () => sameDb = false);
+                await new ProgressDialog { DataContext = secondTracker }.ShowDialog(Window);
+            }
+            else
+            {
+                OpenProject = null;
+            }
+        }
+
+        if (!sameDb && OpenProject is not null && result.State == Project.LoadProjectState.LOOSELEAF_FILES)
         {
             if (await Window.ShowMessageBoxAsync(
                     Strings.Build_Unbuilt_Files_,
@@ -615,10 +644,10 @@ public partial class MainWindowViewModel : ViewModelBase
         }
         else if (result.State == Project.LoadProjectState.CORRUPTED_FILE)
         {
-            if ((await Window.ShowMessageBoxAsync(Strings.Corrupted_File_Detected_,
+            if (await Window.ShowMessageBoxAsync(Strings.Corrupted_File_Detected_,
                     string.Format(Strings.While_attempting_to_build___file___0_X3__in_archive__1__was_found_to_be_corrupt__Serial_Loops_can_delete_this_file_from_your_base_directory_automatically_which_may_allow_you_to_load_the_rest_of_the_project__but_any_changes_made_to_that_file_will_be_lost__Alternatively__you_can_attempt_to_edit_the_file_manually_to_fix_it__How_would_you_like_to_proceed__Press_OK_to_proceed_with_deleting_the_file_and_Cancel_to_attempt_to_deal_with_it_manually_,
                         result.BadFileIndex, result.BadArchive),
-                    ButtonEnum.OkCancel, Icon.Warning, Log)) == ButtonResult.Ok)
+                    ButtonEnum.OkCancel, Icon.Warning, Log) == ButtonResult.Ok)
             {
                 switch (result.BadArchive)
                 {
@@ -726,7 +755,7 @@ public partial class MainWindowViewModel : ViewModelBase
         if (OpenProject is not null)
         {
             SaveItem saveItem = new(savePath, Path.GetFileNameWithoutExtension(savePath));
-            EditorTabs.OpenTab(saveItem);
+            EditorTabs.OpenTab(new(saveItem));
         }
         else
         {
@@ -821,7 +850,18 @@ public partial class MainWindowViewModel : ViewModelBase
             return;
         }
 
-        ItemDescription[] unsavedItems = EditorTabs.Tabs.Select(t => t.Description).Where(i => i.UnsavedChanges).ToArray();
+        SaveItems(EditorTabs.Tabs.Select(t => t.Description).Where(i => i.UnsavedChanges).ToArray());
+    }
+
+    public void SaveItems(ReactiveItemDescription[] unsavedItems)
+    {
+        if (OpenProject is null)
+        {
+            return;
+        }
+
+        using LiteDatabase db = new(OpenProject.DbFile);
+
         bool savedEventTable = false;
         bool savedChrData = false;
         bool savedExtra = false;
@@ -853,9 +893,9 @@ public partial class MainWindowViewModel : ViewModelBase
             }
         };
 
-        foreach (ItemDescription item in unsavedItems)
+        foreach (ReactiveItemDescription reactiveItem in unsavedItems)
         {
-            switch (item.Type)
+            switch (reactiveItem.Item.Type)
             {
                 case ItemDescription.ItemType.Background:
                     if (!savedExtra)
@@ -865,7 +905,9 @@ public partial class MainWindowViewModel : ViewModelBase
                         savedExtra = true;
                     }
 
-                    ((BackgroundItem)item).Write(OpenProject, Log);
+                    BackgroundItem backgroundItem = (BackgroundItem)reactiveItem.Item;
+                    backgroundItem.Write(OpenProject, Log);
+
                     break;
                 case ItemDescription.ItemType.BGM:
                     if (!savedExtra)
@@ -876,10 +918,10 @@ public partial class MainWindowViewModel : ViewModelBase
                     }
                     break;
                 case ItemDescription.ItemType.Character:
-                    CharacterItem characterItem = (CharacterItem)item;
-                    if (characterItem.NameplateProperties.Name != item.DisplayName[4..])
+                    CharacterItem characterItem = (CharacterItem)reactiveItem.Item;
+                    if (characterItem.NameplateProperties.Name != reactiveItem.DisplayName[4..])
                     {
-                        characterItem.Rename($"CHR_{characterItem.NameplateProperties.Name}", OpenProject);
+                        reactiveItem.Rename($"CHR_{characterItem.NameplateProperties.Name}", OpenProject);
                         nameplateCanvas.DrawBitmap(
                             characterItem.GetNewNameplate(_blankNameplate, _blankNameplateBaseArrow, OpenProject),
                             new SKRect(0, 16 * ((int)characterItem.MessageInfo.Character - 1), 64,
@@ -909,24 +951,24 @@ public partial class MainWindowViewModel : ViewModelBase
                             }), OpenProject, Log);
                         savedChrData = true;
                     }
-                    CharacterSpriteItem characterSpriteItem = (CharacterSpriteItem)item;
+                    CharacterSpriteItem characterSpriteItem = (CharacterSpriteItem)reactiveItem.Item;
                     characterSpriteItem.Graphics.Write(OpenProject, Log);
                     break;
                 case ItemDescription.ItemType.Chess_Puzzle:
-                    ChessPuzzleItem chessPuzzleItem = (ChessPuzzleItem)item;
+                    ChessPuzzleItem chessPuzzleItem = (ChessPuzzleItem)reactiveItem.Item;
                     IO.WriteStringFile(Path.Combine("assets", "data", $"{chessPuzzleItem.ChessPuzzle.Index:X3}.s"),
                         chessPuzzleItem.ChessPuzzle.GetSource([]), OpenProject, Log);
                     break;
                 case ItemDescription.ItemType.Group_Selection:
-                    GroupSelectionItem groupSelectionItem = (GroupSelectionItem)item;
+                    GroupSelectionItem groupSelectionItem = (GroupSelectionItem)reactiveItem.Item;
                     OpenProject.Scenario.Selects[groupSelectionItem.Index] = groupSelectionItem.Selection;
                     changedScenario = true;
                     break;
                 case ItemDescription.ItemType.Place:
-                    PlaceItem placeItem = (PlaceItem)item;
-                    if (placeItem.PlaceName != item.DisplayName[4..])
+                    PlaceItem placeItem = (PlaceItem)reactiveItem.Item;
+                    if (placeItem.PlaceName != reactiveItem.DisplayName[4..])
                     {
-                        placeItem.Rename($"PLC_{placeItem.PlaceName}", OpenProject);
+                        reactiveItem.Rename($"PLC_{placeItem.PlaceName}", OpenProject);
                     }
 
                     MemoryStream placeStream = new();
@@ -940,10 +982,10 @@ public partial class MainWindowViewModel : ViewModelBase
                         placeItem.PlaceGraphic.GetGraphicInfoFile(), OpenProject, Log);
                     break;
                 case ItemDescription.ItemType.Item:
-                    ((ItemItem)item).Write(OpenProject, Log);
+                    ((ItemItem)reactiveItem.Item).Write(OpenProject, Log);
                     break;
                 case ItemDescription.ItemType.Layout:
-                    GraphicsFile layout = ((LayoutItem)item).Layout;
+                    GraphicsFile layout = ((LayoutItem)reactiveItem.Item).Layout;
                     if (!changedLayouts.Contains(layout.Index))
                     {
                         changedLayouts.Add(layout.Index);
@@ -951,11 +993,11 @@ public partial class MainWindowViewModel : ViewModelBase
                     }
                     break;
                 case ItemDescription.ItemType.Puzzle:
-                    PuzzleFile puzzle = ((PuzzleItem)item).Puzzle;
+                    PuzzleFile puzzle = ((PuzzleItem)reactiveItem.Item).Puzzle;
                     IO.WriteStringFile(Path.Combine("assets", "data", $"{puzzle.Index:X3}.s"), puzzle.GetSource(includes), OpenProject, Log);
                     break;
                 case ItemDescription.ItemType.Scenario:
-                    ScenarioStruct scenario = ((ScenarioItem)item).Scenario;
+                    ScenarioStruct scenario = ((ScenarioItem)reactiveItem.Item).Scenario;
                     OpenProject.Scenario.Commands = scenario.Commands;
                     changedScenario = true;
                     break;
@@ -965,25 +1007,25 @@ public partial class MainWindowViewModel : ViewModelBase
                         OpenProject.RecalculateEventTable();
                         IO.WriteStringFile(Path.Combine("assets", "events", $"{OpenProject.EventTableFile.Index:X3}.s"), OpenProject.EventTableFile.GetSource(includes), OpenProject, Log);
                     }
-                    EventFile evt = ((ScriptItem)item).Event;
+                    EventFile evt = ((ScriptItem)reactiveItem.Item).Event;
                     evt.CollectGarbage();
                     IO.WriteStringFile(Path.Combine("assets", "events", $"{evt.Index:X3}.s"), evt.GetSource(includes), OpenProject, Log);
                     break;
                 case ItemDescription.ItemType.System_Texture:
-                    ((SystemTextureItem)item).Write(OpenProject, Log);
+                    ((SystemTextureItem)reactiveItem.Item).Write(OpenProject, Log);
                     break;
                 case ItemDescription.ItemType.Topic:
                     changedTopics = true;
                     break;
                 case ItemDescription.ItemType.Voice:
-                    VoicedLineItem vce = (VoicedLineItem)item;
+                    VoicedLineItem vce = (VoicedLineItem)reactiveItem.Item;
                     if (OpenProject.VoiceMap is not null)
                     {
                         changedSubs = true;
                     }
                     break;
                 case ItemDescription.ItemType.Save:
-                    SaveItem save = (SaveItem)item;
+                    SaveItem save = (SaveItem)reactiveItem.Item;
                     try
                     {
                         File.WriteAllBytes(save.SaveLoc, save.Save.GetBytes());
@@ -994,11 +1036,11 @@ public partial class MainWindowViewModel : ViewModelBase
                     }
                     break;
                 default:
-                    Log.LogWarning($"Saving for {item.Type}s not yet implemented.");
+                    Log.LogWarning($"Saving for {reactiveItem.Item.Type}s not yet implemented.");
                     break;
             }
 
-            item.UnsavedChanges = false;
+            reactiveItem.UnsavedChanges = false;
         }
 
         if (changedScenario)

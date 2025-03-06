@@ -1,7 +1,7 @@
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
-namespace SerialLoops.Lib.Items;
+namespace SerialLoops.Lib.Items.Shims;
 
 public class ReactiveItemShim(ItemShim shim) : ReactiveObject
 {

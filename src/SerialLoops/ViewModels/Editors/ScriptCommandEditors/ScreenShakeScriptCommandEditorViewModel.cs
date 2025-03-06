@@ -17,7 +17,7 @@ public class ScreenShakeScriptCommandEditorViewModel : ScriptCommandEditorViewMo
             ((ShortScriptParameter)Command.Parameters[0]).Value = _duration;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[0] = _duration;
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -31,7 +31,7 @@ public class ScreenShakeScriptCommandEditorViewModel : ScriptCommandEditorViewMo
             ((ShortScriptParameter)Command.Parameters[1]).Value = _horizontalIntensity;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[1] = _horizontalIntensity;
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -45,7 +45,7 @@ public class ScreenShakeScriptCommandEditorViewModel : ScriptCommandEditorViewMo
             ((ShortScriptParameter)Command.Parameters[2]).Value = _verticalIntensity;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[2] = _verticalIntensity;
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 

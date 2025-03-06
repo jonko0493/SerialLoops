@@ -1,0 +1,42 @@
+using System.Collections.Generic;
+using System.Linq;
+using LiteDB;
+
+namespace SerialLoops.Lib.Items.Shims;
+
+public class ItemShim
+{
+    [BsonId]
+    public string Name { get; set; }
+    public string DisplayName { get; set; }
+    public ItemDescription.ItemType Type { get; set; }
+    public bool CanRename { get; set; }
+
+    public ItemShim()
+    {
+    }
+
+    public ItemShim(ItemDescription item)
+    {
+        Name = item.Name;
+        DisplayName = item.DisplayName;
+        Type = item.Type;
+        CanRename = item.CanRename;
+    }
+
+    public ItemDescription GetItem(ILiteCollection<ItemDescription> itemsCol)
+    {
+        return itemsCol.FindById(Name);
+    }
+
+    public List<ReactiveItemShim> GetReferencesTo(Project project)
+    {
+        ItemDescription item = null;
+        using (LiteDatabase db = new(project.DbFile))
+        {
+            var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
+            item = itemsCol.FindById(Name);
+        }
+        return item?.GetReferencesTo(project)?.Select(i => new ReactiveItemShim(new(item))).ToList();
+    }
+}

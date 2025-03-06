@@ -5,10 +5,7 @@ using SerialLoops.Lib.Items;
 
 namespace SerialLoops.Models;
 
-public class PrettyScenarioCommand(
-    (ScenarioCommand.ScenarioVerb Verb, string Parameter) scenarioCommand,
-    int index,
-    ScenarioItem scenario) : ReactiveObject
+public class PrettyScenarioCommand(ScenarioCommandHolder scenarioCommand, int index, ScenarioItem scenario) : ReactiveObject
 {
     public ScenarioItem Scenario { get; set; } = scenario;
     public int CommandIndex { get; set; } = index;

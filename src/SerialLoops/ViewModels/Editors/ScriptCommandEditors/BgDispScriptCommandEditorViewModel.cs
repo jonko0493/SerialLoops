@@ -31,7 +31,7 @@ public class BgDispScriptCommandEditorViewModel : ScriptCommandEditorViewModel
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[0] = (short?)_bg?.Id ?? 0;
             ScriptEditor.UpdatePreview();
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -48,7 +48,7 @@ public class BgDispScriptCommandEditorViewModel : ScriptCommandEditorViewModel
     private async Task ReplaceBg()
     {
         using LiteDatabase db = new(_window.OpenProject.DbFile);
-        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
 
         GraphicSelectionDialogViewModel graphicSelectionDialog = new(new List<IPreviewableGraphic> { NonePreviewableGraphic.BACKGROUND }.Concat(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Background).Cast<IPreviewableGraphic>()),
             Bg, _window.OpenProject, _window.Log, i => i.Name == "NONE" || ((BackgroundItem)i).BackgroundType == HaruhiChokuretsuLib.Archive.Data.BgType.TEX_BG);

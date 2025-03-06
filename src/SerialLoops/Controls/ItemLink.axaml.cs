@@ -51,7 +51,7 @@ public partial class ItemLink : UserControl
                 {
                     if (Item is not null)
                     {
-                        Tabs.OpenTab(Item);
+                        Tabs.OpenTab(new(Item));
                     }
                 });
             }

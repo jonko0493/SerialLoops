@@ -15,6 +15,7 @@ using ReactiveUI.Fody.Helpers;
 using SerialLoops.Assets;
 using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
+using SerialLoops.Lib.Items.Shims;
 using SerialLoops.Models;
 using SerialLoops.Utility;
 using SerialLoops.ViewModels.Panels;
@@ -185,7 +186,7 @@ public class SearchDialogViewModel : ViewModelBase
             return;
         }
 
-        _tabs.OpenTab(item);
+        _tabs.OpenTab(new(item));
     }
 }
 

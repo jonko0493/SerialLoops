@@ -49,7 +49,7 @@ public static class Shared
     public static SKBitmap GetCharacterVoicePortrait(Project project, ILogger log, CharacterItem character)
     {
         using LiteDatabase db = new(project.DbFile);
-        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
 
         ItemDescription id = itemsCol.FindById("SYSTEX_SYS_CMN_B46");
         if (id is not SystemTextureItem tex)

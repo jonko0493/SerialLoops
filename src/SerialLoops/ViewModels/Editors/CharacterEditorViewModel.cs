@@ -4,12 +4,14 @@ using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Media;
 using Avalonia.Platform;
+using DynamicData;
 using HaruhiChokuretsuLib.Util;
 using LiteDB;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
+using SerialLoops.Lib.Items.Shims;
 using SerialLoops.Utility;
 using SerialLoops.ViewModels.Panels;
 using SkiaSharp;
@@ -18,7 +20,7 @@ namespace SerialLoops.ViewModels.Editors;
 
 public class CharacterEditorViewModel : EditorViewModel
 {
-    private CharacterItem _character;
+    private readonly CharacterItem _character;
 
     public EditorTabsPanelViewModel Tabs { get; }
 
@@ -30,7 +32,7 @@ public class CharacterEditorViewModel : EditorViewModel
             _character.NameplateProperties.Name = value;
             this.RaisePropertyChanged();
             UpdateNameplateBitmap();
-            _character.UnsavedChanges = true;
+            Description.UnsavedChanges = true;
         }
     }
 
@@ -42,7 +44,7 @@ public class CharacterEditorViewModel : EditorViewModel
             _character.NameplateProperties.NameColor = value;
             this.RaisePropertyChanged();
             UpdateNameplateBitmap();
-            _character.UnsavedChanges = true;
+            Description.UnsavedChanges = true;
         }
     }
 
@@ -54,7 +56,7 @@ public class CharacterEditorViewModel : EditorViewModel
             _character.NameplateProperties.PlateColor = value;
             this.RaisePropertyChanged();
             UpdateNameplateBitmap();
-            _character.UnsavedChanges = true;
+            Description.UnsavedChanges = true;
         }
     }
 
@@ -66,7 +68,7 @@ public class CharacterEditorViewModel : EditorViewModel
             _character.NameplateProperties.OutlineColor = value;
             this.RaisePropertyChanged();
             UpdateNameplateBitmap();
-            _character.UnsavedChanges = true;
+            Description.UnsavedChanges = true;
         }
     }
 
@@ -78,11 +80,11 @@ public class CharacterEditorViewModel : EditorViewModel
             _character.NameplateProperties.HasOutline = value;
             this.RaisePropertyChanged();
             UpdateNameplateBitmap();
-            _character.UnsavedChanges = true;
+            Description.UnsavedChanges = true;
         }
     }
 
-    public ObservableCollection<SfxItem> Sfxs { get; }
+    public ObservableCollection<SfxItem> Sfxs { get; } = [];
     private SfxItem _voiceFont;
     public SfxItem VoiceFont
     {
@@ -91,7 +93,7 @@ public class CharacterEditorViewModel : EditorViewModel
         {
             this.RaiseAndSetIfChanged(ref _voiceFont, value);
             _character.MessageInfo.VoiceFont = _voiceFont.Index;
-            _character.UnsavedChanges = true;
+            Description.UnsavedChanges = true;
         }
     }
 
@@ -102,7 +104,7 @@ public class CharacterEditorViewModel : EditorViewModel
         {
             _character.MessageInfo.TextTimer = value;
             this.RaisePropertyChanged();
-            _character.UnsavedChanges = true;
+            Description.UnsavedChanges = true;
         }
     }
 
@@ -114,16 +116,16 @@ public class CharacterEditorViewModel : EditorViewModel
 
     public CharacterColorPalette ColorPalette { get; } = new();
 
-    public CharacterEditorViewModel(CharacterItem character, MainWindowViewModel window, ILogger log) : base(character, window, log)
+    public CharacterEditorViewModel(CharacterItem character, MainWindowViewModel window, ILogger log) : base(new(character), window, log)
     {
         using LiteDatabase db = new(window.OpenProject.DbFile);
-        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
-        var sfxCol = db.GetCollection<ItemCategoryShim<SfxItem>>(nameof(SfxItem));
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
+        var sfxCol = db.GetCollection<SfxItemShim>(nameof(SfxItem));
 
         _character = character;
         Tabs = window.EditorTabs;
 
-        Sfxs = new(sfxCol.FindAll().Select(s => s.GetItem(itemsCol)));
+        Sfxs.AddRange(sfxCol.FindAll().Select(s => s.GetItem(itemsCol)).Cast<SfxItem>());
         _voiceFont = Sfxs.FirstOrDefault(s => s.Index == _character.MessageInfo.VoiceFont);
 
         using Stream blankNameplateStream = AssetLoader.Open(new("avares://SerialLoops/Assets/Graphics/BlankNameplate.png"));

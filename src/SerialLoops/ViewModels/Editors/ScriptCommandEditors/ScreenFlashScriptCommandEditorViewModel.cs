@@ -18,7 +18,7 @@ public class ScreenFlashScriptCommandEditorViewModel(ScriptItemCommand command, 
             ((ShortScriptParameter)Command.Parameters[0]).Value = _fadeInTime;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[0] = _fadeInTime;
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -32,7 +32,7 @@ public class ScreenFlashScriptCommandEditorViewModel(ScriptItemCommand command, 
             ((ShortScriptParameter)Command.Parameters[1]).Value = _holdTime;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[1] = _holdTime;
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -46,7 +46,7 @@ public class ScreenFlashScriptCommandEditorViewModel(ScriptItemCommand command, 
             ((ShortScriptParameter)Command.Parameters[2]).Value = _fadeOutTime;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[2] = _fadeOutTime;
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -64,7 +64,7 @@ public class ScreenFlashScriptCommandEditorViewModel(ScriptItemCommand command, 
                 .Objects[Command.Index].Parameters[4] = _color.Green;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[5] = _color.Blue;
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 }

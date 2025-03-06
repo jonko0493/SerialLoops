@@ -10,6 +10,7 @@ using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
+using SerialLoops.Lib.Items.Shims;
 using SerialLoops.Models;
 using SerialLoops.ViewModels.Panels;
 using SkiaSharp;
@@ -32,7 +33,7 @@ public class PuzzleEditorViewModel : EditorViewModel
         {
             this.RaiseAndSetIfChanged(ref _map, value);
             _puzzle.Puzzle.Settings.MapId = _map.Map.Index;
-            _puzzle.UnsavedChanges = true;
+            Description.UnsavedChanges = true;
         }
     }
 
@@ -43,7 +44,7 @@ public class PuzzleEditorViewModel : EditorViewModel
         {
             _puzzle.Puzzle.Settings.BaseTime = value;
             this.RaisePropertyChanged();
-            _puzzle.UnsavedChanges = true;
+            Description.UnsavedChanges = true;
         }
     }
 
@@ -54,7 +55,7 @@ public class PuzzleEditorViewModel : EditorViewModel
         {
             _puzzle.Puzzle.Settings.NumSingularities = value;
             this.RaisePropertyChanged();
-            _puzzle.UnsavedChanges = true;
+            Description.UnsavedChanges = true;
         }
     }
 
@@ -65,7 +66,7 @@ public class PuzzleEditorViewModel : EditorViewModel
         {
             _puzzle.Puzzle.Settings.Unknown04 = value;
             this.RaisePropertyChanged();
-            _puzzle.UnsavedChanges = true;
+            Description.UnsavedChanges = true;
         }
     }
 
@@ -76,7 +77,7 @@ public class PuzzleEditorViewModel : EditorViewModel
         {
             _puzzle.Puzzle.Settings.TargetNumber = value;
             this.RaisePropertyChanged();
-            _puzzle.UnsavedChanges = true;
+            Description.UnsavedChanges = true;
         }
     }
 
@@ -87,7 +88,7 @@ public class PuzzleEditorViewModel : EditorViewModel
         {
             _puzzle.Puzzle.Settings.ContinueOnFailure = value;
             this.RaisePropertyChanged();
-            _puzzle.UnsavedChanges = true;
+            Description.UnsavedChanges = true;
         }
     }
 
@@ -101,7 +102,7 @@ public class PuzzleEditorViewModel : EditorViewModel
         {
             this.RaiseAndSetIfChanged(ref _accompanyingCharacter, value);
             _puzzle.Puzzle.Settings.AccompanyingCharacter = _accompanyingCharacter?.Character?.MessageInfo.Character ?? 0;
-            _puzzle.UnsavedChanges = true;
+            Description.UnsavedChanges = true;
         }
     }
     private CharacterFilter _powerCharacter1;
@@ -112,7 +113,7 @@ public class PuzzleEditorViewModel : EditorViewModel
         {
             this.RaiseAndSetIfChanged(ref _powerCharacter1, value);
             _puzzle.Puzzle.Settings.PowerCharacter1 = _powerCharacter1?.Character?.MessageInfo.Character ?? 0;
-            _puzzle.UnsavedChanges = true;
+            Description.UnsavedChanges = true;
         }
     }
     private CharacterFilter _powerCharacter2;
@@ -123,7 +124,7 @@ public class PuzzleEditorViewModel : EditorViewModel
         {
             this.RaiseAndSetIfChanged(ref _powerCharacter2, value);
             _puzzle.Puzzle.Settings.PowerCharacter1 = _powerCharacter2?.Character?.MessageInfo.Character ?? 0;
-            _puzzle.UnsavedChanges = true;
+            Description.UnsavedChanges = true;
         }
     }
 
@@ -136,7 +137,7 @@ public class PuzzleEditorViewModel : EditorViewModel
         {
             _puzzle.Puzzle.Settings.TopicSet = value;
             this.RaisePropertyChanged();
-            _puzzle.UnsavedChanges = true;
+            Description.UnsavedChanges = true;
         }
     }
 
@@ -147,7 +148,7 @@ public class PuzzleEditorViewModel : EditorViewModel
         {
             _puzzle.Puzzle.Settings.Unknown15 = value;
             this.RaisePropertyChanged();
-            _puzzle.UnsavedChanges = true;
+            Description.UnsavedChanges = true;
         }
     }
     public int Unknown16
@@ -157,7 +158,7 @@ public class PuzzleEditorViewModel : EditorViewModel
         {
             _puzzle.Puzzle.Settings.Unknown16 = value;
             this.RaisePropertyChanged();
-            _puzzle.UnsavedChanges = true;
+            Description.UnsavedChanges = true;
         }
     }
     public int Unknown17
@@ -167,22 +168,24 @@ public class PuzzleEditorViewModel : EditorViewModel
         {
             _puzzle.Puzzle.Settings.Unknown17 = value;
             this.RaisePropertyChanged();
-            _puzzle.UnsavedChanges = true;
+            Description.UnsavedChanges = true;
         }
     }
 
-    public PuzzleEditorViewModel(PuzzleItem puzzle, MainWindowViewModel window, ILogger log) : base(puzzle, window, log)
+    public PuzzleEditorViewModel(PuzzleItem puzzle, MainWindowViewModel window, ILogger log) : base(new(puzzle), window, log)
     {
-        using LiteDatabase db = new(Window.OpenProject.DbFile);
-        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+        using (LiteDatabase db = new(Window.OpenProject.DbFile))
+        {
+            var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
+            var topicsCol = db.GetCollection<TopicItemShim>(nameof(TopicItem));
 
-        _puzzle = puzzle;
-        Tabs = Window.EditorTabs;
-        AssociatedMainTopics.AddRange(_puzzle.Puzzle.AssociatedTopics[..^1].Select(
-            tu => new TopicWithUnknown(tu.Topic, tu.Unknown, itemsCol)));
-        HaruhiRoutes.AddRange(_puzzle.Puzzle.HaruhiRoutes.Select(r => r.ToString()));
-        IEnumerable<MapItem> maps = itemsCol.Find(m => m.Type == ItemDescription.ItemType.Map).Cast<MapItem>();
-        _map = maps.FirstOrDefault(m => m.Name == Window.OpenProject.Dat.GetFileByName("QMAPS").CastTo<QMapFile>().QMaps[_puzzle.Puzzle.Settings.MapId].Name[..^2]);
+            _puzzle = puzzle;
+            Tabs = Window.EditorTabs;
+            AssociatedMainTopics.AddRange(_puzzle.Puzzle.AssociatedTopics[..^1].Select(
+                tu => new TopicWithUnknown(tu.Topic, tu.Unknown, itemsCol, topicsCol)));
+            HaruhiRoutes.AddRange(_puzzle.Puzzle.HaruhiRoutes.Select(r => r.ToString()));
+            _map = (MapItem)itemsCol.FindById(Window.OpenProject.Dat.GetFileByName("QMAPS").CastTo<QMapFile>().QMaps[_puzzle.Puzzle.Settings.MapId].Name[..^2]);
+        }
 
         Characters = new(
         [
@@ -194,16 +197,15 @@ public class PuzzleEditorViewModel : EditorViewModel
             new(Window.OpenProject.GetCharacterBySpeaker(Speaker.UNKNOWN)),
         ]);
         _accompanyingCharacter = Characters.First(c => (c.Character?.MessageInfo.Character ?? 0) == _puzzle.Puzzle.Settings.AccompanyingCharacter);
-        _powerCharacter1 = Characters.First(c => (c.Character?.MessageInfo.Character ?? 0) == _puzzle.Puzzle.Settings.PowerCharacter1);;
-        _powerCharacter2 = Characters.First(c => (c.Character?.MessageInfo.Character ?? 0) == _puzzle.Puzzle.Settings.PowerCharacter2);;
+        _powerCharacter1 = Characters.First(c => (c.Character?.MessageInfo.Character ?? 0) == _puzzle.Puzzle.Settings.PowerCharacter1);
+        _powerCharacter2 = Characters.First(c => (c.Character?.MessageInfo.Character ?? 0) == _puzzle.Puzzle.Settings.PowerCharacter2);
     }
 }
 
-public class TopicWithUnknown(int topicId, int unknown, ILiteCollection<ItemDescription> itemsCol) : ReactiveObject
+public class TopicWithUnknown(int topicId, int unknown, ILiteCollection<ItemDescription> itemsCol, ILiteCollection<TopicItemShim> topicsCol) : ReactiveObject
 {
     [Reactive]
-    public TopicItem Topic { get; set; } = (TopicItem)itemsCol.FindOne(t => t.Type == ItemDescription.ItemType.Topic &&
-                                                                             ((TopicItem)t).TopicEntry.Id == (short)topicId);
+    public TopicItem Topic { get; set; } = (TopicItem)topicsCol.FindOne(t => t.TopicEntry.Id == (short)topicId).GetItem(itemsCol);
     [Reactive]
     public int Unknown { get; set; } = unknown;
 }

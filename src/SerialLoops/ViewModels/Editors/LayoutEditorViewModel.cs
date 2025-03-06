@@ -39,11 +39,11 @@ public class LayoutEditorViewModel : EditorViewModel
     public ICommand ExportLayoutCommand { get; }
     public ICommand ExportSourceCommand { get; }
 
-    public LayoutEditorViewModel(LayoutItem item, MainWindowViewModel window, ILogger log) : base(item, window, log)
+    public LayoutEditorViewModel(LayoutItem item, MainWindowViewModel window, ILogger log) : base(new(item), window, log)
     {
         _layout = item;
         _mainWindow = window;
-        LayoutEntries = new(_layout.Layout.LayoutEntries.Skip(_layout.StartEntry).Take(_layout.NumEntries).Select((_, i) => new LayoutEntryWithImage(_layout, i + _layout.StartEntry)));
+        LayoutEntries = new(_layout.Layout.LayoutEntries.Skip(_layout.StartEntry).Take(_layout.NumEntries).Select((_, i) => new LayoutEntryWithImage(Description, _layout, i + _layout.StartEntry)));
         ExportLayoutCommand = ReactiveCommand.CreateFromTask(ExportLayout);
         ExportSourceCommand = ReactiveCommand.CreateFromTask(ExportSource);
     }

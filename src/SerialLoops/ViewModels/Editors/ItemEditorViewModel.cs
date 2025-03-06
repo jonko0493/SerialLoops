@@ -23,7 +23,7 @@ public class ItemEditorViewModel : EditorViewModel
     public ICommand ExportCommand { get; }
     public ICommand ImportCommand { get; }
 
-    public ItemEditorViewModel(ItemItem item, MainWindowViewModel window, ILogger log) : base(item, window, log)
+    public ItemEditorViewModel(ItemItem item, MainWindowViewModel window, ILogger log) : base(new(item), window, log)
     {
         _item = item;
         ExportCommand = ReactiveCommand.CreateFromTask(Export);

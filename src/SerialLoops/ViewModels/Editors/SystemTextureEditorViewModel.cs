@@ -26,7 +26,7 @@ public class SystemTextureEditorViewModel : EditorViewModel
     public bool UsesCommonPalette => SystemTexture.UsesCommonPalette();
     public SKBitmap PaletteBitmap => SystemTexture.Grp.GetPalette();
 
-    public SystemTextureEditorViewModel(SystemTextureItem item, MainWindowViewModel window, Project project, ILogger log) : base(item, window, log, project)
+    public SystemTextureEditorViewModel(SystemTextureItem item, MainWindowViewModel window, Project project, ILogger log) : base(new(item), window, log, project)
     {
         SystemTexture = item;
         ExportCommand = ReactiveCommand.CreateFromTask(ExportButton_Click);

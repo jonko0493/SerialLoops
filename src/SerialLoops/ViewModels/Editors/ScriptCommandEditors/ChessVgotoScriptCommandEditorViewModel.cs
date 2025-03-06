@@ -21,7 +21,7 @@ public class ChessVgotoScriptCommandEditorViewModel(ScriptItemCommand command, S
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[0] = Script.Event.LabelsSection.Objects
                 .FirstOrDefault(l => l.Name.Replace("/", "").Equals(_clearSection.Name))?.Id ?? 0;
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
             Command.UpdateDisplay();
         }
     }
@@ -38,7 +38,7 @@ public class ChessVgotoScriptCommandEditorViewModel(ScriptItemCommand command, S
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[1] = Script.Event.LabelsSection.Objects
                 .FirstOrDefault(l => l.Name.Replace("/", "").Equals(_missSection.Name))?.Id ?? 0;
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
             Command.UpdateDisplay();
         }
     }
@@ -55,7 +55,7 @@ public class ChessVgotoScriptCommandEditorViewModel(ScriptItemCommand command, S
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[2] = Script.Event.LabelsSection.Objects
                 .FirstOrDefault(l => l.Name.Replace("/", "").Equals(_miss2Section.Name))?.Id ?? 0;
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
             Command.UpdateDisplay();
         }
     }

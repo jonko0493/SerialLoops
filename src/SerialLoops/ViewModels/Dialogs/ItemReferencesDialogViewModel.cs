@@ -11,6 +11,7 @@ using ReactiveUI.Fody.Helpers;
 using SerialLoops.Assets;
 using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
+using SerialLoops.Lib.Items.Shims;
 using SerialLoops.Models;
 using SerialLoops.Utility;
 using SerialLoops.ViewModels.Panels;
@@ -76,7 +77,7 @@ public class ItemReferencesDialogViewModel : ViewModelBase
         ItemDescription item = _project.FindItem(((ITreeItem)viewer.RowSelection?.SelectedItem)?.Text);
         if (item is not null)
         {
-            Tabs.OpenTab(item);
+            Tabs.OpenTab(new(item));
         }
     }
 

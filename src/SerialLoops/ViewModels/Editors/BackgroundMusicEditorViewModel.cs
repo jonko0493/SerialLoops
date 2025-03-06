@@ -39,7 +39,7 @@ public class BackgroundMusicEditorViewModel : EditorViewModel
 
     private ICommand _titleBoxTextChangedCommand;
 
-    public BackgroundMusicEditorViewModel(BackgroundMusicItem bgm, MainWindowViewModel window, Project project, ILogger log, bool initializePlayer = true) : base(bgm, window, log, project)
+    public BackgroundMusicEditorViewModel(BackgroundMusicItem bgm, MainWindowViewModel window, Project project, ILogger log, bool initializePlayer = true) : base(new(bgm), window, log, project)
     {
         Bgm = bgm;
 
@@ -61,7 +61,7 @@ public class BackgroundMusicEditorViewModel : EditorViewModel
             _project.Extra.Bgms[_project.Extra.Bgms.IndexOf(_project.Extra.Bgms.First(b => b.Name.GetSubstitutedString(_project) == Bgm.BgmName))].Name = newText.GetOriginalString(_project);
             Bgm.BgmName = newText;
             Bgm.DisplayName = $"{Bgm.Name} - {Bgm.BgmName}";
-            Bgm.UnsavedChanges = true;
+            Description.UnsavedChanges = true;
         }
     }
 

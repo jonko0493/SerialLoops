@@ -19,7 +19,7 @@ public class ToggleDialogueScriptCommandEditorViewModel(ScriptItemCommand comman
                 .Objects[Command.Index].Parameters[0] = _dialogueVisible
                 ? ((BoolScriptParameter)Command.Parameters[0]).TrueValue
                 : ((BoolScriptParameter)Command.Parameters[0]).FalseValue;
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
             ScriptEditor.UpdatePreview();
         }
     }

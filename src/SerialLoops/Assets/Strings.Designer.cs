@@ -4916,6 +4916,24 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Newer Project Version Detected.
+        /// </summary>
+        public static string NewerProjectVersionDetected {
+            get {
+                return ResourceManager.GetString("NewerProjectVersionDetected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This project was made with a more recent version of Serial Loops. Please upgrade your copy of Serial Loops to open it..
+        /// </summary>
+        public static string NewerProjectVersionMessage {
+            get {
+                return ResourceManager.GetString("NewerProjectVersionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to NitroPacker failed to pack ROM with exception.
         /// </summary>
         public static string NitroPacker_failed_to_pack_ROM_with_exception {
@@ -5337,6 +5355,26 @@ namespace SerialLoops.Assets {
         public static string Orphaned_Items {
             get {
                 return ResourceManager.GetString("Orphaned_Items", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Outdated Database Detected.
+        /// </summary>
+        public static string OutdatedDatabaseDetected {
+            get {
+                return ResourceManager.GetString("OutdatedDatabaseDetected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Serial Loops detected that this project is using an outdated database.
+        ///The database can be migrated to the new version automatically. This will take a few minutes at most.
+        ///Would you like to proceed?.
+        /// </summary>
+        public static string OutdatedDatabaseMessage {
+            get {
+                return ResourceManager.GetString("OutdatedDatabaseMessage", resourceCulture);
             }
         }
         
@@ -6376,15 +6414,6 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Save changes to save file?.
-        /// </summary>
-        public static string Save_changes_to_save_file_ {
-            get {
-                return ResourceManager.GetString("Save changes to save file?", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Save character sprite GIF.
         /// </summary>
         public static string Save_character_sprite_GIF {
@@ -6543,6 +6572,24 @@ namespace SerialLoops.Assets {
         public static string Save_voiced_line_as_WAV {
             get {
                 return ResourceManager.GetString("Save voiced line as WAV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Would you like to save your changes to this item before closing it?.
+        /// </summary>
+        public static string SaveClosedItemMessage {
+            get {
+                return ResourceManager.GetString("SaveClosedItemMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save changes?.
+        /// </summary>
+        public static string SaveClosedItemTitle {
+            get {
+                return ResourceManager.GetString("SaveClosedItemTitle", resourceCulture);
             }
         }
         
@@ -8637,15 +8684,6 @@ namespace SerialLoops.Assets {
         public static string Worst_Group {
             get {
                 return ResourceManager.GetString("Worst Group", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Would you like to save your changes to the save file?.
-        /// </summary>
-        public static string Would_you_like_to_save_your_changes_to_the_save_file_ {
-            get {
-                return ResourceManager.GetString("Would you like to save your changes to the save file?", resourceCulture);
             }
         }
         

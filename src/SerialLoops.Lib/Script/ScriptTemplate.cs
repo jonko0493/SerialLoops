@@ -302,7 +302,7 @@ public class TemplateScriptParameter
         try
         {
             using LiteDatabase db = new(project.DbFile);
-            var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+            var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
 
             string value = Value;
             string localizedName = project.Localize(ParameterName);

@@ -31,7 +31,7 @@ public partial class DialogueScriptCommandEditorViewModel : ScriptCommandEditorV
     public DialogueScriptCommandEditorViewModel(ScriptItemCommand command, ScriptEditorViewModel scriptEditor, ILogger log, MainWindowViewModel window) : base(command, scriptEditor, log)
     {
         using LiteDatabase db = new(scriptEditor.Window.OpenProject.DbFile);
-        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
 
         _window = window;
         Tabs = _window.EditorTabs;
@@ -83,7 +83,7 @@ public partial class DialogueScriptCommandEditorViewModel : ScriptCommandEditorV
             ((DialogueScriptParameter)Command.Parameters[0]).Line.Speaker = _speaker.MessageInfo.Character;
             Script.Event.DialogueSection.Objects[Command.Section.Objects[Command.Index].Parameters[0]].Speaker = _speaker.MessageInfo.Character;
             _specialPredicate = i => i.Name != "NONE" && ((CharacterSpriteItem)i).Sprite.Character == _speaker.MessageInfo.Character;
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
             ScriptEditor.UpdatePreview();
         }
     }
@@ -125,7 +125,7 @@ public partial class DialogueScriptCommandEditorViewModel : ScriptCommandEditorV
 
             _dialogueUpdateTimer.Stop();
             _dialogueUpdateTimer.Start();
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
             Command.UpdateDisplay();
         }
     }
@@ -141,7 +141,7 @@ public partial class DialogueScriptCommandEditorViewModel : ScriptCommandEditorV
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[1] = (short?)_characterSprite?.Index ?? 0;
             ScriptEditor.UpdatePreview();
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
     public ICommand SelectCharacterSpriteCommand { get; }
@@ -149,7 +149,7 @@ public partial class DialogueScriptCommandEditorViewModel : ScriptCommandEditorV
     private async Task SelectCharacterSpriteCommand_Executed()
     {
         using LiteDatabase db = new(_window.OpenProject.DbFile);
-        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
 
         GraphicSelectionDialogViewModel graphicSelectionDialog = new(new List<IPreviewableGraphic> { NonePreviewableGraphic.CHARACTER_SPRITE }.Concat(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Character_Sprite).Cast<IPreviewableGraphic>()),
             CharacterSprite, _window.OpenProject, _window.Log, _specialPredicate);
@@ -177,7 +177,7 @@ public partial class DialogueScriptCommandEditorViewModel : ScriptCommandEditorV
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[2] = (short)_spriteEntranceTransition.Entrance;
             ScriptEditor.UpdatePreview();
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -193,7 +193,7 @@ public partial class DialogueScriptCommandEditorViewModel : ScriptCommandEditorV
             ((SpriteExitScriptParameter)Command.Parameters[3]).ExitTransition = _spriteExitTransition.Exit;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[3] = (short)_spriteExitTransition.Exit;
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -209,7 +209,7 @@ public partial class DialogueScriptCommandEditorViewModel : ScriptCommandEditorV
             ((SpriteShakeScriptParameter)Command.Parameters[4]).ShakeEffect = _spriteShakeEffect.Shake;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[4] = (short)_spriteShakeEffect.Shake;
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -224,7 +224,7 @@ public partial class DialogueScriptCommandEditorViewModel : ScriptCommandEditorV
             ((VoicedLineScriptParameter)Command.Parameters[5]).VoiceLine = _voicedLine;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[5] = (short)_voicedLine.Index;
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -238,7 +238,7 @@ public partial class DialogueScriptCommandEditorViewModel : ScriptCommandEditorV
             ((DialoguePropertyScriptParameter)Command.Parameters[6]).Character = _textVoiceFont;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[6] = (short)_textVoiceFont.MessageInfo.Character;
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -252,7 +252,7 @@ public partial class DialogueScriptCommandEditorViewModel : ScriptCommandEditorV
             ((DialoguePropertyScriptParameter)Command.Parameters[7]).Character = _textSpeed;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[7] = (short)_textSpeed.MessageInfo.Character;
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -268,7 +268,7 @@ public partial class DialogueScriptCommandEditorViewModel : ScriptCommandEditorV
             ((TextEntranceEffectScriptParameter)Command.Parameters[8]).EntranceEffect = _textEntranceEffect.Effect;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[8] = (short)_textEntranceEffect.Effect;
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -283,7 +283,7 @@ public partial class DialogueScriptCommandEditorViewModel : ScriptCommandEditorV
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[9] = _spriteLayer;
             ScriptEditor.UpdatePreview();
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -297,7 +297,7 @@ public partial class DialogueScriptCommandEditorViewModel : ScriptCommandEditorV
             ((BoolScriptParameter)Command.Parameters[10]).Value = _dontClearText;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[10] = _dontClearText ? ((BoolScriptParameter)Command.Parameters[10]).TrueValue : ((BoolScriptParameter)Command.Parameters[10]).FalseValue;
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -311,7 +311,7 @@ public partial class DialogueScriptCommandEditorViewModel : ScriptCommandEditorV
             ((BoolScriptParameter)Command.Parameters[11]).Value = _disableLipFlap;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[11] = _disableLipFlap ? ((BoolScriptParameter)Command.Parameters[11]).TrueValue : ((BoolScriptParameter)Command.Parameters[11]).FalseValue;
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 

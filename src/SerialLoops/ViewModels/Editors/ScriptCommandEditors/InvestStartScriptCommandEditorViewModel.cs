@@ -21,7 +21,7 @@ public class InvestStartScriptCommandEditorViewModel(
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[0] = value;
             this.RaisePropertyChanged();
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
     public short Unknown1
@@ -33,7 +33,7 @@ public class InvestStartScriptCommandEditorViewModel(
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[1] = value;
             this.RaisePropertyChanged();
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -46,7 +46,7 @@ public class InvestStartScriptCommandEditorViewModel(
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[2] = value;
             this.RaisePropertyChanged();
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -59,7 +59,7 @@ public class InvestStartScriptCommandEditorViewModel(
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[3] = value;
             this.RaisePropertyChanged();
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -74,7 +74,7 @@ public class InvestStartScriptCommandEditorViewModel(
                     .Objects[Command.Index].Parameters[4] =
                 Script.Event.LabelsSection.Objects.First(l => l.Name.Replace("/", "").Equals(value.Name)).Id;
             this.RaisePropertyChanged();
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 }

@@ -30,7 +30,7 @@ public class TopicEditorViewModel : EditorViewModel
             this.RaiseAndSetIfChanged(ref _title, value.GetOriginalString(Window.OpenProject));
             Topic.TopicEntry.Title = _title;
             Topic.DisplayName = $"{Topic.TopicEntry.Id} - {_title.GetSubstitutedString(Window.OpenProject)}";
-            Topic.UnsavedChanges = true;
+            Description.UnsavedChanges = true;
         }
     }
 
@@ -50,7 +50,7 @@ public class TopicEditorViewModel : EditorViewModel
             {
                 Topic.TopicEntry.EventIndex = (short)_associatedScript.Event.Index;
             }
-            Topic.UnsavedChanges = true;
+            Description.UnsavedChanges = true;
         }
     }
 
@@ -63,7 +63,7 @@ public class TopicEditorViewModel : EditorViewModel
         {
             this.RaiseAndSetIfChanged(ref _episodeGroup, (byte)(value + 1));
             Topic.TopicEntry.EpisodeGroup = _episodeGroup;
-            Topic.UnsavedChanges = true;
+            Description.UnsavedChanges = true;
         }
     }
 
@@ -75,7 +75,7 @@ public class TopicEditorViewModel : EditorViewModel
         {
             this.RaiseAndSetIfChanged(ref _puzzlePhaseGroup, value);
             Topic.TopicEntry.PuzzlePhaseGroup = _puzzlePhaseGroup;
-            Topic.UnsavedChanges = true;
+            Description.UnsavedChanges = true;
         }
     }
 
@@ -91,7 +91,7 @@ public class TopicEditorViewModel : EditorViewModel
             MikuruTime = BaseTimeGain * _mikuruTimePercentage / 100.0;
             NagatoTime = BaseTimeGain * _nagatoTimePercentage / 100.0;
             KoizumiTime = BaseTimeGain * _koizumiTimePercentage / 100.0;
-            Topic.UnsavedChanges = true;
+            Description.UnsavedChanges = true;
         }
     }
 
@@ -106,7 +106,7 @@ public class TopicEditorViewModel : EditorViewModel
             this.RaiseAndSetIfChanged(ref _kyonTimePercentage, value);
             Topic.TopicEntry.KyonTimePercentage = _kyonTimePercentage;
             KyonTime = BaseTimeGain * _kyonTimePercentage / 100.0;
-            Topic.UnsavedChanges = true;
+            Description.UnsavedChanges = true;
         }
     }
 
@@ -121,7 +121,7 @@ public class TopicEditorViewModel : EditorViewModel
             this.RaiseAndSetIfChanged(ref _mikuruTimePercentage, value);
             Topic.TopicEntry.MikuruTimePercentage = _mikuruTimePercentage;
             MikuruTime = BaseTimeGain * _mikuruTimePercentage / 100.0;
-            Topic.UnsavedChanges = true;
+            Description.UnsavedChanges = true;
         }
     }
 
@@ -136,7 +136,7 @@ public class TopicEditorViewModel : EditorViewModel
             this.RaiseAndSetIfChanged(ref _nagatoTimePercentage, value);
             Topic.TopicEntry.NagatoTimePercentage = _nagatoTimePercentage;
             NagatoTime = BaseTimeGain * _nagatoTimePercentage / 100.0;
-            Topic.UnsavedChanges = true;
+            Description.UnsavedChanges = true;
         }
     }
 
@@ -151,16 +151,16 @@ public class TopicEditorViewModel : EditorViewModel
             this.RaiseAndSetIfChanged(ref _koizumiTimePercentage, value);
             Topic.TopicEntry.KoizumiTimePercentage = _koizumiTimePercentage;
             KoizumiTime = BaseTimeGain * _koizumiTimePercentage / 100.0;
-            Topic.UnsavedChanges = true;
+            Description.UnsavedChanges = true;
         }
     }
 
     public short MaxShort => short.MaxValue;
 
-    public TopicEditorViewModel(TopicItem topic, MainWindowViewModel window, ILogger log) : base(topic, window, log)
+    public TopicEditorViewModel(TopicItem topic, MainWindowViewModel window, ILogger log) : base(new(topic), window, log)
     {
         using LiteDatabase db = new(window.OpenProject.DbFile);
-        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
 
         Tabs = window.EditorTabs;
         Topic = topic;

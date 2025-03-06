@@ -10,6 +10,7 @@ using ReactiveUI.Fody.Helpers;
 using SerialLoops.Assets;
 using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
+using SerialLoops.Lib.Items.Shims;
 using SerialLoops.Lib.SaveFile;
 using SerialLoops.Utility;
 using SerialLoops.ViewModels.Editors;
@@ -39,11 +40,11 @@ public class EditorTabsPanelViewModel : ViewModelBase
         _log = log;
     }
 
-    public void OpenTab(ItemDescription item)
+    public void OpenTab(ReactiveItemDescription item)
     {
         foreach (EditorViewModel tab in Tabs)
         {
-            if (tab.Description.DisplayName.Equals(item.DisplayName))
+            if (tab.Description.Item.Name.Equals(item.Item.Name))
             {
                 SelectedTab = tab;
                 ShowTabsPanel = Tabs.Any();
@@ -60,46 +61,46 @@ public class EditorTabsPanelViewModel : ViewModelBase
         ShowTabsPanel = Tabs.Any();
     }
 
-    private EditorViewModel CreateTab(ItemDescription item)
+    private EditorViewModel CreateTab(ReactiveItemDescription item)
     {
-        switch (item.Type)
+        switch (item.Item.Type)
         {
             case ItemDescription.ItemType.Background:
-                return new BackgroundEditorViewModel((BackgroundItem)item, MainWindow, _project, _log);
+                return new BackgroundEditorViewModel((BackgroundItem)item.Item, MainWindow, _project, _log);
             case ItemDescription.ItemType.BGM:
-                return new BackgroundMusicEditorViewModel((BackgroundMusicItem)item, MainWindow, _project, _log);
+                return new BackgroundMusicEditorViewModel((BackgroundMusicItem)item.Item, MainWindow, _project, _log);
             case ItemDescription.ItemType.Character:
-                return new CharacterEditorViewModel((CharacterItem)item, MainWindow, _log);
+                return new CharacterEditorViewModel((CharacterItem)item.Item, MainWindow, _log);
             case ItemDescription.ItemType.Character_Sprite:
-                return new CharacterSpriteEditorViewModel((CharacterSpriteItem)item, MainWindow, _log);
+                return new CharacterSpriteEditorViewModel((CharacterSpriteItem)item.Item, MainWindow, _log);
             case ItemDescription.ItemType.Chess_Puzzle:
-                return new ChessPuzzleEditorViewModel((ChessPuzzleItem)item, MainWindow, _log);
+                return new ChessPuzzleEditorViewModel((ChessPuzzleItem)item.Item, MainWindow, _log);
             case ItemDescription.ItemType.Group_Selection:
-                return new GroupSelectionEditorViewModel((GroupSelectionItem)item, MainWindow, _log);
+                return new GroupSelectionEditorViewModel((GroupSelectionItem)item.Item, MainWindow, _log);
             case ItemDescription.ItemType.Item:
-                return new ItemEditorViewModel((ItemItem)item, MainWindow, _log);
+                return new ItemEditorViewModel((ItemItem)item.Item, MainWindow, _log);
             case ItemDescription.ItemType.Layout:
-                return new LayoutEditorViewModel((LayoutItem)item, MainWindow, _log);
+                return new LayoutEditorViewModel((LayoutItem)item.Item, MainWindow, _log);
             case ItemDescription.ItemType.Map:
-                return new MapEditorViewModel((MapItem)item, MainWindow, _log);
+                return new MapEditorViewModel((MapItem)item.Item, MainWindow, _log);
             case ItemDescription.ItemType.Place:
-                return new PlaceEditorViewModel((PlaceItem)item, MainWindow, _log);
+                return new PlaceEditorViewModel((PlaceItem)item.Item, MainWindow, _log);
             case ItemDescription.ItemType.Puzzle:
-                return new PuzzleEditorViewModel((PuzzleItem)item, MainWindow, _log);
+                return new PuzzleEditorViewModel((PuzzleItem)item.Item, MainWindow, _log);
             case ItemDescription.ItemType.Scenario:
-                return new ScenarioEditorViewModel((ScenarioItem)item, MainWindow, _log);
+                return new ScenarioEditorViewModel((ScenarioItem)item.Item, MainWindow, _log);
             case ItemDescription.ItemType.Script:
-                return new ScriptEditorViewModel((ScriptItem)item, MainWindow, _log);
+                return new ScriptEditorViewModel((ScriptItem)item.Item, MainWindow, _log);
             case ItemDescription.ItemType.SFX:
-                return new SfxEditorViewModel((SfxItem)item, MainWindow, _log);
+                return new SfxEditorViewModel((SfxItem)item.Item, MainWindow, _log);
             case ItemDescription.ItemType.System_Texture:
-                return new SystemTextureEditorViewModel((SystemTextureItem)item, MainWindow, _project, _log);
+                return new SystemTextureEditorViewModel((SystemTextureItem)item.Item, MainWindow, _project, _log);
             case ItemDescription.ItemType.Topic:
-                return new TopicEditorViewModel((TopicItem)item, MainWindow, _log);
+                return new TopicEditorViewModel((TopicItem)item.Item, MainWindow, _log);
             case ItemDescription.ItemType.Voice:
-                return new VoicedLineEditorViewModel((VoicedLineItem)item, MainWindow, _log);
+                return new VoicedLineEditorViewModel((VoicedLineItem)item.Item, MainWindow, _log);
             case ItemDescription.ItemType.Save:
-                return new SaveEditorViewModel((SaveItem)item, MainWindow, _log);
+                return new SaveEditorViewModel((SaveItem)item.Item, MainWindow, _log);
             default:
                 _log.LogError(Strings.Invalid_item_type_);
                 return null;
@@ -113,36 +114,36 @@ public class EditorTabsPanelViewModel : ViewModelBase
 
     public async Task OnTabClosed(EditorViewModel closedEditor)
     {
-        if (closedEditor.Description.Type == ItemDescription.ItemType.BGM)
+        if (closedEditor.Description.UnsavedChanges)
         {
-            ((BackgroundMusicEditorViewModel)closedEditor).BgmPlayer.Stop();
-        }
-        else if (closedEditor.Description.Type == ItemDescription.ItemType.Character_Sprite)
-        {
-            ((CharacterSpriteEditorViewModel)closedEditor).AnimatedImage.Stop();
-        }
-        else if (closedEditor.Description.Type == ItemDescription.ItemType.SFX)
-        {
-            ((SfxEditorViewModel)closedEditor).SfxPlayerPanel.Stop();
-        }
-        else if (closedEditor.Description.Type == ItemDescription.ItemType.Save)
-        {
-            ButtonResult result = await MainWindow.Window.ShowMessageBoxAsync(Strings.Save_changes_to_save_file_,
-                Strings.Would_you_like_to_save_your_changes_to_the_save_file_,
+            ButtonResult result = await MainWindow.Window.ShowMessageBoxAsync(Strings.SaveClosedItemTitle,
+                Strings.SaveClosedItemMessage,
                 ButtonEnum.YesNoCancel, Icon.Question, _log);
-            SaveEditorViewModel saveEditor = (SaveEditorViewModel)closedEditor;
             switch (result)
             {
                 case ButtonResult.Yes:
-                    File.WriteAllBytes(saveEditor.Save.SaveLoc, saveEditor.Save.Save.GetBytes());
+                    MainWindow.SaveItems([closedEditor.Description]);
                     break;
                 case ButtonResult.No:
                     break;
                 default:
                 case ButtonResult.Cancel:
-                    OpenTab(saveEditor.Save);
+                    OpenTab(closedEditor.Description);
                     break;
             }
+        }
+
+        if (closedEditor.Description.Item.Type == ItemDescription.ItemType.BGM)
+        {
+            ((BackgroundMusicEditorViewModel)closedEditor).BgmPlayer.Stop();
+        }
+        else if (closedEditor.Description.Item.Type == ItemDescription.ItemType.Character_Sprite)
+        {
+            ((CharacterSpriteEditorViewModel)closedEditor).AnimatedImage.Stop();
+        }
+        else if (closedEditor.Description.Item.Type == ItemDescription.ItemType.SFX)
+        {
+            ((SfxEditorViewModel)closedEditor).SfxPlayerPanel.Stop();
         }
         ShowTabsPanel = Tabs.Any();
     }

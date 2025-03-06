@@ -22,7 +22,7 @@ public class GotoScriptCommandEditorViewModel : ScriptCommandEditorViewModel
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[0] = Script.Event.LabelsSection.Objects
                 .FirstOrDefault(l => l.Name.Replace("/", "").Equals(_sectionToJumpTo.Name))?.Id ?? 0;
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
             Script.Refresh(_project, Log);
             Command.UpdateDisplay();
         }

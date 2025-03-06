@@ -93,6 +93,6 @@ public class ChessToggleHighlightScriptCommandEditorViewModel : ScriptCommandEdi
         }
 
         ScriptEditor.UpdatePreview();
-        Script.UnsavedChanges = true;
+        ScriptEditor.Description.UnsavedChanges = true;
     }
 }

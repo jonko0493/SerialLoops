@@ -14,8 +14,6 @@ public partial class ItemDescription
     public bool CanRename { get; set; }
     public string DisplayName { get; set; }
     public ItemType Type { get; set; }
-    [BsonIgnore]
-    public bool UnsavedChanges { get; set; }
 
     public ItemDescription()
     {
@@ -34,12 +32,6 @@ public partial class ItemDescription
         {
             DisplayName = Name;
         }
-    }
-
-    public void Rename(string newName, Project project)
-    {
-        DisplayName = newName;
-        project.ItemNames[Name] = DisplayName;
     }
 
     public virtual void InitializeAfterDbLoad(Project project)
@@ -74,7 +66,7 @@ public partial class ItemDescription
     public List<ItemDescription> GetReferencesTo(Project project)
     {
         using LiteDatabase db = new(project.DbFile);
-        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
 
         List<ItemDescription> references = [];
         ScenarioItem scenario = (ScenarioItem)itemsCol.FindById("Scenario");

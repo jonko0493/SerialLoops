@@ -206,7 +206,7 @@ public class ScriptItem : Item
         ScriptItemCommand currentCommand, Project project, ILogger log)
     {
         using LiteDatabase db = new(project.DbFile);
-        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
 
         ScriptPreview preview = new();
 

@@ -38,7 +38,7 @@ public class SceneGotoScriptCommandEditorViewModel : ScriptCommandEditorViewMode
                     (short)(Script.Event.ConditionalsSection.Objects.Count - 1);
                 Script.Event.ConditionalsSection.Objects.Insert(Script.Event.ConditionalsSection.Objects.Count - 1, _selectedScript.Name);
             }
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -46,7 +46,7 @@ public class SceneGotoScriptCommandEditorViewModel : ScriptCommandEditorViewMode
         base(command, scriptEditor, log)
     {
         using LiteDatabase db = new(scriptEditor.Window.OpenProject.DbFile);
-        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
 
         Tabs = window.EditorTabs;
         Scripts = new(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Script)

@@ -2,12 +2,14 @@
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using SerialLoops.Lib.Items;
+using SerialLoops.Lib.Items.Shims;
 using SkiaSharp;
 
 namespace SerialLoops.Models;
 
 public class LayoutEntryWithImage : ReactiveObject
 {
+    private ReactiveItemDescription _description;
     private LayoutItem _layout;
     private int _index;
     public SKBitmap FullImage { get; }
@@ -25,7 +27,7 @@ public class LayoutEntryWithImage : ReactiveObject
             this.RaiseAndSetIfChanged(ref _screenX, value);
             _layout.Layout.LayoutEntries[_index].ScreenX = _screenX;
             CroppedImage = _layout.GetLayoutEntryRender(_index);
-            _layout.UnsavedChanges = true;
+            _description.UnsavedChanges = true;
         }
     }
     private short _screenY;
@@ -37,7 +39,7 @@ public class LayoutEntryWithImage : ReactiveObject
             this.RaiseAndSetIfChanged(ref _screenY, value);
             _layout.Layout.LayoutEntries[_index].ScreenY = _screenY;
             CroppedImage = _layout.GetLayoutEntryRender(_index);
-            _layout.UnsavedChanges = true;
+            _description.UnsavedChanges = true;
         }
     }
     private short _screenW;
@@ -54,7 +56,7 @@ public class LayoutEntryWithImage : ReactiveObject
             this.RaisePropertyChanged(nameof(Width));
             _layout.Layout.LayoutEntries[_index].ScreenW = _screenW;
             CroppedImage = _layout.GetLayoutEntryRender(_index);
-            _layout.UnsavedChanges = true;
+            _description.UnsavedChanges = true;
         }
     }
     private short _screenH;
@@ -71,7 +73,7 @@ public class LayoutEntryWithImage : ReactiveObject
             this.RaisePropertyChanged(nameof(Height));
             _layout.Layout.LayoutEntries[_index].ScreenH = _screenH;
             CroppedImage = _layout.GetLayoutEntryRender(_index);
-            _layout.UnsavedChanges = true;
+            _description.UnsavedChanges = true;
         }
     }
 
@@ -84,7 +86,7 @@ public class LayoutEntryWithImage : ReactiveObject
             this.RaiseAndSetIfChanged(ref _textureX, value);
             _layout.Layout.LayoutEntries[_index].TextureX = _textureX;
             CroppedImage = _layout.GetLayoutEntryRender(_index);
-            _layout.UnsavedChanges = true;
+            _description.UnsavedChanges = true;
         }
     }
     private short _textureY;
@@ -96,7 +98,7 @@ public class LayoutEntryWithImage : ReactiveObject
             this.RaiseAndSetIfChanged(ref _textureY, value);
             _layout.Layout.LayoutEntries[_index].TextureY = _textureY;
             CroppedImage = _layout.GetLayoutEntryRender(_index);
-            _layout.UnsavedChanges = true;
+            _description.UnsavedChanges = true;
         }
     }
     private short _textureW;
@@ -108,7 +110,7 @@ public class LayoutEntryWithImage : ReactiveObject
             this.RaiseAndSetIfChanged(ref _textureW, value);
             _layout.Layout.LayoutEntries[_index].TextureW = _textureW;
             CroppedImage = _layout.GetLayoutEntryRender(_index);
-            _layout.UnsavedChanges = true;
+            _description.UnsavedChanges = true;
         }
     }
     private short _textureH;
@@ -120,7 +122,7 @@ public class LayoutEntryWithImage : ReactiveObject
             this.RaiseAndSetIfChanged(ref _textureH, value);
             _layout.Layout.LayoutEntries[_index].TextureH = _textureH;
             CroppedImage = _layout.GetLayoutEntryRender(_index);
-            _layout.UnsavedChanges = true;
+            _description.UnsavedChanges = true;
         }
     }
 
@@ -133,7 +135,7 @@ public class LayoutEntryWithImage : ReactiveObject
             this.RaiseAndSetIfChanged(ref _tint, value);
             _layout.Layout.LayoutEntries[_index].Tint = _tint;
             CroppedImage = _layout.GetLayoutEntryRender(_index);
-            _layout.UnsavedChanges = true;
+            _description.UnsavedChanges = true;
         }
     }
 
@@ -143,8 +145,9 @@ public class LayoutEntryWithImage : ReactiveObject
     [Reactive]
     public bool IsVisible { get; set; } = true;
 
-    public LayoutEntryWithImage(LayoutItem layout, int idx)
+    public LayoutEntryWithImage(ReactiveItemDescription description, LayoutItem layout, int idx)
     {
+        _description = description;
         _layout = layout;
         _index = idx;
         FullImage = _layout.Layout.LayoutEntries[_index].RelativeShtxIndex >= 0 ? _layout.TilesDict[_layout.Layout.LayoutEntries[_index].RelativeShtxIndex] : null;

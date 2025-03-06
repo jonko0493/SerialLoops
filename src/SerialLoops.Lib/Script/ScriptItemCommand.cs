@@ -110,7 +110,7 @@ public class ScriptItemCommand : ReactiveObject
     private static List<ScriptParameter> GetScriptParameters(ScriptCommandInvocation invocation, ScriptSection section, EventFile eventFile, Project project, Func<string, string> localize, ILogger log)
     {
         using LiteDatabase db = new(project.DbFile);
-        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
 
         List<ScriptParameter> parameters = [];
 

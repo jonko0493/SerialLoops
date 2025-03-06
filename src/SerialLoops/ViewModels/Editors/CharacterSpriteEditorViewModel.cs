@@ -12,6 +12,7 @@ using ReactiveUI;
 using SerialLoops.Assets;
 using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
+using SerialLoops.Lib.Items.Shims;
 using SerialLoops.Utility;
 using SerialLoops.ViewModels.Controls;
 using SerialLoops.ViewModels.Dialogs;
@@ -36,7 +37,7 @@ public class CharacterSpriteEditorViewModel : EditorViewModel
         {
             this.RaiseAndSetIfChanged(ref _character, value);
             _sprite.Sprite.Character = _character.MessageInfo.Character;
-            _sprite.UnsavedChanges = true;
+            Description.UnsavedChanges = true;
         }
     }
     public bool IsLarge
@@ -64,29 +65,29 @@ public class CharacterSpriteEditorViewModel : EditorViewModel
                 _sprite.Graphics.MouthTexture.RenderWidth /= 2;
                 _sprite.Graphics.MouthTexture.RenderHeight /= 2;
             }
-            _sprite.UnsavedChanges = true;
+            Description.UnsavedChanges = true;
         }
     }
 
-    public ICommand ReplaceCommand { get; set; }
-    public ICommand ExportFramesCommand { get; set; }
-    public ICommand ExportGIFCommand { get; set; }
+    public ICommand ReplaceCommand { get; }
+    public ICommand ExportFramesCommand { get; }
+    public ICommand ExportGifCommand { get; }
 
-    public CharacterSpriteEditorViewModel(CharacterSpriteItem item, MainWindowViewModel mainWindow, ILogger log) : base(item, mainWindow, log)
+    public CharacterSpriteEditorViewModel(CharacterSpriteItem sprite, MainWindowViewModel mainWindow, ILogger log) : base(new(sprite), mainWindow, log)
     {
         using LiteDatabase db = new(mainWindow.OpenProject.DbFile);
-        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
-        var charCol = db.GetCollection<ItemCategoryShim<CharacterItem>>(nameof(CharacterItem));
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
+        var charCol = db.GetCollection<CharacterItemShim>(nameof(CharacterItem));
 
-        _sprite = item;
+        _sprite = sprite;
         AnimatedImage = new(_sprite.GetLipFlapAnimation(mainWindow.OpenProject));
-        Characters = new(charCol.FindAll().Select(c => c.GetItem(itemsCol)));
-        _character = Characters.FirstOrDefault(c => c.MessageInfo.Character == item.Sprite.Character);
+        Characters = new(charCol.FindAll().Select(c => c.GetItem(itemsCol)).Cast<CharacterItem>());
+        _character = Characters.FirstOrDefault(c => c.MessageInfo.Character == sprite.Sprite.Character);
         _isLarge = _sprite.Sprite.IsLarge;
 
         ReplaceCommand = ReactiveCommand.CreateFromTask(ReplaceSprite);
         ExportFramesCommand = ReactiveCommand.CreateFromTask(ExportFrames);
-        ExportGIFCommand = ReactiveCommand.CreateFromTask(ExportGIF);
+        ExportGifCommand = ReactiveCommand.CreateFromTask(ExportGIF);
     }
 
     private async Task ReplaceSprite()

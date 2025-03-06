@@ -28,7 +28,7 @@ public class BgmPlayScriptCommandEditorViewModel : ScriptCommandEditorViewModel
             ((BgmScriptParameter)Command.Parameters[0]).Bgm = _music;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[0] = (short)_music.Index;
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -44,7 +44,7 @@ public class BgmPlayScriptCommandEditorViewModel : ScriptCommandEditorViewModel
             ((BgmModeScriptParameter)Command.Parameters[1]).Mode = _mode.Mode;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[1] = (short)_mode.Mode;
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -58,7 +58,7 @@ public class BgmPlayScriptCommandEditorViewModel : ScriptCommandEditorViewModel
             ((ShortScriptParameter)Command.Parameters[2]).Value = _volume;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[2] = _volume;
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -72,7 +72,7 @@ public class BgmPlayScriptCommandEditorViewModel : ScriptCommandEditorViewModel
             ((ShortScriptParameter)Command.Parameters[3]).Value = _fadeInTime;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[3] = _fadeInTime;
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -93,7 +93,7 @@ public class BgmPlayScriptCommandEditorViewModel : ScriptCommandEditorViewModel
         : base(command, scriptEditor, log)
     {
         using LiteDatabase db = new(window.OpenProject.DbFile);
-        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
 
         Tabs = window.EditorTabs;
         Bgms = new(itemsCol.Find(i => i.Type == ItemDescription.ItemType.BGM)

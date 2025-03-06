@@ -13,6 +13,7 @@ using ReactiveUI.Fody.Helpers;
 using SerialLoops.Assets;
 using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
+using SerialLoops.Lib.Items.Shims;
 using SerialLoops.Lib.SaveFile;
 using SerialLoops.Lib.Script;
 using SerialLoops.Lib.Script.Parameters;
@@ -27,6 +28,7 @@ namespace SerialLoops.ViewModels.Dialogs;
 
 public class SaveSlotEditorDialogViewModel : ViewModelBase
 {
+    private ReactiveItemDescription _description;
     private SaveItem _save;
     private CommonSaveData _commonSaveData;
     private SaveSlotData _saveSlot;
@@ -56,9 +58,10 @@ public class SaveSlotEditorDialogViewModel : ViewModelBase
     public ICommand SaveCommand { get; }
     public ICommand CancelCommand { get; }
 
-    public SaveSlotEditorDialogViewModel(SaveItem save, SaveSection saveSection, string saveName, string slotName, Project project,
-        ILogger log, EditorTabsPanelViewModel tabs = null)
+    public SaveSlotEditorDialogViewModel(ReactiveItemDescription description, SaveItem save, SaveSection saveSection,
+        string saveName, string slotName, Project project, ILogger log, EditorTabsPanelViewModel tabs = null)
     {
+        _description = description;
         _save = save;
         _log = log;
         Title = string.Format(Strings.Edit_Save_File____0_____1_, saveName, slotName);
@@ -68,7 +71,7 @@ public class SaveSlotEditorDialogViewModel : ViewModelBase
         Tabs = tabs;
 
         using LiteDatabase db = new(_project.DbFile);
-        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
 
         if (SaveSection is QuickSaveSlotData quickSave)
         {
@@ -224,7 +227,7 @@ public class SaveSlotEditorDialogViewModel : ViewModelBase
 
     private void Save(SaveSlotEditorDialog dialog)
     {
-        _save.UnsavedChanges = true;
+        _description.UnsavedChanges = true;
 
         if (IsCommonSave)
         {

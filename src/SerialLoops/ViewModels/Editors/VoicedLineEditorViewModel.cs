@@ -148,7 +148,7 @@ public class VoicedLineEditorViewModel : EditorViewModel
 
     public bool SubsEnabled => Window.OpenProject.VoiceMap is not null;
 
-    public VoicedLineEditorViewModel(VoicedLineItem item, MainWindowViewModel window, ILogger log) : base(item, window, log, window.OpenProject)
+    public VoicedLineEditorViewModel(VoicedLineItem item, MainWindowViewModel window, ILogger log) : base(new(item), window, log, window.OpenProject)
     {
         _vce = item;
         VcePlayer = new(_vce, log, null);
@@ -184,9 +184,10 @@ public class VoicedLineEditorViewModel : EditorViewModel
         {
             ProgressDialogViewModel tracker = new(Strings.Replace_voiced_line);
             VcePlayer.Stop();
-            tracker.InitializeTasks(() => _vce.Replace(openFile.Path.LocalPath, _project.BaseDirectory, _project.IterativeDirectory, Path.Combine(_project.Config.CachesDirectory, "vce", $"{_vce.Name}.wav"), _log,
+            bool subsAdjusted = false;
+            tracker.InitializeTasks(() => subsAdjusted = _vce.Replace(openFile.Path.LocalPath, _project.BaseDirectory, _project.IterativeDirectory, Path.Combine(_project.Config.CachesDirectory, "vce", $"{_vce.Name}.wav"), _log,
                     _voiceMapEntry),
-                () => { });
+                () => Description.UnsavedChanges = Description.UnsavedChanges || subsAdjusted);
             await new ProgressDialog { DataContext = tracker }.ShowDialog(Window.Window);
             VcePlayer.Stop();
         }
@@ -210,7 +211,7 @@ public class VoicedLineEditorViewModel : EditorViewModel
         if (_voiceMapEntry is not null)
         {
             _voiceMapEntry.Timer = (int)((double)header.TotalSamples / header.SampleRate * 180 + 30);
-            _vce.UnsavedChanges = true;
+            Description.UnsavedChanges = true;
         }
         VcePlayer.Stop();
     }

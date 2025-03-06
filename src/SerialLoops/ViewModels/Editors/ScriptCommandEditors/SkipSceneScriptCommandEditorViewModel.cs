@@ -16,7 +16,7 @@ public class SkipSceneScriptCommandEditorViewModel(ScriptItemCommand command, Sc
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[0] = value;
             this.RaisePropertyChanged();
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 }

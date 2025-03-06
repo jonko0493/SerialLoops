@@ -59,7 +59,7 @@ public class TutorialMapping : ReactiveObject
     public TutorialMapping(Tutorial tutorial, Project project, EditorTabsPanelViewModel tabs)
     {
         using LiteDatabase db = new(project.DbFile);
-        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
 
         Tabs = tabs;
         Scripts = new(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Script).Cast<ScriptItem>());

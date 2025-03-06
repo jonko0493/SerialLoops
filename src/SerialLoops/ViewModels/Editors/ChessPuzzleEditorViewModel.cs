@@ -27,7 +27,7 @@ public class ChessPuzzleEditorViewModel : EditorViewModel
         {
             this.RaiseAndSetIfChanged(ref _numMoves, value);
             _chessPuzzle.ChessPuzzle.NumMoves = _numMoves;
-            _chessPuzzle.UnsavedChanges = true;
+            Description.UnsavedChanges = true;
         }
     }
 
@@ -39,7 +39,7 @@ public class ChessPuzzleEditorViewModel : EditorViewModel
         {
             this.RaiseAndSetIfChanged(ref _timeLimit, value);
             _chessPuzzle.ChessPuzzle.TimeLimit = _timeLimit;
-            _chessPuzzle.UnsavedChanges = true;
+            Description.UnsavedChanges = true;
         }
     }
 
@@ -51,11 +51,11 @@ public class ChessPuzzleEditorViewModel : EditorViewModel
         {
             this.RaiseAndSetIfChanged(ref _unknown08, value);
             _chessPuzzle.ChessPuzzle.Unknown08 = _unknown08;
-            _chessPuzzle.UnsavedChanges = true;
+            Description.UnsavedChanges = true;
         }
     }
 
-    public ChessPuzzleEditorViewModel(ChessPuzzleItem chessPuzzle, MainWindowViewModel window, ILogger log) : base(chessPuzzle, window, log)
+    public ChessPuzzleEditorViewModel(ChessPuzzleItem chessPuzzle, MainWindowViewModel window, ILogger log) : base(new(chessPuzzle), window, log)
     {
         _chessPuzzle = chessPuzzle;
         EmptyChessboard = ChessPuzzleItem.GetEmptyChessboard(Window.OpenProject.Grp);
@@ -77,7 +77,7 @@ public class ChessPuzzleEditorViewModel : EditorViewModel
         Pieces[currentIndex].Move(currentIndex);
         Pieces[newIndex].Move(newIndex);
         _chessPuzzle.ChessPuzzle.Chessboard = [.. Pieces.Select(p => p.Piece)];
-        _chessPuzzle.UnsavedChanges = true;
+        Description.UnsavedChanges = true;
     }
 }
 

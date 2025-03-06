@@ -25,11 +25,11 @@ public class PlaceEditorViewModel : EditorViewModel
             this.RaisePropertyChanged();
             Preview = _place.GetNewPlaceGraphic(_msGothicHaruhi);
             _place.PlaceGraphic.SetImage(Preview);
-            _place.UnsavedChanges = true;
+            Description.UnsavedChanges = true;
         }
     }
 
-    public PlaceEditorViewModel(PlaceItem place, MainWindowViewModel window, ILogger log) : base(place, window, log)
+    public PlaceEditorViewModel(PlaceItem place, MainWindowViewModel window, ILogger log) : base(new(place), window, log)
     {
         _place = place;
         if (string.IsNullOrEmpty(_place.PlaceName))

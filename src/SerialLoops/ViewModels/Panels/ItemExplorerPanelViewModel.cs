@@ -9,6 +9,7 @@ using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
+using SerialLoops.Lib.Items.Shims;
 using SerialLoops.Models;
 using SerialLoops.Utility;
 
@@ -86,7 +87,7 @@ public class ItemExplorerPanelViewModel : ViewModelBase
         ItemDescription item = _project.FindItem(((ITreeItem)viewer.RowSelection?.SelectedItem)?.Text);
         if (item is not null)
         {
-            _tabs.OpenTab(item);
+            _tabs.OpenTab(new(item));
         }
     }
 

@@ -124,7 +124,7 @@ public static class Extensions
     public static void InitializeWithDefaultValues(this ScriptCommandInvocation invocation, EventFile eventFile, Project project)
     {
         using LiteDatabase db = new(project.DbFile);
-        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
 
         switch (Enum.Parse<CommandVerb>(invocation.Command.Mnemonic))
         {

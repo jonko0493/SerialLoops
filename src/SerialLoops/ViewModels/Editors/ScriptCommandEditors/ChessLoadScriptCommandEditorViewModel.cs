@@ -27,7 +27,7 @@ public class ChessLoadScriptCommandEditorViewModel : ScriptCommandEditorViewMode
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[0] = (short)_chessPuzzle.ChessPuzzle.Index;
             ScriptEditor.UpdatePreview();
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -35,7 +35,7 @@ public class ChessLoadScriptCommandEditorViewModel : ScriptCommandEditorViewMode
         : base(command, scriptEditor, log)
     {
         using LiteDatabase db = new(window.OpenProject.DbFile);
-        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
 
         ChessPuzzles = new(itemsCol.Find(c => c.Type == ItemDescription.ItemType.Chess_Puzzle).Cast<ChessPuzzleItem>());
         _chessPuzzle = ((ChessPuzzleScriptParameter)command.Parameters[0]).ChessPuzzle;

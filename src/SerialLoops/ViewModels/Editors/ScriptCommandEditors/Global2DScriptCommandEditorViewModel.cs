@@ -16,7 +16,7 @@ public class Global2DScriptCommandEditorViewModel(ScriptItemCommand command, Scr
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[0] = value;
             this.RaisePropertyChanged();
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 }

@@ -65,8 +65,10 @@ public class VoicedLineItem : Item, ISoundItem
         return new AdxWaveProvider(decoder);
     }
 
-    public void Replace(string audioFile, string baseDirectory, string iterativeDirectory, string vceCachedFile, ILogger log, VoiceMapFile.VoiceMapEntry vceMapEntry = null)
+    public bool Replace(string audioFile, string baseDirectory, string iterativeDirectory, string vceCachedFile, ILogger log, VoiceMapFile.VoiceMapEntry vceMapEntry = null)
     {
+        bool subsAdjusted = false;
+
         // The MP3 decoder is able to create wave files but for whatever reason messes with the ADX encoder
         // So we just convert to WAV AOT
         if (Path.GetExtension(audioFile).Equals(".mp3", StringComparison.OrdinalIgnoreCase))
@@ -94,7 +96,7 @@ public class VoicedLineItem : Item, ISoundItem
         {
             log.LogError("Invalid audio file selected.");
             log.LogWarning(audioFile);
-            return;
+            return false;
         }
 
         if (audio.WaveFormat.Channels > 1 || audio.WaveFormat.SampleRate > SoundItem.MAX_SAMPLERATE)
@@ -136,8 +138,10 @@ public class VoicedLineItem : Item, ISoundItem
         if (vceMapEntry is not null)
         {
             vceMapEntry.Timer = (int)(audio.TotalTime.TotalSeconds * 180 + 30);
-            UnsavedChanges = true;
+            subsAdjusted = true;
         }
+
+        return subsAdjusted;
     }
 
     public override void Refresh(Project project, ILogger log)

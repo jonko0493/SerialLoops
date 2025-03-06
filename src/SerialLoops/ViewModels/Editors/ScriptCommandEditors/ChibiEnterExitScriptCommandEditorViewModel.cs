@@ -25,7 +25,7 @@ public class ChibiEnterExitScriptCommandEditorViewModel : ScriptCommandEditorVie
                 .Objects[Command.Index].Parameters[0] = (short)value.TopScreenIndex;
             this.RaisePropertyChanged();
             ScriptEditor.UpdatePreview();
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -41,7 +41,7 @@ public class ChibiEnterExitScriptCommandEditorViewModel : ScriptCommandEditorVie
                 .Objects[Command.Index].Parameters[1] = (short)value.Mode;
             this.RaisePropertyChanged();
             ScriptEditor.UpdatePreview();
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -54,7 +54,7 @@ public class ChibiEnterExitScriptCommandEditorViewModel : ScriptCommandEditorVie
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[2] = value;
             this.RaisePropertyChanged();
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -62,7 +62,7 @@ public class ChibiEnterExitScriptCommandEditorViewModel : ScriptCommandEditorVie
         : base(command, scriptEditor, log)
     {
         using LiteDatabase db = new(scriptEditor.Window.OpenProject.DbFile);
-        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
 
         Chibis = new(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Chibi).Cast<ChibiItem>());
     }

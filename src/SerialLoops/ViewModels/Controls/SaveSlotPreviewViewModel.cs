@@ -4,6 +4,7 @@ using HaruhiChokuretsuLib.Save;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using SerialLoops.Assets;
+using SerialLoops.Lib.Items.Shims;
 using SerialLoops.Lib.SaveFile;
 using SerialLoops.ViewModels.Dialogs;
 using SerialLoops.Views.Dialogs;
@@ -13,6 +14,7 @@ namespace SerialLoops.ViewModels.Controls;
 
 public class SaveSlotPreviewViewModel : ViewModelBase
 {
+    private ReactiveItemDescription _description;
     private SaveItem _save;
     private int _slotNum;
     public SaveSlotData SlotData { get; }
@@ -26,8 +28,9 @@ public class SaveSlotPreviewViewModel : ViewModelBase
     public ICommand SlotEditCommand { get; }
     public ICommand SlotClearCommand { get; }
 
-    public SaveSlotPreviewViewModel(SaveItem save, SaveSlotData slotData, int slotNum, MainWindowViewModel window)
+    public SaveSlotPreviewViewModel(ReactiveItemDescription description, SaveItem save, SaveSlotData slotData, int slotNum, MainWindowViewModel window)
     {
+        _description = description;
         _save = save;
         SlotData = slotData;
         _slotNum = slotNum;
@@ -42,7 +45,7 @@ public class SaveSlotPreviewViewModel : ViewModelBase
     {
         await new SaveSlotEditorDialog()
         {
-            DataContext = new SaveSlotEditorDialogViewModel(_save, SlotData, _save.DisplayName, SlotName,
+            DataContext = new SaveSlotEditorDialogViewModel(_description, _save, SlotData, _save.DisplayName, SlotName,
                 _window.OpenProject, _window.Log, _window.EditorTabs),
         }.ShowDialog(_window.Window);
     }
@@ -50,7 +53,7 @@ public class SaveSlotPreviewViewModel : ViewModelBase
     private void ClearSlot()
     {
         SlotData.Clear();
-        _save.UnsavedChanges = true;
+        _description.UnsavedChanges = true;
         _window.Log.Log($"Cleared Save File {_slotNum}.");
         SaveSlotPreview = new SaveFilePreview(SlotData, _window.OpenProject).DrawPreview();
     }

@@ -128,16 +128,16 @@ public class ScriptEditorViewModel : EditorViewModel
     public ObservableCollection<StartingChibiWithImage> UnusedChibis { get; }
     public ObservableCollection<StartingChibiWithImage> StartingChibis { get; }
 
-    public ScriptEditorViewModel(ScriptItem script, MainWindowViewModel window, ILogger log) : base(script, window, log)
+    public ScriptEditorViewModel(ScriptItem script, MainWindowViewModel window, ILogger log) : base(new(script), window, log)
     {
-        using LiteDatabase db = new(_project.DbFile);
-        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
-
         _script = script;
         ScriptSections = new(script.Event.ScriptSections.Select(s => new ReactiveScriptSection(s)));
         _project = window.OpenProject;
         PopulateScriptCommands();
         _script.CalculateGraphEdges(_commands, _log);
+
+        using LiteDatabase db = new(_project.DbFile);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
 
         if (_script.Event.StartingChibisSection is not null)
         {
@@ -146,7 +146,7 @@ public class ScriptEditorViewModel : EditorViewModel
             StartingChibis.AddRange(_script.Event.StartingChibisSection.Objects.Where(c => c.ChibiIndex > 0).Select(c => new StartingChibiWithImage(c,
                 ((ChibiItem)itemsCol.FindOne(i => i.Type == ItemDescription.ItemType.Chibi
                                           && ((ChibiItem)i).ChibiIndex == c.ChibiIndex)).ChibiAnimations.First().Value[0].Frame,
-                StartingChibis, UnusedChibis, _script)));
+                StartingChibis, UnusedChibis, _script, this)));
             short[] usedIndices = StartingChibis.Select(c => c.StartingChibi.ChibiIndex).ToArray();
             for (short i = 1; i <= 5; i++)
             {
@@ -155,7 +155,7 @@ public class ScriptEditorViewModel : EditorViewModel
                     continue;
                 }
                 UnusedChibis.Add(new(new() { ChibiIndex = i }, ((ChibiItem)itemsCol.FindOne(c => c.Type == ItemDescription.ItemType.Chibi
-                                                                                                 && ((ChibiItem)c).ChibiIndex == i)).ChibiAnimations.First().Value[0].Frame, StartingChibis, UnusedChibis, _script));
+                                                                                                 && ((ChibiItem)c).ChibiIndex == i)).ChibiAnimations.First().Value[0].Frame, StartingChibis, UnusedChibis, _script, this));
             }
         }
     }
@@ -339,7 +339,7 @@ public class ScriptEditorViewModel : EditorViewModel
             sourceCommand.Index = targetCommandIndex;
 
             _script.Refresh(_project, _log);
-            _script.UnsavedChanges = true;
+            Description.UnsavedChanges = true;
         }
     }
 
@@ -421,7 +421,7 @@ public class ScriptEditorViewModel : EditorViewModel
         Source.RowSelection?.Select(new(_script.Event.ScriptSections.IndexOf(SelectedCommand.Section), SelectedCommand.Index));
 
         _script.Refresh(_project, _log);
-        _script.UnsavedChanges = true;
+        Description.UnsavedChanges = true;
     }
 
     private async Task AddSection()
@@ -483,7 +483,7 @@ public class ScriptEditorViewModel : EditorViewModel
         // inserting directly into the collection, but is fine since users will not be adding sections
         // as frequently as commands (and is necessary with our current architecture)
         Commands = _commands;
-        _script.UnsavedChanges = true;
+        Description.UnsavedChanges = true;
     }
 
     private async Task Delete()
@@ -542,7 +542,7 @@ public class ScriptEditorViewModel : EditorViewModel
         }
 
         _script.Refresh(_project, _log);
-        _script.UnsavedChanges = true;
+        Description.UnsavedChanges = true;
     }
 
     private async Task Clear()
@@ -596,7 +596,7 @@ public class ScriptEditorViewModel : EditorViewModel
         }
 
         _script.Refresh(_project, _log);
-        _script.UnsavedChanges = true;
+        Description.UnsavedChanges = true;
     }
 
     private void Cut()
@@ -669,7 +669,7 @@ public class ScriptEditorViewModel : EditorViewModel
         }
 
         _script.Refresh(_project, _log);
-        _script.UnsavedChanges = true;
+        Description.UnsavedChanges = true;
     }
 
     private async Task ApplyTemplate()
@@ -770,7 +770,7 @@ public class StartingChibiWithImage : ReactiveObject
 
     public StartingChibiWithImage(StartingChibiEntry startingChibi, SKBitmap chibiBitmap,
         ObservableCollection<StartingChibiWithImage> usedChibis, ObservableCollection<StartingChibiWithImage> unusedChibis,
-        ScriptItem script)
+        ScriptItem script, ScriptEditorViewModel editor)
     {
         StartingChibi = startingChibi;
         ChibiBitmap = chibiBitmap;
@@ -793,7 +793,7 @@ public class StartingChibiWithImage : ReactiveObject
                 }
             }
             script.Event.StartingChibisSection.Objects.Add(StartingChibi);
-            script.UnsavedChanges = true;
+            editor.Description.UnsavedChanges = true;
 
         });
         RemoveStartingChibiCommand = ReactiveCommand.Create(() =>
@@ -815,7 +815,7 @@ public class StartingChibiWithImage : ReactiveObject
             }
             script.Event.StartingChibisSection.Objects.Remove(
                 script.Event.StartingChibisSection.Objects.First(c => c.ChibiIndex == StartingChibi.ChibiIndex));
-            script.UnsavedChanges = true;
+            editor.Description.UnsavedChanges = true;
         });
     }
 }

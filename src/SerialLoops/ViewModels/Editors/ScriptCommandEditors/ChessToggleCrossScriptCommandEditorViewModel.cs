@@ -94,6 +94,6 @@ public class ChessToggleCrossScriptCommandEditorViewModel : ScriptCommandEditorV
         }
 
         ScriptEditor.UpdatePreview();
-        Script.UnsavedChanges = true;
+        ScriptEditor.Description.UnsavedChanges = true;
     }
 }

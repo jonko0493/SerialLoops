@@ -16,14 +16,14 @@ public class ScenarioCommandPickerViewModel(short commandIndex, ScenarioItem sce
         set
         {
             this.RaiseAndSetIfChanged(ref _scenarioCommandIndex, value);
-            ScenarioCommandText = $"{Scenario.ScenarioCommands[_scenarioCommandIndex].Command} {Scenario.ScenarioCommands[_scenarioCommandIndex].Parameter}";
+            ScenarioCommandText = $"{Scenario.ScenarioCommands[_scenarioCommandIndex].Verb} {Scenario.ScenarioCommands[_scenarioCommandIndex].Parameter}";
         }
     }
 
     [Reactive]
     public string ScenarioCommandText { get; set; } =
-        $"{scenario.ScenarioCommands[commandIndex].Command} {scenario.ScenarioCommands[commandIndex].Parameter}";
+        $"{scenario.ScenarioCommands[commandIndex].Verb} {scenario.ScenarioCommands[commandIndex].Parameter}";
 
     public ObservableCollection<string> ScenarioCommands { get; set; } =
-        new(scenario.ScenarioCommands.Select(c => $"{c.Command} {c.Parameter}").ToArray());
+        new(scenario.ScenarioCommands.Select(c => $"{c.Verb} {c.Parameter}").ToArray());
 }

@@ -116,7 +116,7 @@ public class ChessMoveScriptCommandEditorViewModel : ScriptCommandEditorViewMode
         ((ChessSpaceScriptParameter)Command.Parameters[1]).SpaceIndex = 0;
         Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
             .Objects[Command.Index].Parameters[1] = 0;
-        Script.UnsavedChanges = true;
+        ScriptEditor.Description.UnsavedChanges = true;
         ScriptEditor.UpdatePreview();
     }
 
@@ -130,7 +130,7 @@ public class ChessMoveScriptCommandEditorViewModel : ScriptCommandEditorViewMode
         ((ChessSpaceScriptParameter)Command.Parameters[3]).SpaceIndex = 0;
         Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
             .Objects[Command.Index].Parameters[3] = 0;
-        Script.UnsavedChanges = true;
+        ScriptEditor.Description.UnsavedChanges = true;
         ScriptEditor.UpdatePreview();
     }
 
@@ -208,7 +208,7 @@ public class ChessMoveScriptCommandEditorViewModel : ScriptCommandEditorViewMode
                 .Objects[Command.Index].Parameters[paramStartIndex + 1] = newIndex;
         }
 
-        Script.UnsavedChanges = true;
+        ScriptEditor.Description.UnsavedChanges = true;
         ScriptEditor.UpdatePreview();
     }
 }

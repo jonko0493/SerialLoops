@@ -5,7 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:assets="using:SerialLoops.Assets"
              xmlns:controls="using:SerialLoops.Controls"
-             xmlns:items="using:SerialLoops.Lib.Items"
+             xmlns:shims="clr-namespace:SerialLoops.Lib.Items.Shims;assembly=SerialLoops.Lib"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="vm:LoadSceneScenarioCommandEditorViewModel"
              x:Class="SerialLoops.Views.Editors.ScenarioCommandEditors.LoadSceneScenarioCommandEditorView">
@@ -15,19 +15,19 @@
         <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding SelectedScenarioCommand.Verb}"/>
         <TextBlock Grid.Row="1" Grid.Column="0" Margin="5" Text="{x:Static assets:Strings.Script}"/>
         <StackPanel Orientation="Horizontal" Spacing="3" Grid.Row="1" Grid.Column="1" Margin="5">
-            <ComboBox Grid.Row="1" Grid.Column="1" Margin="5" ItemsSource="{Binding Scripts}" SelectedItem="{Binding Scene}">
+            <ComboBox Margin="5" ItemsSource="{Binding ScriptShims}" SelectedItem="{Binding ScriptShim}">
                 <ComboBox.ItemTemplate>
-                    <DataTemplate x:DataType="items:ScriptItem">
+                    <DataTemplate x:DataType="shims:ScriptItemShim">
                         <TextBlock Text="{Binding DisplayName}"/>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
                 <ComboBox.ItemContainerTheme>
-                    <ControlTheme TargetType="ComboBoxItem" x:DataType="items:ScriptItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
+                    <ControlTheme TargetType="ComboBoxItem" x:DataType="shims:ScriptItemShim" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
                         <Setter Property="TextSearch.Text" Value="{Binding DisplayName}" />
                     </ControlTheme>
                 </ComboBox.ItemContainerTheme>
             </ComboBox>
-            <controls:ItemLink Item="{Binding Scene}" Tabs="{Binding Tabs}"/>
+            <controls:ItemLink Item="{Binding Script}" Tabs="{Binding Tabs}"/>
         </StackPanel>
     </Grid>
 </UserControl>

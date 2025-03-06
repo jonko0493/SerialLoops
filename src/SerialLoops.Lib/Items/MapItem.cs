@@ -13,7 +13,7 @@ public class MapItem : Item
     public MapFile Map { get; set; }
     public int QmapIndex { get; set; }
 
-    public GraphicsFile Layout { get; }
+    public GraphicsFile Layout { get; set;  }
     [BsonIgnore]
     public SKBitmap BgBitmap { get; set; }
     [BsonIgnore]

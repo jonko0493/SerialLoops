@@ -48,7 +48,7 @@ public class ChessToggleGuideScriptCommandEditorViewModel : ScriptCommandEditorV
                     .Objects[Command.Index].Parameters[0] = 0;
             }
             ScriptEditor.UpdatePreview();
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -117,7 +117,7 @@ public class ChessToggleGuideScriptCommandEditorViewModel : ScriptCommandEditorV
         }
 
         ScriptEditor.UpdatePreview();
-        Script.UnsavedChanges = true;
+        ScriptEditor.Description.UnsavedChanges = true;
     }
 
     private bool IsRemove(int spaceIndex) => ScriptEditor.CurrentGuidePieces.Contains((short)spaceIndex);

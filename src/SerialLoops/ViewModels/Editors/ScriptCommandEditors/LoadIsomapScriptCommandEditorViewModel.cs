@@ -23,7 +23,7 @@ public class LoadIsomapScriptCommandEditorViewModel : ScriptCommandEditorViewMod
             ((MapScriptParameter)Command.Parameters[0]).Map = _selectedMap;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[0] = (short)_selectedMap.Map.Index;
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -31,7 +31,7 @@ public class LoadIsomapScriptCommandEditorViewModel : ScriptCommandEditorViewMod
         : base(command, scriptEditor, log)
     {
         using LiteDatabase db = new(scriptEditor.Window.OpenProject.DbFile);
-        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
 
         Maps  = new(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Map).Cast<MapItem>());
         _selectedMap = ((MapScriptParameter)command.Parameters[0]).Map;

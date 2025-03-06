@@ -34,7 +34,7 @@ public class ItemDispimgScriptCommandEditorViewModel : ScriptCommandEditorViewMo
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[0] = (short)_item.ItemIndex;
             ScriptEditor.UpdatePreview();
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -51,7 +51,7 @@ public class ItemDispimgScriptCommandEditorViewModel : ScriptCommandEditorViewMo
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[1] = (short)_location.Location;
             ScriptEditor.UpdatePreview();
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -67,7 +67,7 @@ public class ItemDispimgScriptCommandEditorViewModel : ScriptCommandEditorViewMo
             ((ItemTransitionScriptParameter)Command.Parameters[2]).Transition = _transition.Transition;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[2] = (short)_transition.Transition;
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -77,7 +77,7 @@ public class ItemDispimgScriptCommandEditorViewModel : ScriptCommandEditorViewMo
         : base(command, scriptEditor, log)
     {
         using LiteDatabase db = new(window.OpenProject.DbFile);
-        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
 
         _window = window;
         Tabs = _window.EditorTabs;
@@ -93,7 +93,7 @@ public class ItemDispimgScriptCommandEditorViewModel : ScriptCommandEditorViewMo
     private async Task ChangeItem()
     {
         using LiteDatabase db = new(_window.OpenProject.DbFile);
-        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
 
         GraphicSelectionDialogViewModel graphicSelectionDialog = new(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Item).Cast<ItemItem>(),
             Item, _window.OpenProject, _window.Log);

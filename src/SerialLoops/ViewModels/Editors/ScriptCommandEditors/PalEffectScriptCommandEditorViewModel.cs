@@ -24,7 +24,7 @@ public class PalEffectScriptCommandEditorViewModel(ScriptItemCommand command, Sc
             ((PaletteEffectScriptParameter)Command.Parameters[0]).Effect = _paletteEffect.Effect;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[0] = (short)_paletteEffect.Effect;
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -38,7 +38,7 @@ public class PalEffectScriptCommandEditorViewModel(ScriptItemCommand command, Sc
             ((ShortScriptParameter)Command.Parameters[1]).Value = _transitionTime;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[1] = _transitionTime;
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 

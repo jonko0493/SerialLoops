@@ -30,7 +30,7 @@ public partial class PinMnlScriptCommandEditorViewModel : ScriptCommandEditorVie
             ((DialogueScriptParameter)Command.Parameters[0]).Line.Speaker = _speaker.MessageInfo.Character;
             Script.Event.DialogueSection.Objects[Command.Section.Objects[Command.Index].Parameters[0]].Speaker = _speaker.MessageInfo.Character;
             ScriptEditor.UpdatePreview();
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -68,7 +68,7 @@ public partial class PinMnlScriptCommandEditorViewModel : ScriptCommandEditorVie
             }
 
             ScriptEditor.UpdatePreview();
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -78,7 +78,7 @@ public partial class PinMnlScriptCommandEditorViewModel : ScriptCommandEditorVie
         _project = project;
         using (LiteDatabase db = new(scriptEditor.Window.OpenProject.DbFile))
         {
-            var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+            var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
             Characters = new(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Character).Cast<CharacterItem>());
         }
         _speaker = project.GetCharacterBySpeaker(((DialogueScriptParameter)command.Parameters[0]).Line.Speaker);

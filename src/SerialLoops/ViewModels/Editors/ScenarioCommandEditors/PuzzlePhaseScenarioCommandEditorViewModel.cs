@@ -2,8 +2,10 @@
 using System.Linq;
 using LiteDB;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
+using SerialLoops.Lib.Items.Shims;
 using SerialLoops.Models;
 using SerialLoops.ViewModels.Panels;
 
@@ -11,29 +13,40 @@ namespace SerialLoops.ViewModels.Editors.ScenarioCommandEditors;
 
 public class PuzzlePhaseScenarioCommandEditorViewModel : ScenarioCommandEditorViewModel
 {
-    public ObservableCollection<PuzzleItem> Puzzles { get; set; }
+    private Project _project;
+    public ObservableCollection<PuzzleItemShim> Puzzles { get; set; }
 
-    private PuzzleItem _puzzle;
-    public PuzzleItem Puzzle
+    private PuzzleItemShim _puzzleShim;
+    public PuzzleItemShim PuzzleShim
     {
-        get => _puzzle;
+        get => _puzzleShim;
         set
         {
-            this.RaiseAndSetIfChanged(ref _puzzle, value);
-            _parameter = _puzzle.Puzzle.Index;
-            SelectedScenarioCommand.Parameter = _puzzle.DisplayName;
+            this.RaiseAndSetIfChanged(ref _puzzleShim, value);
+            _parameter = _puzzleShim.PuzzleIndex;
+            SelectedScenarioCommand.Parameter = _puzzleShim.DisplayName;
             SelectedScenarioCommand.Scenario.Scenario.Commands[SelectedScenarioCommand.CommandIndex].Parameter = _parameter;
-            SelectedScenarioCommand.Scenario.UnsavedChanges = true;
+            ScenarioEditor.Description.UnsavedChanges = true;
+
+            using LiteDatabase db = new(_project.DbFile);
+            var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
+            Puzzle = (PuzzleItem)_puzzleShim.GetItem(itemsCol);
         }
     }
+    [Reactive]
+    public PuzzleItem Puzzle { get; set; }
 
-    public PuzzlePhaseScenarioCommandEditorViewModel(PrettyScenarioCommand command, Project project, EditorTabsPanelViewModel tabs) : base(command, tabs)
+    public PuzzlePhaseScenarioCommandEditorViewModel(ScenarioEditorViewModel scenarioEditor, PrettyScenarioCommand command, Project project, EditorTabsPanelViewModel tabs)
+        : base(scenarioEditor, command, tabs)
     {
+        _project = project;
         using LiteDatabase db = new(project.DbFile);
-        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
+        var puzzlesCol = db.GetCollection<PuzzleItemShim>(nameof(PuzzleItem));
 
-        Puzzles = new(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Puzzle).Cast<PuzzleItem>());
-        _puzzle = Puzzles.FirstOrDefault(s => s.DisplayName == command.Parameter);
-        _parameter = _puzzle.Puzzle.Index;
+        Puzzles = new(puzzlesCol.FindAll());
+        _puzzleShim = Puzzles.FirstOrDefault(s => s.DisplayName == command.Parameter);
+        _parameter = _puzzleShim?.PuzzleIndex ?? 0;
+        Puzzle = (PuzzleItem)_puzzleShim?.GetItem(itemsCol);
     }
 }

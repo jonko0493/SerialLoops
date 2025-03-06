@@ -32,7 +32,7 @@ public class BackgroundEditorViewModel : EditorViewModel
     public string UnknownExtrasShortDescription => string.Format(Strings.Unknown_Extras_Short___0_, Bg.ExtrasShort);
     public string UnknownExtrasByteDescription => string.Format(Strings.Unknown_Extras_Byte___0_, Bg.ExtrasByte);
 
-    public BackgroundEditorViewModel(BackgroundItem item, MainWindowViewModel window, Project project, ILogger log) : base(item, window, log, project)
+    public BackgroundEditorViewModel(BackgroundItem item, MainWindowViewModel window, Project project, ILogger log) : base(new(item), window, log, project)
     {
         Bg = item;
         ExportCommand = ReactiveCommand.CreateFromTask(ExportButton_Click);

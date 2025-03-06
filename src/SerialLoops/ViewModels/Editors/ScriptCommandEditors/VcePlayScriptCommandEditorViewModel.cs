@@ -26,7 +26,7 @@ public class VcePlayScriptCommandEditorViewModel : ScriptCommandEditorViewModel
             ((VoicedLineScriptParameter)Command.Parameters[0]).VoiceLine = _vce;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[0] = (short)_vce.Index;
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -34,7 +34,7 @@ public class VcePlayScriptCommandEditorViewModel : ScriptCommandEditorViewModel
         base(command, scriptEditor, log)
     {
         using LiteDatabase db = new(window.OpenProject.DbFile);
-        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
 
         Tabs = window.EditorTabs;
         Vces = new(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Voice).Cast<VoicedLineItem>());

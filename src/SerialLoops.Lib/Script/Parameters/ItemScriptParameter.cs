@@ -13,7 +13,7 @@ public class ItemScriptParameter(string name, short itemIndex) : ScriptParameter
     public override string GetValueString(Project project)
     {
         using LiteDatabase db = new(project.DbFile);
-        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
         return itemsCol.FindOne(i => i.Type == ItemDescription.ItemType.Item &&
                                         ((ItemItem)i).ItemIndex == ItemIndex)?.DisplayName;
     }

@@ -55,7 +55,7 @@ public class KbgDispScriptCommandEditorViewModel : ScriptCommandEditorViewModel
     private async Task ReplaceKbg()
     {
         using LiteDatabase db = new(_window.OpenProject.DbFile);
-        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
 
         // Order of the predicate matters here as "NONE" short circuits the NonePreviewableGraphic, preventing it from being cast
         GraphicSelectionDialogViewModel graphicSelectionDialog = new(new List<IPreviewableGraphic> { NonePreviewableGraphic.BACKGROUND }.Concat(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Background).Cast<IPreviewableGraphic>()),
@@ -74,6 +74,6 @@ public class KbgDispScriptCommandEditorViewModel : ScriptCommandEditorViewModel
             Kbg = (BackgroundItem)bgItem;
         }
         ScriptEditor.UpdatePreview();
-        Script.UnsavedChanges = true;
+        ScriptEditor.Description.UnsavedChanges = true;
     }
 }

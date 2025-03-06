@@ -7,6 +7,7 @@ namespace SerialLoops.ViewModels.Editors.ScenarioCommandEditors;
 
 public class ScenarioCommandEditorViewModel : ViewModelBase
 {
+    public ScenarioEditorViewModel ScenarioEditor { get; }
     public EditorTabsPanelViewModel Tabs { get; private set; }
 
     [Reactive]
@@ -21,12 +22,13 @@ public class ScenarioCommandEditorViewModel : ViewModelBase
             this.RaiseAndSetIfChanged(ref _parameter, value);
             SelectedScenarioCommand.Parameter = $"{_parameter:N0}";
             SelectedScenarioCommand.Scenario.Scenario.Commands[SelectedScenarioCommand.CommandIndex].Parameter = _parameter;
-            SelectedScenarioCommand.Scenario.UnsavedChanges = true;
+            ScenarioEditor.Description.UnsavedChanges = true;
         }
     }
 
-    public ScenarioCommandEditorViewModel(PrettyScenarioCommand command, EditorTabsPanelViewModel tabs)
+    public ScenarioCommandEditorViewModel(ScenarioEditorViewModel scenarioEditor, PrettyScenarioCommand command, EditorTabsPanelViewModel tabs)
     {
+        ScenarioEditor = scenarioEditor;
         SelectedScenarioCommand = command;
         if (!int.TryParse(command.Parameter, out _parameter))
         {

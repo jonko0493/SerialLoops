@@ -23,7 +23,7 @@ public class TransInOutScriptCommandEditorViewModel : ScriptCommandEditorViewMod
             ((TransitionScriptParameter)Command.Parameters[0]).Transition = _transition.Transition;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[0] = (short)_transition.Transition;
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 

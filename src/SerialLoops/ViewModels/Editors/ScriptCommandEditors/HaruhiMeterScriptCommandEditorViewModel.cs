@@ -20,6 +20,7 @@ public class HaruhiMeterScriptCommandEditorViewModel(ScriptItemCommand command, 
             ((ShortScriptParameter)Command.Parameters[0]).Value = _addAmount;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[1] = _addAmount;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -33,6 +34,7 @@ public class HaruhiMeterScriptCommandEditorViewModel(ScriptItemCommand command, 
             ((ShortScriptParameter)Command.Parameters[1]).Value = _setAmount;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[2] = _setAmount;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -46,6 +48,7 @@ public class HaruhiMeterScriptCommandEditorViewModel(ScriptItemCommand command, 
             ((ShortScriptParameter)Command.Parameters[0]).Value = _addNoShowAmount;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[0] = _addNoShowAmount;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 }

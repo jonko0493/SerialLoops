@@ -119,7 +119,7 @@ public class SelectScriptCommandEditorViewModel : ScriptCommandEditorViewModel
         ((OptionScriptParameter)Command.Parameters[index]).Option = option;
         Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
             .Objects[Command.Index].Parameters[index] = Script.Event.ChoicesSection.Objects.IndexOf(option) == -1 ? (short)0 : (short)Script.Event.ChoicesSection.Objects.IndexOf(option) ;
-        Script.UnsavedChanges = true;
+        ScriptEditor.Description.UnsavedChanges = true;
         ScriptEditor.UpdatePreview();
         Script.Refresh(OpenProject, Log);
     }
@@ -129,6 +129,6 @@ public class SelectScriptCommandEditorViewModel : ScriptCommandEditorViewModel
         ((ShortScriptParameter)Command.Parameters[index + 4]).Value = displayFlag;
         Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
             .Objects[Command.Index].Parameters[index + 4] = displayFlag;
-        Script.UnsavedChanges = true;
+        ScriptEditor.Description.UnsavedChanges = true;
     }
 }

@@ -25,7 +25,7 @@ public class ChibiEmoteScriptCommandEditorViewModel : ScriptCommandEditorViewMod
                 .Objects[Command.Index].Parameters[0] = (short)value.TopScreenIndex;
             this.RaisePropertyChanged();
             ScriptEditor.UpdatePreview();
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -43,14 +43,14 @@ public class ChibiEmoteScriptCommandEditorViewModel : ScriptCommandEditorViewMod
                 .Objects[Command.Index].Parameters[1] = (short)value.Emote;
             this.RaisePropertyChanged();
             ScriptEditor.UpdatePreview();
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
     public ChibiEmoteScriptCommandEditorViewModel(ScriptItemCommand command, ScriptEditorViewModel scriptEditor, ILogger log) : base(command, scriptEditor, log)
     {
         using LiteDatabase db = new(scriptEditor.Window.OpenProject.DbFile);
-        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
 
         Chibis = new(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Chibi).Cast<ChibiItem>());
     }

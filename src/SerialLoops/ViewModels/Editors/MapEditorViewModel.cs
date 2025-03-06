@@ -189,7 +189,7 @@ public class MapEditorViewModel : EditorViewModel
 
     public ICommand ExportCommand { get; }
 
-    public MapEditorViewModel(MapItem map, MainWindowViewModel window, ILogger log) : base(map, window, log)
+    public MapEditorViewModel(MapItem map, MainWindowViewModel window, ILogger log) : base(new(map), window, log)
     {
         _map = map;
         Layout = new(map.Layout,
@@ -202,7 +202,7 @@ public class MapEditorViewModel : EditorViewModel
             if (map.Map.Settings.IntroCameraTruckingDefsStartIndex > 0 && i >= map.Map.Settings.IntroCameraTruckingDefsStartIndex
                 && i <= map.Map.Settings.IntroCameraTruckingDefsEndIndex)
             {
-                CameraTruckingDefinitions.Add(new(Layout, i));
+                CameraTruckingDefinitions.Add(new(Description, Layout, i));
                 continue;
             }
 
@@ -210,14 +210,14 @@ public class MapEditorViewModel : EditorViewModel
             {
                 if (i >= map.Map.Settings.ScrollingBgLayoutStartIndex && i <= map.Map.Settings.ScrollingBgLayoutEndIndex)
                 {
-                    ScrollingBg.Add(new(Layout, i));
+                    ScrollingBg.Add(new(Description, Layout, i));
                     continue;
                 }
             }
 
             if (map.Map.ObjectMarkers[..^1].Select(u => u.LayoutIndex).Contains((short)i))
             {
-                ObjectLayer.Add(new(Layout, i) { Layer = map.Layout.LayoutEntries[i].RelativeShtxIndex });
+                ObjectLayer.Add(new(Description, Layout, i) { Layer = map.Layout.LayoutEntries[i].RelativeShtxIndex });
                 continue;
             }
 
@@ -226,34 +226,34 @@ public class MapEditorViewModel : EditorViewModel
                 default:
                     if (i == 0)
                     {
-                        _origin = new(Layout, i);
+                        _origin = new(Description, Layout, i);
                         continue;
                     }
                     if (i == 1)
                     {
-                        _boundary = new(Layout, i);
+                        _boundary = new(Description, Layout, i);
                         continue;
                     }
-                    InfoLayer.Add(new(Layout, i) { Layer = map.Layout.LayoutEntries[i].RelativeShtxIndex });
+                    InfoLayer.Add(new(Description, Layout, i) { Layer = map.Layout.LayoutEntries[i].RelativeShtxIndex });
                     break;
                 case 0:
                 case 1:
                     if (map.Map.Settings.LayoutOcclusionLayerStartIndex > 0 && i >= map.Map.Settings.LayoutOcclusionLayerStartIndex && i <= map.Map.Settings.LayoutOcclusionLayerEndIndex)
                     {
-                        BgOcclusionLayer.Add(new(Layout, i) { Layer = map.Layout.LayoutEntries[i].RelativeShtxIndex });
+                        BgOcclusionLayer.Add(new(Description, Layout, i) { Layer = map.Layout.LayoutEntries[i].RelativeShtxIndex });
                     }
                     else if (map.Map.Settings.LayoutOcclusionLayerStartIndex > 0 && i > map.Map.Settings.LayoutOcclusionLayerStartIndex
                              || map.Map.Settings.LayoutOcclusionLayerStartIndex == 0 && i > map.Map.Settings.LayoutBgLayerEndIndex)
                     {
-                        BgJunkLayer.Add(new(Layout, i) { Layer = map.Layout.LayoutEntries[i].RelativeShtxIndex });
+                        BgJunkLayer.Add(new(Description, Layout, i) { Layer = map.Layout.LayoutEntries[i].RelativeShtxIndex });
                     }
                     else
                     {
-                        BgLayer.Add(new(Layout, i) { Layer = map.Layout.LayoutEntries[i].RelativeShtxIndex });
+                        BgLayer.Add(new(Description, Layout, i) { Layer = map.Layout.LayoutEntries[i].RelativeShtxIndex });
                     }
                     break;
                 case 2:
-                    ObjectJunkLayer.Add(new(Layout, i) { Layer = map.Layout.LayoutEntries[i].RelativeShtxIndex });
+                    ObjectJunkLayer.Add(new(Description, Layout, i) { Layer = map.Layout.LayoutEntries[i].RelativeShtxIndex });
                     break;
             }
         }
@@ -327,7 +327,7 @@ public class MapEditorViewModel : EditorViewModel
         if (!string.IsNullOrEmpty(exportPath))
         {
             await File.WriteAllTextAsync(exportPath, JsonSerializer.Serialize(_map.Map, Project.SERIALIZER_OPTIONS));
-            await File.WriteAllTextAsync(Path.Combine(Path.GetDirectoryName(exportPath), $"{Path.GetFileNameWithoutExtension(exportPath)}_lay.json"),
+            await File.WriteAllTextAsync(Path.Combine(Path.GetDirectoryName(exportPath)!, $"{Path.GetFileNameWithoutExtension(exportPath)}_lay.json"),
                 JsonSerializer.Serialize(_map.Layout.LayoutEntries, Project.SERIALIZER_OPTIONS));
         }
     }

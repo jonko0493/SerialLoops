@@ -23,7 +23,7 @@ public class ScreenFadeInScriptCommandEditorViewModel : ScriptCommandEditorViewM
             ((ShortScriptParameter)Command.Parameters[0]).Value = _fadeTime;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[0] = _fadeTime;
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -37,7 +37,7 @@ public class ScreenFadeInScriptCommandEditorViewModel : ScriptCommandEditorViewM
             ((ShortScriptParameter)Command.Parameters[1]).Value = _fadePercentage;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[1] = _fadePercentage;
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -56,7 +56,7 @@ public class ScreenFadeInScriptCommandEditorViewModel : ScriptCommandEditorViewM
             ((ColorMonochromeScriptParameter)Command.Parameters[3]).ColorType = _color.Color;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[3] = (short)_color.Color;
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -70,7 +70,7 @@ public class ScreenFadeInScriptCommandEditorViewModel : ScriptCommandEditorViewM
             ((ScreenScriptParameter)Command.Parameters[2]).Screen = ScreenSelector.SelectedScreen;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[2] = (short)ScreenSelector.SelectedScreen;
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         };
         _color = new(((ColorMonochromeScriptParameter)command.Parameters[3]).ColorType);
     }

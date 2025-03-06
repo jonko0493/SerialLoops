@@ -22,7 +22,7 @@ public class ModifyFriendshipScriptCommandEditorViewModel(ScriptItemCommand comm
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[0] = (short)character;
             this.RaisePropertyChanged();
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -35,7 +35,7 @@ public class ModifyFriendshipScriptCommandEditorViewModel(ScriptItemCommand comm
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[1] = value;
             this.RaisePropertyChanged();
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 }

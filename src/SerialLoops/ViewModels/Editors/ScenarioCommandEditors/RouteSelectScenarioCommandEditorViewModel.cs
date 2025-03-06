@@ -2,8 +2,10 @@
 using System.Linq;
 using LiteDB;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
+using SerialLoops.Lib.Items.Shims;
 using SerialLoops.Models;
 using SerialLoops.ViewModels.Panels;
 
@@ -11,29 +13,40 @@ namespace SerialLoops.ViewModels.Editors.ScenarioCommandEditors;
 
 public class RouteSelectScenarioCommandEditorViewModel : ScenarioCommandEditorViewModel
 {
-    public ObservableCollection<GroupSelectionItem> GroupSelections { get; set; }
+    private Project _project;
+    public ObservableCollection<GroupSelectionItemShim> GroupSelections { get; set; }
 
-    public GroupSelectionItem _groupSelection;
-    public GroupSelectionItem GroupSelection
+    private GroupSelectionItemShim _groupSelectionShim;
+    public GroupSelectionItemShim GroupSelectionShim
     {
-        get => _groupSelection;
+        get => _groupSelectionShim;
         set
         {
-            this.RaiseAndSetIfChanged(ref _groupSelection, value);
-            _parameter = GroupSelections.IndexOf(_groupSelection);
-            SelectedScenarioCommand.Parameter = _groupSelection.DisplayName;
+            this.RaiseAndSetIfChanged(ref _groupSelectionShim, value);
+            _parameter = GroupSelections.IndexOf(_groupSelectionShim);
+            SelectedScenarioCommand.Parameter = _groupSelectionShim.DisplayName;
             SelectedScenarioCommand.Scenario.Scenario.Commands[SelectedScenarioCommand.CommandIndex].Parameter = _parameter;
-            SelectedScenarioCommand.Scenario.UnsavedChanges = true;
+            ScenarioEditor.Description.UnsavedChanges = true;
+
+            using LiteDatabase db = new(_project.DbFile);
+            var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
+            GroupSelection = (GroupSelectionItem)_groupSelectionShim?.GetItem(itemsCol);
         }
     }
+    [Reactive]
+    public GroupSelectionItem GroupSelection { get; set; }
 
-    public RouteSelectScenarioCommandEditorViewModel(PrettyScenarioCommand command, Project project, EditorTabsPanelViewModel tabs) : base(command, tabs)
+    public RouteSelectScenarioCommandEditorViewModel(ScenarioEditorViewModel scenarioEditor, PrettyScenarioCommand command, Project project, EditorTabsPanelViewModel tabs)
+        : base(scenarioEditor, command, tabs)
     {
+        _project = project;
         using LiteDatabase db = new(project.DbFile);
-        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
+        var gsCol = db.GetCollection<GroupSelectionItemShim>(nameof(GroupSelectionItem));
 
-        GroupSelections = new(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Group_Selection).Cast<GroupSelectionItem>());
-        _groupSelection = GroupSelections.FirstOrDefault(g => g.DisplayName == command.Parameter);
-        _parameter = GroupSelections.IndexOf(_groupSelection);
+        GroupSelections = new(gsCol.FindAll());
+        _groupSelectionShim = GroupSelections.FirstOrDefault(g => g.DisplayName == command.Parameter);
+        _parameter = _groupSelectionShim?.Index ?? -1;
+        GroupSelection = (GroupSelectionItem)_groupSelectionShim?.GetItem(itemsCol);
     }
 }

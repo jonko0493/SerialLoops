@@ -77,7 +77,7 @@ public class SaveFilePreview(SaveSlotData slotData, Project project)
     private void DrawEpisodeNumber(SKCanvas canvas, int number)
     {
         using LiteDatabase db = new(_project.DbFile);
-        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
         if (itemsCol.FindById("SYSTEX_SYS_CMN_B38") is not SystemTextureItem graphic)
         {
             DrawText(canvas, string.Format(_project.Localize("EPISODE: {0}"), number));
@@ -105,7 +105,7 @@ public class SaveFilePreview(SaveSlotData slotData, Project project)
     private void DrawSaveTime(SKCanvas canvas, DateTimeOffset saveTime)
     {
         using LiteDatabase db = new(_project.DbFile);
-        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
         string date = saveTime.ToString("yyyy/MM/dd");
         string time = saveTime.ToString("HH:mm:ss");
         if (itemsCol.FindById("SYSTEX_SYS_MNU_B00") is not SystemTextureItem graphic)

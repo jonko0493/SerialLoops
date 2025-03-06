@@ -2830,11 +2830,11 @@ This action is irreversible.</value>
   <data name="Fade" xml:space="preserve">
     <value>Fade</value><comment>Describing a transition where the item fades in</comment>
   </data>
-  <data name="Save changes to save file?" xml:space="preserve">
-    <value>Save changes to save file?</value>
+  <data name="SaveClosedItemTitle" xml:space="preserve">
+    <value>Save changes?</value>
   </data>
-  <data name="Would you like to save your changes to the save file?" xml:space="preserve">
-    <value>Would you like to save your changes to the save file?</value>
+  <data name="SaveClosedItemMessage" xml:space="preserve">
+    <value>Would you like to save your changes to this item before closing it?</value>
   </data>
   <data name="Search Project" xml:space="preserve">
     <value>Search Project</value>
@@ -3093,5 +3093,19 @@ This action is irreversible.</value>
   </data>
   <data name="Clear All Guides" xml:space="preserve">
     <value>Clear All Guides</value><comment>As in "delete all guide markers on the chess board"</comment>
+  </data>
+  <data name="OutdatedDatabaseDetected" xml:space="preserve">
+    <value>Outdated Database Detected</value>
+  </data>
+  <data name="OutdatedDatabaseMessage" xml:space="preserve">
+    <value>Serial Loops detected that this project is using an outdated database.
+The database can be migrated to the new version automatically. This will take a few minutes at most.
+Would you like to proceed?</value>
+  </data>
+  <data name="NewerProjectVersionDetected" xml:space="preserve">
+    <value>Newer Project Version Detected</value>
+  </data>
+  <data name="NewerProjectVersionMessage" xml:space="preserve">
+    <value>This project was made with a more recent version of Serial Loops. Please upgrade your copy of Serial Loops to open it.</value>
   </data>
 </root>

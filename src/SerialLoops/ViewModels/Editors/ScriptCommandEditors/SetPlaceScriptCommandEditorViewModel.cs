@@ -33,7 +33,7 @@ public class SetPlaceScriptCommandEditorViewModel : ScriptCommandEditorViewModel
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[0] = _display ? parameter.TrueValue : parameter.FalseValue;
             ScriptEditor.UpdatePreview();
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -48,7 +48,7 @@ public class SetPlaceScriptCommandEditorViewModel : ScriptCommandEditorViewModel
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[1] = (short?)_place?.Index ?? 0;
             ScriptEditor.UpdatePreview();
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -68,7 +68,7 @@ public class SetPlaceScriptCommandEditorViewModel : ScriptCommandEditorViewModel
     private async Task ChangePlace()
     {
         using LiteDatabase db = new(_window.OpenProject.DbFile);
-        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
 
         GraphicSelectionDialogViewModel graphicSelectionDialog = new(new List<IPreviewableGraphic> { NonePreviewableGraphic.PLACE }.Concat(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Place).Cast<IPreviewableGraphic>()),
             Place, _window.OpenProject, _window.Log);

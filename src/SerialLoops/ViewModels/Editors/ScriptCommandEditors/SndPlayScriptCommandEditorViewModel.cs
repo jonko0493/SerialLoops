@@ -30,7 +30,7 @@ public class SndPlayScriptCommandEditorViewModel : ScriptCommandEditorViewModel
             ((SfxScriptParameter)Command.Parameters[0]).Sfx = _selectedSfx;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[0] = _selectedSfx.Index;
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -46,7 +46,7 @@ public class SndPlayScriptCommandEditorViewModel : ScriptCommandEditorViewModel
             ((SfxModeScriptParameter)Command.Parameters[1]).Mode = _sfxMode.Mode;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[1] = (short)_sfxMode.Mode;
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -60,7 +60,7 @@ public class SndPlayScriptCommandEditorViewModel : ScriptCommandEditorViewModel
             ((ShortScriptParameter)Command.Parameters[2]).Value = _volume;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[2] = _volume;
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -86,7 +86,7 @@ public class SndPlayScriptCommandEditorViewModel : ScriptCommandEditorViewModel
                 CrossfadeMax = short.MaxValue;
                 CrossfadeTime = 0;
             }
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -106,7 +106,7 @@ public class SndPlayScriptCommandEditorViewModel : ScriptCommandEditorViewModel
             ((ShortScriptParameter)Command.Parameters[4]).Value = _crossfadeTime;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[4] = _crossfadeTime;
-            Script.UnsavedChanges = true;
+            ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
@@ -114,7 +114,7 @@ public class SndPlayScriptCommandEditorViewModel : ScriptCommandEditorViewModel
         base(command, scriptEditor, log)
     {
         using LiteDatabase db = new(window.OpenProject.DbFile);
-        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsTableName);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
 
         Tabs = window.EditorTabs;
         SfxChoices = new(itemsCol.Find(i => i.Type == ItemDescription.ItemType.SFX && ((SfxItem)i).AssociatedGroups.Contains(window.OpenProject.Snd.Groups[Script.SfxGroupIndex].Name)).Cast<SfxItem>());
