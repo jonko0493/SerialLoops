@@ -7,6 +7,7 @@ using LiteDB;
 using ReactiveUI;
 using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
+using SerialLoops.Lib.Items.Shims;
 using SerialLoops.Lib.Script;
 using SerialLoops.Lib.Script.Parameters;
 using SerialLoops.ViewModels.Dialogs;
@@ -37,8 +38,8 @@ public class SetPlaceScriptCommandEditorViewModel : ScriptCommandEditorViewModel
         }
     }
 
-    private PlaceItem _place;
-    public PlaceItem Place
+    private PlaceItemShim _place;
+    public PlaceItemShim Place
     {
         get => _place;
         set
@@ -71,7 +72,7 @@ public class SetPlaceScriptCommandEditorViewModel : ScriptCommandEditorViewModel
         var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
 
         GraphicSelectionDialogViewModel graphicSelectionDialog = new(new List<IPreviewableGraphic> { NonePreviewableGraphic.PLACE }.Concat(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Place).Cast<IPreviewableGraphic>()),
-            Place, _window.OpenProject, _window.Log);
+            (PlaceItem)Place.GetItem(itemsCol), _window.OpenProject, _window.Log);
         IPreviewableGraphic place = await new GraphicSelectionDialog { DataContext = graphicSelectionDialog }.ShowDialog<IPreviewableGraphic>(_window.Window);
         if (place is null)
         {

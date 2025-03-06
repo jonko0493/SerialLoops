@@ -4,9 +4,11 @@ using System.Linq;
 using HaruhiChokuretsuLib.Util;
 using LiteDB;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 using SerialLoops.Assets;
 using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
+using SerialLoops.Lib.Items.Shims;
 using SerialLoops.Lib.Script;
 using SerialLoops.Lib.Script.Parameters;
 using SerialLoops.ViewModels.Panels;
@@ -17,20 +19,26 @@ public class BgmPlayScriptCommandEditorViewModel : ScriptCommandEditorViewModel
 {
     public EditorTabsPanelViewModel Tabs { get; }
 
-    public ObservableCollection<BackgroundMusicItem> Bgms { get; }
-    private BackgroundMusicItem _music;
-    public BackgroundMusicItem Music
+    public ObservableCollection<BackgroundMusicItemShim> Bgms { get; }
+    private BackgroundMusicItemShim _bgm;
+    public BackgroundMusicItemShim Bgm
     {
-        get => _music;
+        get => _bgm;
         set
         {
-            this.RaiseAndSetIfChanged(ref _music, value);
-            ((BgmScriptParameter)Command.Parameters[0]).Bgm = _music;
+            this.RaiseAndSetIfChanged(ref _bgm, value);
+            ((BgmScriptParameter)Command.Parameters[0]).Bgm = _bgm;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
-                .Objects[Command.Index].Parameters[0] = (short)_music.Index;
+                .Objects[Command.Index].Parameters[0] = (short)_bgm.Index;
             ScriptEditor.Description.UnsavedChanges = true;
+
+            using LiteDatabase db = new(ScriptEditor.Window.OpenProject.DbFile);
+            var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
+            Music = (BackgroundMusicItem)_bgm.GetItem(itemsCol);
         }
     }
+    [Reactive]
+    public BackgroundMusicItem Music { get; set; }
 
     public ObservableCollection<BgmModeLocalized> Modes { get; } = new(Enum.GetValues<BgmModeScriptParameter.BgmMode>()
         .Select(m => new BgmModeLocalized(m)));
@@ -94,11 +102,12 @@ public class BgmPlayScriptCommandEditorViewModel : ScriptCommandEditorViewModel
     {
         using LiteDatabase db = new(window.OpenProject.DbFile);
         var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
+        var bgmCol = db.GetCollection<BackgroundMusicItemShim>(nameof(BackgroundMusicItem));
 
         Tabs = window.EditorTabs;
-        Bgms = new(itemsCol.Find(i => i.Type == ItemDescription.ItemType.BGM)
-            .Cast<BackgroundMusicItem>());
-        _music = ((BgmScriptParameter)Command.Parameters[0]).Bgm;
+        Bgms = new(bgmCol.FindAll());
+        _bgm = ((BgmScriptParameter)Command.Parameters[0]).Bgm;
+        Music = (BackgroundMusicItem)_bgm.GetItem(itemsCol);
         _mode = new(((BgmModeScriptParameter)Command.Parameters[1]).Mode);
         _volume = ((ShortScriptParameter)Command.Parameters[2]).Value;
         _fadeInTime = ((ShortScriptParameter)Command.Parameters[3]).Value;

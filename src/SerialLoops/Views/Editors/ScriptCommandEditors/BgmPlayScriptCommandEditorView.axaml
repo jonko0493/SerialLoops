@@ -5,22 +5,22 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:assets="using:SerialLoops.Assets"
              xmlns:controls="using:SerialLoops.Controls"
-             xmlns:items="clr-namespace:SerialLoops.Lib.Items;assembly=SerialLoops.Lib"
+             xmlns:shims="using:SerialLoops.Lib.Items.Shims"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="vm:BgmPlayScriptCommandEditorViewModel"
              x:Class="SerialLoops.Views.Editors.ScriptCommandEditors.BgmPlayScriptCommandEditorView">
     <Grid ColumnDefinitions="Auto,Auto" RowDefinitions="Auto,Auto,Auto,Auto,Auto">
         <TextBlock Grid.Column="0" Grid.Row="0" Margin="0,7,0,0" Text="{x:Static assets:Strings.Music}"/>
         <StackPanel Grid.Column="1" Grid.Row="0" Margin="10,0,0,0" Orientation="Horizontal" Spacing="5">
-            <ComboBox ItemsSource="{Binding Bgms}" SelectedItem="{Binding Music}">
+            <ComboBox ItemsSource="{Binding Bgms}" SelectedItem="{Binding Bgm}">
                 <ComboBox.ItemTemplate>
-                    <DataTemplate DataType="items:BackgroundMusicItem">
+                    <DataTemplate DataType="shims:BackgroundMusicItemShim">
                         <TextBlock Text="{Binding DisplayName}"/>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
                 <ComboBox.ItemContainerTheme>
-                    <ControlTheme TargetType="ComboBoxItem" x:DataType="items:BackgroundMusicItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
-                        <Setter Property="TextSearch.Text" Value="{Binding BgmName}" />
+                    <ControlTheme TargetType="ComboBoxItem" x:DataType="shims:BackgroundMusicItemShim" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
+                        <Setter Property="TextSearch.Text" Value="{Binding BgmName}"/>
                     </ControlTheme>
                 </ComboBox.ItemContainerTheme>
             </ComboBox>

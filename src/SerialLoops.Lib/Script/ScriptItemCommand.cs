@@ -111,7 +111,6 @@ public class ScriptItemCommand : ReactiveObject
     private static List<ScriptParameter> GetScriptParameters(ScriptCommandInvocation invocation, ScriptSection section, EventFile eventFile, Project project, ILogger log)
     {
         using LiteDatabase db = new(project.DbFile);
-        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
         var bgCol = db.GetCollection<BackgroundItemShim>(nameof(BackgroundItem));
         var bgmCol = db.GetCollection<BackgroundMusicItemShim>(nameof(BackgroundMusicItem));
         var charCol = db.GetCollection<CharacterItemShim>(nameof(CharacterItem));
@@ -137,7 +136,7 @@ public class ScriptItemCommand : ReactiveObject
                             parameters.Add(new DialogueScriptParameter("Dialogue", GetDialogueLine(parameter, eventFile)));
                             break;
                         case 1:
-                            parameters.Add(new SpriteScriptParameter("Sprite", (CharacterSpriteItem)chrSpriteCol.FindOne(c => parameter == c.Index)?.GetItem(itemsCol)));
+                            parameters.Add(new SpriteScriptParameter("Sprite", chrSpriteCol.FindOne(c => parameter == c.Index)));
                             break;
                         case 2:
                             parameters.Add(new SpriteEntranceScriptParameter("Sprite Entrance Transition", parameter));
@@ -149,13 +148,13 @@ public class ScriptItemCommand : ReactiveObject
                             parameters.Add(new SpriteShakeScriptParameter("Sprite Shake", parameter));
                             break;
                         case 5:
-                            parameters.Add(new VoicedLineScriptParameter("Voice Line", (VoicedLineItem)vceCol.FindOne(v => parameter == v.Index)?.GetItem(itemsCol)));
+                            parameters.Add(new VoicedLineScriptParameter("Voice Line", vceCol.FindOne(v => parameter == v.Index)));
                             break;
                         case 6:
-                            parameters.Add(new DialoguePropertyScriptParameter("Text Voice Font", (CharacterItem)charCol.FindOne(c => c.Character == project.MessInfo.MessageInfos[parameter].Character)?.GetItem(itemsCol)));
+                            parameters.Add(new DialoguePropertyScriptParameter("Text Voice Font", charCol.FindOne(c => c.Character == project.MessInfo.MessageInfos[parameter].Character)));
                             break;
                         case 7:
-                            parameters.Add(new DialoguePropertyScriptParameter("Text Speed", (CharacterItem)charCol.FindOne(c => c.Character == project.MessInfo.MessageInfos[parameter].Character)?.GetItem(itemsCol)));
+                            parameters.Add(new DialoguePropertyScriptParameter("Text Speed", charCol.FindOne(c => c.Character == project.MessInfo.MessageInfos[parameter].Character)));
                             break;
                         case 8:
                             parameters.Add(new TextEntranceEffectScriptParameter("Text Entrance Effect", parameter));
@@ -175,7 +174,7 @@ public class ScriptItemCommand : ReactiveObject
                 case CommandVerb.KBG_DISP:
                     if (i == 0)
                     {
-                        parameters.Add(new BgScriptParameter("\"Kinetic\" Background", (BackgroundItem)bgCol.FindOne(b => b.Id == parameter)?.GetItem(itemsCol), kinetic: true));
+                        parameters.Add(new BgScriptParameter("\"Kinetic\" Background", bgCol.FindOne(b => b.Id == parameter), kinetic: true));
                     }
                     break;
                 case CommandVerb.PIN_MNL:
@@ -188,9 +187,9 @@ public class ScriptItemCommand : ReactiveObject
                 case CommandVerb.BG_DISP2:
                     if (i == 0)
                     {
-                        ItemDescription bgItem = (bgCol.FindOne(b => b.Id == parameter)
-                                                 ?? bgCol.FindOne(b => b.BackgroundType == HaruhiChokuretsuLib.Archive.Data.BgType.TEX_BG))?.GetItem(itemsCol);
-                        parameters.Add(new BgScriptParameter("Background", (BackgroundItem)bgItem, kinetic: false));
+                        BackgroundItemShim bgShim = (bgCol.FindOne(b => b.Id == parameter)
+                                                 ?? bgCol.FindOne(b => b.BackgroundType == HaruhiChokuretsuLib.Archive.Data.BgType.TEX_BG));
+                        parameters.Add(new BgScriptParameter("Background", bgShim, kinetic: false));
                     }
                     break;
                 case CommandVerb.SCREEN_FADEIN:
@@ -263,7 +262,7 @@ public class ScriptItemCommand : ReactiveObject
                     switch (i)
                     {
                         case 0:
-                            parameters.Add(new SfxScriptParameter("Sound", (SfxItem)sfxCol.FindOne(s => s.Index == parameter)?.GetItem(itemsCol)));
+                            parameters.Add(new SfxScriptParameter("Sound", sfxCol.FindOne(s => s.Index == parameter)));
                             break;
                         case 1:
                             parameters.Add(new SfxModeScriptParameter("Mode", parameter));
@@ -283,7 +282,7 @@ public class ScriptItemCommand : ReactiveObject
                     switch (i)
                     {
                         case 0:
-                            parameters.Add(new BgmScriptParameter("Music", (BackgroundMusicItem)bgmCol.FindOne(b => b.Index == parameter)?.GetItem(itemsCol)));
+                            parameters.Add(new BgmScriptParameter("Music", bgmCol.FindOne(b => b.Index == parameter)));
                             break;
                         case 1:
                             parameters.Add(new BgmModeScriptParameter("Mode", parameter));
@@ -302,7 +301,7 @@ public class ScriptItemCommand : ReactiveObject
                 case CommandVerb.VCE_PLAY:
                     if (i == 0)
                     {
-                        parameters.Add(new VoicedLineScriptParameter("Voice Line", (VoicedLineItem)vceCol.FindOne(v => parameter == v.Index)?.GetItem(itemsCol)));
+                        parameters.Add(new VoicedLineScriptParameter("Voice Line", vceCol.FindOne(v => parameter == v.Index)));
                     }
                     break;
                 case CommandVerb.FLAG:
@@ -486,10 +485,10 @@ public class ScriptItemCommand : ReactiveObject
                     switch (i)
                     {
                         case 0:
-                            parameters.Add(new BgScriptParameter("Background", (BackgroundItem)bgCol.FindOne(b => b.Id == parameter)?.GetItem(itemsCol), kinetic: false));
+                            parameters.Add(new BgScriptParameter("Background", bgCol.FindOne(b => b.Id == parameter), kinetic: false));
                             break;
                         case 1:
-                            parameters.Add(new BgScriptParameter("Background (CG)", (BackgroundItem)bgCol.FindOne(b => b.Id == parameter)?.GetItem(itemsCol), kinetic: false));
+                            parameters.Add(new BgScriptParameter("Background (CG)", bgCol.FindOne(b => b.Id == parameter), kinetic: false));
                             break;
                         case 2:
                             parameters.Add(new ShortScriptParameter("Fade Time (Frames)", parameter));
@@ -510,7 +509,7 @@ public class ScriptItemCommand : ReactiveObject
                             parameters.Add(new BoolScriptParameter("Display?", parameter == 1));
                             break;
                         case 1:
-                            parameters.Add(new PlaceScriptParameter("Place", (PlaceItem)placeCol.FindOne(p => p.Index == parameter)?.GetItem(itemsCol)));
+                            parameters.Add(new PlaceScriptParameter("Place", placeCol.FindOne(p => p.Index == parameter)));
                             break;
                     }
                     break;
@@ -531,7 +530,7 @@ public class ScriptItemCommand : ReactiveObject
                 case CommandVerb.LOAD_ISOMAP:
                     if (i == 0)
                     {
-                        parameters.Add(new MapScriptParameter("Map", (MapItem)mapCol.FindOne(m => m.MapIndex == parameter)?.GetItem(itemsCol)));
+                        parameters.Add(new MapScriptParameter("Map", mapCol.FindOne(m => m.MapIndex == parameter)));
                     }
                     break;
                 case CommandVerb.INVEST_START:
@@ -554,7 +553,7 @@ public class ScriptItemCommand : ReactiveObject
                     switch (i)
                     {
                         case 0:
-                            parameters.Add(new ChibiScriptParameter("Chibi", (ChibiItem)chibiCol.FindOne(c => c.TopScreenIndex == parameter)?.GetItem(itemsCol)));
+                            parameters.Add(new ChibiScriptParameter("Chibi", chibiCol.FindOne(c => c.TopScreenIndex == parameter)));
                             break;
                         case 1:
                             parameters.Add(new ChibiEmoteScriptParameter("Emote", parameter));
@@ -582,7 +581,7 @@ public class ScriptItemCommand : ReactiveObject
                     switch (i)
                     {
                         case 0:
-                            parameters.Add(new ChibiScriptParameter("Chibi", (ChibiItem)chibiCol.FindOne(c => c.TopScreenIndex == parameter)?.GetItem(itemsCol)));
+                            parameters.Add(new ChibiScriptParameter("Chibi", chibiCol.FindOne(c => c.TopScreenIndex == parameter)));
                             break;
                         case 1:
                             parameters.Add(new ChibiEnterExitScriptParameter("Enter/Exit", parameter));
@@ -601,7 +600,7 @@ public class ScriptItemCommand : ReactiveObject
                 case CommandVerb.CHESS_LOAD:
                     if (i == 0)
                     {
-                        parameters.Add(new ChessPuzzleScriptParameter("Chess File", (ChessPuzzleItem)chessCol.FindOne(c => c.Index ==  parameter)?.GetItem(itemsCol)));
+                        parameters.Add(new ChessPuzzleScriptParameter("Chess File", chessCol.FindOne(c => c.Index ==  parameter)));
                     }
                     break;
                 case CommandVerb.CHESS_VGOTO:
@@ -681,10 +680,10 @@ public class ScriptItemCommand : ReactiveObject
                     switch (i)
                     {
                         case 0:
-                            ItemDescription cgItem = (bgCol.FindOne(b => b.Id == parameter)
-                                                     ?? bgCol.FindOne(b => b.BackgroundType == HaruhiChokuretsuLib.Archive.Data.BgType.TEX_CG))?.GetItem(itemsCol);
+                            BackgroundItemShim cgShim = (bgCol.FindOne(b => b.Id == parameter)
+                                                     ?? bgCol.FindOne(b => b.BackgroundType == HaruhiChokuretsuLib.Archive.Data.BgType.TEX_CG));
 
-                            parameters.Add(new BgScriptParameter("Background", (BackgroundItem)cgItem, kinetic: false));
+                            parameters.Add(new BgScriptParameter("Background", cgShim, kinetic: false));
                             break;
                         case 1:
                             parameters.Add(new BoolScriptParameter("Display from Bottom", parameter == 1));

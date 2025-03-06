@@ -3,8 +3,10 @@ using System.Linq;
 using HaruhiChokuretsuLib.Util;
 using LiteDB;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
+using SerialLoops.Lib.Items.Shims;
 using SerialLoops.Lib.Script;
 using SerialLoops.Lib.Script.Parameters;
 using SerialLoops.ViewModels.Panels;
@@ -15,30 +17,38 @@ public class ChessLoadScriptCommandEditorViewModel : ScriptCommandEditorViewMode
 {
     public EditorTabsPanelViewModel Tabs { get; }
 
-    public ObservableCollection<ChessPuzzleItem> ChessPuzzles { get; }
-    private ChessPuzzleItem _chessPuzzle;
-    public ChessPuzzleItem ChessPuzzle
+    public ObservableCollection<ChessPuzzleItemShim> ChessPuzzles { get; }
+    private ChessPuzzleItemShim _chessPuzzleShim;
+    public ChessPuzzleItemShim ChessPuzzleShim
     {
-        get => _chessPuzzle;
+        get => _chessPuzzleShim;
         set
         {
-            this.RaiseAndSetIfChanged(ref _chessPuzzle, value);
-            ((ChessPuzzleScriptParameter)Command.Parameters[0]).ChessPuzzle = _chessPuzzle;
+            this.RaiseAndSetIfChanged(ref _chessPuzzleShim, value);
+            ((ChessPuzzleScriptParameter)Command.Parameters[0]).ChessPuzzle = _chessPuzzleShim;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
-                .Objects[Command.Index].Parameters[0] = (short)_chessPuzzle.ChessPuzzle.Index;
+                .Objects[Command.Index].Parameters[0] = (short)_chessPuzzleShim.Index;
             ScriptEditor.UpdatePreview();
             ScriptEditor.Description.UnsavedChanges = true;
+
+            using LiteDatabase db = new(ScriptEditor.Window.OpenProject.DbFile);
+            var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
+            ChessPuzzle = (ChessPuzzleItem)_chessPuzzleShim.GetItem(itemsCol);
         }
     }
+    [Reactive]
+    public ChessPuzzleItem ChessPuzzle { get; set; }
 
     public ChessLoadScriptCommandEditorViewModel(ScriptItemCommand command, ScriptEditorViewModel scriptEditor, MainWindowViewModel window, ILogger log)
         : base(command, scriptEditor, log)
     {
         using LiteDatabase db = new(window.OpenProject.DbFile);
         var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
+        var chessCol = db.GetCollection<ChessPuzzleItemShim>(nameof(ChessPuzzleItem));
 
-        ChessPuzzles = new(itemsCol.Find(c => c.Type == ItemDescription.ItemType.Chess_Puzzle).Cast<ChessPuzzleItem>());
-        _chessPuzzle = ((ChessPuzzleScriptParameter)command.Parameters[0]).ChessPuzzle;
+        ChessPuzzles = new(chessCol.FindAll());
+        _chessPuzzleShim = ((ChessPuzzleScriptParameter)command.Parameters[0]).ChessPuzzle;
+        ChessPuzzle = (ChessPuzzleItem)_chessPuzzleShim.GetItem(itemsCol);
         Tabs = window.EditorTabs;
     }
 }

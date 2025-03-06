@@ -1,21 +1,25 @@
 ﻿using HaruhiChokuretsuLib.Archive.Data;
 using HaruhiChokuretsuLib.Archive.Event;
+using LiteDB;
 using SerialLoops.Lib.Items;
+using SerialLoops.Lib.Items.Shims;
 
 namespace SerialLoops.Lib.Script.Parameters;
 
 public class DialoguePropertyScriptParameter : ScriptParameter
 {
-    public CharacterItem Character { get; set; }
-    public override short[] GetValues(object obj = null) => [(short)((MessageInfoFile)obj).MessageInfos.FindIndex(m => m.Character == Character.MessageInfo.Character),
+    public CharacterItemShim Character { get; set; }
+    public override short[] GetValues(object obj = null) => [(short)((MessageInfoFile)obj).MessageInfos.FindIndex(m => m.Character == Character.Character),
     ];
+
+    public CharacterItem GetCharacter(ILiteCollection<ItemDescription> itemsCol) => (CharacterItem)Character?.GetItem(itemsCol);
 
     public override string GetValueString(Project project)
     {
         return Character.DisplayName;
     }
 
-    public DialoguePropertyScriptParameter(string name, CharacterItem character) : base(name, ParameterType.CHARACTER)
+    public DialoguePropertyScriptParameter(string name, CharacterItemShim character) : base(name, ParameterType.CHARACTER)
     {
         Character = character;
     }

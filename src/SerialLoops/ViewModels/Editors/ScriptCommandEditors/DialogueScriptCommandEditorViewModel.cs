@@ -12,6 +12,7 @@ using ReactiveUI;
 using SerialLoops.Assets;
 using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
+using SerialLoops.Lib.Items.Shims;
 using SerialLoops.Lib.Script;
 using SerialLoops.Lib.Script.Parameters;
 using SerialLoops.Lib.Util;
@@ -39,15 +40,15 @@ public partial class DialogueScriptCommandEditorViewModel : ScriptCommandEditorV
         _speaker = _window.OpenProject.GetCharacterBySpeaker(((DialogueScriptParameter)Command.Parameters[0]).Line.Speaker);
         _specialPredicate = i => i.Name == "NONE" || ((CharacterSpriteItem)i).Sprite.Character == _speaker.MessageInfo.Character;
         _dialogueLine = ((DialogueScriptParameter)command.Parameters[0]).Line.Text;
-        _characterSprite = ((SpriteScriptParameter)command.Parameters[1]).Sprite;
+        _characterSprite = ((SpriteScriptParameter)command.Parameters[1]).GetSprite(itemsCol);
         SelectCharacterSpriteCommand = ReactiveCommand.CreateFromTask(SelectCharacterSpriteCommand_Executed);
         _spriteEntranceTransition = new(((SpriteEntranceScriptParameter)command.Parameters[2]).EntranceTransition);
         _spriteExitTransition = new(((SpriteExitScriptParameter)command.Parameters[3]).ExitTransition);
         _spriteShakeEffect = new(((SpriteShakeScriptParameter)command.Parameters[4]).ShakeEffect);
         VoicedLines = new(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Voice).Cast<VoicedLineItem>());
-        _voicedLine = ((VoicedLineScriptParameter)command.Parameters[5]).VoiceLine;
-        _textVoiceFont = ((DialoguePropertyScriptParameter)command.Parameters[6]).Character;
-        _textSpeed = ((DialoguePropertyScriptParameter)command.Parameters[7]).Character;
+        _voicedLine = ((VoicedLineScriptParameter)command.Parameters[5]).GetVoicedLine(itemsCol);
+        _textVoiceFont = ((DialoguePropertyScriptParameter)command.Parameters[6]).GetCharacter(itemsCol);
+        _textSpeed = ((DialoguePropertyScriptParameter)command.Parameters[7]).GetCharacter(itemsCol);
         _textEntranceEffect = new(((TextEntranceEffectScriptParameter)command.Parameters[8]).EntranceEffect);
         _spriteLayer = ((ShortScriptParameter)command.Parameters[9]).Value;
         _dontClearText = ((BoolScriptParameter)command.Parameters[10]).Value;
@@ -137,7 +138,7 @@ public partial class DialogueScriptCommandEditorViewModel : ScriptCommandEditorV
         set
         {
             this.RaiseAndSetIfChanged(ref _characterSprite, value);
-            ((SpriteScriptParameter)Command.Parameters[1]).Sprite = _characterSprite;
+            ((SpriteScriptParameter)Command.Parameters[1]).Sprite = new(_characterSprite);
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[1] = (short?)_characterSprite?.Index ?? 0;
             ScriptEditor.UpdatePreview();
@@ -221,7 +222,7 @@ public partial class DialogueScriptCommandEditorViewModel : ScriptCommandEditorV
         set
         {
             this.RaiseAndSetIfChanged(ref _voicedLine, value);
-            ((VoicedLineScriptParameter)Command.Parameters[5]).VoiceLine = _voicedLine;
+            ((VoicedLineScriptParameter)Command.Parameters[5]).VoiceLine = new(_voicedLine);
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[5] = (short)_voicedLine.Index;
             ScriptEditor.Description.UnsavedChanges = true;
@@ -235,7 +236,7 @@ public partial class DialogueScriptCommandEditorViewModel : ScriptCommandEditorV
         set
         {
             this.RaiseAndSetIfChanged(ref _textVoiceFont, value);
-            ((DialoguePropertyScriptParameter)Command.Parameters[6]).Character = _textVoiceFont;
+            ((DialoguePropertyScriptParameter)Command.Parameters[6]).Character = new(_textVoiceFont);
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[6] = (short)_textVoiceFont.MessageInfo.Character;
             ScriptEditor.Description.UnsavedChanges = true;
@@ -249,7 +250,7 @@ public partial class DialogueScriptCommandEditorViewModel : ScriptCommandEditorV
         set
         {
             this.RaiseAndSetIfChanged(ref _textSpeed, value);
-            ((DialoguePropertyScriptParameter)Command.Parameters[7]).Character = _textSpeed;
+            ((DialoguePropertyScriptParameter)Command.Parameters[7]).Character = new(_textSpeed);
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[7] = (short)_textSpeed.MessageInfo.Character;
             ScriptEditor.Description.UnsavedChanges = true;

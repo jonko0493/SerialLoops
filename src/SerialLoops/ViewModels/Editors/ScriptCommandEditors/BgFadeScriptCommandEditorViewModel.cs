@@ -28,7 +28,7 @@ public class BgFadeScriptCommandEditorViewModel : ScriptCommandEditorViewModel
         set
         {
             this.RaiseAndSetIfChanged(ref _bg, value);
-            ((BgScriptParameter)Command.Parameters[0]).Background = _bg;
+            ((BgScriptParameter)Command.Parameters[0]).Background = new(_bg);
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[0] = (short?)_bg?.Id ?? 0;
             ScriptEditor.UpdatePreview();
@@ -43,7 +43,7 @@ public class BgFadeScriptCommandEditorViewModel : ScriptCommandEditorViewModel
         set
         {
             this.RaiseAndSetIfChanged(ref _cg, value);
-            ((BgScriptParameter)Command.Parameters[1]).Background = _cg;
+            ((BgScriptParameter)Command.Parameters[1]).Background = new(_cg);
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                 .Objects[Command.Index].Parameters[1] = (short?)_cg?.Id ?? 0;
             ScriptEditor.UpdatePreview();
@@ -71,8 +71,10 @@ public class BgFadeScriptCommandEditorViewModel : ScriptCommandEditorViewModel
     {
         _window = window;
         Tabs = _window.EditorTabs;
-        _bg = ((BgScriptParameter)Command.Parameters[0]).Background;
-        _cg = ((BgScriptParameter)Command.Parameters[1]).Background;
+        using LiteDatabase db = new(scriptEditor.Window.OpenProject.DbFile);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
+        _bg = ((BgScriptParameter)Command.Parameters[0]).GetBackground(itemsCol);
+        _cg = ((BgScriptParameter)Command.Parameters[1]).GetBackground(itemsCol);
         _fadeTime = ((ShortScriptParameter)Command.Parameters[2]).Value;
         ReplaceBgCommand = ReactiveCommand.CreateFromTask(ReplaceBg);
         ReplaceCgCommand = ReactiveCommand.CreateFromTask(ReplaceCg);

@@ -6,7 +6,6 @@
              xmlns:assets="using:SerialLoops.Assets"
              xmlns:controls="using:SerialLoops.Controls"
              xmlns:utility="using:SerialLoops.Utility"
-             xmlns:system="using:System"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="vm:VoicedLineEditorViewModel"
              x:Class="SerialLoops.Views.Editors.VoicedLineEditorView">

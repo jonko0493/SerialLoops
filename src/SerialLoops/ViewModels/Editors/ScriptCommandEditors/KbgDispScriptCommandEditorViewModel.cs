@@ -19,7 +19,7 @@ namespace SerialLoops.ViewModels.Editors.ScriptCommandEditors;
 public class KbgDispScriptCommandEditorViewModel : ScriptCommandEditorViewModel
 {
     public ICommand ReplaceKbgCommand { get; }
-    private MainWindowViewModel _window;
+    private readonly MainWindowViewModel _window;
     public EditorTabsPanelViewModel Tabs { get; }
 
     private BackgroundItem _kbg;
@@ -37,7 +37,7 @@ public class KbgDispScriptCommandEditorViewModel : ScriptCommandEditorViewModel
             }
             else
             {
-                ((BgScriptParameter)Command.Parameters[0]).Background = _kbg;
+                ((BgScriptParameter)Command.Parameters[0]).Background = new(_kbg);
                 Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
                     .Objects[Command.Index].Parameters[0] = (short)_kbg.Id;
             }
@@ -46,7 +46,9 @@ public class KbgDispScriptCommandEditorViewModel : ScriptCommandEditorViewModel
 
     public KbgDispScriptCommandEditorViewModel(ScriptItemCommand command, ScriptEditorViewModel scriptEditor, ILogger log, MainWindowViewModel window) : base(command, scriptEditor, log)
     {
-        _kbg = ((BgScriptParameter)command.Parameters[0]).Background;
+        using LiteDatabase db = new(window.OpenProject.DbFile);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
+        _kbg = ((BgScriptParameter)command.Parameters[0]).GetBackground(itemsCol);
         ReplaceKbgCommand = ReactiveCommand.CreateFromTask(ReplaceKbg);
         _window = window;
         Tabs = _window.EditorTabs;

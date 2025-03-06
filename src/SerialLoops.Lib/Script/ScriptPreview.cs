@@ -10,7 +10,7 @@ public class ScriptPreview
     public BackgroundItem Kbg { get; set; }
     public PlaceItem Place { get; set; }
     public List<(ChibiItem Chibi, int X, int Y)> TopScreenChibis { get; set; } = [];
-    public (int InternalYOffset, int ExternalXOffset, ChibiItem EmotingChibi) ChibiEmote { get; set; }
+    public EmotingChibi ChibiEmote { get; set; }
     public BackgroundItem Background { get; set; }
     public PaletteEffectScriptParameter.PaletteEffect BgPalEffect { get; set; }
     public ScriptItemCommand BgScrollCommand { get; set; }
@@ -28,3 +28,5 @@ public class ScriptPreview
     public List<short> ChessCrossedSpaces { get; set; } = [];
     public string ErrorImage { get; set; }
 }
+
+public record EmotingChibi(int InternalYOffset, int ExternalXOffset, int EmotingChibiIndex);

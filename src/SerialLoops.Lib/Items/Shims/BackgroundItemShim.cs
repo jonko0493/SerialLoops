@@ -16,7 +16,7 @@ public class BackgroundItemShim : ItemShim
     {
     }
 
-    public BackgroundItemShim(BackgroundItem bg, Project project) : base(bg)
+    public BackgroundItemShim(BackgroundItem bg) : base(bg)
     {
         Id = bg.Id;
         BackgroundType = bg.BackgroundType;

@@ -5,6 +5,7 @@ namespace SerialLoops.Lib.Items.Shims;
 public class BackgroundMusicItemShim : ItemShim
 {
     public int Index { get; set; }
+    public string BgmName { get; set; }
     public short? Flag { get; set; }
     public string FlagName { get; set; }
     public string FlagNickname { get; set; }
@@ -13,9 +14,10 @@ public class BackgroundMusicItemShim : ItemShim
     {
     }
 
-    public BackgroundMusicItemShim(BackgroundMusicItem bgm, Project project) : base(bgm)
+    public BackgroundMusicItemShim(BackgroundMusicItem bgm) : base(bgm)
     {
         Index = bgm.Index;
+        BgmName = bgm.BgmName;
         Flag = bgm.Flag;
         if (Flag is not null)
         {

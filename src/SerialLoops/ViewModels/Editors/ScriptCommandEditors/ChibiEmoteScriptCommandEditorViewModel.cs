@@ -4,9 +4,11 @@ using System.Linq;
 using HaruhiChokuretsuLib.Util;
 using LiteDB;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 using SerialLoops.Assets;
 using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
+using SerialLoops.Lib.Items.Shims;
 using SerialLoops.Lib.Script;
 using SerialLoops.Lib.Script.Parameters;
 
@@ -14,8 +16,8 @@ namespace SerialLoops.ViewModels.Editors.ScriptCommandEditors;
 
 public class ChibiEmoteScriptCommandEditorViewModel : ScriptCommandEditorViewModel
 {
-    public ObservableCollection<ChibiItem> Chibis { get; }
-    public ChibiItem Chibi
+    public ObservableCollection<ChibiItemShim> Chibis { get; }
+    public ChibiItemShim ChibiShim
     {
         get => ((ChibiScriptParameter)Command.Parameters[0]).Chibi;
         set
@@ -50,9 +52,9 @@ public class ChibiEmoteScriptCommandEditorViewModel : ScriptCommandEditorViewMod
     public ChibiEmoteScriptCommandEditorViewModel(ScriptItemCommand command, ScriptEditorViewModel scriptEditor, ILogger log) : base(command, scriptEditor, log)
     {
         using LiteDatabase db = new(scriptEditor.Window.OpenProject.DbFile);
-        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
+        var chibiCol = db.GetCollection<ChibiItemShim>(nameof(ChibiItem));
 
-        Chibis = new(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Chibi).Cast<ChibiItem>());
+        Chibis = new(chibiCol.FindAll());
     }
 }
 
