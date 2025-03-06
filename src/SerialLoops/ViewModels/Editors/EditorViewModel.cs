@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using HaruhiChokuretsuLib.Util;
+﻿using HaruhiChokuretsuLib.Util;
 using SerialLoops.Lib;
-using SerialLoops.Lib.Items;
 using SerialLoops.Lib.Items.Shims;
-using SerialLoops.Models;
 using SerialLoops.ViewModels.Panels;
 
 namespace SerialLoops.ViewModels.Editors;

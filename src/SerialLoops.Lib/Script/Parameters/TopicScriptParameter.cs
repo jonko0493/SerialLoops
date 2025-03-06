@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using HaruhiChokuretsuLib.Archive.Event;
+﻿using HaruhiChokuretsuLib.Archive.Event;
 using LiteDB;
 using SerialLoops.Lib.Items;
 

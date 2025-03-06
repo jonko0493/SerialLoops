@@ -319,6 +319,7 @@
                                     </ComboBox.ItemContainerTheme>
                                 </ComboBox>
                                 <controls:ItemLink Item="{Binding SelectedScriptItem}" Tabs="{Binding Tabs}"
+                                                   Project="{Binding Project}"
                                                    IsVisible="{Binding Tabs, Converter={x:Static ObjectConverters.IsNotNull}}"/>
                             </StackPanel>
 

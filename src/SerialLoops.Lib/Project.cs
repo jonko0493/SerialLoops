@@ -4,12 +4,10 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Security.Cryptography;
-using System.Security.Principal;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
-using DynamicData;
 using HaroohieClub.NitroPacker;
 using HaruhiChokuretsuLib.Archive;
 using HaruhiChokuretsuLib.Archive.Data;
@@ -35,7 +33,7 @@ public partial class Project
     public const string EXPORT_FORMAT = "slzip";
     public static readonly JsonSerializerOptions SERIALIZER_OPTIONS = new() { Converters = { new SKColorJsonConverter() } };
 
-    public const int DbVersion = 1;
+    public const int DbVersion = 2;
     public const string ItemsCollectionName = "items";
     public const string ShimsCollectionName = "shims";
 
@@ -561,10 +559,21 @@ public partial class Project
             return new(LoadProjectState.FAILED);
         }
 
+        try
+        {
+            TopicFile = Evt.GetFileByName("TOPICS");
+            TopicFile.InitializeTopicFile();
+        }
+        catch (Exception ex)
+        {
+            log.LogException("Failed to load topic file", ex);
+            return new(LoadProjectState.FAILED);
+        }
+
         return loadItems ? LoadItems(tracker, log) : LoadShims(tracker, log);
     }
 
-    private LoadProjectResult LoadShims(IProgressTracker tracker, ILogger log)
+    private LoadProjectResult LoadShims(IProgressTracker tracker, ILogger log, bool renameItems = true)
     {
         try
         {
@@ -575,21 +584,61 @@ public partial class Project
             {
                 tracker.Finished++;
                 return s;
-            }).OrderBy(s => s.DisplayName).Select(s => new ReactiveItemShim(s)).ToList();
-
-            return new(LoadProjectState.SUCCESS);
+            }).OrderBy(s => s.DisplayName).Select(s => new ReactiveItemShim(s, this)).ToList();
         }
         catch (Exception ex)
         {
             log.LogException($"Failed to load items from database!", ex);
+            return new(LoadProjectState.FAILED);
         }
 
-        return new(LoadProjectState.FAILED);
+        if (!renameItems)
+        {
+            return new(LoadProjectState.SUCCESS);
+        }
+
+        if (ItemNames is null)
+        {
+            try
+            {
+                ItemNames = JsonSerializer.Deserialize<Dictionary<string, string>>(File.ReadAllText(Extensions.GetLocalizedFilePath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Defaults", "DefaultNames"), "json")));
+                foreach (ReactiveItemShim shim in ItemShims.Where(s => !ItemNames.ContainsKey(s.Name) && s.CanRename))
+                {
+                    ItemNames.Add(shim.Name, shim.DisplayName);
+                }
+            }
+            catch (Exception ex)
+            {
+                log.LogException($"Failed to load item names", ex);
+                return new(LoadProjectState.FAILED);
+            }
+        }
+
+        foreach (ReactiveItemShim shim in ItemShims.Where(s => s.CanRename || s.Type == ItemType.Place))
+        {
+            if (ItemNames.TryGetValue(shim.Name, out string value))
+            {
+                shim.CommitRename = false;
+                shim.DisplayName = value;
+                shim.CommitRename = true;
+            }
+            else
+            {
+                ItemNames.Add(shim.Name, shim.DisplayName);
+            }
+        }
+
+        return new(LoadProjectState.SUCCESS);
     }
 
     private LoadProjectResult LoadItems(IProgressTracker tracker, ILogger log)
     {
         LiteDatabase db = new(DbFile); // no using because we will manually dispose before calling LoadShims
+        // Clear the database if we're upgrading it
+        foreach (string collection in db.GetCollectionNames())
+        {
+            db.DropCollection(collection);
+        }
         db.UserVersion = DbVersion;
 
         List<ItemDescription> items = [];
@@ -614,10 +663,7 @@ public partial class Project
                     names.Add(name);
                     return new BackgroundItem(name, i, entry, this);
                 }
-                else
-                {
-                    return null;
-                }
+                return null;
             }).Where(b => b is not null).ToArray();
             items.AddRange(bgs);
             var bgCol = db.GetCollection<BackgroundItemShim>(nameof(BackgroundItem));
@@ -878,8 +924,6 @@ public partial class Project
 
         try
         {
-            TopicFile = Evt.GetFileByName("TOPICS");
-            TopicFile.InitializeTopicFile();
             tracker.Focus("Topics", TopicFile.Topics.Count);
             var topicCol = db.GetCollection<TopicItemShim>(nameof(TopicItem));
             foreach (Topic topic in TopicFile.Topics)
@@ -1137,7 +1181,7 @@ public partial class Project
         shimsCol.InsertBulk(items.Select(i => new ItemShim(i)));
         db.Dispose();
 
-        return LoadShims(tracker, log);
+        return LoadShims(tracker, log, renameItems: false);
     }
 
     public bool VoiceMapIsV06OrHigher()
@@ -1670,45 +1714,45 @@ public partial class Project
         }
     }
 
-    private bool ItemIsInEpisode(ItemDescription item, int episodeNum, bool unique)
+    private bool ItemIsInEpisode(ItemShim item, int episodeNum, bool unique)
     {
         int scenarioEpIndex = Scenario.Commands.FindIndex(c => c.Verb == ScenarioCommand.ScenarioVerb.NEW_GAME && c.Parameter == episodeNum);
         if (scenarioEpIndex >= 0)
         {
             int scenarioNextEpIndex = Scenario.Commands.FindIndex(c => c.Verb == ScenarioCommand.ScenarioVerb.NEW_GAME && c.Parameter == episodeNum + 1);
-            if (item is ScriptItem script)
+            if (item is ScriptItemShim script)
             {
                 return ScriptIsInEpisode(script, scenarioEpIndex, scenarioNextEpIndex);
             }
             else
             {
-                List<ItemDescription> references = item.GetReferencesTo(this);
+                List<ItemShim> references = item.GetReferencesTo(this).Select(r => r.Shim).ToList();
                 if (unique)
                 {
 
-                    return references.Where(r => r.Type == ItemType.Script).Any() &&
+                    return references.Any(r => r.Type == ItemType.Script) &&
                            references.Where(r => r.Type == ItemType.Script)
-                               .All(r => ScriptIsInEpisode((ScriptItem)r, scenarioEpIndex, scenarioNextEpIndex));
+                               .All(r => ScriptIsInEpisode((ScriptItemShim)r, scenarioEpIndex, scenarioNextEpIndex));
                 }
                 else
                 {
-                    return references.Any(r => r.Type == ItemType.Script && ScriptIsInEpisode((ScriptItem)r, scenarioEpIndex, scenarioNextEpIndex));
+                    return references.Any(r => r.Type == ItemType.Script && ScriptIsInEpisode((ScriptItemShim)r, scenarioEpIndex, scenarioNextEpIndex));
                 }
             }
         }
         return false;
     }
 
-    private bool ScriptIsInEpisode(ScriptItem script, int scenarioEpIndex, int scenarioNextEpIndex)
+    private bool ScriptIsInEpisode(ScriptItemShim script, int scenarioEpIndex, int scenarioNextEpIndex)
     {
-        int scriptFileScenarioIndex = Scenario.Commands.FindIndex(c => c.Verb == ScenarioCommand.ScenarioVerb.LOAD_SCENE && c.Parameter == script.Event.Index);
+        int scriptFileScenarioIndex = Scenario.Commands.FindIndex(c => c.Verb == ScenarioCommand.ScenarioVerb.LOAD_SCENE && c.Parameter == script.EventIndex);
         if (scriptFileScenarioIndex < 0)
         {
-            List<ItemDescription> references = script.GetReferencesTo(this);
-            ItemDescription groupSelection = references.Find(r => r.Type == ItemType.Group_Selection);
+            List<ItemShim> references = script.GetReferencesTo(this).Select(r => r.Shim).ToList();
+            ItemShim groupSelection = references.Find(r => r.Type == ItemType.Group_Selection);
             if (groupSelection is not null)
             {
-                scriptFileScenarioIndex = Scenario.Commands.FindIndex(c => c.Verb == ScenarioCommand.ScenarioVerb.ROUTE_SELECT && c.Parameter == ((GroupSelectionItem)groupSelection).Index);
+                scriptFileScenarioIndex = Scenario.Commands.FindIndex(c => c.Verb == ScenarioCommand.ScenarioVerb.ROUTE_SELECT && c.Parameter == ((GroupSelectionItemShim)groupSelection).Index);
             }
         }
         if (scenarioNextEpIndex < 0)

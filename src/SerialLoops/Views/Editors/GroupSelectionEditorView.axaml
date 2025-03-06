@@ -12,7 +12,8 @@
              xmlns:utility="using:SerialLoops.Utility"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="vm:GroupSelectionEditorViewModel"
-             x:Class="SerialLoops.Views.Editors.GroupSelectionEditorView">
+             x:Class="SerialLoops.Views.Editors.GroupSelectionEditorView"
+             Name="Editor">
 
     <ScrollViewer>
         <DockPanel>
@@ -111,6 +112,7 @@
                                 <StackPanel Orientation="Vertical" Spacing="16">
                                     <TextBox Text="{Binding Title}" HorizontalAlignment="Center" Width="200"/>
                                     <controls:ItemLink Item="{Binding Script}" Tabs="{Binding Tabs}"
+                                                       Project="{Binding #Editor.((vm:GroupSelectionEditorViewModel)DataContext).OpenProject}"
                                                        HorizontalAlignment="Center"/>
                                     <ItemsRepeater ItemsSource="{Binding CharacterIcons}" HorizontalAlignment="Center">
                                         <ItemsRepeater.Layout>

@@ -4,6 +4,7 @@ using HaruhiChokuretsuLib.Util;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using SerialLoops.Lib.Items;
+using SerialLoops.Lib.Items.Shims;
 using SkiaSharp;
 
 namespace SerialLoops.ViewModels.Editors;
@@ -29,9 +30,9 @@ public class PlaceEditorViewModel : EditorViewModel
         }
     }
 
-    public PlaceEditorViewModel(PlaceItem place, MainWindowViewModel window, ILogger log) : base(new(place), window, log)
+    public PlaceEditorViewModel(ReactiveItemDescription item, MainWindowViewModel window, ILogger log) : base(item, window, log)
     {
-        _place = place;
+        _place = (PlaceItem)item.Item;
         if (string.IsNullOrEmpty(_place.PlaceName))
         {
             _place.PlaceName = _place.DisplayName[4..];

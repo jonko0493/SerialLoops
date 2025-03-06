@@ -6,6 +6,7 @@ using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
+using SerialLoops.Lib.Items.Shims;
 using SkiaSharp;
 
 namespace SerialLoops.ViewModels.Editors;
@@ -55,9 +56,9 @@ public class ChessPuzzleEditorViewModel : EditorViewModel
         }
     }
 
-    public ChessPuzzleEditorViewModel(ChessPuzzleItem chessPuzzle, MainWindowViewModel window, ILogger log) : base(new(chessPuzzle), window, log)
+    public ChessPuzzleEditorViewModel(ReactiveItemDescription item, MainWindowViewModel window, ILogger log) : base(item, window, log)
     {
-        _chessPuzzle = chessPuzzle;
+        _chessPuzzle = (ChessPuzzleItem)item.Item;
         EmptyChessboard = ChessPuzzleItem.GetEmptyChessboard(Window.OpenProject.Grp);
 
         Pieces = new(_chessPuzzle.ChessPuzzle.Chessboard.Select((p, i) => new ChessPieceOnBoard(p, i, window.OpenProject, this)));

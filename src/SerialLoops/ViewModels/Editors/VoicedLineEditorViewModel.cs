@@ -13,6 +13,7 @@ using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using SerialLoops.Assets;
 using SerialLoops.Lib.Items;
+using SerialLoops.Lib.Items.Shims;
 using SerialLoops.Lib.Script.Parameters;
 using SerialLoops.Lib.Util;
 using SerialLoops.Utility;
@@ -148,9 +149,9 @@ public class VoicedLineEditorViewModel : EditorViewModel
 
     public bool SubsEnabled => Window.OpenProject.VoiceMap is not null;
 
-    public VoicedLineEditorViewModel(VoicedLineItem item, MainWindowViewModel window, ILogger log) : base(new(item), window, log, window.OpenProject)
+    public VoicedLineEditorViewModel(ReactiveItemDescription item, MainWindowViewModel window, ILogger log) : base(item, window, log, window.OpenProject)
     {
-        _vce = item;
+        _vce = (VoicedLineItem)item.Item;
         VcePlayer = new(_vce, log, null);
         ReplaceCommand = ReactiveCommand.CreateFromTask(Replace);
         ExportCommand = ReactiveCommand.CreateFromTask(Export);

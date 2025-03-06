@@ -71,54 +71,59 @@ public static class Extensions
 
     public static string GetSubstitutedString(this string line, Project project)
     {
+        if (string.IsNullOrEmpty(line))
+        {
+            return string.Empty;
+        }
         if (project.LangCode != "ja")
         {
             // we replace " in the base library, but we don't want to do that here since we'll rely on rich-text editing instead
             return string.Join("",
                 line.Select(c => c != '“' ? (project.FontReplacement.ReverseLookup(c)?.ReplacedCharacter ?? c) : c));
         }
-        else
-        {
-            return line;
-        }
+
+        return line;
     }
 
     public static string GetOriginalString(this string line, Project project)
     {
-        if (project.LangCode != "ja")
+        if (string.IsNullOrEmpty(line))
         {
-            string originalString = string.Join("",
-                line.Select(c =>
-                    project.FontReplacement.ContainsKey(c) ? project.FontReplacement[c].OriginalCharacter : c));
-            foreach (Match match in Regex.Matches(originalString, @"\$(\d{1,2})").Cast<Match>())
-            {
-                originalString = originalString.Replace(match.Value, match.Value.GetSubstitutedString(project));
-            }
-
-            foreach (Match match in Regex.Matches(originalString, @"。Ｗ(\d{1,2})").Cast<Match>())
-            {
-                originalString = originalString.Replace(match.Value, match.Value.GetSubstitutedString(project));
-            }
-
-            foreach (Match match in Regex.Matches(originalString, @"。Ｐ(\d{2})").Cast<Match>())
-            {
-                originalString = originalString.Replace(match.Value, match.Value.GetSubstitutedString(project));
-            }
-
-            originalString = Regex.Replace(originalString, @"。ＤＰ", "#DP");
-            foreach (Match match in Regex.Matches(originalString, @"。ＳＥ(\d{3})").Cast<Match>())
-            {
-                originalString = originalString.Replace(match.Value, match.Value.GetSubstitutedString(project));
-            }
-
-            originalString = Regex.Replace(originalString, @"。ＳＫ０", "#SK0");
-            originalString = Regex.Replace(originalString, @"。ｓｋ", "#sk");
-            return originalString;
+            return string.Empty;
         }
-        else
+
+        if (project.LangCode == "ja")
         {
             return line;
         }
+
+        string originalString = string.Join("",
+            line.Select(c =>
+                project.FontReplacement.ContainsKey(c) ? project.FontReplacement[c].OriginalCharacter : c));
+        foreach (Match match in Regex.Matches(originalString, @"\$(\d{1,2})").Cast<Match>())
+        {
+            originalString = originalString.Replace(match.Value, match.Value.GetSubstitutedString(project));
+        }
+
+        foreach (Match match in Regex.Matches(originalString, @"。Ｗ(\d{1,2})").Cast<Match>())
+        {
+            originalString = originalString.Replace(match.Value, match.Value.GetSubstitutedString(project));
+        }
+
+        foreach (Match match in Regex.Matches(originalString, @"。Ｐ(\d{2})").Cast<Match>())
+        {
+            originalString = originalString.Replace(match.Value, match.Value.GetSubstitutedString(project));
+        }
+
+        originalString = Regex.Replace(originalString, @"。ＤＰ", "#DP");
+        foreach (Match match in Regex.Matches(originalString, @"。ＳＥ(\d{3})").Cast<Match>())
+        {
+            originalString = originalString.Replace(match.Value, match.Value.GetSubstitutedString(project));
+        }
+
+        originalString = Regex.Replace(originalString, @"。ＳＫ０", "#SK0");
+        originalString = Regex.Replace(originalString, @"。ｓｋ", "#sk");
+        return originalString;
     }
 
     public static void InitializeWithDefaultValues(this ScriptCommandInvocation invocation, EventFile eventFile, Project project)

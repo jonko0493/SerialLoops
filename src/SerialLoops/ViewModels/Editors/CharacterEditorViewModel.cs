@@ -116,13 +116,13 @@ public class CharacterEditorViewModel : EditorViewModel
 
     public CharacterColorPalette ColorPalette { get; } = new();
 
-    public CharacterEditorViewModel(CharacterItem character, MainWindowViewModel window, ILogger log) : base(new(character), window, log)
+    public CharacterEditorViewModel(ReactiveItemDescription item, MainWindowViewModel window, ILogger log) : base(item, window, log)
     {
         using LiteDatabase db = new(window.OpenProject.DbFile);
         var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
         var sfxCol = db.GetCollection<SfxItemShim>(nameof(SfxItem));
 
-        _character = character;
+        _character = (CharacterItem)item.Item;
         Tabs = window.EditorTabs;
 
         Sfxs.AddRange(sfxCol.FindAll().Select(s => s.GetItem(itemsCol)).Cast<SfxItem>());

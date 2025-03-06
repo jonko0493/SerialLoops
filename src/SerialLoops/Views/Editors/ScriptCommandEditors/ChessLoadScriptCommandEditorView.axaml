@@ -24,7 +24,8 @@
                     </ControlTheme>
                 </ComboBox.ItemContainerTheme>
             </ComboBox>
-            <controls:ItemLink Tabs="{Binding Tabs}" Item="{Binding ChessPuzzle}"/>
+            <controls:ItemLink Tabs="{Binding Tabs}" Item="{Binding ChessPuzzle}"
+                               Project="{Binding ScriptEditor.Window.OpenProject}"/>
         </StackPanel>
     </Grid>
 </UserControl>

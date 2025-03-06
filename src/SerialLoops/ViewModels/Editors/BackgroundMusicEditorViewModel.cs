@@ -11,6 +11,7 @@ using ReactiveUI.Fody.Helpers;
 using SerialLoops.Assets;
 using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
+using SerialLoops.Lib.Items.Shims;
 using SerialLoops.Lib.Util;
 using SerialLoops.Models;
 using SerialLoops.Utility;
@@ -39,9 +40,9 @@ public class BackgroundMusicEditorViewModel : EditorViewModel
 
     private ICommand _titleBoxTextChangedCommand;
 
-    public BackgroundMusicEditorViewModel(BackgroundMusicItem bgm, MainWindowViewModel window, Project project, ILogger log, bool initializePlayer = true) : base(new(bgm), window, log, project)
+    public BackgroundMusicEditorViewModel(ReactiveItemDescription item, MainWindowViewModel window, Project project, ILogger log, bool initializePlayer = true) : base(item, window, log, project)
     {
-        Bgm = bgm;
+        Bgm = (BackgroundMusicItem)item.Item;
 
         _bgmCachedFile = Path.Combine(project.Config.CachesDirectory, "bgm", $"{Bgm.Name}.wav");
 
@@ -60,7 +61,7 @@ public class BackgroundMusicEditorViewModel : EditorViewModel
         {
             _project.Extra.Bgms[_project.Extra.Bgms.IndexOf(_project.Extra.Bgms.First(b => b.Name.GetSubstitutedString(_project) == Bgm.BgmName))].Name = newText.GetOriginalString(_project);
             Bgm.BgmName = newText;
-            Bgm.DisplayName = $"{Bgm.Name} - {Bgm.BgmName}";
+            Description.DisplayName = $"{Bgm.Name} - {Bgm.BgmName}";
             Description.UnsavedChanges = true;
         }
     }

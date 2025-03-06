@@ -22,6 +22,7 @@ using ReactiveUI.Fody.Helpers;
 using SerialLoops.Assets;
 using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
+using SerialLoops.Lib.Items.Shims;
 using SerialLoops.Lib.Script;
 using SerialLoops.Lib.Util;
 using SerialLoops.Models;
@@ -128,10 +129,10 @@ public class ScriptEditorViewModel : EditorViewModel
     public ObservableCollection<StartingChibiWithImage> UnusedChibis { get; }
     public ObservableCollection<StartingChibiWithImage> StartingChibis { get; }
 
-    public ScriptEditorViewModel(ScriptItem script, MainWindowViewModel window, ILogger log) : base(new(script), window, log)
+    public ScriptEditorViewModel(ReactiveItemDescription item, MainWindowViewModel window, ILogger log) : base(item, window, log)
     {
-        _script = script;
-        ScriptSections = new(script.Event.ScriptSections.Select(s => new ReactiveScriptSection(s)));
+        _script = (ScriptItem)item.Item;
+        ScriptSections = new(_script.Event.ScriptSections.Select(s => new ReactiveScriptSection(s)));
         _project = window.OpenProject;
         PopulateScriptCommands();
         _script.CalculateGraphEdges(_commands, _log);

@@ -8,6 +8,7 @@ using ReactiveUI.Fody.Helpers;
 using SerialLoops.Assets;
 using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
+using SerialLoops.Lib.Items.Shims;
 using SerialLoops.Lib.Util;
 using SerialLoops.ViewModels.Panels;
 
@@ -29,30 +30,36 @@ public class TopicEditorViewModel : EditorViewModel
         {
             this.RaiseAndSetIfChanged(ref _title, value.GetOriginalString(Window.OpenProject));
             Topic.TopicEntry.Title = _title;
-            Topic.DisplayName = $"{Topic.TopicEntry.Id} - {_title.GetSubstitutedString(Window.OpenProject)}";
+            Description.DisplayName = $"{Topic.TopicEntry.Id} - {_title.GetSubstitutedString(Window.OpenProject)}";
             Description.UnsavedChanges = true;
         }
     }
 
-    public ObservableCollection<ScriptItem> Scripts { get; }
-    private ScriptItem _associatedScript;
-    public ScriptItem AssociatedScript
+    public ObservableCollection<ScriptItemShim> ScriptShims { get; }
+    private ScriptItemShim _associatedScriptShim;
+    public ScriptItemShim AssociatedScriptShim
     {
-        get => _associatedScript;
+        get => _associatedScriptShim;
         set
         {
-            this.RaiseAndSetIfChanged(ref _associatedScript, value);
+            this.RaiseAndSetIfChanged(ref _associatedScriptShim, value);
             if (Topic.TopicEntry.Type == TopicType.Main)
             {
-                Topic.HiddenMainTopic.EventIndex = (short)_associatedScript.Event.Index;
+                Topic.HiddenMainTopic.EventIndex = (short)_associatedScriptShim.EventIndex;
             }
             else
             {
-                Topic.TopicEntry.EventIndex = (short)_associatedScript.Event.Index;
+                Topic.TopicEntry.EventIndex = (short)_associatedScriptShim.EventIndex;
             }
             Description.UnsavedChanges = true;
+
+            using LiteDatabase db = new(Window.OpenProject.DbFile);
+            var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
+            AssociatedScript = (ScriptItem)_associatedScriptShim?.GetItem(itemsCol);
         }
     }
+    [Reactive]
+    public ScriptItem AssociatedScript { get; set; }
 
     public ObservableCollection<string> EpisodeGroups { get; }
     private byte _episodeGroup;
@@ -157,18 +164,19 @@ public class TopicEditorViewModel : EditorViewModel
 
     public short MaxShort => short.MaxValue;
 
-    public TopicEditorViewModel(TopicItem topic, MainWindowViewModel window, ILogger log) : base(new(topic), window, log)
+    public TopicEditorViewModel(ReactiveItemDescription item, MainWindowViewModel window, ILogger log) : base(item, window, log)
     {
         using LiteDatabase db = new(window.OpenProject.DbFile);
         var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
+        var scriptsCol = db.GetCollection<ScriptItemShim>(nameof(ScriptItem));
 
         Tabs = window.EditorTabs;
-        Topic = topic;
+        Topic = (TopicItem)item.Item;
         _title = Topic.TopicEntry.Title;
-        Scripts = new(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Script).Cast<ScriptItem>());
-        short associatedScriptIndex = (short)(Topic.TopicEntry.Type == TopicType.Main ? Topic.HiddenMainTopic?.EventIndex ?? Topic.TopicEntry.EventIndex : Topic.TopicEntry.EventIndex);
-        _associatedScript = (ScriptItem)itemsCol.FindOne(i =>
-            i.Type == ItemDescription.ItemType.Script && ((ScriptItem)i).Event.Index == associatedScriptIndex);
+        ScriptShims = new(scriptsCol.FindAll());
+        short associatedScriptIndex = Topic.TopicEntry.Type == TopicType.Main ? Topic.HiddenMainTopic?.EventIndex ?? Topic.TopicEntry.EventIndex : Topic.TopicEntry.EventIndex;
+        _associatedScriptShim = ScriptShims.FirstOrDefault(s => s.EventIndex == associatedScriptIndex);
+        AssociatedScript = (ScriptItem)_associatedScriptShim?.GetItem(itemsCol);
         EpisodeGroups = [Strings.Episode_1, Strings.Episode_2, Strings.Episode_3, Strings.Episode_4, Strings.Episode_5];
         _episodeGroup = Topic.TopicEntry.EpisodeGroup;
         _puzzlePhaseGroup = Topic.TopicEntry.PuzzlePhaseGroup;

@@ -9,6 +9,7 @@ using ReactiveUI;
 using SerialLoops.Assets;
 using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
+using SerialLoops.Lib.Items.Shims;
 using SerialLoops.Utility;
 using SerialLoops.ViewModels.Dialogs;
 using SerialLoops.Views.Dialogs;
@@ -26,9 +27,9 @@ public class SystemTextureEditorViewModel : EditorViewModel
     public bool UsesCommonPalette => SystemTexture.UsesCommonPalette();
     public SKBitmap PaletteBitmap => SystemTexture.Grp.GetPalette();
 
-    public SystemTextureEditorViewModel(SystemTextureItem item, MainWindowViewModel window, Project project, ILogger log) : base(new(item), window, log, project)
+    public SystemTextureEditorViewModel(ReactiveItemDescription item, MainWindowViewModel window, Project project, ILogger log) : base(item, window, log, project)
     {
-        SystemTexture = item;
+        SystemTexture = (SystemTextureItem)item.Item;
         ExportCommand = ReactiveCommand.CreateFromTask(ExportButton_Click);
         ReplaceCommand = ReactiveCommand.CreateFromTask(ReplaceButton_Click);
         ReplaceWithPaletteCommand = ReactiveCommand.CreateFromTask(ReplaceWithPaletteButton_Click);

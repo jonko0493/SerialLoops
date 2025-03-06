@@ -11,6 +11,7 @@ using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
+using SerialLoops.Lib.Items.Shims;
 using SerialLoops.Models;
 using SerialLoops.Utility;
 using SkiaSharp;
@@ -189,39 +190,39 @@ public class MapEditorViewModel : EditorViewModel
 
     public ICommand ExportCommand { get; }
 
-    public MapEditorViewModel(MapItem map, MainWindowViewModel window, ILogger log) : base(new(map), window, log)
+    public MapEditorViewModel(ReactiveItemDescription item, MainWindowViewModel window, ILogger log) : base(item, window, log)
     {
-        _map = map;
-        Layout = new(map.Layout,
-            [.. map.Map.Settings.TextureFileIndices.Select(idx => window.OpenProject.Grp.GetFileByIndex(idx))],
-            0, map.Layout.LayoutEntries.Count, map.DisplayName);
-        CanvasWidth = map.Layout.LayoutEntries.Max(l => l.ScreenX + l.ScreenW);
-        CanvasHeight = map.Layout.LayoutEntries.Max(l => l.ScreenY + l.ScreenH);
-        for (int i = 0; i < map.Layout.LayoutEntries.Count; i++)
+        _map = (MapItem)item.Item;
+        Layout = new(_map.Layout,
+            [.. _map.Map.Settings.TextureFileIndices.Select(idx => window.OpenProject.Grp.GetFileByIndex(idx))],
+            0, _map.Layout.LayoutEntries.Count, _map.DisplayName);
+        CanvasWidth = _map.Layout.LayoutEntries.Max(l => l.ScreenX + l.ScreenW);
+        CanvasHeight = _map.Layout.LayoutEntries.Max(l => l.ScreenY + l.ScreenH);
+        for (int i = 0; i < _map.Layout.LayoutEntries.Count; i++)
         {
-            if (map.Map.Settings.IntroCameraTruckingDefsStartIndex > 0 && i >= map.Map.Settings.IntroCameraTruckingDefsStartIndex
-                && i <= map.Map.Settings.IntroCameraTruckingDefsEndIndex)
+            if (_map.Map.Settings.IntroCameraTruckingDefsStartIndex > 0 && i >= _map.Map.Settings.IntroCameraTruckingDefsStartIndex
+                && i <= _map.Map.Settings.IntroCameraTruckingDefsEndIndex)
             {
                 CameraTruckingDefinitions.Add(new(Description, Layout, i));
                 continue;
             }
 
-            if (map.Map.Settings.ScrollingBgDefinitionLayoutIndex > 0)
+            if (_map.Map.Settings.ScrollingBgDefinitionLayoutIndex > 0)
             {
-                if (i >= map.Map.Settings.ScrollingBgLayoutStartIndex && i <= map.Map.Settings.ScrollingBgLayoutEndIndex)
+                if (i >= _map.Map.Settings.ScrollingBgLayoutStartIndex && i <= _map.Map.Settings.ScrollingBgLayoutEndIndex)
                 {
                     ScrollingBg.Add(new(Description, Layout, i));
                     continue;
                 }
             }
 
-            if (map.Map.ObjectMarkers[..^1].Select(u => u.LayoutIndex).Contains((short)i))
+            if (_map.Map.ObjectMarkers[..^1].Select(u => u.LayoutIndex).Contains((short)i))
             {
-                ObjectLayer.Add(new(Description, Layout, i) { Layer = map.Layout.LayoutEntries[i].RelativeShtxIndex });
+                ObjectLayer.Add(new(Description, Layout, i) { Layer = _map.Layout.LayoutEntries[i].RelativeShtxIndex });
                 continue;
             }
 
-            switch (map.Layout.LayoutEntries[i].RelativeShtxIndex)
+            switch (_map.Layout.LayoutEntries[i].RelativeShtxIndex)
             {
                 default:
                     if (i == 0)
@@ -234,26 +235,26 @@ public class MapEditorViewModel : EditorViewModel
                         _boundary = new(Description, Layout, i);
                         continue;
                     }
-                    InfoLayer.Add(new(Description, Layout, i) { Layer = map.Layout.LayoutEntries[i].RelativeShtxIndex });
+                    InfoLayer.Add(new(Description, Layout, i) { Layer = _map.Layout.LayoutEntries[i].RelativeShtxIndex });
                     break;
                 case 0:
                 case 1:
-                    if (map.Map.Settings.LayoutOcclusionLayerStartIndex > 0 && i >= map.Map.Settings.LayoutOcclusionLayerStartIndex && i <= map.Map.Settings.LayoutOcclusionLayerEndIndex)
+                    if (_map.Map.Settings.LayoutOcclusionLayerStartIndex > 0 && i >= _map.Map.Settings.LayoutOcclusionLayerStartIndex && i <= _map.Map.Settings.LayoutOcclusionLayerEndIndex)
                     {
-                        BgOcclusionLayer.Add(new(Description, Layout, i) { Layer = map.Layout.LayoutEntries[i].RelativeShtxIndex });
+                        BgOcclusionLayer.Add(new(Description, Layout, i) { Layer = _map.Layout.LayoutEntries[i].RelativeShtxIndex });
                     }
-                    else if (map.Map.Settings.LayoutOcclusionLayerStartIndex > 0 && i > map.Map.Settings.LayoutOcclusionLayerStartIndex
-                             || map.Map.Settings.LayoutOcclusionLayerStartIndex == 0 && i > map.Map.Settings.LayoutBgLayerEndIndex)
+                    else if (_map.Map.Settings.LayoutOcclusionLayerStartIndex > 0 && i > _map.Map.Settings.LayoutOcclusionLayerStartIndex
+                             || _map.Map.Settings.LayoutOcclusionLayerStartIndex == 0 && i > _map.Map.Settings.LayoutBgLayerEndIndex)
                     {
-                        BgJunkLayer.Add(new(Description, Layout, i) { Layer = map.Layout.LayoutEntries[i].RelativeShtxIndex });
+                        BgJunkLayer.Add(new(Description, Layout, i) { Layer = _map.Layout.LayoutEntries[i].RelativeShtxIndex });
                     }
                     else
                     {
-                        BgLayer.Add(new(Description, Layout, i) { Layer = map.Layout.LayoutEntries[i].RelativeShtxIndex });
+                        BgLayer.Add(new(Description, Layout, i) { Layer = _map.Layout.LayoutEntries[i].RelativeShtxIndex });
                     }
                     break;
                 case 2:
-                    ObjectJunkLayer.Add(new(Description, Layout, i) { Layer = map.Layout.LayoutEntries[i].RelativeShtxIndex });
+                    ObjectJunkLayer.Add(new(Description, Layout, i) { Layer = _map.Layout.LayoutEntries[i].RelativeShtxIndex });
                     break;
             }
         }
@@ -273,7 +274,7 @@ public class MapEditorViewModel : EditorViewModel
 
             for (int i = 0; i < tiles; i++)
             {
-                switch (map.Map.Settings.TransformMode)
+                switch (_map.Map.Settings.TransformMode)
                 {
                     case 4:
                         if (i % 2 == 1)
@@ -289,32 +290,32 @@ public class MapEditorViewModel : EditorViewModel
         }
 
         PathingMap = [];
-        SKPoint skGridZero = map.GetOrigin(window.OpenProject.Grp);
+        SKPoint skGridZero = _map.GetOrigin(window.OpenProject.Grp);
         Point gridZero = new(skGridZero.X, skGridZero.Y);
-        for (int y = 0; y < map.Map.PathingMap.Length; y++)
+        for (int y = 0; y < _map.Map.PathingMap.Length; y++)
         {
-            for (int x = 0; x < map.Map.PathingMap[y].Length; x++)
+            for (int x = 0; x < _map.Map.PathingMap[y].Length; x++)
             {
-                PathingMap.Add(new(map.Map.PathingMap, x, y, gridZero, map.Map.Settings.SlgMode));
+                PathingMap.Add(new(_map.Map.PathingMap, x, y, gridZero, _map.Map.Settings.SlgMode));
             }
         }
 
-        if (map.Map.Settings.SlgMode)
+        if (_map.Map.Settings.SlgMode)
         {
-            StartingPointX = (int)gridZero.X - map.Map.Settings.StartingPosition.x * 32 + map.Map.Settings.StartingPosition.y * 32;
-            StartingPointY = (int)gridZero.Y + map.Map.Settings.StartingPosition.x * 16 + map.Map.Settings.StartingPosition.y * 16 + 16;
+            StartingPointX = (int)gridZero.X - _map.Map.Settings.StartingPosition.x * 32 + _map.Map.Settings.StartingPosition.y * 32;
+            StartingPointY = (int)gridZero.Y + _map.Map.Settings.StartingPosition.x * 16 + _map.Map.Settings.StartingPosition.y * 16 + 16;
         }
         else
         {
-            StartingPointX = (int)gridZero.X - map.Map.Settings.StartingPosition.x * 16 + map.Map.Settings.StartingPosition.y * 16;
-            StartingPointY = (int)gridZero.Y + map.Map.Settings.StartingPosition.x * 8 + map.Map.Settings.StartingPosition.y * 8 + 8;
+            StartingPointX = (int)gridZero.X - _map.Map.Settings.StartingPosition.x * 16 + _map.Map.Settings.StartingPosition.y * 16;
+            StartingPointY = (int)gridZero.Y + _map.Map.Settings.StartingPosition.x * 8 + _map.Map.Settings.StartingPosition.y * 8 + 8;
         }
 
-        InteractableObjects = new(map.Map.InteractableObjects[..^1].Select(io => new HighlightedSpace(io, gridZero, window.OpenProject)));
+        InteractableObjects = new(_map.Map.InteractableObjects[..^1].Select(io => new HighlightedSpace(io, gridZero, window.OpenProject)));
 
-        Unknown2s = new(map.Map.UnknownMapObject2s[..^1].Select(u => new HighlightedSpace(u, gridZero, map.Map.Settings.SlgMode)));
+        Unknown2s = new(_map.Map.UnknownMapObject2s[..^1].Select(u => new HighlightedSpace(u, gridZero, _map.Map.Settings.SlgMode)));
 
-        ObjectPositions = new(map.Map.ObjectMarkers[..^1].Select(u => new HighlightedSpace(u, gridZero, map.Map.Settings.SlgMode)));
+        ObjectPositions = new(_map.Map.ObjectMarkers[..^1].Select(u => new HighlightedSpace(u, gridZero, _map.Map.Settings.SlgMode)));
 
         ExportCommand = ReactiveCommand.CreateFromTask(Export);
     }

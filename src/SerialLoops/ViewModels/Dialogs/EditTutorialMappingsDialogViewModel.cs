@@ -17,6 +17,7 @@ namespace SerialLoops.ViewModels.Dialogs;
 
 public class EditTutorialMappingsDialogViewModel : ViewModelBase
 {
+    public Project Project { get; }
     public ObservableCollection<TutorialMapping> Tutorials { get; }
 
     public ICommand SaveCommand { get; }
@@ -24,6 +25,7 @@ public class EditTutorialMappingsDialogViewModel : ViewModelBase
 
     public EditTutorialMappingsDialogViewModel(Project project, EditorTabsPanelViewModel tabs, ILogger log)
     {
+        Project = project;
         Tutorials = new(project.TutorialFile.Tutorials.Where(t => t.AssociatedScript > 0)
             .Select(t => new TutorialMapping(t, project, tabs)));
 

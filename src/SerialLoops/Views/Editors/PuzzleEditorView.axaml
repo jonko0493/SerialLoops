@@ -22,7 +22,8 @@
                     <ItemsRepeater.ItemTemplate>
                         <DataTemplate DataType="vm:TopicWithUnknown">
                             <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <controls:ItemLink Item="{Binding Topic}" Tabs="{Binding $parent[local:PuzzleEditorView].((vm:PuzzleEditorViewModel)DataContext).Tabs}"/>
+                                <controls:ItemLink Item="{Binding Topic}" Tabs="{Binding $parent[local:PuzzleEditorView].((vm:PuzzleEditorViewModel)DataContext).Tabs}"
+                                                   Project="{Binding $parent[local:PuzzleEditorView].((vm:PuzzleEditorViewModel)DataContext).Window.OpenProject}"/>
                                 <StackPanel Orientation="Horizontal" Spacing="3">
                                     <TextBlock Text="{x:Static assets:Strings.Unknown}"/>
                                     <TextBlock Text="{Binding Unknown}"/>
@@ -51,7 +52,8 @@
                            Margin="20, 10">
                 <Grid ColumnDefinitions="Auto,Auto" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="{x:Static assets:Strings.Map}"/>
-                    <controls:ItemLink Grid.Row="0" Grid.Column="1" Margin="10,0,0,0" Item="{Binding Map}" Tabs="{Binding Tabs}"/>
+                    <controls:ItemLink Grid.Row="0" Grid.Column="1" Margin="10,0,0,0" Item="{Binding Map}" Tabs="{Binding Tabs}"
+                                       Project="{Binding Window.OpenProject}"/>
 
                     <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static assets:Strings.Base_Time}"/>
                     <NumericUpDown Grid.Row="1" Grid.Column="1" Margin="10,0,0,0" Minimum="0" Maximum="999"

@@ -43,7 +43,8 @@
                                             </ControlTheme>
                                         </ComboBox.ItemContainerTheme>
                                     </ComboBox>
-                                    <controls:ItemLink Item="{Binding Script}" Tabs="{Binding Tabs}"/>
+                                    <controls:ItemLink Item="{Binding Script}" Tabs="{Binding Tabs}"
+                                                       Project="{Binding #Dialog.((vm:EditTutorialMappingsDialogViewModel)DataContext).Project}"/>
                                 </StackPanel>
                             </HeaderedContentControl>
                         </DataTemplate>

@@ -73,16 +73,16 @@ public class CharacterSpriteEditorViewModel : EditorViewModel
     public ICommand ExportFramesCommand { get; }
     public ICommand ExportGifCommand { get; }
 
-    public CharacterSpriteEditorViewModel(CharacterSpriteItem sprite, MainWindowViewModel mainWindow, ILogger log) : base(new(sprite), mainWindow, log)
+    public CharacterSpriteEditorViewModel(ReactiveItemDescription item, MainWindowViewModel mainWindow, ILogger log) : base(item, mainWindow, log)
     {
         using LiteDatabase db = new(mainWindow.OpenProject.DbFile);
         var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
         var charCol = db.GetCollection<CharacterItemShim>(nameof(CharacterItem));
 
-        _sprite = sprite;
+        _sprite = (CharacterSpriteItem)item.Item;
         AnimatedImage = new(_sprite.GetLipFlapAnimation(mainWindow.OpenProject));
         Characters = new(charCol.FindAll().Select(c => c.GetItem(itemsCol)).Cast<CharacterItem>());
-        _character = Characters.FirstOrDefault(c => c.MessageInfo.Character == sprite.Sprite.Character);
+        _character = Characters.FirstOrDefault(c => c.MessageInfo.Character == _sprite.Sprite.Character);
         _isLarge = _sprite.Sprite.IsLarge;
 
         ReplaceCommand = ReactiveCommand.CreateFromTask(ReplaceSprite);

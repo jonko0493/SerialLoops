@@ -6,6 +6,7 @@ public class CharacterItemShim : ItemShim
 {
     public Speaker Character { get; set; }
     public string CharacterName { get; set; }
+    public short VoiceFont { get; set; }
 
     public CharacterItemShim()
     {
@@ -15,5 +16,6 @@ public class CharacterItemShim : ItemShim
     {
         Character = character.MessageInfo.Character;
         CharacterName= character.NameplateProperties.Name;
+        VoiceFont = character.MessageInfo.VoiceFont;
     }
 }

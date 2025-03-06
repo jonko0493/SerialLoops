@@ -54,10 +54,10 @@ public class ScenarioEditorViewModel : EditorViewModel
     public ICommand UpCommand { get; set; }
     public ICommand DownCommand { get; set; }
 
-    public ScenarioEditorViewModel(ScenarioItem scenario, MainWindowViewModel window, ILogger log) : base(new(scenario), window, log)
+    public ScenarioEditorViewModel(ReactiveItemDescription item, MainWindowViewModel window, ILogger log) : base(item, window, log)
     {
-        _scenario = scenario;
-        Commands = new(scenario.ScenarioCommands.Select((s, i) => new PrettyScenarioCommand(s, i, scenario)));
+        _scenario = (ScenarioItem)item.Item;
+        Commands = new(_scenario.ScenarioCommands.Select((s, i) => new PrettyScenarioCommand(s, i, _scenario)));
         AddCommand = ReactiveCommand.Create(Add);
         DeleteCommand = ReactiveCommand.Create(Delete);
         ClearCommand = ReactiveCommand.CreateFromTask(Clear);

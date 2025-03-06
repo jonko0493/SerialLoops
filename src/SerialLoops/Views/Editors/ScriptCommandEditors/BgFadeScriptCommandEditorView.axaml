@@ -12,13 +12,15 @@
         <TextBlock Grid.Column="0" Grid.Row="0" Margin="0,7,0,0" Text="{x:Static assets:Strings.Background}" />
         <StackPanel Grid.Column="1" Grid.Row="0" Margin="10,0,0,0" Orientation="Horizontal" Spacing="10">
             <Button Content="{x:Static assets:Strings.Select___}" Command="{Binding ReplaceBgCommand}"/>
-            <controls:ItemLink Tabs="{Binding Tabs}" Item="{Binding Bg}"/>
+            <controls:ItemLink Tabs="{Binding Tabs}" Item="{Binding Bg}"
+                               Project="{Binding ScriptEditor.Window.OpenProject}"/>
         </StackPanel>
 
         <TextBlock Grid.Column="0" Grid.Row="1" Margin="0,7,0,0" Text="{x:Static assets:Strings.Background__CG_}" />
         <StackPanel Grid.Column="1" Grid.Row="1" Margin="10,0,0,0" Orientation="Horizontal" Spacing="10">
             <Button Content="{x:Static assets:Strings.Select___}" Command="{Binding ReplaceCgCommand}"/>
-            <controls:ItemLink Tabs="{Binding Tabs}" Item="{Binding Cg}"/>
+            <controls:ItemLink Tabs="{Binding Tabs}" Item="{Binding Cg}"
+                               Project="{Binding ScriptEditor.Window.OpenProject}"/>
         </StackPanel>
 
         <TextBlock Grid.Column="0" Grid.Row="2" Margin="0,7,0,0" Text="{x:Static assets:Strings.Fade_Time__Frames_}"/>

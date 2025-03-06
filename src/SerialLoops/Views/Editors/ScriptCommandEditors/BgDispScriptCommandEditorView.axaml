@@ -12,7 +12,8 @@
         <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static assets:Strings.Background}" Margin="0,7,0,0"/>
         <StackPanel Grid.Column="1" Grid.Row="0" Margin="10,0,0,0" Orientation="Horizontal" Spacing="10">
             <Button Content="{x:Static assets:Strings.Select___}" Command="{Binding ReplaceBgCommand}"/>
-            <controls:ItemLink Tabs="{Binding Tabs}" Item="{Binding Bg}"/>
+            <controls:ItemLink Tabs="{Binding Tabs}" Item="{Binding Bg}"
+                               Project="{Binding ScriptEditor.Window.OpenProject}"/>
         </StackPanel>
     </Grid>
 </UserControl>

@@ -37,6 +37,15 @@ public class ItemShim
             var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
             item = itemsCol.FindById(Name);
         }
-        return item?.GetReferencesTo(project)?.Select(i => new ReactiveItemShim(new(item))).ToList();
+        return item?.GetReferencesTo(project)?.Select(s => new ReactiveItemShim(s, project)).ToList();
+    }
+
+    public void CommitRename(Project project)
+    {
+        using LiteDatabase db = new(project.DbFile);
+        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
+        ItemDescription item = itemsCol.FindById(Name);
+        item.DisplayName = DisplayName;
+        itemsCol.Update(item.Name, item);
     }
 }

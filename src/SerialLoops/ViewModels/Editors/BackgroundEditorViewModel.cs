@@ -11,6 +11,7 @@ using ReactiveUI;
 using SerialLoops.Assets;
 using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
+using SerialLoops.Lib.Items.Shims;
 using SerialLoops.Lib.Util;
 using SerialLoops.Utility;
 using SerialLoops.ViewModels.Dialogs;
@@ -32,9 +33,9 @@ public class BackgroundEditorViewModel : EditorViewModel
     public string UnknownExtrasShortDescription => string.Format(Strings.Unknown_Extras_Short___0_, Bg.ExtrasShort);
     public string UnknownExtrasByteDescription => string.Format(Strings.Unknown_Extras_Byte___0_, Bg.ExtrasByte);
 
-    public BackgroundEditorViewModel(BackgroundItem item, MainWindowViewModel window, Project project, ILogger log) : base(new(item), window, log, project)
+    public BackgroundEditorViewModel(ReactiveItemDescription item, MainWindowViewModel window, Project project, ILogger log) : base(item, window, log, project)
     {
-        Bg = item;
+        Bg = (BackgroundItem)item.Item;
         ExportCommand = ReactiveCommand.CreateFromTask(ExportButton_Click);
         ReplaceCommand = ReactiveCommand.CreateFromTask(ReplaceButton_Click);
         CgNameChangeCommand = ReactiveCommand.Create<string>((cgName) =>

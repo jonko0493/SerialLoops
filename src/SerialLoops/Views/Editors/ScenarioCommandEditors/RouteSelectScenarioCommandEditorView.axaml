@@ -27,7 +27,8 @@
                     </ControlTheme>
                 </ComboBox.ItemContainerTheme>
             </ComboBox>
-            <controls:ItemLink Item="{Binding GroupSelection}" Tabs="{Binding Tabs}"/>
+            <controls:ItemLink Item="{Binding GroupSelection}" Tabs="{Binding Tabs}"
+                               Project="{Binding ScenarioEditor.Window.OpenProject}"/>
         </StackPanel>
     </Grid>
 </UserControl>

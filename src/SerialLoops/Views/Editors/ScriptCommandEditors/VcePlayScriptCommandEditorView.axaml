@@ -24,7 +24,8 @@
                     </ControlTheme>
                 </ComboBox.ItemContainerTheme>
             </ComboBox>
-            <controls:ItemLink Item="{Binding Vce}" Tabs="{Binding Tabs}"/>
+            <controls:ItemLink Item="{Binding Vce}" Tabs="{Binding Tabs}"
+                               Project="{Binding ScriptEditor.Window.OpenProject}"/>
         </StackPanel>
     </Grid>
 </UserControl>

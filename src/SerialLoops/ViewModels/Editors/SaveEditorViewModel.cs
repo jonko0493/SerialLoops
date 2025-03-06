@@ -3,6 +3,7 @@ using System.Windows.Input;
 using HaruhiChokuretsuLib.Util;
 using ReactiveUI;
 using SerialLoops.Assets;
+using SerialLoops.Lib.Items.Shims;
 using SerialLoops.Lib.SaveFile;
 using SerialLoops.ViewModels.Controls;
 using SerialLoops.ViewModels.Dialogs;
@@ -20,10 +21,10 @@ public class SaveEditorViewModel : EditorViewModel
 
     public ICommand EditCommonSaveDataCommand { get; }
 
-    public SaveEditorViewModel(SaveItem save, MainWindowViewModel window, ILogger log, EditorTabsPanelViewModel tabs = null) :
-        base(new(save), window, log, tabs: tabs)
+    public SaveEditorViewModel(ReactiveItemDescription item, MainWindowViewModel window, ILogger log, EditorTabsPanelViewModel tabs = null) :
+        base(item, window, log, tabs: tabs)
     {
-        Save = save;
+        Save = (SaveItem)item.Item;
 
         EditCommonSaveDataCommand = ReactiveCommand.CreateFromTask(EditCommonData);
     }

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -32,10 +31,10 @@ public class GroupSelectionEditorViewModel : EditorViewModel
     public EditorTabsPanelViewModel Tabs { get; }
     public Dictionary<Speaker, SKBitmap> CharacterPortraits { get; } = [];
 
-    public GroupSelectionEditorViewModel(GroupSelectionItem groupSelection, MainWindowViewModel window, ILogger log) : base(new(groupSelection), window, log)
+    public GroupSelectionEditorViewModel(ReactiveItemDescription item, MainWindowViewModel window, ILogger log) : base(item, window, log)
     {
         Tabs = window.EditorTabs;
-        GroupSelection = groupSelection;
+        GroupSelection = (GroupSelectionItem)item.Item;
         OpenProject = window.OpenProject;
 
         using LiteDatabase db = new(OpenProject.DbFile);
@@ -59,7 +58,7 @@ public class GroupSelectionEditorViewModel : EditorViewModel
         CharacterPortraits.Add(Speaker.INFO, anyPortrait);
 
         // We don't do the Where in advance because we need the index to be accurate
-        Activities = new(groupSelection.Selection.Activities.Select((a, i) => a is not null
+        Activities = new(GroupSelection.Selection.Activities.Select((a, i) => a is not null
                 ? new ScenarioActivityViewModel(this, a, i, topicsCol, scriptsCol, itemsCol)
                 : null)
             .Where(a => a is not null));

@@ -8,6 +8,7 @@ using HaruhiChokuretsuLib.Util;
 using ReactiveUI;
 using SerialLoops.Assets;
 using SerialLoops.Lib.Items;
+using SerialLoops.Lib.Items.Shims;
 using SerialLoops.Utility;
 using SerialLoops.ViewModels.Dialogs;
 using SerialLoops.Views.Dialogs;
@@ -23,9 +24,9 @@ public class ItemEditorViewModel : EditorViewModel
     public ICommand ExportCommand { get; }
     public ICommand ImportCommand { get; }
 
-    public ItemEditorViewModel(ItemItem item, MainWindowViewModel window, ILogger log) : base(new(item), window, log)
+    public ItemEditorViewModel(ReactiveItemDescription item, MainWindowViewModel window, ILogger log) : base(item, window, log)
     {
-        _item = item;
+        _item = (ItemItem)item.Item;
         ExportCommand = ReactiveCommand.CreateFromTask(Export);
         ImportCommand = ReactiveCommand.CreateFromTask(Import);
     }

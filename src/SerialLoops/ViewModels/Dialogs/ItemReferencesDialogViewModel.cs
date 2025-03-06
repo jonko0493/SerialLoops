@@ -77,7 +77,18 @@ public class ItemReferencesDialogViewModel : ViewModelBase
         ItemDescription item = _project.FindItem(((ITreeItem)viewer.RowSelection?.SelectedItem)?.Text);
         if (item is not null)
         {
-            Tabs.OpenTab(new(item));
+            ReactiveItemDescription desc;
+            ReactiveItemShim shim = _project.ItemShims.First(i => i.Name == item.Name);
+            if (shim.Item is null)
+            {
+                desc = new(item, _project);
+                shim.Item = desc;
+            }
+            else
+            {
+                desc = shim.Item;
+            }
+            Tabs.OpenTab(desc);
         }
     }
 

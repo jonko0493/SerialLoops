@@ -38,7 +38,7 @@ public class SaveSlotEditorDialogViewModel : ViewModelBase
     public string Title { get; }
     public SaveSection SaveSection { get; }
     public string SlotName { get; }
-    private Project _project;
+    public Project Project { get; }
     public EditorTabsPanelViewModel Tabs { get; }
 
     public bool IsCommonSave { get; }
@@ -67,10 +67,10 @@ public class SaveSlotEditorDialogViewModel : ViewModelBase
         Title = string.Format(Strings.Edit_Save_File____0_____1_, saveName, slotName);
         SaveSection = saveSection;
         SlotName = slotName;
-        _project = project;
+        Project = project;
         Tabs = tabs;
 
-        using LiteDatabase db = new(_project.DbFile);
+        using LiteDatabase db = new(Project.DbFile);
         var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
 
         if (SaveSection is QuickSaveSlotData quickSave)
@@ -81,7 +81,7 @@ public class SaveSlotEditorDialogViewModel : ViewModelBase
             _selectedScriptItem = ScriptItems.FirstOrDefault(i => i.Event.Index == _quickSave.CurrentScript);
             if (_selectedScriptItem is not null)
             {
-                _currentCommandTree = _selectedScriptItem.GetScriptCommandTree(_project, _log);
+                _currentCommandTree = _selectedScriptItem.GetScriptCommandTree(Project, _log);
                 _selectedScriptItem.CalculateGraphEdges(_currentCommandTree, _log);
                 ScriptSections = new(_selectedScriptItem.Event.ScriptSections);
                 SelectedScriptSection = ScriptSections[_quickSave.CurrentScriptBlock];
@@ -131,7 +131,7 @@ public class SaveSlotEditorDialogViewModel : ViewModelBase
                 ],
             };
 
-            (ScriptPreview, ErrorImagePath) = ScriptItem.GeneratePreviewImage(_scriptPreview, _project);
+            (ScriptPreview, ErrorImagePath) = ScriptItem.GeneratePreviewImage(_scriptPreview, Project);
         }
         if (SaveSection is SaveSlotData saveSlot)
         {
@@ -372,7 +372,7 @@ public class SaveSlotEditorDialogViewModel : ViewModelBase
             }
             else
             {
-                OrderedDictionary<ScriptSection, List<ScriptItemCommand>> commandTree = SelectedScriptItem.GetScriptCommandTree(_project, _log);
+                OrderedDictionary<ScriptSection, List<ScriptItemCommand>> commandTree = SelectedScriptItem.GetScriptCommandTree(Project, _log);
                 ScriptItemCommand currentCommand = commandTree[SelectedScriptItem.Event.ScriptSections[_quickSave.CurrentScriptBlock]][ScriptCommandIndex];
                 List<ScriptItemCommand> commands = currentCommand.WalkCommandGraph(commandTree, SelectedScriptItem.Graph);
                 for (int i = commands.Count - 1; i >= 0; i--)
@@ -419,36 +419,36 @@ public class SaveSlotEditorDialogViewModel : ViewModelBase
 
     public void LoadCharacterPortraits()
     {
-        CharacterItem kyon = _project.GetCharacterBySpeaker(Speaker.KYON);
-        KyonVoicePortrait = Shared.GetCharacterVoicePortrait(_project, _log, kyon);
+        CharacterItem kyon = Project.GetCharacterBySpeaker(Speaker.KYON);
+        KyonVoicePortrait = Shared.GetCharacterVoicePortrait(Project, _log, kyon);
         KyonName = kyon.DisplayName[4..];
-        CharacterItem haruhi = _project.GetCharacterBySpeaker(Speaker.HARUHI);
-        HaruhiVoicePortrait = Shared.GetCharacterVoicePortrait(_project, _log, haruhi);
+        CharacterItem haruhi = Project.GetCharacterBySpeaker(Speaker.HARUHI);
+        HaruhiVoicePortrait = Shared.GetCharacterVoicePortrait(Project, _log, haruhi);
         HaruhiName = haruhi.DisplayName[4..];
-        CharacterItem asahina = _project.GetCharacterBySpeaker(Speaker.MIKURU);
-        AsahinaVoicePortrait = Shared.GetCharacterVoicePortrait(_project, _log, asahina);
+        CharacterItem asahina = Project.GetCharacterBySpeaker(Speaker.MIKURU);
+        AsahinaVoicePortrait = Shared.GetCharacterVoicePortrait(Project, _log, asahina);
         AsahinaName = asahina.DisplayName[4..];
-        CharacterItem nagato = _project.GetCharacterBySpeaker(Speaker.NAGATO);
-        NagatoVoicePortrait = Shared.GetCharacterVoicePortrait(_project, _log, nagato);
+        CharacterItem nagato = Project.GetCharacterBySpeaker(Speaker.NAGATO);
+        NagatoVoicePortrait = Shared.GetCharacterVoicePortrait(Project, _log, nagato);
         NagatoName = nagato.DisplayName[4..];
-        CharacterItem koizumi = _project.GetCharacterBySpeaker(Speaker.KOIZUMI);
-        KoizumiVoicePortrait = Shared.GetCharacterVoicePortrait(_project, _log, koizumi);
+        CharacterItem koizumi = Project.GetCharacterBySpeaker(Speaker.KOIZUMI);
+        KoizumiVoicePortrait = Shared.GetCharacterVoicePortrait(Project, _log, koizumi);
         KoizumiName = koizumi.DisplayName[4..];
 
-        CharacterItem sis = _project.GetCharacterBySpeaker(Speaker.KYON_SIS);
-        SisterVoicePortrait = Shared.GetCharacterVoicePortrait(_project, _log, sis);
+        CharacterItem sis = Project.GetCharacterBySpeaker(Speaker.KYON_SIS);
+        SisterVoicePortrait = Shared.GetCharacterVoicePortrait(Project, _log, sis);
         SisterName = sis.DisplayName[4..];
-        CharacterItem tsuruya = _project.GetCharacterBySpeaker(Speaker.TSURUYA);
-        TsuruyaVoicePortrait = Shared.GetCharacterVoicePortrait(_project, _log, tsuruya);
+        CharacterItem tsuruya = Project.GetCharacterBySpeaker(Speaker.TSURUYA);
+        TsuruyaVoicePortrait = Shared.GetCharacterVoicePortrait(Project, _log, tsuruya);
         TsuruyaName = tsuruya.DisplayName[4..];
-        CharacterItem taniguchi = _project.GetCharacterBySpeaker(Speaker.TANIGUCHI);
-        TaniguchiVoicePortrait = Shared.GetCharacterVoicePortrait(_project, _log, taniguchi);
+        CharacterItem taniguchi = Project.GetCharacterBySpeaker(Speaker.TANIGUCHI);
+        TaniguchiVoicePortrait = Shared.GetCharacterVoicePortrait(Project, _log, taniguchi);
         TaniguchiName = taniguchi.DisplayName[4..];
-        CharacterItem kunikida = _project.GetCharacterBySpeaker(Speaker.KUNIKIDA);
-        KunikidaVoicePortrait = Shared.GetCharacterVoicePortrait(_project, _log, kunikida);
+        CharacterItem kunikida = Project.GetCharacterBySpeaker(Speaker.KUNIKIDA);
+        KunikidaVoicePortrait = Shared.GetCharacterVoicePortrait(Project, _log, kunikida);
         KunikidaName = kunikida.DisplayName[4..];
-        CharacterItem mysteryGirl = _project.GetCharacterBySpeaker(Speaker.GIRL);
-        MysteryGirlVoicePortrait = Shared.GetCharacterVoicePortrait(_project, _log, mysteryGirl);
+        CharacterItem mysteryGirl = Project.GetCharacterBySpeaker(Speaker.GIRL);
+        MysteryGirlVoicePortrait = Shared.GetCharacterVoicePortrait(Project, _log, mysteryGirl);
         MysteryGirlName = mysteryGirl.DisplayName[4..];
     }
 
@@ -549,7 +549,7 @@ public class SaveSlotEditorDialogViewModel : ViewModelBase
         set
         {
             this.RaiseAndSetIfChanged(ref _selectedScriptItem, value);
-            _currentCommandTree = _selectedScriptItem.GetScriptCommandTree(_project, _log);
+            _currentCommandTree = _selectedScriptItem.GetScriptCommandTree(Project, _log);
             _selectedScriptItem.CalculateGraphEdges(_currentCommandTree, _log);
             ScriptSections.Clear();
             ScriptSections.AddRange(_selectedScriptItem.Event.ScriptSections);
@@ -579,8 +579,8 @@ public class SaveSlotEditorDialogViewModel : ViewModelBase
             }
             this.RaiseAndSetIfChanged(ref _scriptCommandIndex, value);
             _scriptPreview = _selectedScriptItem.GetScriptPreview(_currentCommandTree,
-                _currentCommandTree[SelectedScriptSection][_scriptCommandIndex], _project, _log);
-            (ScriptPreview, ErrorImagePath) = ScriptItem.GeneratePreviewImage(_scriptPreview, _project);
+                _currentCommandTree[SelectedScriptSection][_scriptCommandIndex], Project, _log);
+            (ScriptPreview, ErrorImagePath) = ScriptItem.GeneratePreviewImage(_scriptPreview, Project);
         }
     }
     private ScriptPreview _scriptPreview;

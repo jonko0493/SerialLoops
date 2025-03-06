@@ -9,6 +9,7 @@ using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using SerialLoops.Assets;
 using SerialLoops.Lib.Items;
+using SerialLoops.Lib.Items.Shims;
 using SerialLoops.Utility;
 using SerialLoops.ViewModels.Controls;
 
@@ -28,9 +29,9 @@ public class SfxEditorViewModel : EditorViewModel
 
     public ICommand ExtractCommand { get; }
 
-    public SfxEditorViewModel(ItemDescription item, MainWindowViewModel window, ILogger log) : base(new(item), window, log, window.OpenProject)
+    public SfxEditorViewModel(ReactiveItemDescription item, MainWindowViewModel window, ILogger log) : base(item, window, log, window.OpenProject)
     {
-        Sfx = (SfxItem)Description.Item;
+        Sfx = (SfxItem)item.Item;
         _archive = _project.Snd.SequenceArchives[Sfx.Entry.SequenceArchive].File;
         _sequence = _archive.Sequences[Sfx.Entry.Index];
 

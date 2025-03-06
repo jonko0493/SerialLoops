@@ -87,7 +87,10 @@ public class ItemExplorerPanelViewModel : ViewModelBase
         ItemDescription item = _project.FindItem(((ITreeItem)viewer.RowSelection?.SelectedItem)?.Text);
         if (item is not null)
         {
-            _tabs.OpenTab(new(item));
+            ReactiveItemShim shim = _items.First(i => i.Name == item.Name);
+            ReactiveItemDescription desc = new(item, _project);
+            shim.Item = desc;
+            _tabs.OpenTab(desc);
         }
     }
 

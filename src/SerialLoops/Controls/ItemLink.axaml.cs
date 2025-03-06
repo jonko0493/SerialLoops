@@ -1,7 +1,10 @@
+using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using ReactiveUI;
+using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
+using SerialLoops.Lib.Items.Shims;
 using SerialLoops.ViewModels.Panels;
 
 namespace SerialLoops.Controls;
@@ -10,6 +13,7 @@ public partial class ItemLink : UserControl
 {
     public static readonly AvaloniaProperty<EditorTabsPanelViewModel> TabsProperty = AvaloniaProperty.Register<ItemLink, EditorTabsPanelViewModel>(nameof(Tabs));
     public static readonly AvaloniaProperty<ItemDescription> ItemProperty = AvaloniaProperty.Register<ItemLink, ItemDescription>(nameof(Item));
+    public static readonly AvaloniaProperty<Project> ProjectProperty = AvaloniaProperty.Register<ItemLink, Project>(nameof(Project));
 
     public EditorTabsPanelViewModel Tabs
     {
@@ -20,10 +24,13 @@ public partial class ItemLink : UserControl
     public ItemDescription Item
     {
         get => this.GetValue<ItemDescription>(ItemProperty);
-        set
-        {
-            SetValue(ItemProperty, value);
-        }
+        set => SetValue(ItemProperty, value);
+    }
+
+    public Project Project
+    {
+        get => this.GetValue<Project>(ProjectProperty);
+        set => SetValue(ProjectProperty, value);
     }
 
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
@@ -51,7 +58,18 @@ public partial class ItemLink : UserControl
                 {
                     if (Item is not null)
                     {
-                        Tabs.OpenTab(new(Item));
+                        ReactiveItemDescription desc;
+                        ReactiveItemShim shim = Project.ItemShims.First(i => i.Name == Item.Name);
+                        if (shim.Item is null)
+                        {
+                            desc = new(Item, Project);
+                            shim.Item = desc;
+                        }
+                        else
+                        {
+                            desc = shim.Item;
+                        }
+                        Tabs.OpenTab(desc);
                     }
                 });
             }
@@ -61,6 +79,5 @@ public partial class ItemLink : UserControl
     public ItemLink()
     {
         InitializeComponent();
-
     }
 }

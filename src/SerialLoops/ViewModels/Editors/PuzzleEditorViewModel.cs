@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using AvaloniaEdit.Utils;
@@ -172,14 +171,14 @@ public class PuzzleEditorViewModel : EditorViewModel
         }
     }
 
-    public PuzzleEditorViewModel(PuzzleItem puzzle, MainWindowViewModel window, ILogger log) : base(new(puzzle), window, log)
+    public PuzzleEditorViewModel(ReactiveItemDescription item, MainWindowViewModel window, ILogger log) : base(item, window, log)
     {
         using (LiteDatabase db = new(Window.OpenProject.DbFile))
         {
             var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
             var topicsCol = db.GetCollection<TopicItemShim>(nameof(TopicItem));
 
-            _puzzle = puzzle;
+            _puzzle = (PuzzleItem)item.Item;
             Tabs = Window.EditorTabs;
             AssociatedMainTopics.AddRange(_puzzle.Puzzle.AssociatedTopics[..^1].Select(
                 tu => new TopicWithUnknown(tu.Topic, tu.Unknown, itemsCol, topicsCol)));

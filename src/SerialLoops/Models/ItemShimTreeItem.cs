@@ -5,7 +5,6 @@ using Avalonia.Controls;
 using Avalonia.Layout;
 using ReactiveUI;
 using SerialLoops.Assets;
-using SerialLoops.Lib.Items;
 using SerialLoops.Lib.Items.Shims;
 using SerialLoops.ViewModels;
 using SerialLoops.ViewModels.Dialogs;

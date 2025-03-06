@@ -186,7 +186,18 @@ public class SearchDialogViewModel : ViewModelBase
             return;
         }
 
-        _tabs.OpenTab(new(item));
+        ReactiveItemDescription desc;
+        ReactiveItemShim shim = _project.ItemShims.First(i => i.Name == item.Name);
+        if (shim.Item is null)
+        {
+            desc = new(item, _project);
+            shim.Item = desc;
+        }
+        else
+        {
+            desc = shim.Item;
+        }
+        _tabs.OpenTab(desc);
     }
 }
 
