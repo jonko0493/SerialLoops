@@ -1,4 +1,5 @@
 ﻿using SerialLoops.Lib.Items;
+using SerialLoops.Lib.Items.Shims;
 using SkiaSharp;
 
 namespace SerialLoops.Lib.Script;
@@ -23,7 +24,7 @@ public class SpritePositioning
 
 public struct PositionedSprite
 {
-    public CharacterSpriteItem Sprite { get; set; }
+    public CharacterSpriteItemShim Sprite { get; set; }
     public SpritePositioning Positioning { get; set; }
     public SKPaint PalEffect { get; set; }
 }

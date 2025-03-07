@@ -105,30 +105,30 @@ public class SaveSlotEditorDialogViewModel : ViewModelBase
 
             _scriptPreview = new()
             {
-                Background = (BackgroundItem)itemsCol.FindOne(i => i.Type == ItemDescription.ItemType.Background && ((BackgroundItem)i).Id == (_quickSave.CgIndex != 0 ? _quickSave.CgIndex : _quickSave.BgIndex)),
-                BgPalEffect = (PaletteEffectScriptParameter.PaletteEffect)_quickSave.BgPalEffect,
-                EpisodeHeader = _quickSave.EpisodeHeader,
-                Kbg = (BackgroundItem)itemsCol.FindOne(i => i.Type == ItemDescription.ItemType.Background && ((BackgroundItem)i).Id == _quickSave.KbgIndex),
-                Place = (PlaceItem)itemsCol.FindOne(i => i.Type == ItemDescription.ItemType.Place && ((PlaceItem)i).Index == _quickSave.Place),
-                TopScreenChibis = topScreenChibis,
-                Sprites =
-                [
-                    new()
-                    {
-                        Sprite = (CharacterSpriteItem)itemsCol.FindOne(i => i.Type == ItemDescription.ItemType.Character_Sprite && ((CharacterSpriteItem)i).Index == _quickSave.FirstCharacterSprite),
-                        Positioning = new() { X = _quickSave.Sprite1XOffset, Layer = 2 },
-                    },
-                    new()
-                    {
-                        Sprite = (CharacterSpriteItem)itemsCol.FindOne(i => i.Type == ItemDescription.ItemType.Character_Sprite && ((CharacterSpriteItem)i).Index == _quickSave.SecondCharacterSprite),
-                        Positioning = new() { X = _quickSave.Sprite2XOffset, Layer = 1 },
-                    },
-                    new()
-                    {
-                        Sprite = (CharacterSpriteItem)itemsCol.FindOne(i => i.Type == ItemDescription.ItemType.Character_Sprite && ((CharacterSpriteItem)i).Index == _quickSave.ThirdCharacterSprite),
-                        Positioning = new() { X = _quickSave.Sprite3XOffset, Layer = 0 },
-                    },
-                ],
+                // Background = (BackgroundItem)itemsCol.FindOne(i => i.Type == ItemDescription.ItemType.Background && ((BackgroundItem)i).Id == (_quickSave.CgIndex != 0 ? _quickSave.CgIndex : _quickSave.BgIndex)),
+                // BgPalEffect = (PaletteEffectScriptParameter.PaletteEffect)_quickSave.BgPalEffect,
+                // EpisodeHeader = _quickSave.EpisodeHeader,
+                // Kbg = (BackgroundItem)itemsCol.FindOne(i => i.Type == ItemDescription.ItemType.Background && ((BackgroundItem)i).Id == _quickSave.KbgIndex),
+                // Place = (PlaceItem)itemsCol.FindOne(i => i.Type == ItemDescription.ItemType.Place && ((PlaceItem)i).Index == _quickSave.Place),
+                // TopScreenChibis = topScreenChibis,
+                // Sprites =
+                // [
+                //     new()
+                //     {
+                //         Sprite = (CharacterSpriteItem)itemsCol.FindOne(i => i.Type == ItemDescription.ItemType.Character_Sprite && ((CharacterSpriteItem)i).Index == _quickSave.FirstCharacterSprite),
+                //         Positioning = new() { X = _quickSave.Sprite1XOffset, Layer = 2 },
+                //     },
+                //     new()
+                //     {
+                //         Sprite = (CharacterSpriteItem)itemsCol.FindOne(i => i.Type == ItemDescription.ItemType.Character_Sprite && ((CharacterSpriteItem)i).Index == _quickSave.SecondCharacterSprite),
+                //         Positioning = new() { X = _quickSave.Sprite2XOffset, Layer = 1 },
+                //     },
+                //     new()
+                //     {
+                //         Sprite = (CharacterSpriteItem)itemsCol.FindOne(i => i.Type == ItemDescription.ItemType.Character_Sprite && ((CharacterSpriteItem)i).Index == _quickSave.ThirdCharacterSprite),
+                //         Positioning = new() { X = _quickSave.Sprite3XOffset, Layer = 0 },
+                //     },
+                // ],
             };
 
             (ScriptPreview, ErrorImagePath) = ScriptItem.GeneratePreviewImage(_scriptPreview, Project);
