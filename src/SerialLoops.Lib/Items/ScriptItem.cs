@@ -607,7 +607,7 @@ public class ScriptItem : Item
                         case SpriteExitScriptParameter.SpriteExitTransition.SLIDE_FROM_CENTER_TO_RIGHT_FADE_OUT:
                         case SpriteExitScriptParameter.SpriteExitTransition.FADE_OUT_CENTER:
                         case SpriteExitScriptParameter.SpriteExitTransition.FADE_OUT_LEFT:
-                            if (sprites.Keys.Any(s => s.Character == prevCharacter.Character) && previousSprites.Keys.Any((s => s.Character == prevCharacter.Character)) &&
+                            if (sprites.ContainsKey(prevCharacter) && previousSprites.ContainsKey(prevCharacter) &&
                                 ((SpriteScriptParameter)previousCommand.Parameters[1])?.Sprite?.Character ==
                                 prevCharacter.Character)
                             {
@@ -685,7 +685,7 @@ public class ScriptItem : Item
                     SpriteShakeScriptParameter spriteShakeParam = (SpriteShakeScriptParameter)command.Parameters[4];
                     short layer = ((ShortScriptParameter)command.Parameters[9]).Value;
 
-                    bool spriteIsNew = sprites.Keys.All(c => c.Character != character.Character);
+                    bool spriteIsNew = !sprites.ContainsKey(character);
                     if (spriteIsNew && spriteEntranceParam.EntranceTransition !=
                         SpriteEntranceScriptParameter.SpriteEntranceTransition.NO_TRANSITION)
                     {
@@ -820,7 +820,7 @@ public class ScriptItem : Item
                     }
 
                     if (spriteShakeParam.ShakeEffect != SpriteShakeScriptParameter.SpriteShakeEffect.NO_SHAKE &&
-                        sprites.Keys.Any(c => c.Character == character.Character))
+                        sprites.ContainsKey(character))
                     {
                         switch (spriteShakeParam.ShakeEffect)
                         {

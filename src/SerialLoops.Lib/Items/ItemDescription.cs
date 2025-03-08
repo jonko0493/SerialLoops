@@ -37,6 +37,16 @@ public partial class ItemDescription
     {
     }
 
+    public override bool Equals(object obj)
+    {
+        return Name.Equals(((ItemDescription)obj)?.Name);
+    }
+
+    public override int GetHashCode()
+    {
+        return Name!.GetHashCode();
+    }
+
     // Enum with values for each type of item
     public enum ItemType
     {

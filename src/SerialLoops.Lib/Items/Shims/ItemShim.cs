@@ -24,6 +24,16 @@ public class ItemShim
         CanRename = item.CanRename;
     }
 
+    public override bool Equals(object obj)
+    {
+        return Name.Equals(((ItemShim)obj)?.Name);
+    }
+
+    public override int GetHashCode()
+    {
+        return Name!.GetHashCode();
+    }
+
     public ItemDescription GetItem(ILiteCollection<ItemDescription> itemsCol)
     {
         return itemsCol.FindById(Name);
