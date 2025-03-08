@@ -947,7 +947,7 @@ public partial class MainWindowViewModel : ViewModelBase
                         savedMessInfo = true;
                     }
                     var charCol = db.GetCollection<CharacterItemShim>(nameof(CharacterItem));
-                    charCol.Update(characterItem.Name, new(characterItem));
+                    charCol.Update(characterItem.Name, new(characterItem, OpenProject));
                     break;
                 case ItemDescription.ItemType.Character_Sprite:
                     if (!savedChrData)

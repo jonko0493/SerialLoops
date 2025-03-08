@@ -8,6 +8,7 @@ using LiteDB;
 using ReactiveUI;
 using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
+using SerialLoops.Lib.Items.Shims;
 using SerialLoops.Lib.Script;
 using SerialLoops.Lib.Script.Parameters;
 using SerialLoops.ViewModels.Dialogs;
@@ -84,8 +85,10 @@ public class BgFadeScriptCommandEditorViewModel : ScriptCommandEditorViewModel
     {
         using LiteDatabase db = new(_window.OpenProject.DbFile);
         var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
+        var bgCol = db.GetCollection<BackgroundItemShim>(nameof(BackgroundItem));
 
-        GraphicSelectionDialogViewModel graphicSelectionDialog = new(new List<IPreviewableGraphic> { NonePreviewableGraphic.BACKGROUND }.Concat(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Background).Cast<IPreviewableGraphic>()),
+        // Order of the predicate matters here as "NONE" short circuits the NonePreviewableGraphic, preventing it from being cast
+        GraphicSelectionDialogViewModel graphicSelectionDialog = new(new List<IPreviewableGraphic> { NonePreviewableGraphic.BACKGROUND }.Concat(bgCol.FindAll().Select(b => b.GetItem(itemsCol)).Cast<IPreviewableGraphic>()),
             Bg, _window.OpenProject, _window.Log, i => i.Name == "NONE" || ((BackgroundItem)i).BackgroundType == BgType.TEX_BG);
         IPreviewableGraphic bg = await new GraphicSelectionDialog { DataContext = graphicSelectionDialog }.ShowDialog<IPreviewableGraphic>(_window.Window);
         if (bg is null)
@@ -107,8 +110,10 @@ public class BgFadeScriptCommandEditorViewModel : ScriptCommandEditorViewModel
     {
         using LiteDatabase db = new(_window.OpenProject.DbFile);
         var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
+        var bgCol = db.GetCollection<BackgroundItemShim>(nameof(BackgroundItem));
 
-        GraphicSelectionDialogViewModel graphicSelectionDialog = new(new List<IPreviewableGraphic> { NonePreviewableGraphic.BACKGROUND }.Concat(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Background).Cast<IPreviewableGraphic>()),
+        // Order of the predicate matters here as "NONE" short circuits the NonePreviewableGraphic, preventing it from being cast
+        GraphicSelectionDialogViewModel graphicSelectionDialog = new(new List<IPreviewableGraphic> { NonePreviewableGraphic.BACKGROUND }.Concat(bgCol.FindAll().Select(b => b.GetItem(itemsCol)).Cast<IPreviewableGraphic>()),
             Cg, _window.OpenProject, _window.Log, i => i.Name == "NONE" ||
                                                        (((BackgroundItem)i).BackgroundType != BgType.TEX_BG && ((BackgroundItem)i).BackgroundType != BgType.KINETIC_SCREEN));
         IPreviewableGraphic cg = await new GraphicSelectionDialog { DataContext = graphicSelectionDialog }.ShowDialog<IPreviewableGraphic>(_window.Window);

@@ -5,7 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:assets="using:SerialLoops.Assets"
              xmlns:controls="using:SerialLoops.Controls"
-             xmlns:items="clr-namespace:SerialLoops.Lib.Items;assembly=SerialLoops.Lib"
+             xmlns:shims="using:SerialLoops.Lib.Items.Shims"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="vm:TopicGetScriptCommandEditorViewModel"
              x:Class="SerialLoops.Views.Editors.ScriptCommandEditors.TopicGetScriptCommandEditorView">
@@ -18,12 +18,17 @@
         <StackPanel Grid.Column="1" Grid.Row="0" Margin="10,0,0,0" Orientation="Horizontal" Spacing="5" IsVisible="{Binding SelectedTopic, Converter={x:Static ObjectConverters.IsNotNull}}">
             <ComboBox ItemsSource="{Binding Topics}" SelectedItem="{Binding SelectedTopic}">
                 <ComboBox.ItemTemplate>
-                    <DataTemplate DataType="items:TopicItem">
+                    <DataTemplate DataType="shims:TopicItemShim">
                         <TextBlock Text="{Binding DisplayName}"/>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
+                <ComboBox.ItemContainerTheme>
+                    <ControlTheme TargetType="ComboBoxItem" x:DataType="shims:TopicItemShim">
+                        <Setter Property="TextSearch.Text" Value="{Binding DisplayName}" />
+                    </ControlTheme>
+                </ComboBox.ItemContainerTheme>
             </ComboBox>
-            <controls:ItemLink Item="{Binding SelectedTopic}" Tabs="{Binding Tabs}"
+            <controls:ItemLink Item="{Binding RealTopic}" Tabs="{Binding Tabs}"
                                Project="{Binding ScriptEditor.Window.OpenProject}"/>
         </StackPanel>
     </Grid>

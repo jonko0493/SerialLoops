@@ -1,7 +1,6 @@
 using System.Linq;
 using HaruhiChokuretsuLib.Archive.Event;
 using HaruhiChokuretsuLib.Util;
-using SerialLoops.Lib.Script.Parameters;
 using SerialLoops.Lib.Util;
 
 namespace SerialLoops.Lib.Items.Shims;
@@ -40,5 +39,20 @@ public class ScriptItemShim : ItemShim
         //     .Cast<FlagScriptParameter>().Select(f => f.Id))).ToArray();
         // FlagNames = FlagIds.Select(f => new FlagScriptParameter("Flag", f).FlagName).ToArray();
         // FlagNicknames = string.Join(' ', FlagIds.Select(f => Flags.GetFlagNickname(f, project)));
+    }
+
+    public void UpdateEventTableInfo(EventTable evtTbl)
+    {
+        EventTableEntry entry = evtTbl.Entries.FirstOrDefault(e => e.EventFileIndex == EventIndex);
+        if (entry is not null)
+        {
+            StartReadFlag = entry.FirstReadFlag;
+            SfxGroupIndex = entry.SfxGroupIndex;
+        }
+        else
+        {
+            StartReadFlag = -1;
+            SfxGroupIndex = -1;
+        }
     }
 }

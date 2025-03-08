@@ -19,14 +19,8 @@ public class EpisodeHeaderScriptParameter(string name, short epHeaderIndex) : Sc
         return new(Name, (short)EpisodeHeaderIndex);
     }
 
-    public SystemTextureItem GetTexture(Project project)
+    public static SystemTextureItem GetTexture(Episode episode, LiteDatabase db)
     {
-        return GetTexture(EpisodeHeaderIndex, project);
-    }
-
-    public static SystemTextureItem GetTexture(Episode episode, Project project)
-    {
-        using LiteDatabase db = new(project.DbFile);
         var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
         // We use names here because display names can change but names cannot
         return episode switch

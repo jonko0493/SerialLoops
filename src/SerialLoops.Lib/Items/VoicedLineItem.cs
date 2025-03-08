@@ -8,7 +8,6 @@ using NAudio.Vorbis;
 using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
 using NLayer.NAudioSupport;
-using VCDiff.Decoders;
 
 namespace SerialLoops.Lib.Items;
 

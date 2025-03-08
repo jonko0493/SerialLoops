@@ -1,5 +1,4 @@
-﻿using SerialLoops.Lib.Items;
-using SerialLoops.Lib.Items.Shims;
+﻿using SerialLoops.Lib.Items.Shims;
 using SkiaSharp;
 
 namespace SerialLoops.Lib.Script;

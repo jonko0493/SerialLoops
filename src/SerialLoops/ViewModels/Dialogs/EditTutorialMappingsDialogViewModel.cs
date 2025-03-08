@@ -9,6 +9,7 @@ using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
+using SerialLoops.Lib.Items.Shims;
 using SerialLoops.ViewModels.Panels;
 using SerialLoops.Views.Dialogs;
 using IO = SerialLoops.Lib.IO;
@@ -48,7 +49,20 @@ public class TutorialMapping : ReactiveObject
 {
     public EditorTabsPanelViewModel Tabs { get; }
 
-    public ObservableCollection<ScriptItem> Scripts { get; }
+    public ObservableCollection<ScriptItemShim> Scripts { get; }
+
+    private ScriptItemShim _scriptShim;
+    public ScriptItemShim ScriptShim
+    {
+        get => _scriptShim;
+        set
+        {
+            this.RaiseAndSetIfChanged(ref _scriptShim, value);
+            using LiteDatabase db = new(_project.DbFile);
+            var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
+            Script = (ScriptItem)_scriptShim.GetItem(itemsCol);
+        }
+    }
 
     [Reactive]
     public int Flag { get; set; }
@@ -58,14 +72,19 @@ public class TutorialMapping : ReactiveObject
     [Reactive]
     public ScriptItem Script { get; set; }
 
+    private Project _project;
+
     public TutorialMapping(Tutorial tutorial, Project project, EditorTabsPanelViewModel tabs)
     {
         using LiteDatabase db = new(project.DbFile);
         var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
+        var scriptsCol = db.GetCollection<ScriptItemShim>(nameof(ScriptItem));
+        _project = project;
 
         Tabs = tabs;
-        Scripts = new(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Script).Cast<ScriptItem>());
+        Scripts = new(scriptsCol.FindAll());
+        _scriptShim = scriptsCol.FindOne(s => s.EventIndex == tutorial.AssociatedScript);
         Flag = tutorial.Id;
-        Script = (ScriptItem)itemsCol.FindOne(i => i.Type == ItemDescription.ItemType.Script && ((ScriptItem)i).Event.Index == tutorial.AssociatedScript);
+        Script = (ScriptItem)_scriptShim.GetItem(itemsCol);
     }
 }

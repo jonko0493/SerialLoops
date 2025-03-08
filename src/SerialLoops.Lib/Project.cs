@@ -9,7 +9,6 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
-using DynamicData;
 using HaroohieClub.NitroPacker;
 using HaruhiChokuretsuLib.Archive;
 using HaruhiChokuretsuLib.Archive.Data;
@@ -22,7 +21,6 @@ using HaruhiChokuretsuLib.Util.Exceptions;
 using LiteDB;
 using SerialLoops.Lib.Items;
 using SerialLoops.Lib.Items.Shims;
-using SerialLoops.Lib.Script.Parameters;
 using SerialLoops.Lib.Util;
 using SkiaSharp;
 using static SerialLoops.Lib.Items.ItemDescription;
@@ -810,7 +808,7 @@ public partial class Project
             }).ToArray();
             items.AddRange(chars);
             var charCol = db.GetCollection<CharacterItemShim>(nameof(CharacterItem));
-            charCol.InsertBulk(chars.Select(c => new CharacterItemShim(c)));
+            charCol.InsertBulk(chars.Select(c => new CharacterItemShim(c, this)));
         }
         catch (Exception ex)
         {
@@ -1228,9 +1226,19 @@ public partial class Project
 
         using LiteDatabase db = new(DbFile);
         var itemsCol = db.GetCollection<ItemDescription>(ItemsCollectionName);
-        List<ScriptItem> scripts = itemsCol.Find(i => i.Type == ItemType.Script).Cast<ScriptItem>().ToList();
-        scripts.ForEach(s => s.UpdateEventTableInfo(EventTableFile.EvtTbl));
-        itemsCol.Update(scripts);
+        var scriptsCol = db.GetCollection<ScriptItemShim>(nameof(ScriptItem));
+        Dictionary<int, ScriptItemShim> scripts = scriptsCol.FindAll().ToDictionary(s => s.EventIndex, s => s);
+        foreach (int index in scripts.Keys)
+        {
+            scripts[index].UpdateEventTableInfo(EventTableFile.EvtTbl);
+            scriptsCol.Update(scripts[index].EventIndex, scripts[index]);
+        }
+        itemsCol.UpdateMany(i =>
+            new ScriptItem
+            {
+                StartReadFlag = scripts[((ScriptItem)i).Event.Index].StartReadFlag,
+                SfxGroupIndex = scripts[((ScriptItem)i).Event.Index].SfxGroupIndex,
+            }, i => i.Type == ItemType.Script);
     }
 
     public void MigrateProject(string newRom, Config config, ILogger log, IProgressTracker tracker)
@@ -1476,6 +1484,11 @@ public partial class Project
         var charactersCol = db.GetCollection<CharacterItemShim>(nameof(CharacterItem));
         string displayName = $"CHR_{Characters[(int)speaker].Name}";
         return (CharacterItem)charactersCol.FindOne(c => c.DisplayName == displayName)?.GetItem(itemsCol);
+    }
+    public CharacterItemShim GetCharacterShimBySpeaker(Speaker speaker, LiteDatabase db)
+    {
+        var charactersCol = db.GetCollection<CharacterItemShim>(nameof(CharacterItem));
+        return charactersCol.FindOne(c => c.Character == speaker);
     }
 
     private IEnumerable<ReactiveItemShim> GetQueryResults(string term, SearchQuery.DataHolder scope, LiteDatabase db, ILogger logger)

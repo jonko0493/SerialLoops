@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using HaruhiChokuretsuLib.Archive;
 using HaruhiChokuretsuLib.Archive.Data;
 using HaruhiChokuretsuLib.Archive.Graphics;
 using HaruhiChokuretsuLib.Util;
@@ -38,14 +37,14 @@ public class ChibiItem : Item, IPreviewableGraphic
         ChibiEntries.AddRange(Chibi.ChibiEntries.Where(c => c.Animation > 0)
             .Select(c => new ChibiGraphics(project.Grp.GetFileByIndex(c.Animation).Name[..^3], c, project)));
         ChibiEntries.ForEach(e => ChibiEntryModifications.Add(e.Name, false));
-        ChibiEntries.ForEach(e => ChibiAnimations.Add(e.Name, GetChibiAnimation(e.Name, project.Grp)));
+        ChibiEntries.ForEach(e => ChibiAnimations.Add(e.Name, GetChibiAnimation(e.Name)));
     }
 
     public override void InitializeAfterDbLoad(Project project)
     {
         base.InitializeAfterDbLoad(project);
         ChibiAnimations.Clear();
-        ChibiEntries.ForEach(e => ChibiAnimations.Add(e.Name, GetChibiAnimation(e.Name, project.Grp)));
+        ChibiEntries.ForEach(e => ChibiAnimations.Add(e.Name, GetChibiAnimation(e.Name)));
     }
 
     public void SetChibiAnimation(string entryName, List<(SKBitmap, short)> framesAndTimings)
@@ -57,7 +56,7 @@ public class ChibiItem : Item, IPreviewableGraphic
         chibiGraphics.Texture = texture;
     }
 
-    public List<(SKBitmap Frame, short Timing)> GetChibiAnimation(string entryName, ArchiveFile<GraphicsFile> grp)
+    public List<(SKBitmap Frame, short Timing)> GetChibiAnimation(string entryName)
     {
         ChibiGraphics chibiGraphics = ChibiEntries.First(c => c.Name == entryName);
         GraphicsFile animation = chibiGraphics.Animation;
@@ -71,7 +70,7 @@ public class ChibiItem : Item, IPreviewableGraphic
     public override void Refresh(Project project, ILogger log)
     {
         ChibiAnimations.Clear();
-        ChibiEntries.ForEach(e => ChibiAnimations.Add(e.Name, GetChibiAnimation(e.Name, project.Grp)));
+        ChibiEntries.ForEach(e => ChibiAnimations.Add(e.Name, GetChibiAnimation(e.Name)));
     }
 
     SKBitmap IPreviewableGraphic.GetPreview(Project project)

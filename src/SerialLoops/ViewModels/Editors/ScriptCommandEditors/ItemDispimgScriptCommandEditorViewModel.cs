@@ -9,6 +9,7 @@ using ReactiveUI;
 using SerialLoops.Assets;
 using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
+using SerialLoops.Lib.Items.Shims;
 using SerialLoops.Lib.Script;
 using SerialLoops.Lib.Script.Parameters;
 using SerialLoops.ViewModels.Dialogs;
@@ -94,8 +95,10 @@ public class ItemDispimgScriptCommandEditorViewModel : ScriptCommandEditorViewMo
     {
         using LiteDatabase db = new(_window.OpenProject.DbFile);
         var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
+        var itemItemCol = db.GetCollection<ItemItemShim>(nameof(ItemItem));
 
-        GraphicSelectionDialogViewModel graphicSelectionDialog = new(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Item).Cast<ItemItem>(),
+        // Order of the predicate matters here as "NONE" short circuits the NonePreviewableGraphic, preventing it from being cast
+        GraphicSelectionDialogViewModel graphicSelectionDialog = new(itemItemCol.FindAll().Select(i => (ItemItem)i.GetItem(itemsCol)),
             Item, _window.OpenProject, _window.Log);
         ItemItem item = await new GraphicSelectionDialog { DataContext = graphicSelectionDialog }.ShowDialog<ItemItem>(_window.Window);
         if (item is not null)

@@ -5,7 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:assets="using:SerialLoops.Assets"
              xmlns:controls="using:SerialLoops.Controls"
-             xmlns:items="using:SerialLoops.Lib.Items"
+             xmlns:shims="using:SerialLoops.Lib.Items.Shims"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="vm:SceneGotoScriptCommandEditorViewModel"
              x:Class="SerialLoops.Views.Editors.ScriptCommandEditors.SceneGotoScriptCommandEditorView">
@@ -15,17 +15,17 @@
             <ComboBox Margin="10,0,0,0" ItemsSource="{Binding Scripts}"
                       SelectedItem="{Binding SelectedScript}">
                 <ComboBox.ItemTemplate>
-                    <DataTemplate DataType="items:ScriptItem">
+                    <DataTemplate DataType="shims:ScriptItemShim">
                         <TextBlock Text="{Binding DisplayName}"/>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
                 <ComboBox.ItemContainerTheme>
-                    <ControlTheme TargetType="ComboBoxItem" x:DataType="items:ScriptItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
+                    <ControlTheme TargetType="ComboBoxItem" x:DataType="shims:ScriptItemShim" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
                         <Setter Property="TextSearch.Text" Value="{Binding DisplayName}" />
                     </ControlTheme>
                 </ComboBox.ItemContainerTheme>
             </ComboBox>
-            <controls:ItemLink Item="{Binding SelectedScript}" Tabs="{Binding Tabs}"
+            <controls:ItemLink Item="{Binding ActualScript}" Tabs="{Binding Tabs}"
                                Project="{Binding ScriptEditor.Window.OpenProject}"/>
         </StackPanel>
     </Grid>

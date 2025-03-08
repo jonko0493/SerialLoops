@@ -70,8 +70,10 @@ public class SetPlaceScriptCommandEditorViewModel : ScriptCommandEditorViewModel
     {
         using LiteDatabase db = new(_window.OpenProject.DbFile);
         var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
+        var placeCol = db.GetCollection<PlaceItemShim>(nameof(PlaceItem));
 
-        GraphicSelectionDialogViewModel graphicSelectionDialog = new(new List<IPreviewableGraphic> { NonePreviewableGraphic.PLACE }.Concat(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Place).Cast<IPreviewableGraphic>()),
+        // Order of the predicate matters here as "NONE" short circuits the NonePreviewableGraphic, preventing it from being cast
+        GraphicSelectionDialogViewModel graphicSelectionDialog = new(new List<IPreviewableGraphic> { NonePreviewableGraphic.PLACE }.Concat(placeCol.FindAll().Select(b => b.GetItem(itemsCol)).Cast<IPreviewableGraphic>()),
             (PlaceItem)Place.GetItem(itemsCol), _window.OpenProject, _window.Log);
         IPreviewableGraphic place = await new GraphicSelectionDialog { DataContext = graphicSelectionDialog }.ShowDialog<IPreviewableGraphic>(_window.Window);
         if (place is null)

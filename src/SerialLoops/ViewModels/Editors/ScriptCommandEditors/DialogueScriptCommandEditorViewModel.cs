@@ -9,6 +9,7 @@ using System.Windows.Input;
 using HaruhiChokuretsuLib.Util;
 using LiteDB;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 using SerialLoops.Assets;
 using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
@@ -33,22 +34,24 @@ public partial class DialogueScriptCommandEditorViewModel : ScriptCommandEditorV
     {
         using LiteDatabase db = new(scriptEditor.Window.OpenProject.DbFile);
         var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
+        var charCol = db.GetCollection<CharacterItemShim>(nameof(CharacterItem));
+        var vceCol = db.GetCollection<VoicedLineItemShim>(nameof(VoicedLineItem));
 
         _window = window;
         Tabs = _window.EditorTabs;
-        Characters = new(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Character).Cast<CharacterItem>());
-        _speaker = _window.OpenProject.GetCharacterBySpeaker(((DialogueScriptParameter)Command.Parameters[0]).Line.Speaker);
-        _specialPredicate = i => i.Name == "NONE" || ((CharacterSpriteItem)i).Sprite.Character == _speaker.MessageInfo.Character;
+        Characters = new(charCol.FindAll());
+        _speaker = _window.OpenProject.GetCharacterShimBySpeaker(((DialogueScriptParameter)Command.Parameters[0]).Line.Speaker, db);
+        _specialPredicate = i => i.Name == "NONE" || ((CharacterSpriteItem)i).Sprite.Character == _speaker.Character;
         _dialogueLine = ((DialogueScriptParameter)command.Parameters[0]).Line.Text;
         _characterSprite = ((SpriteScriptParameter)command.Parameters[1]).GetSprite(itemsCol);
         SelectCharacterSpriteCommand = ReactiveCommand.CreateFromTask(SelectCharacterSpriteCommand_Executed);
         _spriteEntranceTransition = new(((SpriteEntranceScriptParameter)command.Parameters[2]).EntranceTransition);
         _spriteExitTransition = new(((SpriteExitScriptParameter)command.Parameters[3]).ExitTransition);
         _spriteShakeEffect = new(((SpriteShakeScriptParameter)command.Parameters[4]).ShakeEffect);
-        VoicedLines = new(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Voice).Cast<VoicedLineItem>());
-        _voicedLine = ((VoicedLineScriptParameter)command.Parameters[5]).GetVoicedLine(itemsCol);
-        _textVoiceFont = ((DialoguePropertyScriptParameter)command.Parameters[6]).GetCharacter(itemsCol);
-        _textSpeed = ((DialoguePropertyScriptParameter)command.Parameters[7]).GetCharacter(itemsCol);
+        VoicedLines = new(vceCol.FindAll());
+        _voicedLineShim = ((VoicedLineScriptParameter)command.Parameters[5]).VoiceLine;
+        _textVoiceFont = ((DialoguePropertyScriptParameter)command.Parameters[6]).Character;
+        _textSpeed = ((DialoguePropertyScriptParameter)command.Parameters[7]).Character;
         _textEntranceEffect = new(((TextEntranceEffectScriptParameter)command.Parameters[8]).EntranceEffect);
         _spriteLayer = ((ShortScriptParameter)command.Parameters[9]).Value;
         _dontClearText = ((BoolScriptParameter)command.Parameters[10]).Value;
@@ -62,9 +65,9 @@ public partial class DialogueScriptCommandEditorViewModel : ScriptCommandEditorV
         };
     }
 
-    public ObservableCollection<CharacterItem> Characters { get; }
-    private CharacterItem _speaker;
-    public CharacterItem Speaker
+    public ObservableCollection<CharacterItemShim> Characters { get; }
+    private CharacterItemShim _speaker;
+    public CharacterItemShim Speaker
     {
         get => _speaker;
         set
@@ -72,18 +75,18 @@ public partial class DialogueScriptCommandEditorViewModel : ScriptCommandEditorV
             if (value is null)
                 return;
 
-            if (_speaker.MessageInfo.Character == TextVoiceFont.MessageInfo.Character)
+            if (_speaker.Character == TextVoiceFont.Character)
             {
                 TextVoiceFont = value;
             }
-            if (_speaker.MessageInfo.Character == TextSpeed.MessageInfo.Character)
+            if (_speaker.Character == TextSpeed.Character)
             {
                 TextSpeed = value;
             }
             this.RaiseAndSetIfChanged(ref _speaker, value);
-            ((DialogueScriptParameter)Command.Parameters[0]).Line.Speaker = _speaker.MessageInfo.Character;
-            Script.Event.DialogueSection.Objects[Command.Section.Objects[Command.Index].Parameters[0]].Speaker = _speaker.MessageInfo.Character;
-            _specialPredicate = i => i.Name != "NONE" && ((CharacterSpriteItem)i).Sprite.Character == _speaker.MessageInfo.Character;
+            ((DialogueScriptParameter)Command.Parameters[0]).Line.Speaker = _speaker.Character;
+            Script.Event.DialogueSection.Objects[Command.Section.Objects[Command.Index].Parameters[0]].Speaker = _speaker.Character;
+            _specialPredicate = i => i.Name != "NONE" && ((CharacterSpriteItem)i).Sprite.Character == _speaker.Character;
             ScriptEditor.Description.UnsavedChanges = true;
             ScriptEditor.UpdatePreview();
         }
@@ -151,8 +154,10 @@ public partial class DialogueScriptCommandEditorViewModel : ScriptCommandEditorV
     {
         using LiteDatabase db = new(_window.OpenProject.DbFile);
         var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
+        var sprCol = db.GetCollection<CharacterSpriteItemShim>(nameof(CharacterSpriteItem));
 
-        GraphicSelectionDialogViewModel graphicSelectionDialog = new(new List<IPreviewableGraphic> { NonePreviewableGraphic.CHARACTER_SPRITE }.Concat(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Character_Sprite).Cast<IPreviewableGraphic>()),
+        // Order of the predicate matters here as "NONE" short circuits the NonePreviewableGraphic, preventing it from being cast
+        GraphicSelectionDialogViewModel graphicSelectionDialog = new(new List<IPreviewableGraphic> { NonePreviewableGraphic.BACKGROUND }.Concat(sprCol.FindAll().Select(b => b.GetItem(itemsCol)).Cast<IPreviewableGraphic>()),
             CharacterSprite, _window.OpenProject, _window.Log, _specialPredicate);
         IPreviewableGraphic sprite = await new GraphicSelectionDialog { DataContext = graphicSelectionDialog }.ShowDialog<IPreviewableGraphic>(_window.Window);
         if (sprite?.Text == "NONE")
@@ -214,45 +219,51 @@ public partial class DialogueScriptCommandEditorViewModel : ScriptCommandEditorV
         }
     }
 
-    public ObservableCollection<VoicedLineItem> VoicedLines { get; }
-    private VoicedLineItem _voicedLine;
-    public VoicedLineItem VoicedLine
+    public ObservableCollection<VoicedLineItemShim> VoicedLines { get; }
+    private VoicedLineItemShim _voicedLineShim;
+    public VoicedLineItemShim VoicedLineShim
     {
-        get => _voicedLine;
+        get => _voicedLineShim;
         set
         {
-            this.RaiseAndSetIfChanged(ref _voicedLine, value);
-            ((VoicedLineScriptParameter)Command.Parameters[5]).VoiceLine = new(_voicedLine);
+            this.RaiseAndSetIfChanged(ref _voicedLineShim, value);
+            ((VoicedLineScriptParameter)Command.Parameters[5]).VoiceLine = _voicedLineShim;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
-                .Objects[Command.Index].Parameters[5] = (short)_voicedLine.Index;
+                .Objects[Command.Index].Parameters[5] = (short)_voicedLineShim.Index;
             ScriptEditor.Description.UnsavedChanges = true;
+
+            using LiteDatabase db = new(ScriptEditor.Window.OpenProject.DbFile);
+            var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
+            VoicedLine = (VoicedLineItem)_voicedLineShim.GetItem(itemsCol);
         }
     }
 
-    private CharacterItem _textVoiceFont;
-    public CharacterItem TextVoiceFont
+    [Reactive] public VoicedLineItem VoicedLine { get; set; }
+
+    private CharacterItemShim _textVoiceFont;
+    public CharacterItemShim TextVoiceFont
     {
         get => _textVoiceFont;
         set
         {
             this.RaiseAndSetIfChanged(ref _textVoiceFont, value);
-            ((DialoguePropertyScriptParameter)Command.Parameters[6]).Character = new(_textVoiceFont);
+            ((DialoguePropertyScriptParameter)Command.Parameters[6]).Character = _textVoiceFont;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
-                    .Objects[Command.Index].Parameters[6] = (short)ScriptEditor.Window.OpenProject.MessInfo.MessageInfos.IndexOf(_textVoiceFont.MessageInfo);
+                    .Objects[Command.Index].Parameters[6] = (short)_textVoiceFont.MessInfoIndex;
             ScriptEditor.Description.UnsavedChanges = true;
         }
     }
 
-    private CharacterItem _textSpeed;
-    public CharacterItem TextSpeed
+    private CharacterItemShim _textSpeed;
+    public CharacterItemShim TextSpeed
     {
         get => _textSpeed;
         set
         {
             this.RaiseAndSetIfChanged(ref _textSpeed, value);
-            ((DialoguePropertyScriptParameter)Command.Parameters[7]).Character = new(_textSpeed);
+            ((DialoguePropertyScriptParameter)Command.Parameters[7]).Character = _textSpeed;
             Script.Event.ScriptSections[Script.Event.ScriptSections.IndexOf(Command.Section)]
-                .Objects[Command.Index].Parameters[7] = (short)ScriptEditor.Window.OpenProject.MessInfo.MessageInfos.IndexOf(_textSpeed.MessageInfo);
+                .Objects[Command.Index].Parameters[7] = (short)_textSpeed.MessInfoIndex;
             ScriptEditor.Description.UnsavedChanges = true;
         }
     }

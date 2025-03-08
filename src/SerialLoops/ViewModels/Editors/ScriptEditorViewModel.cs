@@ -159,7 +159,6 @@ public class ScriptEditorViewModel : EditorViewModel
         Source.ExpandAll();
 
         using LiteDatabase db = new(_project.DbFile);
-        var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
         var chibiCol = db.GetCollection<ChibiItemShim>(nameof(ChibiItem));
 
         if (_script.Event.StartingChibisSection is not null)
@@ -167,11 +166,8 @@ public class ScriptEditorViewModel : EditorViewModel
             HasStartingChibis = true;
             StartingChibis.AddRange(_script.Event.StartingChibisSection.Objects.Where(c => c.ChibiIndex > 0).Select(c =>
             {
-                ChibiItem chibi = (ChibiItem)chibiCol.FindOne(i => i.ChibiIndex == c.ChibiIndex).GetItem(itemsCol);
-                chibi.InitializeAfterDbLoad(_project);
                 return new StartingChibiWithImage(c,
-                    chibi.ChibiAnimations
-                    .First().Value[0].Frame,
+                    chibiCol.FindOne(i => i.ChibiIndex == c.ChibiIndex).GetFirstFrame(),
                     StartingChibis, UnusedChibis, _script, this);
             }));
             short[] usedIndices = StartingChibis.Select(c => c.StartingChibi.ChibiIndex).ToArray();
@@ -182,9 +178,7 @@ public class ScriptEditorViewModel : EditorViewModel
                     continue;
                 }
 
-                ChibiItem chibi = (ChibiItem)chibiCol.FindOne(c => c.ChibiIndex == i).GetItem(itemsCol);
-                chibi.InitializeAfterDbLoad(_project);
-                UnusedChibis.Add(new(new() { ChibiIndex = i }, chibi.ChibiAnimations.First().Value[0].Frame, StartingChibis, UnusedChibis, _script, this));
+                UnusedChibis.Add(new(new() { ChibiIndex = i }, chibiCol.FindOne(c => c.ChibiIndex == i).GetFirstFrame(), StartingChibis, UnusedChibis, _script, this));
             }
         }
         else

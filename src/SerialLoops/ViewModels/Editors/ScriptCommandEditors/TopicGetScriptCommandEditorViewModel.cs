@@ -7,6 +7,7 @@ using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
+using SerialLoops.Lib.Items.Shims;
 using SerialLoops.Lib.Script;
 using SerialLoops.Lib.Script.Parameters;
 using SerialLoops.ViewModels.Panels;
@@ -20,9 +21,9 @@ public class TopicGetScriptCommandEditorViewModel : ScriptCommandEditorViewModel
     [Reactive]
     public short TopicId { get; set; }
 
-    public ObservableCollection<TopicItem> Topics { get; }
-    private TopicItem _selectedTopic;
-    public TopicItem SelectedTopic
+    public ObservableCollection<TopicItemShim> Topics { get; }
+    private TopicItemShim _selectedTopic;
+    public TopicItemShim SelectedTopic
     {
         get => _selectedTopic;
         set
@@ -35,6 +36,8 @@ public class TopicGetScriptCommandEditorViewModel : ScriptCommandEditorViewModel
             ScriptEditor.Description.UnsavedChanges = true;
         }
     }
+    [Reactive]
+    public TopicItem RealTopic { get; set; }
 
     public ICommand SelectTopicCommand { get; }
 
@@ -43,11 +46,13 @@ public class TopicGetScriptCommandEditorViewModel : ScriptCommandEditorViewModel
     {
         using LiteDatabase db = new(window.OpenProject.DbFile);
         var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
+        var topicsCol = db.GetCollection<TopicItemShim>(nameof(TopicItemShim));
 
         Tabs = window.EditorTabs;
-        Topics = new(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Topic).Cast<TopicItem>());
+        Topics = new(topicsCol.FindAll());
         TopicId = ((TopicScriptParameter)Command.Parameters[0]).TopicId;
-        _selectedTopic = (TopicItem)itemsCol.FindOne(i => i.Type == ItemDescription.ItemType.Topic && ((TopicItem)i).TopicEntry.Id == TopicId);
+        _selectedTopic = topicsCol.FindOne(t => t.TopicEntry.Id == TopicId);
+        RealTopic = (TopicItem)_selectedTopic.GetItem(itemsCol);
         SelectTopicCommand = ReactiveCommand.Create(() => SelectedTopic = Topics.FirstOrDefault());
     }
 }

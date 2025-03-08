@@ -1,5 +1,4 @@
 using System.Collections.ObjectModel;
-using System.Linq;
 using HaruhiChokuretsuLib.Util;
 using LiteDB;
 using ReactiveUI;

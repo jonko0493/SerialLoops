@@ -6,6 +6,7 @@ using LiteDB;
 using ReactiveUI;
 using SerialLoops.Lib;
 using SerialLoops.Lib.Items;
+using SerialLoops.Lib.Items.Shims;
 using SerialLoops.Lib.Script;
 using SerialLoops.Lib.Script.Parameters;
 using SerialLoops.Lib.Util;
@@ -16,9 +17,9 @@ public partial class PinMnlScriptCommandEditorViewModel : ScriptCommandEditorVie
 {
     private Project _project;
 
-    public ObservableCollection<CharacterItem> Characters { get; }
-    private CharacterItem _speaker;
-    public CharacterItem Speaker
+    public ObservableCollection<CharacterItemShim> Characters { get; }
+    private CharacterItemShim _speaker;
+    public CharacterItemShim Speaker
     {
         get => _speaker;
         set
@@ -27,8 +28,8 @@ public partial class PinMnlScriptCommandEditorViewModel : ScriptCommandEditorVie
                 return;
 
             this.RaiseAndSetIfChanged(ref _speaker, value);
-            ((DialogueScriptParameter)Command.Parameters[0]).Line.Speaker = _speaker.MessageInfo.Character;
-            Script.Event.DialogueSection.Objects[Command.Section.Objects[Command.Index].Parameters[0]].Speaker = _speaker.MessageInfo.Character;
+            ((DialogueScriptParameter)Command.Parameters[0]).Line.Speaker = _speaker.Character;
+            Script.Event.DialogueSection.Objects[Command.Section.Objects[Command.Index].Parameters[0]].Speaker = _speaker.Character;
             ScriptEditor.UpdatePreview();
             ScriptEditor.Description.UnsavedChanges = true;
         }
@@ -76,12 +77,10 @@ public partial class PinMnlScriptCommandEditorViewModel : ScriptCommandEditorVie
         : base(command, scriptEditor, log)
     {
         _project = project;
-        using (LiteDatabase db = new(scriptEditor.Window.OpenProject.DbFile))
-        {
-            var itemsCol = db.GetCollection<ItemDescription>(Project.ItemsCollectionName);
-            Characters = new(itemsCol.Find(i => i.Type == ItemDescription.ItemType.Character).Cast<CharacterItem>());
-        }
-        _speaker = project.GetCharacterBySpeaker(((DialogueScriptParameter)command.Parameters[0]).Line.Speaker);
+        LiteDatabase db = new(scriptEditor.Window.OpenProject.DbFile);
+        var charCol = db.GetCollection<CharacterItemShim>(nameof(CharacterItem));
+        Characters = new(charCol.FindAll());
+        _speaker = project.GetCharacterShimBySpeaker(((DialogueScriptParameter)command.Parameters[0]).Line.Speaker, db);
         _dialogueLine = ((DialogueScriptParameter)command.Parameters[0]).Line.Text;
     }
 

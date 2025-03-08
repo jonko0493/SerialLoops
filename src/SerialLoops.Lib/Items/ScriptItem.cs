@@ -311,7 +311,7 @@ public class ScriptItem : Item
                         ChibiEnterExitScriptParameter.ChibiEnterExitType.Enter)
                     {
                         ChibiItemShim chibi = ((ChibiScriptParameter)commands[i].Parameters[0]).Chibi;
-                        if (!chibis.Contains(chibi))
+                        if (chibis.All(c => chibi.ChibiIndex != c.ChibiIndex))
                         {
                             if (chibi.TopScreenIndex < 1 || chibis.Count == 0)
                             {
@@ -607,7 +607,7 @@ public class ScriptItem : Item
                         case SpriteExitScriptParameter.SpriteExitTransition.SLIDE_FROM_CENTER_TO_RIGHT_FADE_OUT:
                         case SpriteExitScriptParameter.SpriteExitTransition.FADE_OUT_CENTER:
                         case SpriteExitScriptParameter.SpriteExitTransition.FADE_OUT_LEFT:
-                            if (sprites.ContainsKey(prevCharacter) && previousSprites.ContainsKey(prevCharacter) &&
+                            if (sprites.Keys.Any(s => s.Character == prevCharacter.Character) && previousSprites.Keys.Any((s => s.Character == prevCharacter.Character)) &&
                                 ((SpriteScriptParameter)previousCommand.Parameters[1])?.Sprite?.Character ==
                                 prevCharacter.Character)
                             {
@@ -685,7 +685,7 @@ public class ScriptItem : Item
                     SpriteShakeScriptParameter spriteShakeParam = (SpriteShakeScriptParameter)command.Parameters[4];
                     short layer = ((ShortScriptParameter)command.Parameters[9]).Value;
 
-                    bool spriteIsNew = !sprites.ContainsKey(character);
+                    bool spriteIsNew = sprites.Keys.All(c => c.Character != character.Character);
                     if (spriteIsNew && spriteEntranceParam.EntranceTransition !=
                         SpriteEntranceScriptParameter.SpriteEntranceTransition.NO_TRANSITION)
                     {
@@ -820,7 +820,7 @@ public class ScriptItem : Item
                     }
 
                     if (spriteShakeParam.ShakeEffect != SpriteShakeScriptParameter.SpriteShakeEffect.NO_SHAKE &&
-                        sprites.ContainsKey(character))
+                        sprites.Keys.Any(c => c.Character == character.Character))
                     {
                         switch (spriteShakeParam.ShakeEffect)
                         {
@@ -960,7 +960,7 @@ public class ScriptItem : Item
             {
                 canvas.DrawBitmap(
                     EpisodeHeaderScriptParameter
-                        .GetTexture((EpisodeHeaderScriptParameter.Episode)preview.EpisodeHeader, project).GetTexture(),
+                        .GetTexture((EpisodeHeaderScriptParameter.Episode)preview.EpisodeHeader, db).GetTexture(),
                     new SKPoint(0, 0));
             }
             else
@@ -977,9 +977,7 @@ public class ScriptItem : Item
 
                 foreach (var chibi in preview.TopScreenChibis)
                 {
-                    ChibiItem chibiItem = (ChibiItem)chibi.Chibi.GetItem(itemsCol);
-                    chibiItem.InitializeAfterDbLoad(project);
-                    SKBitmap chibiFrame = chibiItem.ChibiAnimations.First().Value.ElementAt(0).Frame;
+                    SKBitmap chibiFrame = chibi.Chibi.GetFirstFrame();
                     canvas.DrawBitmap(chibiFrame, new SKPoint(chibi.X, chibi.Y));
                 }
 
