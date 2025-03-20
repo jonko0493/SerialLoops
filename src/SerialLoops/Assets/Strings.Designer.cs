@@ -2626,6 +2626,15 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit Episode Titles.
+        /// </summary>
+        public static string EditEpisodeTitlesDialogTitle {
+            get {
+                return ResourceManager.GetString("EditEpisodeTitlesDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Editor Tabs not provided to project creation dialog.
         /// </summary>
         public static string Editor_Tabs_not_provided_to_project_creation_dialog {
@@ -9792,7 +9801,7 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tip: Type to jump to an 
+        ///   Looks up a localized string similar to Tip: Type to jump to an
         ///item in the dropdown!.
         /// </summary>
         public static string TypeToSearchHelp {

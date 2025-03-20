@@ -3651,4 +3651,7 @@ item in the dropdown!</value>
   <data name="CharacterSpriteEditorSelectMouthFrames" xml:space="preserve">
     <value>Select mouth animation frames</value>
   </data>
+  <data name="EditEpisodeTitlesDialogTitle" xml:space="preserve">
+    <value>Edit Episode Titles</value>
+  </data>
 </root>
