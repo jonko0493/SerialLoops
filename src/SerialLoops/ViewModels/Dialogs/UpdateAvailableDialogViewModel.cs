@@ -36,8 +36,8 @@ public class UpdateAvailableDialogViewModel : ViewModelBase
         Url = url;
         Changelog = changelog;
 
-        Title = string.Format(Strings.New_Update_Available___0_, Version);
-        Header = string.Format(Strings.Serial_Loops_v_0_, Version);
+        Title = string.Format(Strings.UpdaterNewUpdateAvailableTitle, Version);
+        Header = string.Format(Strings.SerialLoopsVersionString, Version);
         ConfigUser = mainWindowViewModel.CurrentConfig;
         CheckForUpdates = ConfigUser.CheckForUpdates;
         UsePreReleaseChannel = ConfigUser.PreReleaseChannel;

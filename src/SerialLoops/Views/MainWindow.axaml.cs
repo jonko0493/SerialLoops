@@ -36,25 +36,25 @@ public partial class MainWindow : Window
 
         NativeMenuItem fileMenu = new()
         {
-            Header = Strings._File,
+            Header = Strings.MenuFile,
             Menu =
             [
                 new NativeMenuItem
                 {
-                    Header = Strings.New_Project___,
+                    Header = Strings.MenuNewProject,
                     Icon = ControlGenerator.GetIcon("New", ViewModel.Log),
                     Command = ViewModel.NewProjectCommand,
                 },
                 new NativeMenuItem
                 {
-                    Header = Strings.Open_Project,
+                    Header = Strings.MenuProjectOpen,
                     Icon = ControlGenerator.GetIcon("Open", ViewModel.Log),
                     Command = ViewModel.OpenProjectCommand,
                 },
                 ViewModel.RecentProjectsMenu,
                 new NativeMenuItem
                 {
-                    Header = Strings.Import_Project,
+                    Header = Strings.MenuImportProjectLabel,
                     Icon = ControlGenerator.GetIcon("Import_Project", ViewModel.Log),
                     Command = ViewModel.ImportProjectCommand,
                 },
@@ -80,7 +80,7 @@ public partial class MainWindow : Window
                 new NativeMenuItemSeparator(),
                 new NativeMenuItem
                 {
-                    Header = Strings.Edit_Save_File,
+                    Header = Strings.MenuEditSaveFile,
                     Icon = ControlGenerator.GetIcon("Edit_Save", ViewModel.Log),
                     Command = ViewModel.EditSaveCommand,
                 },
@@ -92,7 +92,7 @@ public partial class MainWindow : Window
             fileMenu.Menu.Items.Add(new NativeMenuItemSeparator());
             fileMenu.Menu.Items.Add(new NativeMenuItem
             {
-                Header = Strings._Preferences___,
+                Header = Strings.MenuPreferences,
                 Icon = ControlGenerator.GetIcon("Options", ViewModel.Log),
                 Command = ViewModel.PreferencesCommand,
             });
@@ -100,30 +100,30 @@ public partial class MainWindow : Window
             {
                 fileMenu.Menu.Items.Add(new NativeMenuItem
                 {
-                    Header = Strings._Check_for_Updates___,
+                    Header = Strings.MenuCheckForUpdates,
                     Icon = ControlGenerator.GetIcon("Update", ViewModel.Log),
                     Command = ViewModel.CheckForUpdatesCommand,
                 });
             }
             fileMenu.Menu.Items.Add(new NativeMenuItem
             {
-                Header = Strings.View__Logs,
+                Header = Strings.MenuViewLogs,
                 Command = ViewModel.ViewLogsCommand,
             });
             fileMenu.Menu.Items.Add(new NativeMenuItem
             {
-                Header = Strings.View_Crash_Log,
+                Header = Strings.MenuViewCrashLog,
                 Command = ViewModel.ViewCrashLogCommand,
             });
 
             menu.Items.Add(new NativeMenuItem
             {
-                Header = Strings._Help,
+                Header = Strings.MenuHelp,
                 Menu =
                 [
                     new NativeMenuItem
                     {
-                        Header = Strings.About___,
+                        Header = Strings.AboutDetails,
                         Icon = ControlGenerator.GetIcon("Help", ViewModel.Log),
                         Command = ViewModel.AboutCommand,
                     },

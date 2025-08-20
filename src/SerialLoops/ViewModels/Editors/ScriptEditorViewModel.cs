@@ -339,7 +339,7 @@ public class ScriptEditorViewModel : EditorViewModel
         }
         catch (Exception ex)
         {
-            _log.LogException("Failed to update preview!", ex);
+            _log.LogException(Strings.ErrorFailedUpdatingPreview, ex);
         }
     }
 
@@ -527,8 +527,8 @@ public class ScriptEditorViewModel : EditorViewModel
         sectionName = $"NONE{sectionName}";
         if (ScriptSections.Any(s => s.Name.Equals(sectionName)))
         {
-            await Window.Window.ShowMessageBoxAsync(Strings.Duplicate_Section_Name,
-                Strings.Section_name_already_exists__Please_pick_a_different_name_for_this_section_,
+            await Window.Window.ShowMessageBoxAsync(Strings.ScriptEditorDupeSectionNameErrorTitle,
+                Strings.ScriptEditorSectionNameExistsWarning,
                 ButtonEnum.Ok, Icon.Warning, _log);
             return;
         }
@@ -599,8 +599,8 @@ public class ScriptEditorViewModel : EditorViewModel
             int sectionIndex = ScriptSections.IndexOf(SelectedSection);
             if (sectionIndex == 0)
             {
-                await Window.Window.ShowMessageBoxAsync(Strings.Cannot_Delete_Root_Section_,
-                    Strings.The_root_section_cannot_be_deleted_, ButtonEnum.Ok,
+                await Window.Window.ShowMessageBoxAsync(Strings.ScriptEditorCannotDeleteRootSection,
+                    Strings.ScriptEditorCannotDeleteRootWarning, ButtonEnum.Ok,
                     Icon.Warning, _log);
                 return;
             }
@@ -661,8 +661,8 @@ public class ScriptEditorViewModel : EditorViewModel
 
     private async Task Clear()
     {
-        if (await Window.Window.ShowMessageBoxAsync(Strings.Clear_Script_,
-                Strings.Are_you_sure_you_want_to_clear_the_script__nThis_action_is_irreversible_,
+        if (await Window.Window.ShowMessageBoxAsync(Strings.ScriptEditorClearScriptPromptTitle,
+                Strings.ScriptEditorClearScriptPrompt,
                 ButtonEnum.YesNo, Icon.Question, _log) != ButtonResult.Yes)
         {
             return;
@@ -968,7 +968,7 @@ public class ScriptEditorViewModel : EditorViewModel
         ChoicesSectionEntry choice = new()
         {
             Id = _script.Event.LabelsSection.Objects.FirstOrDefault(i => i.Id > 0)?.Id ?? 0,
-            Text = "Replace me",
+            Text = _project.Localize("Replace me"),
         };
         if (_script.Event.ChoicesSection.Objects.Count > 0)
         {

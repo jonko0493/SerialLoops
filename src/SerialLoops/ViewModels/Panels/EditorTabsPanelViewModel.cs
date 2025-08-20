@@ -174,7 +174,7 @@ public class EditorTabsPanelViewModel : ViewModelBase
             case ItemDescription.ItemType.Save:
                 return new SaveEditorViewModel((SaveItem)item, MainWindow, _log);
             default:
-                _log.LogError(Strings.Invalid_item_type_);
+                _log.LogError(Strings.ErrorInvalidItemType);
                 return null;
         }
     }
@@ -202,8 +202,8 @@ public class EditorTabsPanelViewModel : ViewModelBase
         }
         else if (closedEditor.Description.Type == ItemDescription.ItemType.Save)
         {
-            ButtonResult result = await MainWindow.Window.ShowMessageBoxAsync(Strings.Save_changes_to_save_file_,
-                Strings.Would_you_like_to_save_your_changes_to_the_save_file_,
+            ButtonResult result = await MainWindow.Window.ShowMessageBoxAsync(Strings.SaveEditorSaveChangesPromptTitle,
+                Strings.SaveEditorSaveChangesPrompt,
                 ButtonEnum.YesNoCancel, Icon.Question, _log);
             SaveEditorViewModel saveEditor = (SaveEditorViewModel)closedEditor;
             switch (result)

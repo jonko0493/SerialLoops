@@ -39,7 +39,7 @@ public class SystemTextureEditorViewModel : EditorViewModel
 
     private async Task ExportButton_Click()
     {
-        IStorageFile savedFile = await Window.Window.ShowSaveFilePickerAsync(Strings.Export_System_Texture, [new(Strings.PNG_Image) { Patterns = ["*.png"] }], $"{SystemTexture.Grp.Index:D4}.png");
+        IStorageFile savedFile = await Window.Window.ShowSaveFilePickerAsync(Strings.SystemTextureEditorExportFileDialogTitle, [new(Strings.FiletypePng) { Patterns = ["*.png"] }], $"{SystemTexture.Grp.Index:D4}.png");
         if (savedFile is not null)
         {
             try
@@ -49,7 +49,7 @@ public class SystemTextureEditorViewModel : EditorViewModel
             }
             catch (Exception ex)
             {
-                _log.LogException(string.Format(Strings.Failed_to_export_system_texture__0__to_file__1_, SystemTexture.DisplayName, savedFile.Path.LocalPath), ex);
+                _log.LogException(string.Format(Strings.ErrorFailedExportingSysTex, SystemTexture.DisplayName, savedFile.Path.LocalPath), ex);
             }
         }
     }
@@ -67,7 +67,7 @@ public class SystemTextureEditorViewModel : EditorViewModel
     private async Task ReplaceImage(bool replacePalette)
     {
         SKBitmap original = SystemTexture.GetTexture();
-        IStorageFile openFile = await Window.Window.ShowOpenFilePickerAsync(Strings.Replace_System_Texture, [new(Strings.Supported_Images) { Patterns = Shared.SupportedImageFiletypes }]);
+        IStorageFile openFile = await Window.Window.ShowOpenFilePickerAsync(Strings.SysTexEditorReplaceSysTex, [new(Strings.FiletypeSupportedImages) { Patterns = Shared.SupportedImageFiletypes }]);
         if (openFile is not null)
         {
             ImageCropResizeDialogViewModel cropResizeDialogViewModel = new(openFile.TryGetLocalPath(), original.Width, original.Height, _log);
@@ -79,7 +79,7 @@ public class SystemTextureEditorViewModel : EditorViewModel
             {
                 try
                 {
-                    ProgressDialogViewModel tracker = new(string.Format(Strings.Replacing__0____, SystemTexture.DisplayName));
+                    ProgressDialogViewModel tracker = new(string.Format(Strings.ReplacingItemProgressMessage, SystemTexture.DisplayName));
                     tracker.InitializeTasks(() => SystemTexture.SetTexture(finalImage, replacePalette, _log), () => { });
                     await new ProgressDialog { DataContext = tracker }.ShowDialog(Window.Window);
                     this.RaisePropertyChanged(nameof(SystemTextureBitmap));
@@ -91,7 +91,7 @@ public class SystemTextureEditorViewModel : EditorViewModel
                 }
                 catch (Exception ex)
                 {
-                    _log.LogException(string.Format(Strings.Failed_to_replace_system_texture__0__with_file__1_, SystemTexture.DisplayName, openFile.Path.LocalPath), ex);
+                    _log.LogException(string.Format(Strings.ErrorFailedReplacingSysTex, SystemTexture.DisplayName, openFile.Path.LocalPath), ex);
                 }
             }
         }

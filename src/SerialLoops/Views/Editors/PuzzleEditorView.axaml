@@ -12,7 +12,7 @@
              x:Class="SerialLoops.Views.Editors.PuzzleEditorView">
     <ScrollViewer>
         <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,Auto">
-            <HeaderedContentControl Grid.Row="0" Grid.Column="0" Header="{x:Static assets:Strings.Associated_Main_Topics}"
+            <HeaderedContentControl Grid.Row="0" Grid.Column="0" Header="{x:Static assets:Strings.PuzzleEditorAssociatedMainTopicsHeader}"
                            Margin="20, 10">
                 <ItemsRepeater ItemsSource="{Binding AssociatedMainTopics}">
                     <ItemsRepeater.Layout>
@@ -32,7 +32,7 @@
                 </ItemsRepeater>
             </HeaderedContentControl>
 
-            <HeaderedContentControl Grid.Row="1" Grid.Column="0" Header="{x:Static assets:Strings.Haruhi_Routes}"
+            <HeaderedContentControl Grid.Row="1" Grid.Column="0" Header="{x:Static assets:Strings.PuzzleEditorHaruhiRoutes}"
                            Margin="20, 10">
                 <ItemsRepeater ItemsSource="{Binding HaruhiRoutes}">
                     <ItemsRepeater.Layout>
@@ -49,49 +49,49 @@
             <HeaderedContentControl Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Header="{x:Static assets:Strings.Settings}"
                            Margin="20, 10">
                 <Grid ColumnDefinitions="Auto,Auto" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
-                    <TextBlock Grid.Row="0" Grid.Column="0" Text="{x:Static assets:Strings.Map}"/>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="{x:Static assets:Strings.ScriptParamMap}"/>
                     <controls:ItemLink Grid.Row="0" Grid.Column="1" Margin="10,0,0,0" Item="{Binding Map}" Tabs="{Binding Tabs}"/>
 
-                    <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static assets:Strings.Base_Time}"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static assets:Strings.PuzzleEditorBaseTimeLabel}"/>
                     <NumericUpDown Grid.Row="1" Grid.Column="1" Margin="10,0,0,0" Minimum="0" Maximum="999"
                                    Value="{Binding BaseTime}" FormatString="N0" Increment="1" ParsingNumberStyle="Integer"/>
 
-                    <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static assets:Strings.Number_of_Singularities}"/>
+                    <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static assets:Strings.PuzzleEditorNumSingularities}"/>
                     <NumericUpDown Grid.Row="2" Grid.Column="1" Margin="10,0,0,0" Minimum="0" Maximum="99"
                                    Value="{Binding NumSingularities}" FormatString="N0" Increment="1" ParsingNumberStyle="Integer"/>
 
-                    <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static assets:Strings.Unknown_04}"/>
+                    <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static assets:Strings.PuzzleEditorUnknown04}"/>
                     <NumericUpDown Grid.Row="3" Grid.Column="1" Margin="10,0,0,0" Minimum="0" Maximum="999"
                                    Value="{Binding Unknown04}" FormatString="N0" Increment="1" ParsingNumberStyle="Integer"/>
 
-                    <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static assets:Strings.Continue_on_Failure}"/>
+                    <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static assets:Strings.PuzzleEditorContinueOnFailureLabel}"/>
                     <CheckBox Grid.Row="4" Grid.Column="1" Margin="10,0,0,0" IsChecked="{Binding ContinueOnFailure}"/>
 
-                    <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static assets:Strings.Accompanying_Character}"/>
+                    <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static assets:Strings.PuzzleEditorAccompanyingCharacterLabel}"/>
                     <ComboBox Grid.Row="5" Grid.Column="1" Margin="10,0,0,0" ItemsSource="{Binding Characters}" SelectedItem="{Binding AccompanyingCharacter}"/>
 
-                    <TextBlock Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static assets:Strings.Power_Character_1}"/>
+                    <TextBlock Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static assets:Strings.PuzzleEditorPowerCharacter1}"/>
                     <ComboBox Grid.Row="6" Grid.Column="1" Margin="10,0,0,0" ItemsSource="{Binding Characters}" SelectedItem="{Binding PowerCharacter1}"/>
 
-                    <TextBlock Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static assets:Strings.Power_Character_2}"/>
+                    <TextBlock Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static assets:Strings.PuzzleEditorPowerCharacter2}"/>
                     <ComboBox Grid.Row="7" Grid.Column="1" Margin="10,0,0,0" ItemsSource="{Binding Characters}" SelectedItem="{Binding PowerCharacter2}"/>
 
-                    <TextBlock Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static assets:Strings.Singularity}"/>
+                    <TextBlock Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static assets:Strings.PuzzleEditorSingularityImage}"/>
                     <Image Grid.Row="8" Grid.Column="1" Margin="10,0,0,0" Source="{Binding Singularity, Converter={x:Static utility:SLConverters.SKBitmapToAvaloniaConverter}}"/>
 
-                    <TextBlock Grid.Row="9" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static assets:Strings.Topic_Set}"/>
+                    <TextBlock Grid.Row="9" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static assets:Strings.PuzzleEditorTopicSet}"/>
                     <NumericUpDown Grid.Row="9" Grid.Column="1" Margin="10,0,0,0" Minimum="0" Maximum="20"
                                    Value="{Binding TopicSet}" FormatString="N0" Increment="1" ParsingNumberStyle="Integer"/>
 
-                    <TextBlock Grid.Row="10" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static assets:Strings.Unknown_15}"/>
+                    <TextBlock Grid.Row="10" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static assets:Strings.PuzzleEditorUnknown15}"/>
                     <NumericUpDown Grid.Row="10" Grid.Column="1" Margin="10,0,0,0" Minimum="0" Maximum="65535"
                                    Value="{Binding Unknown15}" FormatString="N0" Increment="1" ParsingNumberStyle="Integer"/>
 
-                    <TextBlock Grid.Row="11" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static assets:Strings.Unknown_16}"/>
+                    <TextBlock Grid.Row="11" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static assets:Strings.PuzzleEditorUnknown16}"/>
                     <NumericUpDown Grid.Row="11" Grid.Column="1" Margin="10,0,0,0" Minimum="0" Maximum="65535"
                                    Value="{Binding Unknown16}" FormatString="N0" Increment="1" ParsingNumberStyle="Integer"/>
 
-                    <TextBlock Grid.Row="12" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static assets:Strings.Unknown_17}"/>
+                    <TextBlock Grid.Row="12" Grid.Column="0" VerticalAlignment="Center" Text="{x:Static assets:Strings.PuzzleEditorUnknown17}"/>
                     <NumericUpDown Grid.Row="12" Grid.Column="1" Margin="10,0,0,0" Minimum="0" Maximum="65535"
                                    Value="{Binding Unknown17}" FormatString="N0" Increment="1" ParsingNumberStyle="Integer"/>
                 </Grid>

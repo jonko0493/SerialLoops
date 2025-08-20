@@ -24,7 +24,7 @@ public class SfxEditorViewModel : EditorViewModel
 
     [Reactive]
     public SfxPlayerPanelViewModel SfxPlayerPanel { get; set; }
-    public string Groups => string.Format(Strings.Groups___0_, string.Join(", ", Sfx.AssociatedGroups));
+    public string Groups => string.Format(Strings.SfxEditorGroupsList, string.Join(", ", Sfx.AssociatedGroups));
 
     public ICommand ExtractCommand { get; }
 
@@ -46,7 +46,7 @@ public class SfxEditorViewModel : EditorViewModel
     private async Task Extract()
     {
         _player.Stop();
-        IStorageFile wavFile = await GuiExtensions.ShowSaveFilePickerAsync(Window.Window, Strings.Export_SFX, [new(Strings.WAV_File) { Patterns = ["*.wav"] }], $"{Sfx.DisplayName}.wav");
+        IStorageFile wavFile = await GuiExtensions.ShowSaveFilePickerAsync(Window.Window, Strings.SfxEditorExportButton, [new(Strings.FiletypeWav) { Patterns = ["*.wav"] }], $"{Sfx.DisplayName}.wav");
         if (wavFile is not null)
         {
             _player.Record(wavFile.TryGetLocalPath());

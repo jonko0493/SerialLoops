@@ -52,7 +52,7 @@ public class PreferencesDialogViewModel : ViewModelBase
             },
             new FileOption(_preferencesDialog)
             {
-                OptionName = Strings.Emulator_Path,
+                OptionName = Strings.PreferencesEmulatorPathLabel,
                 Path = Configuration.SysConfig.EmulatorPath,
                 OnChange = path =>
                 {
@@ -70,7 +70,7 @@ public class PreferencesDialogViewModel : ViewModelBase
             },
             new TextOption
             {
-                OptionName = Strings.Emulator_Flatpak,
+                OptionName = Strings.PreferencesEmulatorFlatpakLabel,
                 Value = Configuration.SysConfig.EmulatorFlatpak,
                 OnChange = flatpak =>
                 {
@@ -87,23 +87,23 @@ public class PreferencesDialogViewModel : ViewModelBase
                 Enabled = OperatingSystem.IsLinux() && string.IsNullOrEmpty(Configuration.SysConfig.BundledEmulator),
             },
         ]);
-        _preferencesDialog.ProjectOptions.InitializeOptions(Strings.Projects,
+        _preferencesDialog.ProjectOptions.InitializeOptions(Strings.PreferencesProjectsTab,
         [
             new BooleanOption
             {
-                OptionName = Strings.Auto_Re_Open_Last_Project,
+                OptionName = Strings.PreferencesAutoReopenLabel,
                 Value = Configuration.AutoReopenLastProject,
                 OnChange = value => Configuration.AutoReopenLastProject = value,
             },
             new BooleanOption
             {
-                OptionName = Strings.Remember_Project_Workspace,
+                OptionName = Strings.PreferencesRememberProjectWorkspace,
                 Value = Configuration.RememberProjectWorkspace,
                 OnChange = value => Configuration.RememberProjectWorkspace = value,
             },
             new BooleanOption
             {
-                OptionName = Strings.Remove_Missing_Projects,
+                OptionName = Strings.PreferencesRemoveMissingProjects,
                 Value = Configuration.RemoveMissingProjects,
                 OnChange = value => Configuration.RemoveMissingProjects = value,
             },
@@ -131,11 +131,11 @@ public class PreferencesDialogViewModel : ViewModelBase
                 },
             },
             new ComboBoxOption([
-                ("", string.Format(Strings.Default_Font_Display, Strings.Default_Font)),
+                ("", string.Format(Strings.DefaultFontDisplay, Strings.DefaultFont)),
                 ..SystemFonts.Collection.Families.Select(f => (f.Name, f.Name)),
             ], font: true)
             {
-                OptionName = Strings.Display_Font,
+                OptionName = Strings.PreferencesDisplayFontLabel,
                 Value = Configuration.DisplayFont ?? "",
                 OnChange = value =>
                 {
@@ -145,14 +145,14 @@ public class PreferencesDialogViewModel : ViewModelBase
             },
             new BooleanOption
             {
-                OptionName = Strings.Check_for_Updates_on_Startup,
+                OptionName = Strings.PreferencesCheckForUpdatesOnStartup,
                 Value = Configuration.CheckForUpdates,
                 OnChange = value => Configuration.CheckForUpdates = value,
                 Enabled = Configuration.SysConfig.UseUpdater,
             },
             new BooleanOption
             {
-                OptionName = Strings.Use_Pre_Release_Update_Channel,
+                OptionName = Strings.PreferencesUsePreReleaseUpdateChannel,
                 Value = Configuration.PreReleaseChannel,
                 OnChange = value => Configuration.PreReleaseChannel = value,
                 Enabled = Configuration.SysConfig.UseUpdater,

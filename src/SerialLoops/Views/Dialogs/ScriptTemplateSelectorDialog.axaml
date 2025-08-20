@@ -14,7 +14,7 @@
         ExtendClientAreaToDecorationsHint="True"
         x:DataType="vm:ScriptTemplateSelectorDialogViewModel"
         x:Class="SerialLoops.Views.Dialogs.ScriptTemplateSelectorDialog"
-        Title="{x:Static assets:Strings.Select_Template_to_Apply}"
+        Title="{x:Static assets:Strings.ScriptTemplateSelectToApply}"
         Name="ApplyTemplateDialog">
     <Panel>
         <controls:AcrylicBorderHandler/>
@@ -22,7 +22,7 @@
         <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="10 30" Spacing="10">
             <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto">
                 <TextBox Grid.Column="0" Grid.Row="0" Width="200"
-                         Watermark="{x:Static assets:Strings.Filter_by_name}"
+                         Watermark="{x:Static assets:Strings.FilterByName}"
                          Text="{Binding Filter}"/>
                 <ScrollViewer Grid.Column="0" Grid.Row="1">
                     <ListBox Width="200" Height="330" ItemsSource="{Binding ScriptTemplates}"
@@ -44,7 +44,7 @@
                             Spacing="3" HorizontalAlignment="Center" IsVisible="{Binding SelectedScriptTemplate, Converter={x:Static ObjectConverters.IsNull}}">
                     <Svg Path="avares://SerialLoops/Assets/Icons/Template.svg" HorizontalAlignment="Center"
                          Width="22"/>
-                    <TextBlock HorizontalAlignment="Center" Text="{x:Static assets:Strings.Please_select_a_template}"/>
+                    <TextBlock HorizontalAlignment="Center" Text="{x:Static assets:Strings.ScriptTemplateSelectPrompt}"/>
                 </StackPanel>
                 <StackPanel Grid.Column="1" Grid.Row="1" MinWidth="480" MinHeight="330" Margin="10" Spacing="5"
                             Orientation="Vertical" IsVisible="{Binding SelectedScriptTemplate, Converter={x:Static ObjectConverters.IsNotNull}}">

@@ -42,14 +42,14 @@ public class ImportProjectDialogViewModel : ViewModelBase
     {
         _log = log;
 
-        RomHashString = string.Format(Strings.Expected_ROM_SHA_1_Hash___0_,
-            Strings.Select_an_exported_project_to_see_expected_ROM_hash);
-        SlzipPath = string.IsNullOrEmpty(slzipPath) ? Strings.No_exported_project_selected : slzipPath;
+        RomHashString = string.Format(Strings.ExpectedRomHashLabel,
+            Strings.ImportProjectRomHashDefaultMessage);
+        SlzipPath = string.IsNullOrEmpty(slzipPath) ? Strings.ProjectImportNoExportedProjectSelected : slzipPath;
         if (!string.IsNullOrEmpty(slzipPath))
         {
             SetExpectedRomHash();
         }
-        RomPath = Strings.None_Selected;
+        RomPath = Strings.ProjectCreationNoRomSelected;
 
         SelectExportedProjectCommand = ReactiveCommand.CreateFromTask<ImportProjectDialog>(SelectExportedProject);
         OpenRomCommand = ReactiveCommand.CreateFromTask<ImportProjectDialog>(OpenRom);
@@ -61,8 +61,8 @@ public class ImportProjectDialogViewModel : ViewModelBase
 
     private async Task SelectExportedProject(ImportProjectDialog dialog)
     {
-        string slzipPath = (await dialog.ShowOpenFilePickerAsync(Strings.Import_Project,
-            [new(Strings.Exported_Project) { Patterns = ["*.slzip"] }]))?.TryGetLocalPath();
+        string slzipPath = (await dialog.ShowOpenFilePickerAsync(Strings.MenuImportProjectLabel,
+            [new(Strings.FiletypeExportedProject) { Patterns = ["*.slzip"] }]))?.TryGetLocalPath();
         if (!string.IsNullOrEmpty(slzipPath))
         {
             SlzipPath = slzipPath;
@@ -76,13 +76,13 @@ public class ImportProjectDialogViewModel : ViewModelBase
         using FileStream slzipFs = File.OpenRead(SlzipPath);
         using ZipArchive slzip = new(slzipFs);
         _expectedRomHash = slzip.Comment;
-        RomHashString = string.Format(Strings.Expected_ROM_SHA_1_Hash___0_, _expectedRomHash);
+        RomHashString = string.Format(Strings.ExpectedRomHashLabel, _expectedRomHash);
     }
 
     private async Task OpenRom(ImportProjectDialog dialog)
     {
-        string rom = (await dialog.ShowOpenFilePickerAsync(Strings.Import_Project,
-            [new(Strings.NDS_ROM) { Patterns = ["*.nds"] }])).TryGetLocalPath();
+        string rom = (await dialog.ShowOpenFilePickerAsync(Strings.MenuImportProjectLabel,
+            [new(Strings.FiletypeNdsRom) { Patterns = ["*.nds"] }])).TryGetLocalPath();
         if (!string.IsNullOrEmpty(rom))
         {
             _actualRomHash = string.Join("", SHA1.HashData(File.ReadAllBytes(rom)).Select(b => $"{b:X2}"));
@@ -100,8 +100,8 @@ public class ImportProjectDialogViewModel : ViewModelBase
 
         if (!_expectedRomHash.Equals(_actualRomHash))
         {
-            await dialog.ShowMessageBoxAsync(Strings.ROM_Hash_Mismatch,
-                Strings.The_selected_ROM_s_hash_does_not_match_the_expected_ROM_hash__Please_ensure_you_are_using_the_correct_base_ROM__n_nIf_you_wish_to_ignore_this__please_check_the___Ignore_Hash___checkbox_,
+            await dialog.ShowMessageBoxAsync(Strings.ImportProjectRomHashMismatch,
+                Strings.ProjectImportSelectedRomHashWarning,
                 ButtonEnum.Ok, Icon.Warning, _log);
             return;
         }

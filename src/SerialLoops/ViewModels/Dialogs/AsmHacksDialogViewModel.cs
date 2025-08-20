@@ -69,7 +69,7 @@ public class AsmHacksDialogViewModel : ViewModelBase
             }
             catch (Exception ex)
             {
-                _log.LogException(string.Format(Strings.Failed_to_add_parameters_for_hack_file__0__in_hack__1_, file.File, SelectedHack.Name), ex);
+                _log.LogException(string.Format(Strings.ErrorFailedAddingParametersToHack, file.File, SelectedHack.Name), ex);
             }
         }
     }
@@ -104,13 +104,13 @@ public class AsmHacksDialogViewModel : ViewModelBase
                 parametersLayout.Children.Add(paramDescPanel);
             }
         }
-        HeaderedContentControl parametersBox = new() { Header = Strings.Parameters, Content = parametersLayout };
+        HeaderedContentControl parametersBox = new() { Header = Strings.AsmHackParametersLabel, Content = parametersLayout };
         descriptionPanel.Children.Add(parametersBox);
     }
 
     private async Task ImportHackCommand_Executed(AsmHacksDialog dialog)
     {
-        IStorageFile file = await dialog.ShowOpenFilePickerAsync(Strings.Import_a_Hack, [new(Strings.Serial_Loops_ASM_Hack) { Patterns = ["*.slhack"] }]);
+        IStorageFile file = await dialog.ShowOpenFilePickerAsync(Strings.AsmHackImportLabel, [new(Strings.FiletypeAsmHack) { Patterns = ["*.slhack"] }]);
         string path = file?.TryGetLocalPath();
         if (!string.IsNullOrEmpty(path))
         {
@@ -124,7 +124,7 @@ public class AsmHacksDialogViewModel : ViewModelBase
 
             if (Configuration.Hacks.Any(h => h.Files.Any(f => hack.Files.Contains(f))))
             {
-                _log.LogError(Strings.Error__duplicate_hack_detected__A_file_with_the_same_name_as_a_file_in_this_hack_has_already_been_imported_);
+                _log.LogError(Strings.ErrorDuplicateHack);
                 return;
             }
             else if (Configuration.Hacks.Contains(hack))
@@ -187,7 +187,7 @@ public class AsmHacksDialogViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            _log.LogException(string.Format(Strings.Failed_to_read_ARM9_from___0__, arm9Path), ex);
+            _log.LogException(string.Format(Strings.ErrorFailedReadingARM9, arm9Path), ex);
         }
 
         Overlay[] overlays = [];
@@ -213,14 +213,14 @@ public class AsmHacksDialogViewModel : ViewModelBase
                 }
                 catch (Exception ex)
                 {
-                    _log.LogException(Strings.Failed_to_insert_ARM9_assembly_hacks, ex);
+                    _log.LogException(Strings.ErrorFailedInsertingHacks, ex);
                 }
             }, () => { });
             await new ProgressDialog { DataContext = tracker }.ShowDialog(dialog);
         }
         catch (Exception ex)
         {
-            _log.LogException(Strings.Failed_to_insert_ARM9_assembly_hacks, ex);
+            _log.LogException(Strings.ErrorFailedInsertingHacks, ex);
         }
 
         try
@@ -229,7 +229,7 @@ public class AsmHacksDialogViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            _log.LogException("Failed to write ARM9 to disk", ex);
+            _log.LogException(_project.Localize("ErrorFailedWritingArm9"), ex);
         }
 
         // Save the modified overlays
@@ -244,7 +244,7 @@ public class AsmHacksDialogViewModel : ViewModelBase
             }
             catch (Exception ex)
             {
-                _log.LogException(string.Format(Strings.Failed_saving_overlay__0__to_disk, overlay.Name), ex);
+                _log.LogException(string.Format(Strings.ErrorFailedSavingOverlay, overlay.Name), ex);
             }
         }
         // For the other overlays, we're going copy in their original forms since we might have reverted hacks on them
@@ -265,7 +265,7 @@ public class AsmHacksDialogViewModel : ViewModelBase
         string[] failedHackNames = appliedHacks.Where(h => !h.Applied(_project)).Select(h => h.Name).ToArray();
         if (failedHackNames.Length > 0)
         {
-            _log.LogError(string.Format(Strings.Failed_to_apply_the_following_hacks_to_the_ROM__n_0__n_nPlease_check_the_log_file_for_more_information__n_nIn_order_to_preserve_state__no_hacks_were_applied_, string.Join(", ", failedHackNames)));
+            _log.LogError(string.Format(Strings.ErrorFailedToApplyHacks, string.Join(", ", failedHackNames)));
             foreach (AsmHack hack in appliedHacks)
             {
                 hack.Revert(_project, _log);
@@ -286,12 +286,12 @@ public class AsmHacksDialogViewModel : ViewModelBase
         {
             if (appliedHacks.Count != 0)
             {
-                await dialog.ShowMessageBoxAsync(Strings.Successfully_applied_hacks_, string.Format(Strings.Successfully_applied_the_following_hacks__n_0_, string.Join(", ", appliedHacks.Select(h => h.Name))),
+                await dialog.ShowMessageBoxAsync(Strings.AsmHacksSuccessMessageBoxTitle, string.Format(Strings.AsmHacksSuccessMessage, string.Join(", ", appliedHacks.Select(h => h.Name))),
                     ButtonEnum.Ok, Icon.Info, _log);
             }
             else
             {
-                await dialog.ShowMessageBoxAsync(Strings.Success_, Strings.No_hacks_applied_, ButtonEnum.Ok, Icon.Info, _log);
+                await dialog.ShowMessageBoxAsync(Strings.MessageBoxTitleSuccessGeneric, Strings.AsmHackNoneApplied, ButtonEnum.Ok, Icon.Info, _log);
             }
         }
 

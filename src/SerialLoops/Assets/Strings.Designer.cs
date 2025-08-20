@@ -58,218 +58,56 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to %.
-        /// </summary>
-        public static string _ {
-            get {
-                return ResourceManager.GetString("%", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0} ({1}) Seen (F{2:D2}).
-        /// </summary>
-        public static string _0____1___Seen__F_2_D2__ {
-            get {
-                return ResourceManager.GetString("{0} ({1}) Seen (F{2:D2})", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0} - Adjust Volume.
-        /// </summary>
-        public static string _0____Adjust_Volume {
-            get {
-                return ResourceManager.GetString("{0} - Adjust Volume", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0} - Manage Loop.
-        /// </summary>
-        public static string _0____Manage_Loop {
-            get {
-                return ResourceManager.GetString("{0} - Manage Loop", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0} Obtained (F{1:D2}).
-        /// </summary>
-        public static string _0__Obtained__F_1_D2__ {
-            get {
-                return ResourceManager.GetString("{0} Obtained (F{1:D2})", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0} results.
-        /// </summary>
-        public static string _0__results {
-            get {
-                return ResourceManager.GetString("{0} results", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0} results found.
-        /// </summary>
-        public static string _0__results_found {
-            get {
-                return ResourceManager.GetString("{0} results found", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0} Watched in Extras (F{1:D2}).
-        /// </summary>
-        public static string _0__Watched_in_Extras__F_1_D2__ {
-            get {
-                return ResourceManager.GetString("{0} Watched in Extras (F{1:D2})", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 100%&apos;d game message box.
-        /// </summary>
-        public static string _100__d_game_message_box {
-            get {
-                return ResourceManager.GetString("100%\'d game message box", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to _Build.
-        /// </summary>
-        public static string _Build {
-            get {
-                return ResourceManager.GetString("_Build", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to _Check for Updates….
-        /// </summary>
-        public static string _Check_for_Updates___ {
-            get {
-                return ResourceManager.GetString("_Check for Updates...", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to _Edit.
-        /// </summary>
-        public static string _Edit {
-            get {
-                return ResourceManager.GetString("_Edit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &quot;Failed to open log file directly. Logs can be found at {0}&quot;.
-        /// </summary>
-        public static string _Failed_to_open_log_file_directly__Logs_can_be_found_at__0__ {
-            get {
-                return ResourceManager.GetString("\"Failed to open log file directly. Logs can be found at {0}\"", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to _File.
-        /// </summary>
-        public static string _File {
-            get {
-                return ResourceManager.GetString("_File", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to _Help.
-        /// </summary>
-        public static string _Help {
-            get {
-                return ResourceManager.GetString("_Help", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &quot;Kinetic&quot; Background.
-        /// </summary>
-        public static string _Kinetic__Background {
-            get {
-                return ResourceManager.GetString("\"Kinetic\" Background", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to  (Missing).
-        /// </summary>
-        public static string _Missing_ {
-            get {
-                return ResourceManager.GetString("(Missing)", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to _Preferences….
-        /// </summary>
-        public static string _Preferences___ {
-            get {
-                return ResourceManager.GetString("_Preferences...", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to _Project.
-        /// </summary>
-        public static string _Project {
-            get {
-                return ResourceManager.GetString("_Project", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to _Tools.
-        /// </summary>
-        public static string _Tools {
-            get {
-                return ResourceManager.GetString("_Tools", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to A new update for Serial Loops is available!.
-        /// </summary>
-        public static string A_new_update_for_Serial_Loops_is_available_ {
-            get {
-                return ResourceManager.GetString("A new update for Serial Loops is available!", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to About.
-        /// </summary>
-        public static string About {
-            get {
-                return ResourceManager.GetString("About", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to About….
         /// </summary>
-        public static string About___ {
+        public static string AboutDetails {
             get {
-                return ResourceManager.GetString("About...", resourceCulture);
+                return ResourceManager.GetString("AboutDetails", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to About Serial Loops.
+        ///   Looks up a localized string similar to Credits.
         /// </summary>
-        public static string About_Serial_Loops {
+        public static string AboutDialogCredits {
             get {
-                return ResourceManager.GetString("About Serial Loops", resourceCulture);
+                return ResourceManager.GetString("AboutDialogCredits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Systems architect &amp; reverse engineering work.
+        /// </summary>
+        public static string AboutDialogCreditsJonkoRole {
+            get {
+                return ResourceManager.GetString("AboutDialogCreditsJonkoRole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UX architect &amp; design work.
+        /// </summary>
+        public static string AboutDialogCreditsWillRole {
+            get {
+                return ResourceManager.GetString("AboutDialogCreditsWillRole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Development.
+        /// </summary>
+        public static string AboutDialogDevelopmentHeader {
+            get {
+                return ResourceManager.GetString("AboutDialogDevelopmentHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Translation.
+        /// </summary>
+        public static string AboutDialogTranslationCredits {
+            get {
+                return ResourceManager.GetString("AboutDialogTranslationCredits", resourceCulture);
             }
         }
         
@@ -283,209 +121,38 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Above Bottom.
+        ///   Looks up a localized string similar to About.
         /// </summary>
-        public static string Above_Bottom {
+        public static string AboutMenuTitle {
             get {
-                return ResourceManager.GetString("Above Bottom", resourceCulture);
+                return ResourceManager.GetString("AboutMenuTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Accessing save data prompt message box.
+        ///   Looks up a localized string similar to About Serial Loops.
         /// </summary>
-        public static string Accessing_save_data_prompt_message_box {
+        public static string AboutSerialLoops {
             get {
-                return ResourceManager.GetString("Accessing save data prompt message box", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Accompanying Character.
-        /// </summary>
-        public static string Accompanying_Character {
-            get {
-                return ResourceManager.GetString("Accompanying Character", resourceCulture);
+                return ResourceManager.GetString("AboutSerialLoops", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Add.
         /// </summary>
-        public static string Add {
+        public static string AddAmountLabel {
             get {
-                return ResourceManager.GetString("Add", resourceCulture);
+                return ResourceManager.GetString("AddAmountLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add Chibi.
+        ///   Looks up a localized string similar to Add.
         /// </summary>
-        public static string Add_Chibi {
+        public static string AddItemLabel {
             get {
-                return ResourceManager.GetString("Add Chibi", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add Command.
-        /// </summary>
-        public static string Add_Command {
-            get {
-                return ResourceManager.GetString("Add Command", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add Frames.
-        /// </summary>
-        public static string Add_Frames {
-            get {
-                return ResourceManager.GetString("Add Frames", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add Interactable Object.
-        /// </summary>
-        public static string Add_Interactable_Object {
-            get {
-                return ResourceManager.GetString("Add Interactable Object", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add Interactable Objects.
-        /// </summary>
-        public static string Add_Interactable_Objects {
-            get {
-                return ResourceManager.GetString("Add Interactable Objects", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add Map Characters.
-        /// </summary>
-        public static string Add_Map_Characters {
-            get {
-                return ResourceManager.GetString("Add Map Characters", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add Read Flag.
-        /// </summary>
-        public static string Add_Read_Flag {
-            get {
-                return ResourceManager.GetString("Add Read Flag", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add Section.
-        /// </summary>
-        public static string Add_Section {
-            get {
-                return ResourceManager.GetString("Add Section", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add Starting Chibis.
-        /// </summary>
-        public static string Add_Starting_Chibis {
-            get {
-                return ResourceManager.GetString("Add Starting Chibis", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add to Event Table.
-        /// </summary>
-        public static string Add_to_Event_Table {
-            get {
-                return ResourceManager.GetString("Add to Event Table", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add Choice.
-        /// </summary>
-        public static string AddChoice {
-            get {
-                return ResourceManager.GetString("AddChoice", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Adding frames to GIF….
-        /// </summary>
-        public static string Adding_frames_to_GIF___ {
-            get {
-                return ResourceManager.GetString("Adding frames to GIF...", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Adjust Volume.
-        /// </summary>
-        public static string Adjust_Volume {
-            get {
-                return ResourceManager.GetString("Adjust Volume", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Adjusting Loop Info.
-        /// </summary>
-        public static string Adjusting_Loop_Info {
-            get {
-                return ResourceManager.GetString("Adjusting Loop Info", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Adjusting Volume.
-        /// </summary>
-        public static string Adjusting_Volume {
-            get {
-                return ResourceManager.GetString("Adjusting Volume", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to All data erased message box.
-        /// </summary>
-        public static string All_data_erased_message_box {
-            get {
-                return ResourceManager.GetString("All data erased message box", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to All data will be erased prompt message box.
-        /// </summary>
-        public static string All_data_will_be_erased_prompt_message_box {
-            get {
-                return ResourceManager.GetString("All data will be erased prompt message box", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Toggle All Off.
-        /// </summary>
-        public static string All_Off {
-            get {
-                return ResourceManager.GetString("All Off", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Toggle All On.
-        /// </summary>
-        public static string All_On {
-            get {
-                return ResourceManager.GetString("All On", resourceCulture);
+                return ResourceManager.GetString("AddItemLabel", resourceCulture);
             }
         }
         
@@ -499,29 +166,65 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Animation.
+        ///   Looks up a localized string similar to GIF exported!.
         /// </summary>
-        public static string Animation {
+        public static string AnimationExportedGifSuccessMessage {
             get {
-                return ResourceManager.GetString("Animation", resourceCulture);
+                return ResourceManager.GetString("AnimationExportedGifSuccessMessage", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Animation Export Option.
+        ///   Looks up a localized string similar to Export Frames.
         /// </summary>
-        public static string Animation_Export_Option {
+        public static string AnimationExportFramesButton {
             get {
-                return ResourceManager.GetString("Animation Export Option", resourceCulture);
+                return ResourceManager.GetString("AnimationExportFramesButton", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Any.
+        ///   Looks up a localized string similar to Export GIF.
         /// </summary>
-        public static string Any_Character {
+        public static string AnimationExportGifButton {
             get {
-                return ResourceManager.GetString("Any Character", resourceCulture);
+                return ResourceManager.GetString("AnimationExportGifButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exporting GIF….
+        /// </summary>
+        public static string AnimationExportingGifProgressMessage {
+            get {
+                return ResourceManager.GetString("AnimationExportingGifProgressMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Saving GIF….
+        /// </summary>
+        public static string AnimationGifSavingProgressMessage {
+            get {
+                return ResourceManager.GetString("AnimationGifSavingProgressMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace Frames.
+        /// </summary>
+        public static string AnimationReplaceFrames {
+            get {
+                return ResourceManager.GetString("AnimationReplaceFrames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select frames.
+        /// </summary>
+        public static string AnimationSelectFramesReplacementDialogTitle {
+            get {
+                return ResourceManager.GetString("AnimationSelectFramesReplacementDialogTitle", resourceCulture);
             }
         }
         
@@ -531,33 +234,6 @@ namespace SerialLoops.Assets {
         public static string Apply {
             get {
                 return ResourceManager.GetString("Apply", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Apply Assembly Hacks.
-        /// </summary>
-        public static string Apply_Assembly_Hack {
-            get {
-                return ResourceManager.GetString("Apply Assembly Hack", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Apply Hacks….
-        /// </summary>
-        public static string Apply_Hacks___ {
-            get {
-                return ResourceManager.GetString("Apply Hacks...", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Apply Template.
-        /// </summary>
-        public static string Apply_Template {
-            get {
-                return ResourceManager.GetString("Apply Template", resourceCulture);
             }
         }
         
@@ -580,48 +256,92 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to clear the script?
-        ///This action is irreversible..
+        ///   Looks up a localized string similar to Hack Created Successfully!.
         /// </summary>
-        public static string Are_you_sure_you_want_to_clear_the_script__nThis_action_is_irreversible_ {
+        public static string AsmHackCreatedSuccessfullyTitle {
             get {
-                return ResourceManager.GetString("Are you sure you want to clear the script?\\nThis action is irreversible.", resourceCulture);
+                return ResourceManager.GetString("AsmHackCreatedSuccessfullyTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to delete the map characters section?.
+        ///   Looks up a localized string similar to The hack file has been successfully created. To import it, open the ASM hacks dialog and select &quot;Import Hack&quot;..
         /// </summary>
-        public static string Are_you_sure_you_want_to_delete_the_map_characters_section_ {
+        public static string AsmHackCreationSuccessMessage {
             get {
-                return ResourceManager.GetString("Are you sure you want to delete the map characters section?", resourceCulture);
+                return ResourceManager.GetString("AsmHackCreationSuccessMessage", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Asahina companion selected description.
+        ///   Looks up a localized string similar to Hack Description.
         /// </summary>
-        public static string Asahina_companion_selected_description {
+        public static string AsmHackDescription {
             get {
-                return ResourceManager.GetString("Asahina companion selected description", resourceCulture);
+                return ResourceManager.GetString("AsmHackDescription", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Asahina Present.
+        ///   Looks up a localized string similar to Export Hack.
         /// </summary>
-        public static string Asahina_Present {
+        public static string AsmHackExportDialogTitle {
             get {
-                return ResourceManager.GetString("Asahina Present", resourceCulture);
+                return ResourceManager.GetString("AsmHackExportDialogTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Asahina puzzle phase selected description.
+        ///   Looks up a localized string similar to Import Hack.
         /// </summary>
-        public static string Asahina_puzzle_phase_selected_description {
+        public static string AsmHackImportButton {
             get {
-                return ResourceManager.GetString("Asahina puzzle phase selected description", resourceCulture);
+                return ResourceManager.GetString("AsmHackImportButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import a Hack.
+        /// </summary>
+        public static string AsmHackImportLabel {
+            get {
+                return ResourceManager.GetString("AsmHackImportLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No hacks applied!.
+        /// </summary>
+        public static string AsmHackNoneApplied {
+            get {
+                return ResourceManager.GetString("AsmHackNoneApplied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parameter Name.
+        /// </summary>
+        public static string AsmHackParameterName {
+            get {
+                return ResourceManager.GetString("AsmHackParameterName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parameters.
+        /// </summary>
+        public static string AsmHackParametersLabel {
+            get {
+                return ResourceManager.GetString("AsmHackParametersLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parameter Value.
+        /// </summary>
+        public static string AsmHackParameterValue {
+            get {
+                return ResourceManager.GetString("AsmHackParameterValue", resourceCulture);
             }
         }
         
@@ -635,47 +355,57 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Associated Main Topics.
+        ///   Looks up a localized string similar to Select Hack Files.
         /// </summary>
-        public static string Associated_Main_Topics {
+        public static string AsmHackSelectFiles {
             get {
-                return ResourceManager.GetString("Associated Main Topics", resourceCulture);
+                return ResourceManager.GetString("AsmHackSelectFiles", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Associated Script.
+        ///   Looks up a localized string similar to Successfully applied the following hacks:
+        ///{0}.
         /// </summary>
-        public static string Associated_Script {
+        public static string AsmHacksSuccessMessage {
             get {
-                return ResourceManager.GetString("Associated Script", resourceCulture);
+                return ResourceManager.GetString("AsmHacksSuccessMessage", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Auto Re-Open Last Project.
+        ///   Looks up a localized string similar to Successfully applied hacks!.
         /// </summary>
-        public static string Auto_Re_Open_Last_Project {
+        public static string AsmHacksSuccessMessageBoxTitle {
             get {
-                return ResourceManager.GetString("Auto Re-Open Last Project", resourceCulture);
+                return ResourceManager.GetString("AsmHacksSuccessMessageBoxTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Background.
+        ///   Looks up a localized string similar to Symbols.
         /// </summary>
-        public static string Background {
+        public static string AsmHackSymbolsLabel {
             get {
-                return ResourceManager.GetString("Background", resourceCulture);
+                return ResourceManager.GetString("AsmHackSymbolsLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Background (CG).
+        ///   Looks up a localized string similar to Apply Hacks....
         /// </summary>
-        public static string Background__CG_ {
+        public static string AssemblyHacksApplyDetails {
             get {
-                return ResourceManager.GetString("Background (CG)", resourceCulture);
+                return ResourceManager.GetString("AssemblyHacksApplyDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apply Assembly Hacks.
+        /// </summary>
+        public static string AssemblyHacksApplyLabel {
+            get {
+                return ResourceManager.GetString("AssemblyHacksApplyLabel", resourceCulture);
             }
         }
         
@@ -689,20 +419,29 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Background music volume options ticker tape.
-        /// </summary>
-        public static string Background_music_volume_options_ticker_tape {
-            get {
-                return ResourceManager.GetString("Background music volume options ticker tape", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Background Type.
         /// </summary>
         public static string Background_Type {
             get {
                 return ResourceManager.GetString("Background_Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Setting CG single image….
+        /// </summary>
+        public static string BackgroundEditorCGSingleReplaceProgressMessage {
+            get {
+                return ResourceManager.GetString("BackgroundEditorCGSingleReplaceProgressMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export Background Image.
+        /// </summary>
+        public static string BackgroundEditorExportFileDialogTitle {
+            get {
+                return ResourceManager.GetString("BackgroundEditorExportFileDialogTitle", resourceCulture);
             }
         }
         
@@ -770,128 +509,83 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Backgrounds.
+        ///   Looks up a localized string similar to &quot;Kinetic&quot; Background.
         /// </summary>
-        public static string Backgrounds {
+        public static string BackgroundEditorKineticBackgroundLabel {
             get {
-                return ResourceManager.GetString("Backgrounds", resourceCulture);
+                return ResourceManager.GetString("BackgroundEditorKineticBackgroundLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bank.
+        ///   Looks up a localized string similar to Replace Background Image.
         /// </summary>
-        public static string Bank {
+        public static string BackgroundEditorReplaceBackgroundImage {
             get {
-                return ResourceManager.GetString("Bank", resourceCulture);
+                return ResourceManager.GetString("BackgroundEditorReplaceBackgroundImage", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Base Time.
+        ///   Looks up a localized string similar to Setting palettes and images….
         /// </summary>
-        public static string Base_Time {
+        public static string BackgroundEditorSettingPalettesAndImages {
             get {
-                return ResourceManager.GetString("Base Time", resourceCulture);
+                return ResourceManager.GetString("BackgroundEditorSettingPalettesAndImages", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Base Time Gain.
+        ///   Looks up a localized string similar to Setting screen image….
         /// </summary>
-        public static string Base_Time_Gain {
+        public static string BackgroundEditorSettingScreenImage {
             get {
-                return ResourceManager.GetString("Base Time Gain", resourceCulture);
+                return ResourceManager.GetString("BackgroundEditorSettingScreenImage", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Batch Dialogue Display.
+        ///   Looks up a localized string similar to Drawing top screen tiles….
         /// </summary>
-        public static string Batch_Dialogue_Display {
+        public static string BgEditorTopScreenProgressMessage {
             get {
-                return ResourceManager.GetString("Batch Dialogue Display", resourceCulture);
+                return ResourceManager.GetString("BgEditorTopScreenProgressMessage", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Batch Dialogue Display Off.
+        ///   Looks up a localized string similar to Unknown Extras Byte: {0}.
         /// </summary>
-        public static string Batch_Dialogue_Display_Off {
+        public static string BgEditorUnknownExtrasByte {
             get {
-                return ResourceManager.GetString("Batch Dialogue Display Off", resourceCulture);
+                return ResourceManager.GetString("BgEditorUnknownExtrasByte", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Batch Dialogue Display On.
+        ///   Looks up a localized string similar to Unknown Extras Short: {0}.
         /// </summary>
-        public static string Batch_Dialogue_Display_On {
+        public static string BgEditorUnknownExtrasShort {
             get {
-                return ResourceManager.GetString("Batch Dialogue Display On", resourceCulture);
+                return ResourceManager.GetString("BgEditorUnknownExtrasShort", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Batch Dialogue Display option.
+        ///   Looks up a localized string similar to Drawing bottom screen texture….
         /// </summary>
-        public static string Batch_Dialogue_Display_option {
+        public static string BgItemBottomScreenProgressMessage {
             get {
-                return ResourceManager.GetString("Batch Dialogue Display option", resourceCulture);
+                return ResourceManager.GetString("BgItemBottomScreenProgressMessage", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Batch Dialogue Display ticker tape.
+        ///   Looks up a localized string similar to Drawing textures….
         /// </summary>
-        public static string Batch_Dialogue_Display_ticker_tape {
+        public static string BgItemDrawingTexturesProgressMessage {
             get {
-                return ResourceManager.GetString("Batch Dialogue Display ticker tape", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Below Top.
-        /// </summary>
-        public static string Below_Top {
-            get {
-                return ResourceManager.GetString("Below Top", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to BG Junk Layer.
-        /// </summary>
-        public static string BG_Junk_Layer {
-            get {
-                return ResourceManager.GetString("BG Junk Layer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to BG Layer.
-        /// </summary>
-        public static string BG_Layer {
-            get {
-                return ResourceManager.GetString("BG Layer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to BG Object Layer.
-        /// </summary>
-        public static string BG_Object_Layer {
-            get {
-                return ResourceManager.GetString("BG Object Layer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to BG Occlusion Layer.
-        /// </summary>
-        public static string BG_Occlusion_Layer {
-            get {
-                return ResourceManager.GetString("BG Occlusion Layer", resourceCulture);
+                return ResourceManager.GetString("BgItemDrawingTexturesProgressMessage", resourceCulture);
             }
         }
         
@@ -914,6 +608,51 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} - Adjust Volume.
+        /// </summary>
+        public static string BgmEditorAdjustVolumeDialogTitle {
+            get {
+                return ResourceManager.GetString("BgmEditorAdjustVolumeDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adjust Volume.
+        /// </summary>
+        public static string BgmEditorAdjustVolumeLabel {
+            get {
+                return ResourceManager.GetString("BgmEditorAdjustVolumeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Caching BGM.
+        /// </summary>
+        public static string BgmEditorCachingBGMMessage {
+            get {
+                return ResourceManager.GetString("BgmEditorCachingBGMMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exporting BGM.
+        /// </summary>
+        public static string BgmEditorExportingProgressMessage {
+            get {
+                return ResourceManager.GetString("BgmEditorExportingProgressMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loop?.
+        /// </summary>
+        public static string BgmEditorLoopCheckboxLabel {
+            get {
+                return ResourceManager.GetString("BgmEditorLoopCheckboxLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The audio format used by Chokuretsu encodes loop information into audio file itself, denoting where the track should loop from and to. Click this button to edit this information..
         /// </summary>
         public static string BgmEditorLoopInfoHelp {
@@ -923,11 +662,128 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Adjusting Loop Info.
+        /// </summary>
+        public static string BgmEditorLoopInfoStatusMessage {
+            get {
+                return ResourceManager.GetString("BgmEditorLoopInfoStatusMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage Loop.
+        /// </summary>
+        public static string BgmEditorManageLoopButton {
+            get {
+                return ResourceManager.GetString("BgmEditorManageLoopButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} - Manage Loop.
+        /// </summary>
+        public static string BgmEditorManageLoopDialogTitle {
+            get {
+                return ResourceManager.GetString("BgmEditorManageLoopDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Normalize.
+        /// </summary>
+        public static string BgmEditorNormalizeButton {
+            get {
+                return ResourceManager.GetString("BgmEditorNormalizeButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace BGM.
+        /// </summary>
+        public static string BgmEditorReplaceBgmLabel {
+            get {
+                return ResourceManager.GetString("BgmEditorReplaceBgmLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace BGM track.
+        /// </summary>
+        public static string BgmEditorReplaceBgmTrack {
+            get {
+                return ResourceManager.GetString("BgmEditorReplaceBgmTrack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replacing BGM.
+        /// </summary>
+        public static string BgmEditorReplacingProgressMessage {
+            get {
+                return ResourceManager.GetString("BgmEditorReplacingProgressMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save BGM as WAV.
+        /// </summary>
+        public static string BgmEditorSaveBgmAsWavFileDialogTitle {
+            get {
+                return ResourceManager.GetString("BgmEditorSaveBgmAsWavFileDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set BGM loop info.
+        /// </summary>
+        public static string BgmEditorSetBgmLoopInfoTitle {
+            get {
+                return ResourceManager.GetString("BgmEditorSetBgmLoopInfoTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Click this button to adjust the volume of the track..
         /// </summary>
         public static string BgmEditorVolumeHelp {
             get {
                 return ResourceManager.GetString("BgmEditorVolumeHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adjusting Volume.
+        /// </summary>
+        public static string BgmEditorVolumeStatusMessage {
+            get {
+                return ResourceManager.GetString("BgmEditorVolumeStatusMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Caching.
+        /// </summary>
+        public static string BgmItemCachingMessage {
+            get {
+                return ResourceManager.GetString("BgmItemCachingMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Downsampling….
+        /// </summary>
+        public static string BgmItemDownsamplingProgressMessage {
+            get {
+                return ResourceManager.GetString("BgmItemDownsamplingProgressMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Encoding.
+        /// </summary>
+        public static string BgmItemEncodingProgressMessage {
+            get {
+                return ResourceManager.GetString("BgmItemEncodingProgressMessage", resourceCulture);
             }
         }
         
@@ -959,15 +815,6 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to BGMs.
-        /// </summary>
-        public static string BGMs {
-            get {
-                return ResourceManager.GetString("BGMs", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Click this to normalize the volume to match the default volume of all other tracks in the game. Recommended..
         /// </summary>
         public static string BgmVolumeNormalizeHelp {
@@ -977,74 +824,11 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Black.
+        ///   Looks up a localized string similar to Down.
         /// </summary>
-        public static string BLACK {
+        public static string BgScrollDown {
             get {
-                return ResourceManager.GetString("BLACK", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Blinds.
-        /// </summary>
-        public static string BLINDS {
-            get {
-                return ResourceManager.GetString("BLINDS", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Blinds (Alternative).
-        /// </summary>
-        public static string BLINDS2 {
-            get {
-                return ResourceManager.GetString("BLINDS2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Both.
-        /// </summary>
-        public static string Both {
-            get {
-                return ResourceManager.GetString("Both", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Both an exported project and a base ROM must be selected to import a project..
-        /// </summary>
-        public static string Both_an_exported_project_and_a_base_ROM_must_be_selected_to_import_a_project_ {
-            get {
-                return ResourceManager.GetString("Both an exported project and a base ROM must be selected to import a project.", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Both Screens.
-        /// </summary>
-        public static string Both_Screens {
-            get {
-                return ResourceManager.GetString("Both Screens", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Bottom.
-        /// </summary>
-        public static string Bottom {
-            get {
-                return ResourceManager.GetString("Bottom", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Bottom Screen.
-        /// </summary>
-        public static string Bottom_Screen {
-            get {
-                return ResourceManager.GetString("Bottom Screen", resourceCulture);
+                return ResourceManager.GetString("BgScrollDown", resourceCulture);
             }
         }
         
@@ -1096,135 +880,180 @@ namespace SerialLoops.Assets {
         /// <summary>
         ///   Looks up a localized string similar to Build &amp; Run.
         /// </summary>
-        public static string Build_and_Run {
+        public static string BuildAndRun {
             get {
-                return ResourceManager.GetString("Build and Run", resourceCulture);
+                return ResourceManager.GetString("BuildAndRun", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cleaning Iterative Directory.
+        /// </summary>
+        public static string BuildCleaningIterativeDirectory {
+            get {
+                return ResourceManager.GetString("BuildCleaningIterativeDirectory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copying Archives to Iterative Originals.
+        /// </summary>
+        public static string BuildCopyingArchivesMessage {
+            get {
+                return ResourceManager.GetString("BuildCopyingArchivesMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to While attempting to build, file #{0:X3} in archive {1} was found to be corrupt. Serial Loops can delete this file from your base directory automatically which may allow you to load the rest of the project, but any changes made to that file will be lost. Alternatively, you can attempt to edit the file manually to fix it. How would you like to proceed? Press OK to proceed with deleting the file and Cancel to attempt to deal with it manually..
+        /// </summary>
+        public static string BuildCorruptedFileDetectedPrompt {
+            get {
+                return ResourceManager.GetString("BuildCorruptedFileDetectedPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Compiled file {0} does not exist!.
+        /// </summary>
+        public static string BuildErrorCompiledFileNotExist {
+            get {
+                return ResourceManager.GetString("BuildErrorCompiledFileNotExist", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Build failed!.
         /// </summary>
-        public static string Build_failed_ {
+        public static string BuildFailed {
             get {
-                return ResourceManager.GetString("Build failed!", resourceCulture);
+                return ResourceManager.GetString("BuildFailed", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Build from Scratch.
         /// </summary>
-        public static string Build_from_Scratch {
+        public static string BuildFromScratch {
             get {
-                return ResourceManager.GetString("Build from Scratch", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Build Result.
-        /// </summary>
-        public static string Build_Result {
-            get {
-                return ResourceManager.GetString("Build Result", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Build succeeded!.
-        /// </summary>
-        public static string Build_succeeded_ {
-            get {
-                return ResourceManager.GetString("Build succeeded!", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Build Unbuilt Files?.
-        /// </summary>
-        public static string Build_Unbuilt_Files_ {
-            get {
-                return ResourceManager.GetString("Build Unbuilt Files?", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Building:.
-        /// </summary>
-        public static string Building_ {
-            get {
-                return ResourceManager.GetString("Building:", resourceCulture);
+                return ResourceManager.GetString("BuildFromScratch", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Building and Running.
         /// </summary>
-        public static string Building_and_Running {
+        public static string BuildingAndRunningMessage {
             get {
-                return ResourceManager.GetString("Building and Running", resourceCulture);
+                return ResourceManager.GetString("BuildingAndRunningMessage", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Building from Scratch.
         /// </summary>
-        public static string Building_from_Scratch {
+        public static string BuildingFromScratchMessage {
             get {
-                return ResourceManager.GetString("Building from Scratch", resourceCulture);
+                return ResourceManager.GetString("BuildingFromScratchMessage", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Building Iteratively.
         /// </summary>
-        public static string Building_Iteratively {
+        public static string BuildingIterativelyMessage {
             get {
-                return ResourceManager.GetString("Building Iteratively", resourceCulture);
+                return ResourceManager.GetString("BuildingIterativelyMessage", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Caching.
+        ///   Looks up a localized string similar to Building:.
         /// </summary>
-        public static string Caching {
+        public static string BuildingPrefix {
             get {
-                return ResourceManager.GetString("Caching", resourceCulture);
+                return ResourceManager.GetString("BuildingPrefix", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Caching BGM.
+        ///   Looks up a localized string similar to NitroPacker failed to pack ROM with exception.
         /// </summary>
-        public static string Caching_BGM {
+        public static string BuildNitroPackerFailedPacking {
             get {
-                return ResourceManager.GetString("Caching BGM", resourceCulture);
+                return ResourceManager.GetString("BuildNitroPackerFailedPacking", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Camera Trucking.
+        ///   Looks up a localized string similar to Packing ROM.
         /// </summary>
-        public static string Camera_Trucking {
+        public static string BuildPackingRomProgressMessage {
             get {
-                return ResourceManager.GetString("Camera Trucking", resourceCulture);
+                return ResourceManager.GetString("BuildPackingRomProgressMessage", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Can&apos;t Rename Item.
+        ///   Looks up a localized string similar to Replacing Files.
         /// </summary>
-        public static string Can_t_Rename_Item {
+        public static string BuildReplacingFilesProgressMessage {
             get {
-                return ResourceManager.GetString("Can\'t Rename Item", resourceCulture);
+                return ResourceManager.GetString("BuildReplacingFilesProgressMessage", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Can&apos;t rename this item directly -- open it to rename it!.
+        ///   Looks up a localized string similar to Build Result.
         /// </summary>
-        public static string Can_t_rename_this_item_directly____open_it_to_rename_it_ {
+        public static string BuildResult {
             get {
-                return ResourceManager.GetString("Can\'t rename this item directly -- open it to rename it!", resourceCulture);
+                return ResourceManager.GetString("BuildResult", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Build succeeded!.
+        /// </summary>
+        public static string BuildSucceeded {
+            get {
+                return ResourceManager.GetString("BuildSucceeded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unsure what to do with file &apos;{0}&apos;.
+        /// </summary>
+        public static string BuildUnsureWhatToDoWithFileMessage {
+            get {
+                return ResourceManager.GetString("BuildUnsureWhatToDoWithFileMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Writing Includes.
+        /// </summary>
+        public static string BuildWritingIncludesProgressMessage {
+            get {
+                return ResourceManager.GetString("BuildWritingIncludesProgressMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Writing NitroPacker Project File.
+        /// </summary>
+        public static string BuildWritingNPProjectFile {
+            get {
+                return ResourceManager.GetString("BuildWritingNPProjectFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Writing Replaced Archives.
+        /// </summary>
+        public static string BuildWritingReplacedArchivesProgressMessage {
+            get {
+                return ResourceManager.GetString("BuildWritingReplacedArchivesProgressMessage", resourceCulture);
             }
         }
         
@@ -1238,60 +1067,6 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cannot Delete Root Section!.
-        /// </summary>
-        public static string Cannot_Delete_Root_Section_ {
-            get {
-                return ResourceManager.GetString("Cannot Delete Root Section!", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Center.
-        /// </summary>
-        public static string Center {
-            get {
-                return ResourceManager.GetString("Center", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Character.
-        /// </summary>
-        public static string Character {
-            get {
-                return ResourceManager.GetString("Character", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Character Distribution.
-        /// </summary>
-        public static string Character_Distribution {
-            get {
-                return ResourceManager.GetString("Character Distribution", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Character distribution instructions.
-        /// </summary>
-        public static string Character_distribution_instructions {
-            get {
-                return ResourceManager.GetString("Character distribution instructions", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Character Power Statuses.
-        /// </summary>
-        public static string Character_Power_Statuses {
-            get {
-                return ResourceManager.GetString("Character Power Statuses", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Character Sprite.
         /// </summary>
         public static string Character_Sprite {
@@ -1301,38 +1076,56 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Character sprite frames exported!.
+        ///   Looks up a localized string similar to Has Outline?.
         /// </summary>
-        public static string Character_sprite_frames_exported_ {
+        public static string CharacterEditorHasOutlineLabel {
             get {
-                return ResourceManager.GetString("Character sprite frames exported!", resourceCulture);
+                return ResourceManager.GetString("CharacterEditorHasOutlineLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Character Sprites.
+        ///   Looks up a localized string similar to Outline Color.
         /// </summary>
-        public static string Character_Sprites {
+        public static string CharacterEditorNameOutlineColor {
             get {
-                return ResourceManager.GetString("Character_Sprites", resourceCulture);
+                return ResourceManager.GetString("CharacterEditorNameOutlineColor", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Character Topic.
+        ///   Looks up a localized string similar to Plate Color.
         /// </summary>
-        public static string Character_Topic {
+        public static string CharacterEditorNameplateColor {
             get {
-                return ResourceManager.GetString("Character Topic", resourceCulture);
+                return ResourceManager.GetString("CharacterEditorNameplateColor", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Character voice toggle options ticker tape.
+        ///   Looks up a localized string similar to Text Color.
         /// </summary>
-        public static string Character_voice_toggle_options_ticker_tape {
+        public static string CharacterEditorNameplateTextColor {
             get {
-                return ResourceManager.GetString("Character voice toggle options ticker tape", resourceCulture);
+                return ResourceManager.GetString("CharacterEditorNameplateTextColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to None.
+        /// </summary>
+        public static string CharacterEditorNoCharacter {
+            get {
+                return ResourceManager.GetString("CharacterEditorNoCharacter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text Timer.
+        /// </summary>
+        public static string CharacterEditorTextTimer {
+            get {
+                return ResourceManager.GetString("CharacterEditorTextTimer", resourceCulture);
             }
         }
         
@@ -1355,20 +1148,65 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Characters.
+        ///   Looks up a localized string similar to Voice Font.
         /// </summary>
-        public static string Characters {
+        public static string CharacterEditorVoiceFontLabel {
             get {
-                return ResourceManager.GetString("Characters", resourceCulture);
+                return ResourceManager.GetString("CharacterEditorVoiceFontLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Characters Involved.
+        ///   Looks up a localized string similar to Any.
         /// </summary>
-        public static string Characters_Involved {
+        public static string CharacterFilterAnyCharacter {
             get {
-                return ResourceManager.GetString("Characters Involved", resourceCulture);
+                return ResourceManager.GetString("CharacterFilterAnyCharacter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Character sprite frames exported!.
+        /// </summary>
+        public static string CharacterSpriteEditorFramesExportedMessage {
+            get {
+                return ResourceManager.GetString("CharacterSpriteEditorFramesExportedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Include lip flap animation?.
+        /// </summary>
+        public static string CharacterSpriteEditorIncludeLipFlapAnimationTitle {
+            get {
+                return ResourceManager.GetString("CharacterSpriteEditorIncludeLipFlapAnimationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is Large.
+        /// </summary>
+        public static string CharacterSpriteEditorIsLargeLabel {
+            get {
+                return ResourceManager.GetString("CharacterSpriteEditorIsLargeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace Sprite.
+        /// </summary>
+        public static string CharacterSpriteEditorReplaceSprite {
+            get {
+                return ResourceManager.GetString("CharacterSpriteEditorReplaceSprite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save character sprite GIF.
+        /// </summary>
+        public static string CharacterSpriteEditorSaveGifFileDialogTitle {
+            get {
+                return ResourceManager.GetString("CharacterSpriteEditorSaveGifFileDialogTitle", resourceCulture);
             }
         }
         
@@ -1378,6 +1216,15 @@ namespace SerialLoops.Assets {
         public static string CharacterSpriteEditorSelectBase {
             get {
                 return ResourceManager.GetString("CharacterSpriteEditorSelectBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select character sprite export folder.
+        /// </summary>
+        public static string CharacterSpriteEditorSelectExportFolder {
+            get {
+                return ResourceManager.GetString("CharacterSpriteEditorSelectExportFolder", resourceCulture);
             }
         }
         
@@ -1400,42 +1247,6 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Check for Updates.
-        /// </summary>
-        public static string Check_for_Updates {
-            get {
-                return ResourceManager.GetString("Check for Updates", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Check for Updates on Startup.
-        /// </summary>
-        public static string Check_for_Updates_on_Startup {
-            get {
-                return ResourceManager.GetString("Check for Updates on Startup", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Chess File.
-        /// </summary>
-        public static string Chess_File {
-            get {
-                return ResourceManager.GetString("Chess File", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Chess Mode Unlocked message box.
-        /// </summary>
-        public static string Chess_Mode_Unlocked_message_box {
-            get {
-                return ResourceManager.GetString("Chess Mode Unlocked message box", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Chess Puzzle.
         /// </summary>
         public static string Chess_Puzzle {
@@ -1445,11 +1256,11 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Chess Puzzles.
+        ///   Looks up a localized string similar to Number of Moves.
         /// </summary>
-        public static string Chess_Puzzles {
+        public static string ChessPuzzleEditorNumMoves {
             get {
-                return ResourceManager.GetString("Chess_Puzzles", resourceCulture);
+                return ResourceManager.GetString("ChessPuzzleEditorNumMoves", resourceCulture);
             }
         }
         
@@ -1472,6 +1283,15 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Time Limit.
+        /// </summary>
+        public static string ChessPuzzleEditorTimeLimitLabel {
+            get {
+                return ResourceManager.GetString("ChessPuzzleEditorTimeLimitLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chibi.
         /// </summary>
         public static string Chibi {
@@ -1481,11 +1301,11 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Chibi frames exported!.
+        ///   Looks up a localized string similar to Add Frames.
         /// </summary>
-        public static string Chibi_frames_exported_ {
+        public static string ChibiAndSpriteEditorAddFramesLabel {
             get {
-                return ResourceManager.GetString("Chibi frames exported!", resourceCulture);
+                return ResourceManager.GetString("ChibiAndSpriteEditorAddFramesLabel", resourceCulture);
             }
         }
         
@@ -1607,47 +1427,56 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Chibis.
+        ///   Looks up a localized string similar to Animation Export Option.
         /// </summary>
-        public static string Chibis {
+        public static string ChibiEditorAnimationExportOptionMessageBoxTitle {
             get {
-                return ResourceManager.GetString("Chibis", resourceCulture);
+                return ResourceManager.GetString("ChibiEditorAnimationExportOptionMessageBoxTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Chinese (Simplified).
+        ///   Looks up a localized string similar to Animation.
         /// </summary>
-        public static string Chinese__Simplified_ {
+        public static string ChibiEditorAnimationHeader {
             get {
-                return ResourceManager.GetString("Chinese (Simplified)", resourceCulture);
+                return ResourceManager.GetString("ChibiEditorAnimationHeader", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Choices.
+        ///   Looks up a localized string similar to Chibi frames exported!.
         /// </summary>
-        public static string Choices {
+        public static string ChibiEditorFramesExportedMessage {
             get {
-                return ResourceManager.GetString("Choices", resourceCulture);
+                return ResourceManager.GetString("ChibiEditorFramesExportedMessage", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Chokuretsu ROM.
+        ///   Looks up a localized string similar to Frames.
         /// </summary>
-        public static string Chokuretsu_ROM {
+        public static string ChibiEditorFramesLabel {
             get {
-                return ResourceManager.GetString("Chokuretsu ROM", resourceCulture);
+                return ResourceManager.GetString("ChibiEditorFramesLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Chokuretsu Save File.
+        ///   Looks up a localized string similar to Save chibi GIF.
         /// </summary>
-        public static string Chokuretsu_Save_File {
+        public static string ChibiEditorSaveGifFileDialogTitle {
             get {
-                return ResourceManager.GetString("Chokuretsu Save File", resourceCulture);
+                return ResourceManager.GetString("ChibiEditorSaveGifFileDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select chibi export folder.
+        /// </summary>
+        public static string ChibiEditorSelectExportFolder {
+            get {
+                return ResourceManager.GetString("ChibiEditorSelectExportFolder", resourceCulture);
             }
         }
         
@@ -1670,174 +1499,20 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cleaning Iterative Directory.
-        /// </summary>
-        public static string Cleaning_Iterative_Directory {
-            get {
-                return ResourceManager.GetString("Cleaning Iterative Directory", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Clear all commands from the game scenario?
-        ///This action is irreversible..
-        /// </summary>
-        public static string Clear_all_commands_from_the_game_scenario__nThis_action_is_irreversible_ {
-            get {
-                return ResourceManager.GetString("Clear all commands from the game scenario?\\nThis action is irreversible.", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Clear All Guides.
-        /// </summary>
-        public static string Clear_All_Guides {
-            get {
-                return ResourceManager.GetString("Clear All Guides", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Clear Move.
-        /// </summary>
-        public static string Clear_Move {
-            get {
-                return ResourceManager.GetString("Clear Move", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Clear Scenario.
-        /// </summary>
-        public static string Clear_Scenario {
-            get {
-                return ResourceManager.GetString("Clear Scenario", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Clear Script.
-        /// </summary>
-        public static string Clear_Script {
-            get {
-                return ResourceManager.GetString("Clear Script", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Clear Script?.
-        /// </summary>
-        public static string Clear_Script_ {
-            get {
-                return ResourceManager.GetString("Clear Script?", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Win Section.
-        /// </summary>
-        public static string Clear_Section {
-            get {
-                return ResourceManager.GetString("Clear Section", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Cleared all chess puzzles message box.
-        /// </summary>
-        public static string Cleared_all_chess_puzzles_message_box {
-            get {
-                return ResourceManager.GetString("Cleared all chess puzzles message box", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Close All.
-        /// </summary>
-        public static string Close_All {
-            get {
-                return ResourceManager.GetString("Close All", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Close All But This.
-        /// </summary>
-        public static string Close_All_But_This {
-            get {
-                return ResourceManager.GetString("Close All But This", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Close All To Right.
-        /// </summary>
-        public static string Close_All_To_Right {
-            get {
-                return ResourceManager.GetString("Close All To Right", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Close Project.
         /// </summary>
-        public static string Close_Project {
+        public static string CloseProjectLabel {
             get {
-                return ResourceManager.GetString("Close Project", resourceCulture);
+                return ResourceManager.GetString("CloseProjectLabel", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Close Save File.
         /// </summary>
-        public static string Close_Save_File {
+        public static string CloseSaveFileLabel {
             get {
-                return ResourceManager.GetString("Close Save File", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Collected all Haruhi topics message box.
-        /// </summary>
-        public static string Collected_all_Haruhi_topics_message_box {
-            get {
-                return ResourceManager.GetString("Collected all Haruhi topics message box", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Collected all Koizumi topics message box.
-        /// </summary>
-        public static string Collected_all_Koizumi_topics_message_box {
-            get {
-                return ResourceManager.GetString("Collected all Koizumi topics message box", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Collected all main topics message box.
-        /// </summary>
-        public static string Collected_all_main_topics_message_box {
-            get {
-                return ResourceManager.GetString("Collected all main topics message box", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Collected all Mikuru topics message box.
-        /// </summary>
-        public static string Collected_all_Mikuru_topics_message_box {
-            get {
-                return ResourceManager.GetString("Collected all Mikuru topics message box", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Collected all Nagato topics message box.
-        /// </summary>
-        public static string Collected_all_Nagato_topics_message_box {
-            get {
-                return ResourceManager.GetString("Collected all Nagato topics message box", resourceCulture);
+                return ResourceManager.GetString("CloseSaveFileLabel", resourceCulture);
             }
         }
         
@@ -1847,6 +1522,33 @@ namespace SerialLoops.Assets {
         public static string Color {
             get {
                 return ResourceManager.GetString("Color", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Black.
+        /// </summary>
+        public static string ColorMonoParamBlack {
+            get {
+                return ResourceManager.GetString("ColorMonoParamBlack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Custom Color.
+        /// </summary>
+        public static string ColorMonoParamCustom {
+            get {
+                return ResourceManager.GetString("ColorMonoParamCustom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to White.
+        /// </summary>
+        public static string ColorMonoParamWhite {
+            get {
+                return ResourceManager.GetString("ColorMonoParamWhite", resourceCulture);
             }
         }
         
@@ -1862,81 +1564,18 @@ namespace SerialLoops.Assets {
         /// <summary>
         ///   Looks up a localized string similar to Command Index: .
         /// </summary>
-        public static string Command_Index_ {
+        public static string CommandIndexLabel {
             get {
-                return ResourceManager.GetString("Command Index:", resourceCulture);
+                return ResourceManager.GetString("CommandIndexLabel", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Command Type:.
         /// </summary>
-        public static string Command_Type_ {
+        public static string CommandTypeLabel {
             get {
-                return ResourceManager.GetString("Command Type:", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Common Save Data.
-        /// </summary>
-        public static string Common_Save_Data {
-            get {
-                return ResourceManager.GetString("Common Save Data", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Common Save Data….
-        /// </summary>
-        public static string Common_Save_Data___ {
-            get {
-                return ResourceManager.GetString("Common Save Data...", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Companion Selection.
-        /// </summary>
-        public static string Companion_Selection {
-            get {
-                return ResourceManager.GetString("Companion Selection", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Companion selection description.
-        /// </summary>
-        public static string Companion_selection_description {
-            get {
-                return ResourceManager.GetString("Companion selection description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Compiled file {0} does not exist!.
-        /// </summary>
-        public static string Compiled_file__0__does_not_exist_ {
-            get {
-                return ResourceManager.GetString("Compiled file {0} does not exist!", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Conditional.
-        /// </summary>
-        public static string Conditional {
-            get {
-                return ResourceManager.GetString("Conditional", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Config Data.
-        /// </summary>
-        public static string Config_Data {
-            get {
-                return ResourceManager.GetString("Config Data", resourceCulture);
+                return ResourceManager.GetString("CommandTypeLabel", resourceCulture);
             }
         }
         
@@ -1968,74 +1607,11 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Continue on Failure.
-        /// </summary>
-        public static string Continue_on_Failure {
-            get {
-                return ResourceManager.GetString("Continue on Failure", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Converting frames….
-        /// </summary>
-        public static string Converting_frames___ {
-            get {
-                return ResourceManager.GetString("Converting frames...", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Converting from MP3….
-        /// </summary>
-        public static string Converting_from_MP3___ {
-            get {
-                return ResourceManager.GetString("Converting from MP3...", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Converting from Vorbis….
-        /// </summary>
-        public static string Converting_from_Vorbis___ {
-            get {
-                return ResourceManager.GetString("Converting from Vorbis...", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Copy.
         /// </summary>
         public static string Copy {
             get {
                 return ResourceManager.GetString("Copy", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Copying Archives to Iterative Originals.
-        /// </summary>
-        public static string Copying_Archives_to_Iterative_Originals {
-            get {
-                return ResourceManager.GetString("Copying Archives to Iterative Originals", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Copying Files.
-        /// </summary>
-        public static string Copying_Files {
-            get {
-                return ResourceManager.GetString("Copying Files", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Corrupted File Detected!.
-        /// </summary>
-        public static string Corrupted_File_Detected_ {
-            get {
-                return ResourceManager.GetString("Corrupted File Detected!", resourceCulture);
             }
         }
         
@@ -2049,114 +1625,6 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create.
-        /// </summary>
-        public static string Create {
-            get {
-                return ResourceManager.GetString("Create", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Create ASM Hack.
-        /// </summary>
-        public static string Create_ASM_Hack {
-            get {
-                return ResourceManager.GetString("Create ASM Hack", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Create New Project.
-        /// </summary>
-        public static string Create_New_Project {
-            get {
-                return ResourceManager.GetString("Create New Project", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Creating Directories.
-        /// </summary>
-        public static string Creating_Directories {
-            get {
-                return ResourceManager.GetString("Creating Directories", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Creating Patch.
-        /// </summary>
-        public static string Creating_Patch {
-            get {
-                return ResourceManager.GetString("Creating Patch", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Creating Project.
-        /// </summary>
-        public static string Creating_Project {
-            get {
-                return ResourceManager.GetString("Creating Project", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Credits.
-        /// </summary>
-        public static string Credits {
-            get {
-                return ResourceManager.GetString("Credits", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Crop &amp; Scale.
-        /// </summary>
-        public static string Crop___Scale {
-            get {
-                return ResourceManager.GetString("Crop & Scale", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Cross Space {0}.
-        /// </summary>
-        public static string Cross_Space__0_ {
-            get {
-                return ResourceManager.GetString("Cross Space {0}", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Crossfade Time (Frames).
-        /// </summary>
-        public static string Crossfade_Time__Frames_ {
-            get {
-                return ResourceManager.GetString("Crossfade Time (Frames)", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ctrl+Scroll - Scale Image.
-        /// </summary>
-        public static string Ctrl_Scroll___Scale_Image {
-            get {
-                return ResourceManager.GetString("Ctrl+Scroll - Scale Image", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Custom Color.
-        /// </summary>
-        public static string CUSTOM_COLOR {
-            get {
-                return ResourceManager.GetString("CUSTOM_COLOR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Cut.
         /// </summary>
         public static string Cut {
@@ -2166,56 +1634,20 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Data reset message box.
-        /// </summary>
-        public static string Data_reset_message_box {
-            get {
-                return ResourceManager.GetString("Data reset message box", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Segoe UI.
         /// </summary>
-        public static string Default_Font {
+        public static string DefaultFont {
             get {
-                return ResourceManager.GetString("Default Font", resourceCulture);
+                return ResourceManager.GetString("DefaultFont", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Default ({0}).
         /// </summary>
-        public static string Default_Font_Display {
+        public static string DefaultFontDisplay {
             get {
-                return ResourceManager.GetString("Default Font Display", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Default.
-        /// </summary>
-        public static string DEFAULT_PALETTE {
-            get {
-                return ResourceManager.GetString("DEFAULT_PALETTE", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Defaults.
-        /// </summary>
-        public static string Defaults {
-            get {
-                return ResourceManager.GetString("Defaults", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Delay (Frames).
-        /// </summary>
-        public static string Delay__Frames_ {
-            get {
-                return ResourceManager.GetString("Delay (Frames)", resourceCulture);
+                return ResourceManager.GetString("DefaultFontDisplay", resourceCulture);
             }
         }
         
@@ -2225,151 +1657,6 @@ namespace SerialLoops.Assets {
         public static string Delete {
             get {
                 return ResourceManager.GetString("Delete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Delete Map Characters?.
-        /// </summary>
-        public static string Delete_Map_Characters_ {
-            get {
-                return ResourceManager.GetString("Delete Map Characters?", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Deleting all data message box.
-        /// </summary>
-        public static string Deleting_all_data_message_box {
-            get {
-                return ResourceManager.GetString("Deleting all data message box", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Development.
-        /// </summary>
-        public static string Development {
-            get {
-                return ResourceManager.GetString("Development", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to devkitARM Docker Tag.
-        /// </summary>
-        public static string devkitARM_Docker_Tag {
-            get {
-                return ResourceManager.GetString("devkitARM Docker Tag", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to devkitARM is not detected at the default or specified install location. Please set devkitARM path..
-        /// </summary>
-        public static string devkitARM_is_not_detected_at_the_default_or_specified_install_location__Please_set_devkitARM_path_ {
-            get {
-                return ResourceManager.GetString("devkitARM is not detected at the default or specified install location. Please se" +
-                        "t devkitARM path.", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to DevkitARM must be supplied in order to build!.
-        /// </summary>
-        public static string DevkitARM_must_be_supplied_in_order_to_build_ {
-            get {
-                return ResourceManager.GetString("DevkitARM must be supplied in order to build!", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to devkitARM Path.
-        /// </summary>
-        public static string devkitARM_Path {
-            get {
-                return ResourceManager.GetString("devkitARM Path", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Diagonal Up Left.
-        /// </summary>
-        public static string DIAGONAL_LEFT_UP {
-            get {
-                return ResourceManager.GetString("DIAGONAL_LEFT_UP", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Diagonal Down Right.
-        /// </summary>
-        public static string DIAGONAL_RIGHT_DOWN {
-            get {
-                return ResourceManager.GetString("DIAGONAL_RIGHT_DOWN", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Dialogue.
-        /// </summary>
-        public static string Dialogue {
-            get {
-                return ResourceManager.GetString("Dialogue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Dialogue: .
-        /// </summary>
-        public static string Dialogue_ {
-            get {
-                return ResourceManager.GetString("Dialogue:", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Dialogue Skipping.
-        /// </summary>
-        public static string Dialogue_Skipping {
-            get {
-                return ResourceManager.GetString("Dialogue Skipping", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Dialogue Skipping Fast Forward.
-        /// </summary>
-        public static string Dialogue_Skipping_Fast_Forward {
-            get {
-                return ResourceManager.GetString("Dialogue Skipping Fast Forward", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Dialogue Skipping setting.
-        /// </summary>
-        public static string Dialogue_Skipping_setting {
-            get {
-                return ResourceManager.GetString("Dialogue Skipping setting", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Dialogue Skipping Skip Already Read.
-        /// </summary>
-        public static string Dialogue_Skipping_Skip_Already_Read {
-            get {
-                return ResourceManager.GetString("Dialogue Skipping Skip Already Read", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Dialogue Skipping ticker tape.
-        /// </summary>
-        public static string Dialogue_Skipping_ticker_tape {
-            get {
-                return ResourceManager.GetString("Dialogue Skipping ticker tape", resourceCulture);
             }
         }
         
@@ -2428,294 +1715,6 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dimmed.
-        /// </summary>
-        public static string DIMMED {
-            get {
-                return ResourceManager.GetString("DIMMED", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Disable Lip Flap.
-        /// </summary>
-        public static string Disable_Lip_Flap {
-            get {
-                return ResourceManager.GetString("Disable Lip Flap", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Display?.
-        /// </summary>
-        public static string Display_ {
-            get {
-                return ResourceManager.GetString("Display?", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Display Flag 1.
-        /// </summary>
-        public static string Display_Flag_1 {
-            get {
-                return ResourceManager.GetString("Display Flag 1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Display Flag 2.
-        /// </summary>
-        public static string Display_Flag_2 {
-            get {
-                return ResourceManager.GetString("Display Flag 2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Display Flag 3.
-        /// </summary>
-        public static string Display_Flag_3 {
-            get {
-                return ResourceManager.GetString("Display Flag 3", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Display Flag 4.
-        /// </summary>
-        public static string Display_Flag_4 {
-            get {
-                return ResourceManager.GetString("Display Flag 4", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Display Font.
-        /// </summary>
-        public static string Display_Font {
-            get {
-                return ResourceManager.GetString("Display Font", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Display from Bottom.
-        /// </summary>
-        public static string Display_from_Bottom {
-            get {
-                return ResourceManager.GetString("Display from Bottom", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Don&apos;t Clear Text.
-        /// </summary>
-        public static string Don_t_Clear_Text {
-            get {
-                return ResourceManager.GetString("Don\'t Clear Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Down.
-        /// </summary>
-        public static string DOWN {
-            get {
-                return ResourceManager.GetString("DOWN", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Download from GitHub.
-        /// </summary>
-        public static string Download_from_GitHub {
-            get {
-                return ResourceManager.GetString("Download from GitHub", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Download release from GitHub.
-        /// </summary>
-        public static string Download_release_from_GitHub {
-            get {
-                return ResourceManager.GetString("Download release from GitHub", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Downsampling….
-        /// </summary>
-        public static string Downsampling___ {
-            get {
-                return ResourceManager.GetString("Downsampling...", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Draw Boundary.
-        /// </summary>
-        public static string Draw_Boundary {
-            get {
-                return ResourceManager.GetString("Draw Boundary", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Draw Origin.
-        /// </summary>
-        public static string Draw_Origin {
-            get {
-                return ResourceManager.GetString("Draw Origin", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Draw Pathing Map.
-        /// </summary>
-        public static string Draw_Pathing_Map {
-            get {
-                return ResourceManager.GetString("Draw Pathing Map", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Draw Starting Point.
-        /// </summary>
-        public static string Draw_Starting_Point {
-            get {
-                return ResourceManager.GetString("Draw Starting Point", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Drawing bottom screen texture….
-        /// </summary>
-        public static string Drawing_bottom_screen_texture___ {
-            get {
-                return ResourceManager.GetString("Drawing bottom screen texture...", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Drawing textures….
-        /// </summary>
-        public static string Drawing_textures___ {
-            get {
-                return ResourceManager.GetString("Drawing textures...", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Drawing top screen tiles….
-        /// </summary>
-        public static string Drawing_top_screen_tiles___ {
-            get {
-                return ResourceManager.GetString("Drawing top screen tiles...", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Duplicate.
-        /// </summary>
-        public static string Duplicate {
-            get {
-                return ResourceManager.GetString("Duplicate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Duplicate Section Name.
-        /// </summary>
-        public static string Duplicate_Section_Name {
-            get {
-                return ResourceManager.GetString("Duplicate Section Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Duration (Frames).
-        /// </summary>
-        public static string Duration__Frames_ {
-            get {
-                return ResourceManager.GetString("Duration (Frames)", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Edit Save File.
-        /// </summary>
-        public static string Edit_Save_File {
-            get {
-                return ResourceManager.GetString("Edit Save File", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Edit Save File….
-        /// </summary>
-        public static string Edit_Save_File___ {
-            get {
-                return ResourceManager.GetString("Edit Save File...", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Edit Save File - {0} - {1}.
-        /// </summary>
-        public static string Edit_Save_File____0_____1_ {
-            get {
-                return ResourceManager.GetString("Edit Save File - {0} - {1}", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Edit Subtitle.
-        /// </summary>
-        public static string Edit_Subtitle {
-            get {
-                return ResourceManager.GetString("Edit Subtitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Edit Tutorial Mappings.
-        /// </summary>
-        public static string Edit_Tutorial_Mappings {
-            get {
-                return ResourceManager.GetString("Edit Tutorial Mappings", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Edit Tutorial Mappings….
-        /// </summary>
-        public static string Edit_Tutorial_Mappings___ {
-            get {
-                return ResourceManager.GetString("Edit Tutorial Mappings...", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Edit UI Text.
-        /// </summary>
-        public static string Edit_UI_Text {
-            get {
-                return ResourceManager.GetString("Edit UI Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Edit UI Text….
-        /// </summary>
-        public static string Edit_UI_Text___ {
-            get {
-                return ResourceManager.GetString("Edit UI Text...", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Edit Dialogue Colors.
         /// </summary>
         public static string EditDialogueColorsDialogTitle {
@@ -2725,38 +1724,74 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Editor Tabs not provided to project creation dialog.
+        ///   Looks up a localized string similar to Background (CG).
         /// </summary>
-        public static string Editor_Tabs_not_provided_to_project_creation_dialog {
+        public static string EditorBackgroundCGItemLabel {
             get {
-                return ResourceManager.GetString("Editor Tabs not provided to project creation dialog", resourceCulture);
+                return ResourceManager.GetString("EditorBackgroundCGItemLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Emote.
+        ///   Looks up a localized string similar to Background.
         /// </summary>
-        public static string Emote {
+        public static string EditorBackgroundItemLabel {
             get {
-                return ResourceManager.GetString("Emote", resourceCulture);
+                return ResourceManager.GetString("EditorBackgroundItemLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Emulator Flatpak.
+        ///   Looks up a localized string similar to Character.
         /// </summary>
-        public static string Emulator_Flatpak {
+        public static string EditorCharacterLabel {
             get {
-                return ResourceManager.GetString("Emulator Flatpak", resourceCulture);
+                return ResourceManager.GetString("EditorCharacterLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Emulator Path.
+        ///   Looks up a localized string similar to Converting frames….
         /// </summary>
-        public static string Emulator_Path {
+        public static string EditorConvertingFramesMessage {
             get {
-                return ResourceManager.GetString("Emulator Path", resourceCulture);
+                return ResourceManager.GetString("EditorConvertingFramesMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Flag: {0}.
+        /// </summary>
+        public static string EditorFlagIdLabel {
+            get {
+                return ResourceManager.GetString("EditorFlagIdLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Associated Script.
+        /// </summary>
+        public static string EditorItemAssociatedScriptLabel {
+            get {
+                return ResourceManager.GetString("EditorItemAssociatedScriptLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Tutorial Mappings.
+        /// </summary>
+        public static string EditTutorialMappingsTitle {
+            get {
+                return ResourceManager.GetString("EditTutorialMappingsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit UI Text.
+        /// </summary>
+        public static string EditUITextTitle {
+            get {
+                return ResourceManager.GetString("EditUITextTitle", resourceCulture);
             }
         }
         
@@ -2770,65 +1805,11 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Encoding.
-        /// </summary>
-        public static string Encoding {
-            get {
-                return ResourceManager.GetString("Encoding", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to End.
         /// </summary>
-        public static string End {
+        public static string EndPosition {
             get {
-                return ResourceManager.GetString("End", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to End Script Section.
-        /// </summary>
-        public static string End_Script_Section {
-            get {
-                return ResourceManager.GetString("End Script Section", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to English.
-        /// </summary>
-        public static string English {
-            get {
-                return ResourceManager.GetString("English", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Enter.
-        /// </summary>
-        public static string Enter {
-            get {
-                return ResourceManager.GetString("Enter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Enter/Exit.
-        /// </summary>
-        public static string Enter_Exit {
-            get {
-                return ResourceManager.GetString("Enter/Exit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Enter subtitle text….
-        /// </summary>
-        public static string Enter_subtitle_text___ {
-            get {
-                return ResourceManager.GetString("Enter subtitle text...", resourceCulture);
+                return ResourceManager.GetString("EndPosition", resourceCulture);
             }
         }
         
@@ -2842,47 +1823,11 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Episode: .
-        /// </summary>
-        public static string Episode_ {
-            get {
-                return ResourceManager.GetString("Episode:", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to EPISODE: {0}.
-        /// </summary>
-        public static string EPISODE___0_ {
-            get {
-                return ResourceManager.GetString("EPISODE: {0}", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Episode 1.
         /// </summary>
         public static string EPISODE_1 {
             get {
                 return ResourceManager.GetString("EPISODE_1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Episode 1 ticker tape.
-        /// </summary>
-        public static string Episode_1_ticker_tape {
-            get {
-                return ResourceManager.GetString("Episode 1 ticker tape", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Episode 1 title.
-        /// </summary>
-        public static string Episode_1_title {
-            get {
-                return ResourceManager.GetString("Episode 1 title", resourceCulture);
             }
         }
         
@@ -2896,47 +1841,11 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Episode 2 ticker tape.
-        /// </summary>
-        public static string Episode_2_ticker_tape {
-            get {
-                return ResourceManager.GetString("Episode 2 ticker tape", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Episode 2 title.
-        /// </summary>
-        public static string Episode_2_title {
-            get {
-                return ResourceManager.GetString("Episode 2 title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Episode 3.
         /// </summary>
         public static string EPISODE_3 {
             get {
                 return ResourceManager.GetString("EPISODE_3", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Episode 3 ticker tape.
-        /// </summary>
-        public static string Episode_3_ticker_tape {
-            get {
-                return ResourceManager.GetString("Episode 3 ticker tape", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Episode 3 title.
-        /// </summary>
-        public static string Episode_3_title {
-            get {
-                return ResourceManager.GetString("Episode 3 title", resourceCulture);
             }
         }
         
@@ -2950,65 +1859,11 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Episode 4 ticker tape.
-        /// </summary>
-        public static string Episode_4_ticker_tape {
-            get {
-                return ResourceManager.GetString("Episode 4 ticker tape", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Episode 4 title.
-        /// </summary>
-        public static string Episode_4_title {
-            get {
-                return ResourceManager.GetString("Episode 4 title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Episode 5.
         /// </summary>
         public static string EPISODE_5 {
             get {
                 return ResourceManager.GetString("EPISODE_5", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Episode 5 ticker tape.
-        /// </summary>
-        public static string Episode_5_ticker_tape {
-            get {
-                return ResourceManager.GetString("Episode 5 ticker tape", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Episode 5 title.
-        /// </summary>
-        public static string Episode_5_title {
-            get {
-                return ResourceManager.GetString("Episode 5 title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Episode Group.
-        /// </summary>
-        public static string Episode_Group {
-            get {
-                return ResourceManager.GetString("Episode Group", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Episode Header.
-        /// </summary>
-        public static string Episode_Header {
-            get {
-                return ResourceManager.GetString("Episode Header", resourceCulture);
             }
         }
         
@@ -3031,24 +1886,6 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Erase data options ticker tape.
-        /// </summary>
-        public static string Erase_data_options_ticker_tape {
-            get {
-                return ResourceManager.GetString("Erase data options ticker tape", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Erase data options title.
-        /// </summary>
-        public static string Erase_data_options_title {
-            get {
-                return ResourceManager.GetString("Erase data options title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         public static string Error {
@@ -3058,94 +1895,556 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ERROR: {0}.
+        ///   Looks up a localized string similar to One or more archives is null..
         /// </summary>
-        public static string ERROR___0_ {
+        public static string ErrorArchivesNull {
             get {
-                return ResourceManager.GetString("ERROR: {0}", resourceCulture);
+                return ResourceManager.GetString("ErrorArchivesNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to load BGM file: file not found..
+        /// </summary>
+        public static string ErrorBgmFileNotFound {
+            get {
+                return ResourceManager.GetString("ErrorBgmFileNotFound", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Error: duplicate hack detected! A file with the same name as a file in this hack has already been imported..
         /// </summary>
-        public static string Error__duplicate_hack_detected__A_file_with_the_same_name_as_a_file_in_this_hack_has_already_been_imported_ {
+        public static string ErrorDuplicateHack {
             get {
-                return ResourceManager.GetString("Error: duplicate hack detected! A file with the same name as a file in this hack " +
-                        "has already been imported.", resourceCulture);
+                return ResourceManager.GetString("ErrorDuplicateHack", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error: duplicate hack detected! A hack with the same name has already been imported..
+        ///   Looks up a localized string similar to Failed to export project.
         /// </summary>
-        public static string Error__duplicate_hack_detected__A_hack_with_the_same_name_has_already_been_imported_ {
+        public static string ErrorExportProjectFailed {
             get {
-                return ResourceManager.GetString("Error: duplicate hack detected! A hack with the same name has already been import" +
-                        "ed.", resourceCulture);
+                return ResourceManager.GetString("ErrorExportProjectFailed", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error getting script command tree for script {0} ({1}): {2} {3}.
+        ///   Looks up a localized string similar to Failed to add parameters for hack file {0} in hack {1}.
         /// </summary>
-        public static string Error_getting_script_command_tree_for_script__0____1__ {
+        public static string ErrorFailedAddingParametersToHack {
             get {
-                return ResourceManager.GetString("Error getting script command tree for script {0} ({1})", resourceCulture);
+                return ResourceManager.GetString("ErrorFailedAddingParametersToHack", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error getting script command tree for script {0} ({1}): {2} {3}.
+        ///   Looks up a localized string similar to Failed to calculate graph edges!.
         /// </summary>
-        public static string Error_getting_script_command_tree_for_script__0____1_____2___3_ {
+        public static string ErrorFailedCalculatingScriptGraph {
             get {
-                return ResourceManager.GetString("Error getting script command tree for script {0} ({1}): {2} {3}", resourceCulture);
+                return ResourceManager.GetString("ErrorFailedCalculatingScriptGraph", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error pruning labels!.
+        ///   Looks up a localized string similar to Failed to check for updates! (Endpoint: {0}).
         /// </summary>
-        public static string Error_pruning_labels_ {
+        public static string ErrorFailedCheckingForUpdates {
             get {
-                return ResourceManager.GetString("Error pruning labels!", resourceCulture);
+                return ResourceManager.GetString("ErrorFailedCheckingForUpdates", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error reading save file..
+        ///   Looks up a localized string similar to Failed to clean iterative directory.
         /// </summary>
-        public static string Error_reading_save_file_ {
+        public static string ErrorFailedCleanIterativeDir {
             get {
-                return ResourceManager.GetString("Error reading save file.", resourceCulture);
+                return ResourceManager.GetString("ErrorFailedCleanIterativeDir", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed converting audio file to WAV..
+        /// </summary>
+        public static string ErrorFailedConvertingAudioToWav {
+            get {
+                return ResourceManager.GetString("ErrorFailedConvertingAudioToWav", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to copy newly built archives to the iterative originals directory.
+        /// </summary>
+        public static string ErrorFailedCopyingArchivesToIterativeDir {
+            get {
+                return ResourceManager.GetString("ErrorFailedCopyingArchivesToIterativeDir", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed copying file &apos;{0}&apos; to base and iterative directories at path &apos;{1}&apos;.
+        /// </summary>
+        public static string ErrorFailedCopyingFile {
+            get {
+                return ResourceManager.GetString("ErrorFailedCopyingFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to create directory on specified path!.
+        /// </summary>
+        public static string ErrorFailedCreatingDir {
+            get {
+                return ResourceManager.GetString("ErrorFailedCreatingDir", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to create XDelta patch!.
+        /// </summary>
+        public static string ErrorFailedCreatingXdelta {
+            get {
+                return ResourceManager.GetString("ErrorFailedCreatingXdelta", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to delete file &apos;{0}&apos;.
+        /// </summary>
+        public static string ErrorFailedDeletingFile {
+            get {
+                return ResourceManager.GetString("ErrorFailedDeletingFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to delete files for hack &apos;{0}&apos; -- this hack is likely applied in the ROM base and can&apos;t be disabled..
+        /// </summary>
+        public static string ErrorFailedDeletingHackFiles {
+            get {
+                return ResourceManager.GetString("ErrorFailedDeletingHackFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to deserialize script template file &apos;{0}&apos;.
+        /// </summary>
+        public static string ErrorFailedDeserializingScriptTemplate {
+            get {
+                return ResourceManager.GetString("ErrorFailedDeserializingScriptTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed downsampling audio file..
+        /// </summary>
+        public static string ErrorFailedDownsamplingAudio {
+            get {
+                return ResourceManager.GetString("ErrorFailedDownsamplingAudio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed encoding audio file to ADX..
+        /// </summary>
+        public static string ErrorFailedEncodingAudioAdx {
+            get {
+                return ResourceManager.GetString("ErrorFailedEncodingAudioAdx", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to export background {0} to file {1}.
+        /// </summary>
+        public static string ErrorFailedExportingBackground {
+            get {
+                return ResourceManager.GetString("ErrorFailedExportingBackground", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to export chibi animation {0} for chibi {1} to file.
+        /// </summary>
+        public static string ErrorFailedExportingChibiAnimation {
+            get {
+                return ResourceManager.GetString("ErrorFailedExportingChibiAnimation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to export eye animation {0} for sprite {1} to file.
+        /// </summary>
+        public static string ErrorFailedExportingEyeAnimation {
+            get {
+                return ResourceManager.GetString("ErrorFailedExportingEyeAnimation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to export mouth animation {0} for sprite {1} to file.
+        /// </summary>
+        public static string ErrorFailedExportingMouthAnimation {
+            get {
+                return ResourceManager.GetString("ErrorFailedExportingMouthAnimation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to export layout for sprite {0} to file.
+        /// </summary>
+        public static string ErrorFailedExportingSpriteLayout {
+            get {
+                return ResourceManager.GetString("ErrorFailedExportingSpriteLayout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to export system texture {0} to file {1}.
+        /// </summary>
+        public static string ErrorFailedExportingSysTex {
+            get {
+                return ResourceManager.GetString("ErrorFailedExportingSysTex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to import project.
+        /// </summary>
+        public static string ErrorFailedImportingProject {
+            get {
+                return ResourceManager.GetString("ErrorFailedImportingProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to insert ARM9 assembly hacks.
+        /// </summary>
+        public static string ErrorFailedInsertingHacks {
+            get {
+                return ResourceManager.GetString("ErrorFailedInsertingHacks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to load cached data.
+        /// </summary>
+        public static string ErrorFailedLoadingCachedData {
+            get {
+                return ResourceManager.GetString("ErrorFailedLoadingCachedData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to load character progress voice for {0}..
+        /// </summary>
+        public static string ErrorFailedLoadingCharacterProgressVoice {
+            get {
+                return ResourceManager.GetString("ErrorFailedLoadingCharacterProgressVoice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to parse script parameter {0} of type {1} with parameter &apos;{2}&apos;!.
+        /// </summary>
+        public static string ErrorFailedParsingScriptParameter {
+            get {
+                return ResourceManager.GetString("ErrorFailedParsingScriptParameter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to read ARM9 from &apos;{0}&apos;.
+        /// </summary>
+        public static string ErrorFailedReadingARM9 {
+            get {
+                return ResourceManager.GetString("ErrorFailedReadingARM9", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to read BGM file; falling back to original….
+        /// </summary>
+        public static string ErrorFailedReadingBgmFile {
+            get {
+                return ResourceManager.GetString("ErrorFailedReadingBgmFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed replacing animation file {0} in grp.bin with file &apos;{1}&apos;.
+        /// </summary>
+        public static string ErrorFailedReplacingAnimationFile {
+            get {
+                return ResourceManager.GetString("ErrorFailedReplacingAnimationFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to replace background {0} with file {1}.
+        /// </summary>
+        public static string ErrorFailedReplacingBackground {
+            get {
+                return ResourceManager.GetString("ErrorFailedReplacingBackground", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed replacing source file {0} in dat.bin with file &apos;{1}&apos;.
+        /// </summary>
+        public static string ErrorFailedReplacingDatFile {
+            get {
+                return ResourceManager.GetString("ErrorFailedReplacingDatFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed replacing file {0} in evt.bin with file &apos;{1}&apos;.
+        /// </summary>
+        public static string ErrorFailedReplacingEvtFile {
+            get {
+                return ResourceManager.GetString("ErrorFailedReplacingEvtFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed replacing source file {0} in evt.bin with file &apos;{1}&apos;.
+        /// </summary>
+        public static string ErrorFailedReplacingEvtSourceFile {
+            get {
+                return ResourceManager.GetString("ErrorFailedReplacingEvtSourceFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed replacing graphics file {0} with file &apos;{1}&apos;.
+        /// </summary>
+        public static string ErrorFailedReplacingGraphicsFile {
+            get {
+                return ResourceManager.GetString("ErrorFailedReplacingGraphicsFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to replace item {0} with file {1}.
+        /// </summary>
+        public static string ErrorFailedReplacingItem {
+            get {
+                return ResourceManager.GetString("ErrorFailedReplacingItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to replace screen image: image too complex (generated more than 255 tiles); please use a simpler image.
+        /// </summary>
+        public static string ErrorFailedReplacingKbg {
+            get {
+                return ResourceManager.GetString("ErrorFailedReplacingKbg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to replace system texture {0} with file {1}.
+        /// </summary>
+        public static string ErrorFailedReplacingSysTex {
+            get {
+                return ResourceManager.GetString("ErrorFailedReplacingSysTex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed restoring BGM file..
+        /// </summary>
+        public static string ErrorFailedRestoringBgmFile {
+            get {
+                return ResourceManager.GetString("ErrorFailedRestoringBgmFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to save Chokuretsu save file!.
+        /// </summary>
+        public static string ErrorFailedSavingChokuSave {
+            get {
+                return ResourceManager.GetString("ErrorFailedSavingChokuSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed saving overlay {0} to disk.
+        /// </summary>
+        public static string ErrorFailedSavingOverlay {
+            get {
+                return ResourceManager.GetString("ErrorFailedSavingOverlay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to apply the following hacks to the ROM:
+        ///{0}
+        ///
+        ///Please check the log file for more information.
+        ///
+        ///In order to preserve state, no hacks were applied..
+        /// </summary>
+        public static string ErrorFailedToApplyHacks {
+            get {
+                return ResourceManager.GetString("ErrorFailedToApplyHacks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed attempting to cache audio file.
+        /// </summary>
+        public static string ErrorFailedToCacheAudioFile {
+            get {
+                return ResourceManager.GetString("ErrorFailedToCacheAudioFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to decode original file too, giving up!.
+        /// </summary>
+        public static string ErrorFailedToDecodeOriginalAdx {
+            get {
+                return ResourceManager.GetString("ErrorFailedToDecodeOriginalAdx", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to unpack ROM.
+        /// </summary>
+        public static string ErrorFailedUnpackingRom {
+            get {
+                return ResourceManager.GetString("ErrorFailedUnpackingRom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to update preview!.
+        /// </summary>
+        public static string ErrorFailedUpdatingPreview {
+            get {
+                return ResourceManager.GetString("ErrorFailedUpdatingPreview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to write ARM9 to disk.
+        /// </summary>
+        public static string ErrorFailedWritingArm9 {
+            get {
+                return ResourceManager.GetString("ErrorFailedWritingArm9", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to write include files to disk..
+        /// </summary>
+        public static string ErrorFailedWritingIncludeFiles {
+            get {
+                return ResourceManager.GetString("ErrorFailedWritingIncludeFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to write NitroPacker NDS project file to disk.
+        /// </summary>
+        public static string ErrorFailedWritingNPProjectFile {
+            get {
+                return ResourceManager.GetString("ErrorFailedWritingNPProjectFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid audio file selected..
+        /// </summary>
+        public static string ErrorInvalidAudioSelected {
+            get {
+                return ResourceManager.GetString("ErrorInvalidAudioSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to load BGM file: file invalid..
+        /// </summary>
+        public static string ErrorInvalidBgmFile {
+            get {
+                return ResourceManager.GetString("ErrorInvalidBgmFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid image file selected.
+        /// </summary>
+        public static string ErrorInvalidImageSelected {
+            get {
+                return ResourceManager.GetString("ErrorInvalidImageSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid item type!.
+        /// </summary>
+        public static string ErrorInvalidItemType {
+            get {
+                return ResourceManager.GetString("ErrorInvalidItemType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to load voice file: file invalid..
+        /// </summary>
+        public static string ErrorInvalidVoiceFile {
+            get {
+                return ResourceManager.GetString("ErrorInvalidVoiceFile", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Error while loading project.
         /// </summary>
-        public static string Error_while_loading_project {
+        public static string ErrorLoadingProject {
             get {
-                return ResourceManager.GetString("Error while loading project", resourceCulture);
+                return ResourceManager.GetString("ErrorLoadingProject", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Exception occurred while parsing config.json!.
         /// </summary>
-        public static string Exception_occurred_while_parsing_config_json_ {
+        public static string ErrorParsingConfigJson {
             get {
-                return ResourceManager.GetString("Exception occurred while parsing config.json!", resourceCulture);
+                return ResourceManager.GetString("ErrorParsingConfigJson", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Exception occurred while parsing projects_cache.json!.
+        ///   Looks up a localized string similar to Error getting script command tree for script {0} ({1}): {2} {3}.
         /// </summary>
-        public static string Exception_occurred_while_parsing_projects_cache_json_ {
+        public static string ErrorScriptCommandTree {
             get {
-                return ResourceManager.GetString("Exception occurred while parsing projects_cache.json!", resourceCulture);
+                return ResourceManager.GetString("ErrorScriptCommandTree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error pruning labels!.
+        /// </summary>
+        public static string ErrorScriptItemPruningLabels {
+            get {
+                return ResourceManager.GetString("ErrorScriptItemPruningLabels", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to load voice file: file not found..
+        /// </summary>
+        public static string ErrorVoiceFileNotFound {
+            get {
+                return ResourceManager.GetString("ErrorVoiceFileNotFound", resourceCulture);
             }
         }
         
@@ -3170,207 +2469,90 @@ namespace SerialLoops.Assets {
         /// <summary>
         ///   Looks up a localized string similar to Expected ROM SHA-1 Hash: {0}.
         /// </summary>
-        public static string Expected_ROM_SHA_1_Hash___0_ {
+        public static string ExpectedRomHashLabel {
             get {
-                return ResourceManager.GetString("Expected ROM SHA-1 Hash: {0}", resourceCulture);
+                return ResourceManager.GetString("ExpectedRomHashLabel", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Export.
         /// </summary>
-        public static string Export {
+        public static string ExportButtonLabel {
             get {
-                return ResourceManager.GetString("Export", resourceCulture);
+                return ResourceManager.GetString("ExportButtonLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Export Background Image.
+        ///   Looks up a localized string similar to No base ROM selected!.
         /// </summary>
-        public static string Export_Background_Image {
+        public static string ExportPatchNoBaseRomSelected {
             get {
-                return ResourceManager.GetString("Export Background Image", resourceCulture);
+                return ResourceManager.GetString("ExportPatchNoBaseRomSelected", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Export Frames.
+        ///   Looks up a localized string similar to Please select a path to save the XDelta patch to before attempting to create it..
         /// </summary>
-        public static string Export_Frames {
+        public static string ExportPatchNoXdeltaMessage {
             get {
-                return ResourceManager.GetString("Export Frames", resourceCulture);
+                return ResourceManager.GetString("ExportPatchNoXdeltaMessage", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Export GIF.
+        ///   Looks up a localized string similar to No path to XDelta file selected!.
         /// </summary>
-        public static string Export_GIF {
+        public static string ExportPatchNoXdeltaSelected {
             get {
-                return ResourceManager.GetString("Export GIF", resourceCulture);
+                return ResourceManager.GetString("ExportPatchNoXdeltaSelected", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Export Hack.
+        ///   Looks up a localized string similar to Creating Patch.
         /// </summary>
-        public static string Export_Hack {
+        public static string ExportPatchProgressMessage {
             get {
-                return ResourceManager.GetString("Export Hack", resourceCulture);
+                return ResourceManager.GetString("ExportPatchProgressMessage", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Export Item Image.
+        ///   Looks up a localized string similar to Select base ROM.
         /// </summary>
-        public static string Export_Item_Image {
+        public static string ExportPatchSelectBaseRom {
             get {
-                return ResourceManager.GetString("Export Item Image", resourceCulture);
+                return ResourceManager.GetString("ExportPatchSelectBaseRom", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Export Item Names.
+        ///   Looks up a localized string similar to Please select a base ROM before attempting to create the XDelta patch!.
         /// </summary>
-        public static string Export_Item_Names {
+        public static string ExportPatchSelectBaseRomMessage {
             get {
-                return ResourceManager.GetString("Export Item Names", resourceCulture);
+                return ResourceManager.GetString("ExportPatchSelectBaseRomMessage", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Export Layout Preview.
+        ///   Looks up a localized string similar to Patch Created!.
         /// </summary>
-        public static string Export_Layout_Preview {
+        public static string ExportPatchSuccessMessageTitle {
             get {
-                return ResourceManager.GetString("Export Layout Preview", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Export Patch.
-        /// </summary>
-        public static string Export_Patch {
-            get {
-                return ResourceManager.GetString("Export Patch", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Export Project.
-        /// </summary>
-        public static string Export_Project {
-            get {
-                return ResourceManager.GetString("Export Project", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Export Project....
-        /// </summary>
-        public static string Export_Project___ {
-            get {
-                return ResourceManager.GetString("Export Project...", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Export SFX.
-        /// </summary>
-        public static string Export_SFX {
-            get {
-                return ResourceManager.GetString("Export SFX", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Export Source Preview.
-        /// </summary>
-        public static string Export_Source_Preview {
-            get {
-                return ResourceManager.GetString("Export Source Preview", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Export Sprites.
-        /// </summary>
-        public static string Export_Sprites {
-            get {
-                return ResourceManager.GetString("Export Sprites", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Export System Texture.
-        /// </summary>
-        public static string Export_System_Texture {
-            get {
-                return ResourceManager.GetString("Export System Texture", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Exported Project.
-        /// </summary>
-        public static string Exported_Project {
-            get {
-                return ResourceManager.GetString("Exported Project", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Exporting BGM.
-        /// </summary>
-        public static string Exporting_BGM {
-            get {
-                return ResourceManager.GetString("Exporting BGM", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Exporting GIF….
-        /// </summary>
-        public static string Exporting_GIF___ {
-            get {
-                return ResourceManager.GetString("Exporting GIF...", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Exporting Project.
-        /// </summary>
-        public static string Exporting_Project {
-            get {
-                return ResourceManager.GetString("Exporting Project", resourceCulture);
+                return ResourceManager.GetString("ExportPatchSuccessMessageTitle", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Extract.
         /// </summary>
-        public static string Extract {
+        public static string ExtractButton {
             get {
-                return ResourceManager.GetString("Extract", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Extras unlocked message box.
-        /// </summary>
-        public static string Extras_unlocked_message_box {
-            get {
-                return ResourceManager.GetString("Extras unlocked message box", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Fade.
-        /// </summary>
-        public static string Fade {
-            get {
-                return ResourceManager.GetString("Fade", resourceCulture);
+                return ResourceManager.GetString("ExtractButton", resourceCulture);
             }
         }
         
@@ -3380,24 +2562,6 @@ namespace SerialLoops.Assets {
         public static string FADE_IN_LEFT {
             get {
                 return ResourceManager.GetString("FADE_IN_LEFT", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Fade In Percentage.
-        /// </summary>
-        public static string Fade_In_Percentage {
-            get {
-                return ResourceManager.GetString("Fade In Percentage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Fade In Time (Frames).
-        /// </summary>
-        public static string Fade_In_Time__Frames_ {
-            get {
-                return ResourceManager.GetString("Fade In Time (Frames)", resourceCulture);
             }
         }
         
@@ -3420,33 +2584,6 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fade Out Percentage.
-        /// </summary>
-        public static string Fade_Out_Percentage {
-            get {
-                return ResourceManager.GetString("Fade Out Percentage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Fade Out Time (Frames).
-        /// </summary>
-        public static string Fade_Out_Time__Frames_ {
-            get {
-                return ResourceManager.GetString("Fade Out Time (Frames)", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Fade Time (Frames).
-        /// </summary>
-        public static string Fade_Time__Frames_ {
-            get {
-                return ResourceManager.GetString("Fade Time (Frames)", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Fade to Center.
         /// </summary>
         public static string FADE_TO_CENTER {
@@ -3456,668 +2593,155 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Faded Gray.
+        ///   Looks up a localized string similar to Serial Loops ASM Hack.
         /// </summary>
-        public static string FADED_GRAY {
+        public static string FiletypeAsmHack {
             get {
-                return ResourceManager.GetString("FADED_GRAY", resourceCulture);
+                return ResourceManager.GetString("FiletypeAsmHack", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed attempting to cache audio file.
+        ///   Looks up a localized string similar to Chokuretsu Save File.
         /// </summary>
-        public static string Failed_attempting_to_cache_audio_file {
+        public static string FiletypeChokuretsuSave {
             get {
-                return ResourceManager.GetString("Failed attempting to cache audio file", resourceCulture);
+                return ResourceManager.GetString("FiletypeChokuretsuSave", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed converting audio file to WAV..
+        ///   Looks up a localized string similar to Exported Project.
         /// </summary>
-        public static string Failed_converting_audio_file_to_WAV_ {
+        public static string FiletypeExportedProject {
             get {
-                return ResourceManager.GetString("Failed converting audio file to WAV.", resourceCulture);
+                return ResourceManager.GetString("FiletypeExportedProject", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed copying file &apos;{0}&apos; to base and iterative directories at path &apos;{1}&apos;.
+        ///   Looks up a localized string similar to FLAC files.
         /// </summary>
-        public static string Failed_copying_file___0___to_base_and_iterative_directories_at_path___1__ {
+        public static string FiletypeFlac {
             get {
-                return ResourceManager.GetString("Failed copying file \'{0}\' to base and iterative directories at path \'{1}\'", resourceCulture);
+                return ResourceManager.GetString("FiletypeFlac", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed downsampling audio file..
+        ///   Looks up a localized string similar to GIF file.
         /// </summary>
-        public static string Failed_downsampling_audio_file_ {
+        public static string FiletypeGif {
             get {
-                return ResourceManager.GetString("Failed downsampling audio file.", resourceCulture);
+                return ResourceManager.GetString("FiletypeGif", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed encoding audio file to ADX..
+        ///   Looks up a localized string similar to Image Files.
         /// </summary>
-        public static string Failed_encoding_audio_file_to_ADX_ {
+        public static string FiletypeImages {
             get {
-                return ResourceManager.GetString("Failed encoding audio file to ADX.", resourceCulture);
+                return ResourceManager.GetString("FiletypeImages", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed replacing animation file {0} in grp.bin with file &apos;{1}&apos;.
+        ///   Looks up a localized string similar to MP3 files.
         /// </summary>
-        public static string Failed_replacing_animation_file__0__in_grp_bin_with_file___1__ {
+        public static string FiletypeMp3 {
             get {
-                return ResourceManager.GetString("Failed replacing animation file {0} in grp.bin with file \'{1}\'", resourceCulture);
+                return ResourceManager.GetString("FiletypeMp3", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed replacing file {0} in evt.bin with file &apos;{1}&apos;.
+        ///   Looks up a localized string similar to NDS ROM.
         /// </summary>
-        public static string Failed_replacing_file__0__in_evt_bin_with_file___1__ {
+        public static string FiletypeNdsRom {
             get {
-                return ResourceManager.GetString("Failed replacing file {0} in evt.bin with file \'{1}\'", resourceCulture);
+                return ResourceManager.GetString("FiletypeNdsRom", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed replacing graphics file {0} with file &apos;{1}&apos;.
+        ///   Looks up a localized string similar to Opus or Vorbis-encoded OGG files.
         /// </summary>
-        public static string Failed_replacing_graphics_file__0__with_file___1__ {
+        public static string FiletypeOgg {
             get {
-                return ResourceManager.GetString("Failed replacing graphics file {0} with file \'{1}\'", resourceCulture);
+                return ResourceManager.GetString("FiletypeOgg", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed replacing source file {0} in dat.bin with file &apos;{1}&apos;.
+        ///   Looks up a localized string similar to PNG Image.
         /// </summary>
-        public static string Failed_replacing_source_file__0__in_dat_bin_with_file___1__ {
+        public static string FiletypePng {
             get {
-                return ResourceManager.GetString("Failed replacing source file {0} in dat.bin with file \'{1}\'", resourceCulture);
+                return ResourceManager.GetString("FiletypePng", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed replacing source file {0} in evt.bin with file &apos;{1}&apos;.
+        ///   Looks up a localized string similar to Serial Loops Project.
         /// </summary>
-        public static string Failed_replacing_source_file__0__in_evt_bin_with_file___1__ {
+        public static string FiletypeProject {
             get {
-                return ResourceManager.GetString("Failed replacing source file {0} in evt.bin with file \'{1}\'", resourceCulture);
+                return ResourceManager.GetString("FiletypeProject", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed restoring BGM file..
+        ///   Looks up a localized string similar to Supported Audio Files.
         /// </summary>
-        public static string Failed_restoring_BGM_file_ {
+        public static string FiletypeSupportedAudio {
             get {
-                return ResourceManager.GetString("Failed restoring BGM file.", resourceCulture);
+                return ResourceManager.GetString("FiletypeSupportedAudio", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed saving overlay {0} to disk.
+        ///   Looks up a localized string similar to Supported Images.
         /// </summary>
-        public static string Failed_saving_overlay__0__to_disk {
+        public static string FiletypeSupportedImages {
             get {
-                return ResourceManager.GetString("Failed saving overlay {0} to disk", resourceCulture);
+                return ResourceManager.GetString("FiletypeSupportedImages", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed to add parameters for hack file {0} in hack {1}.
+        ///   Looks up a localized string similar to WAV File.
         /// </summary>
-        public static string Failed_to_add_parameters_for_hack_file__0__in_hack__1_ {
+        public static string FiletypeWav {
             get {
-                return ResourceManager.GetString("Failed to add parameters for hack file {0} in hack {1}", resourceCulture);
+                return ResourceManager.GetString("FiletypeWav", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed to apply the following hacks to the ROM:
-        ///{0}
-        ///
-        ///Please check the log file for more information.
-        ///
-        ///In order to preserve state, no hacks were applied..
+        ///   Looks up a localized string similar to WAV files.
         /// </summary>
-        public static string Failed_to_apply_the_following_hacks_to_the_ROM__n_0__n_nPlease_check_the_log_file_for_more_information__n_nIn_order_to_preserve_state__no_hacks_were_applied_ {
+        public static string FiletypeWavs {
             get {
-                return ResourceManager.GetString("Failed to apply the following hacks to the ROM:\\n{0}\\n\\nPlease check the log file" +
-                        " for more information.\\n\\nIn order to preserve state, no hacks were applied.", resourceCulture);
+                return ResourceManager.GetString("FiletypeWavs", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed to calculate graph edges!.
+        ///   Looks up a localized string similar to XDelta patch.
         /// </summary>
-        public static string Failed_to_calculate_graph_edges_ {
+        public static string FiletypeXdelta {
             get {
-                return ResourceManager.GetString("Failed to calculate graph edges!", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to check for updates! (Endpoint: {0}).
-        /// </summary>
-        public static string Failed_to_check_for_updates___Endpoint___0__ {
-            get {
-                return ResourceManager.GetString("Failed to check for updates! (Endpoint: {0})", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to clean iterative directory.
-        /// </summary>
-        public static string Failed_to_clean_iterative_directory {
-            get {
-                return ResourceManager.GetString("Failed to clean iterative directory", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to copy newly built archives to the iterative originals directory.
-        /// </summary>
-        public static string Failed_to_copy_newly_built_archives_to_the_iterative_originals_directory {
-            get {
-                return ResourceManager.GetString("Failed to copy newly built archives to the iterative originals directory", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to create directory on specified path!.
-        /// </summary>
-        public static string Failed_to_create_directory_on_specified_path_ {
-            get {
-                return ResourceManager.GetString("Failed to create directory on specified path!", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to create XDelta patch!.
-        /// </summary>
-        public static string Failed_to_create_XDelta_patch_ {
-            get {
-                return ResourceManager.GetString("Failed to create XDelta patch!", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to decode original file too, giving up!.
-        /// </summary>
-        public static string Failed_to_decode_original_file_too__giving_up_ {
-            get {
-                return ResourceManager.GetString("Failed to decode original file too, giving up!", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to delete file &apos;{0}&apos;.
-        /// </summary>
-        public static string Failed_to_delete_file___0__ {
-            get {
-                return ResourceManager.GetString("Failed to delete file \'{0}\'", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to delete files for hack &apos;{0}&apos; -- this hack is likely applied in the ROM base and can&apos;t be disabled..
-        /// </summary>
-        public static string Failed_to_delete_files_for_hack___0______this_hack_is_likely_applied_in_the_ROM_base_and_can_t_be_disabled_ {
-            get {
-                return ResourceManager.GetString("Failed to delete files for hack \'{0}\' -- this hack is likely applied in the ROM b" +
-                        "ase and can\'t be disabled.", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to deserialize script template file &apos;{0}&apos;.
-        /// </summary>
-        public static string Failed_to_deserialize_script_template_file___0__ {
-            get {
-                return ResourceManager.GetString("Failed to deserialize script template file \'{0}\'", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to export background {0} to file {1}.
-        /// </summary>
-        public static string Failed_to_export_background__0__to_file__1_ {
-            get {
-                return ResourceManager.GetString("Failed to export background {0} to file {1}", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to export chibi animation {0} for chibi {1} to file.
-        /// </summary>
-        public static string Failed_to_export_chibi_animation__0__for_chibi__1__to_file {
-            get {
-                return ResourceManager.GetString("Failed to export chibi animation {0} for chibi {1} to file", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to export eye animation {0} for sprite {1} to file.
-        /// </summary>
-        public static string Failed_to_export_eye_animation__0__for_sprite__1__to_file {
-            get {
-                return ResourceManager.GetString("Failed to export eye animation {0} for sprite {1} to file", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to export item {0} to file {1}.
-        /// </summary>
-        public static string Failed_to_export_item__0__to_file__1_ {
-            get {
-                return ResourceManager.GetString("Failed to export item {0} to file {1}", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to export layout for sprite {0} to file.
-        /// </summary>
-        public static string Failed_to_export_layout_for_sprite__0__to_file {
-            get {
-                return ResourceManager.GetString("Failed to export layout for sprite {0} to file", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to export mouth animation {0} for sprite {1} to file.
-        /// </summary>
-        public static string Failed_to_export_mouth_animation__0__for_sprite__1__to_file {
-            get {
-                return ResourceManager.GetString("Failed to export mouth animation {0} for sprite {1} to file", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to export project.
-        /// </summary>
-        public static string Failed_to_export_project {
-            get {
-                return ResourceManager.GetString("Failed to export project", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to export system texture {0} to file {1}.
-        /// </summary>
-        public static string Failed_to_export_system_texture__0__to_file__1_ {
-            get {
-                return ResourceManager.GetString("Failed to export system texture {0} to file {1}", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to find character item -- have you saved all of your changes to character names?.
-        /// </summary>
-        public static string Failed_to_find_character_item____have_you_saved_all_of_your_changes_to_character_names_ {
-            get {
-                return ResourceManager.GetString("Failed to find character item -- have you saved all of your changes to character " +
-                        "names?", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to generate script template!.
-        /// </summary>
-        public static string Failed_to_generate_script_template_ {
-            get {
-                return ResourceManager.GetString("Failed to generate script template!", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to import project.
-        /// </summary>
-        public static string Failed_to_import_project {
-            get {
-                return ResourceManager.GetString("Failed to import project", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to insert ARM9 assembly hacks.
-        /// </summary>
-        public static string Failed_to_insert_ARM9_assembly_hacks {
-            get {
-                return ResourceManager.GetString("Failed to insert ARM9 assembly hacks", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to insert hacks into overlay {0}..
-        /// </summary>
-        public static string Failed_to_insert_hacks_into_overlay__0__ {
-            get {
-                return ResourceManager.GetString("Failed to insert hacks into overlay {0}.", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to load BGM file: file invalid..
-        /// </summary>
-        public static string Failed_to_load_BGM_file__file_invalid_ {
-            get {
-                return ResourceManager.GetString("Failed to load BGM file: file invalid.", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to load BGM file: file not found..
-        /// </summary>
-        public static string Failed_to_load_BGM_file__file_not_found_ {
-            get {
-                return ResourceManager.GetString("Failed to load BGM file: file not found.", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to load cached data.
-        /// </summary>
-        public static string Failed_to_load_cached_data {
-            get {
-                return ResourceManager.GetString("Failed to load cached data", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to load character progress voice for {0}..
-        /// </summary>
-        public static string Failed_to_load_character_progress_voice_for__0__ {
-            get {
-                return ResourceManager.GetString("Failed to load character progress voice for {0}.", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to load editor controls!.
-        /// </summary>
-        public static string Failed_to_load_editor_controls_ {
-            get {
-                return ResourceManager.GetString("Failed to load editor controls!", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to load script file {0}.
-        /// </summary>
-        public static string Failed_to_load_script_file__0_ {
-            get {
-                return ResourceManager.GetString("Failed to load script file {0}", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to load voice file: file invalid..
-        /// </summary>
-        public static string Failed_to_load_voice_file__file_invalid_ {
-            get {
-                return ResourceManager.GetString("Failed to load voice file: file invalid.", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to load voice file: file not found..
-        /// </summary>
-        public static string Failed_to_load_voice_file__file_not_found_ {
-            get {
-                return ResourceManager.GetString("Failed to load voice file: file not found.", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to parse script parameter {0} of type {1} with parameter &apos;{2}&apos;!.
-        /// </summary>
-        public static string Failed_to_parse_script_parameter__0__of_type__1__with_parameter___2___ {
-            get {
-                return ResourceManager.GetString("Failed to parse script parameter {0} of type {1} with parameter \'{2}\'!", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to read ARM9 from &apos;{0}&apos;.
-        /// </summary>
-        public static string Failed_to_read_ARM9_from___0__ {
-            get {
-                return ResourceManager.GetString("Failed to read ARM9 from \'{0}\'", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to read BGM file; falling back to original….
-        /// </summary>
-        public static string Failed_to_read_BGM_file__falling_back_to_original___ {
-            get {
-                return ResourceManager.GetString("Failed to read BGM file; falling back to original...", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to replace background {0} with file {1}.
-        /// </summary>
-        public static string Failed_to_replace_background__0__with_file__1_ {
-            get {
-                return ResourceManager.GetString("Failed to replace background {0} with file {1}", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to replace item {0} with file {1}.
-        /// </summary>
-        public static string Failed_to_replace_item__0__with_file__1_ {
-            get {
-                return ResourceManager.GetString("Failed to replace item {0} with file {1}", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to replace screen image: image too complex (generated more than 255 tiles); please use a simpler image.
-        /// </summary>
-        public static string Failed_to_replace_screen_image__image_too_complex__generated_more_than_255_tiles___please_use_a_simpler_image {
-            get {
-                return ResourceManager.GetString("Failed to replace screen image: image too complex (generated more than 255 tiles)" +
-                        "; please use a simpler image", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to replace system texture {0} with file {1}.
-        /// </summary>
-        public static string Failed_to_replace_system_texture__0__with_file__1_ {
-            get {
-                return ResourceManager.GetString("Failed to replace system texture {0} with file {1}", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to save Chokuretsu save file!.
-        /// </summary>
-        public static string Failed_to_save_Chokuretsu_save_file_ {
-            get {
-                return ResourceManager.GetString("Failed to save Chokuretsu save file!", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to set script command list panel section content..
-        /// </summary>
-        public static string Failed_to_set_script_command_list_panel_section_content_ {
-            get {
-                return ResourceManager.GetString("Failed to set script command list panel section content.", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to set viewr contents for script command list panel..
-        /// </summary>
-        public static string Failed_to_set_viewr_contents_for_script_command_list_panel_ {
-            get {
-                return ResourceManager.GetString("Failed to set viewr contents for script command list panel.", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to unpack ROM.
-        /// </summary>
-        public static string Failed_to_unpack_ROM {
-            get {
-                return ResourceManager.GetString("Failed to unpack ROM", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to update preview!.
-        /// </summary>
-        public static string Failed_to_update_preview_ {
-            get {
-                return ResourceManager.GetString("Failed to update preview!", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to write ARM9 to disk.
-        /// </summary>
-        public static string Failed_to_write_ARM9_to_disk {
-            get {
-                return ResourceManager.GetString("Failed to write ARM9 to disk", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to write include files to disk..
-        /// </summary>
-        public static string Failed_to_write_include_files_to_disk_ {
-            get {
-                return ResourceManager.GetString("Failed to write include files to disk.", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to write NitroPacker NDS project file to disk.
-        /// </summary>
-        public static string Failed_to_write_NitroPacker_NDS_project_file_to_disk {
-            get {
-                return ResourceManager.GetString("Failed to write NitroPacker NDS project file to disk", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Fast Forward.
-        /// </summary>
-        public static string Fast_Forward {
-            get {
-                return ResourceManager.GetString("Fast Forward", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to File.
-        /// </summary>
-        public static string File {
-            get {
-                return ResourceManager.GetString("File", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to File {0}.
-        /// </summary>
-        public static string File__0_ {
-            get {
-                return ResourceManager.GetString("File {0}", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Filter.
-        /// </summary>
-        public static string Filter {
-            get {
-                return ResourceManager.GetString("Filter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Filter by Item.
-        /// </summary>
-        public static string Filter_by_Item {
-            get {
-                return ResourceManager.GetString("Filter by Item", resourceCulture);
+                return ResourceManager.GetString("FiletypeXdelta", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Filter by name.
         /// </summary>
-        public static string Filter_by_name {
+        public static string FilterByName {
             get {
-                return ResourceManager.GetString("Filter by name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Find in Project.
-        /// </summary>
-        public static string Find_in_Project {
-            get {
-                return ResourceManager.GetString("Find in Project", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Find Orphaned Items….
-        /// </summary>
-        public static string Find_Orphaned_Items___ {
-            get {
-                return ResourceManager.GetString("Find Orphaned Items...", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Find References….
-        /// </summary>
-        public static string Find_References___ {
-            get {
-                return ResourceManager.GetString("Find References...", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Finding orphaned items.
-        /// </summary>
-        public static string Finding_orphaned_items {
-            get {
-                return ResourceManager.GetString("Finding orphaned items", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Finding orphaned items….
-        /// </summary>
-        public static string Finding_orphaned_items___ {
-            get {
-                return ResourceManager.GetString("Finding orphaned items...", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to First Selection.
-        /// </summary>
-        public static string First_Selection {
-            get {
-                return ResourceManager.GetString("First Selection", resourceCulture);
+                return ResourceManager.GetString("FilterByName", resourceCulture);
             }
         }
         
@@ -4127,15 +2751,6 @@ namespace SerialLoops.Assets {
         public static string FirstTimeFlatpakButton {
             get {
                 return ResourceManager.GetString("FirstTimeFlatpakButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string FirstTimeFlatpakImportProjectsFolder {
-            get {
-                return ResourceManager.GetString("FirstTimeFlatpakImportProjectsFolder", resourceCulture);
             }
         }
         
@@ -4158,65 +2773,65 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to FLAC files.
+        ///   Looks up a localized string similar to {0} ({1}) Seen (F{2:D2}).
         /// </summary>
-        public static string FLAC_files {
+        public static string FlagCgSeen {
             get {
-                return ResourceManager.GetString("FLAC files", resourceCulture);
+                return ResourceManager.GetString("FlagCgSeen", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Flag.
+        ///   Looks up a localized string similar to Listened to {0} (F{1:D2}).
         /// </summary>
-        public static string Flag {
+        public static string FlagListenedToBgm {
             get {
-                return ResourceManager.GetString("Flag", resourceCulture);
+                return ResourceManager.GetString("FlagListenedToBgm", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Flag: {0}.
+        ///   Looks up a localized string similar to Script {0} Section {1} Completed (F{2:D2}).
         /// </summary>
-        public static string Flag___0_ {
+        public static string FlagScriptSectionCompleted {
             get {
-                return ResourceManager.GetString("Flag: {0}", resourceCulture);
+                return ResourceManager.GetString("FlagScriptSectionCompleted", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Flag Description.
+        ///   Looks up a localized string similar to Route &quot;{0}&quot; Completed (F{1:D2}).
         /// </summary>
-        public static string Flag_Description {
+        public static string FlagsRouteCompletedDescription {
             get {
-                return ResourceManager.GetString("Flag Description", resourceCulture);
+                return ResourceManager.GetString("FlagsRouteCompletedDescription", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Flags.
+        ///   Looks up a localized string similar to Tutorial {0} Completed (F{1:D2}).
         /// </summary>
-        public static string Flags {
+        public static string FlagsTutorialCompletedDescription {
             get {
-                return ResourceManager.GetString("Flags", resourceCulture);
+                return ResourceManager.GetString("FlagsTutorialCompletedDescription", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Force Drop Shadow.
+        ///   Looks up a localized string similar to {0} Obtained (F{1:D2}).
         /// </summary>
-        public static string Force_Drop_Shadow {
+        public static string FlagTopicObtained {
             get {
-                return ResourceManager.GetString("Force Drop Shadow", resourceCulture);
+                return ResourceManager.GetString("FlagTopicObtained", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Frames.
+        ///   Looks up a localized string similar to {0} Watched in Extras (F{1:D2}).
         /// </summary>
-        public static string Frames {
+        public static string FlagTopicSceneWatchedInExtras {
             get {
-                return ResourceManager.GetString("Frames", resourceCulture);
+                return ResourceManager.GetString("FlagTopicSceneWatchedInExtras", resourceCulture);
             }
         }
         
@@ -4230,164 +2845,29 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to French.
+        ///   Looks up a localized string similar to Adding frames to GIF….
         /// </summary>
-        public static string French {
+        public static string GifExportAddingFramesStatusMessage {
             get {
-                return ResourceManager.GetString("French", resourceCulture);
+                return ResourceManager.GetString("GifExportAddingFramesStatusMessage", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Friendship Levels.
+        ///   Looks up a localized string similar to No preview available.
         /// </summary>
-        public static string Friendship_Levels {
+        public static string GraphicSelectionNoPreviewAvailable {
             get {
-                return ResourceManager.GetString("Friendship Levels", resourceCulture);
+                return ResourceManager.GetString("GraphicSelectionNoPreviewAvailable", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Future Description.
+        ///   Looks up a localized string similar to Select Graphic.
         /// </summary>
-        public static string Future_Description {
+        public static string GraphicSelectionTitle {
             get {
-                return ResourceManager.GetString("Future Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Game Banner.
-        /// </summary>
-        public static string Game_Banner {
-            get {
-                return ResourceManager.GetString("Game Banner", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Game banner can only contain up to three lines..
-        /// </summary>
-        public static string Game_banner_can_only_contain_up_to_three_lines_ {
-            get {
-                return ResourceManager.GetString("Game banner can only contain up to three lines.", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Game Investigation Phase (Options).
-        /// </summary>
-        public static string Game_Investigation_Phase__Options_ {
-            get {
-                return ResourceManager.GetString("Game Investigation Phase (Options)", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Game Puzzle Phase (Options).
-        /// </summary>
-        public static string Game_Puzzle_Phase__Options_ {
-            get {
-                return ResourceManager.GetString("Game Puzzle Phase (Options)", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Game saved message box.
-        /// </summary>
-        public static string Game_saved_message_box {
-            get {
-                return ResourceManager.GetString("Game saved message box", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Game Title.
-        /// </summary>
-        public static string Game_Title {
-            get {
-                return ResourceManager.GetString("Game Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to gcc exited with code {0}.
-        /// </summary>
-        public static string gcc_exited_with_code__0_ {
-            get {
-                return ResourceManager.GetString("gcc exited with code {0}", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to gcc not found at &apos;{0}&apos;.
-        /// </summary>
-        public static string gcc_not_found_at___0__ {
-            get {
-                return ResourceManager.GetString("gcc not found at \'{0}\'", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Generate Template.
-        /// </summary>
-        public static string Generate_Template {
-            get {
-                return ResourceManager.GetString("Generate Template", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to German.
-        /// </summary>
-        public static string German {
-            get {
-                return ResourceManager.GetString("German", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to GIF exported!.
-        /// </summary>
-        public static string GIF_exported_ {
-            get {
-                return ResourceManager.GetString("GIF exported!", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to GIF file.
-        /// </summary>
-        public static string GIF_file {
-            get {
-                return ResourceManager.GetString("GIF file", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Gray.
-        /// </summary>
-        public static string GRAY {
-            get {
-                return ResourceManager.GetString("GRAY", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Grayscale.
-        /// </summary>
-        public static string GRAYSCALE {
-            get {
-                return ResourceManager.GetString("GRAYSCALE", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Greek.
-        /// </summary>
-        public static string Greek {
-            get {
-                return ResourceManager.GetString("Greek", resourceCulture);
+                return ResourceManager.GetString("GraphicSelectionTitle", resourceCulture);
             }
         }
         
@@ -4401,110 +2881,47 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Group selection impossible selection made ticker tape.
+        ///   Looks up a localized string similar to Future Description.
         /// </summary>
-        public static string Group_selection_impossible_selection_made_ticker_tape {
+        public static string GroupSelectionEditorFutureDescription {
             get {
-                return ResourceManager.GetString("Group selection impossible selection made ticker tape", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Group Selections.
-        /// </summary>
-        public static string Group_Selections {
-            get {
-                return ResourceManager.GetString("Group_Selections", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Groups.
-        /// </summary>
-        public static string Groups {
-            get {
-                return ResourceManager.GetString("Groups", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Groups: {0}.
-        /// </summary>
-        public static string Groups___0_ {
-            get {
-                return ResourceManager.GetString("Groups: {0}", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Hack Created Successfully!.
-        /// </summary>
-        public static string Hack_Created_Successfully_ {
-            get {
-                return ResourceManager.GetString("Hack Created Successfully!", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Hack Description.
-        /// </summary>
-        public static string Hack_Description {
-            get {
-                return ResourceManager.GetString("Hack Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Haroohie.
-        /// </summary>
-        public static string Haroohie {
-            get {
-                return ResourceManager.GetString("Haroohie", resourceCulture);
+                return ResourceManager.GetString("GroupSelectionEditorFutureDescription", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Haruhi Present.
         /// </summary>
-        public static string Haruhi_Present {
+        public static string GroupSelectionEditorHaruhiPresentLabel {
             get {
-                return ResourceManager.GetString("Haruhi Present", resourceCulture);
+                return ResourceManager.GetString("GroupSelectionEditorHaruhiPresentLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Haruhi Routes.
+        ///   Looks up a localized string similar to Kyonless Topics.
         /// </summary>
-        public static string Haruhi_Routes {
+        public static string GroupSelectionEditorKyonlessTopics {
             get {
-                return ResourceManager.GetString("Haruhi Routes", resourceCulture);
+                return ResourceManager.GetString("GroupSelectionEditorKyonlessTopics", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Haruhi Suzumiya event unlocked message box.
+        ///   Looks up a localized string similar to Past Description.
         /// </summary>
-        public static string Haruhi_Suzumiya_event_unlocked_message_box {
+        public static string GroupSelectionEditorPastDescriptionLabel {
             get {
-                return ResourceManager.GetString("Haruhi Suzumiya event unlocked message box", resourceCulture);
+                return ResourceManager.GetString("GroupSelectionEditorPastDescriptionLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Haruhi Topic.
+        ///   Looks up a localized string similar to Title.
         /// </summary>
-        public static string Haruhi_Topic {
+        public static string GroupSelectionEditorRouteTitle {
             get {
-                return ResourceManager.GetString("Haruhi Topic", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Has Outline?.
-        /// </summary>
-        public static string Has_Outline_ {
-            get {
-                return ResourceManager.GetString("Has Outline?", resourceCulture);
+                return ResourceManager.GetString("GroupSelectionEditorRouteTitle", resourceCulture);
             }
         }
         
@@ -4518,74 +2935,29 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hidden ID.
+        ///   Looks up a localized string similar to Scale Image.
         /// </summary>
-        public static string Hidden_ID {
+        public static string IcrScaleImage {
             get {
-                return ResourceManager.GetString("Hidden ID", resourceCulture);
+                return ResourceManager.GetString("IcrScaleImage", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hide Unset Flags.
+        ///   Looks up a localized string similar to Scale to Fit:.
         /// </summary>
-        public static string Hide_Unset_Flags {
+        public static string IcrScaleToFit {
             get {
-                return ResourceManager.GetString("Hide Unset Flags", resourceCulture);
+                return ResourceManager.GetString("IcrScaleToFit", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Highlight Space {0}.
+        ///   Looks up a localized string similar to Crop &amp; Scale.
         /// </summary>
-        public static string Highlight_Space__0_ {
+        public static string ImageCropAndScale {
             get {
-                return ResourceManager.GetString("Highlight Space {0}", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Hold Time (Frames).
-        /// </summary>
-        public static string Hold_Time__Frames_ {
-            get {
-                return ResourceManager.GetString("Hold Time (Frames)", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Horizontal Intensity.
-        /// </summary>
-        public static string Horizontal_Intensity {
-            get {
-                return ResourceManager.GetString("Horizontal Intensity", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ID.
-        /// </summary>
-        public static string ID {
-            get {
-                return ResourceManager.GetString("ID", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ignore Hash?.
-        /// </summary>
-        public static string Ignore_Hash_ {
-            get {
-                return ResourceManager.GetString("Ignore Hash?", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Image Files.
-        /// </summary>
-        public static string Image_Files {
-            get {
-                return ResourceManager.GetString("Image Files", resourceCulture);
+                return ResourceManager.GetString("ImageCropAndScale", resourceCulture);
             }
         }
         
@@ -4602,103 +2974,20 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Import.
+        ///   Looks up a localized string similar to Select an exported project to see expected ROM hash.
         /// </summary>
-        public static string Import {
+        public static string ImportProjectRomHashDefaultMessage {
             get {
-                return ResourceManager.GetString("Import", resourceCulture);
+                return ResourceManager.GetString("ImportProjectRomHashDefaultMessage", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Import a Hack.
+        ///   Looks up a localized string similar to ROM Hash Mismatch.
         /// </summary>
-        public static string Import_a_Hack {
+        public static string ImportProjectRomHashMismatch {
             get {
-                return ResourceManager.GetString("Import a Hack", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Import Hack.
-        /// </summary>
-        public static string Import_Hack {
-            get {
-                return ResourceManager.GetString("Import Hack", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Import Item Image.
-        /// </summary>
-        public static string Import_Item_Image {
-            get {
-                return ResourceManager.GetString("Import Item Image", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Import Project.
-        /// </summary>
-        public static string Import_Project {
-            get {
-                return ResourceManager.GetString("Import Project", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Import Project....
-        /// </summary>
-        public static string Import_Project___ {
-            get {
-                return ResourceManager.GetString("Import Project...", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Importing Project.
-        /// </summary>
-        public static string Importing_Project {
-            get {
-                return ResourceManager.GetString("Importing Project", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to In order to edit this save file, Serial Loops needs to make a temporary project. However, a project called &quot;{0}&quot; already exists. Would you like to overwrite this project?.
-        /// </summary>
-        public static string In_order_to_edit_this_save_file__Serial_Loops_needs_to_make_a_temporary_project__However__a_project_called___0___already_exists__Would_you_like_to_overwrite_this_project_ {
-            get {
-                return ResourceManager.GetString("In order to edit this save file, Serial Loops needs to make a temporary project. " +
-                        "However, a project called \"{0}\" already exists. Would you like to overwrite this" +
-                        " project?", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Include lip flap animation?.
-        /// </summary>
-        public static string Include_lip_flap_animation_ {
-            get {
-                return ResourceManager.GetString("Include lip flap animation?", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Info Layer.
-        /// </summary>
-        public static string Info_Layer {
-            get {
-                return ResourceManager.GetString("Info Layer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Interactable Objects.
-        /// </summary>
-        public static string Interactable_Objects {
-            get {
-                return ResourceManager.GetString("Interactable Objects", resourceCulture);
+                return ResourceManager.GetString("ImportProjectRomHashMismatch", resourceCulture);
             }
         }
         
@@ -4714,101 +3003,20 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid audio file selected..
+        ///   Looks up a localized string similar to Copying Files.
         /// </summary>
-        public static string Invalid_audio_file_selected_ {
+        public static string IOCopyingFilesMessage {
             get {
-                return ResourceManager.GetString("Invalid audio file selected.", resourceCulture);
+                return ResourceManager.GetString("IOCopyingFilesMessage", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid image file selected.
+        ///   Looks up a localized string similar to Creating Directories.
         /// </summary>
-        public static string Invalid_image_file_selected {
+        public static string IOCreatingDirectoriesMessage {
             get {
-                return ResourceManager.GetString("Invalid image file selected", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Invalid item type!.
-        /// </summary>
-        public static string Invalid_item_type_ {
-            get {
-                return ResourceManager.GetString("Invalid item type!", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Invalid or unavailable script command selected: {0}.
-        /// </summary>
-        public static string Invalid_or_unavailable_script_command_selected___0_ {
-            get {
-                return ResourceManager.GetString("Invalid or unavailable script command selected: {0}", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Invalid parameter detected in script {0} parameter {1}.
-        /// </summary>
-        public static string Invalid_parameter_detected_in_script__0__parameter__1_ {
-            get {
-                return ResourceManager.GetString("Invalid parameter detected in script {0} parameter {1}", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Invalid search terms.
-        /// </summary>
-        public static string Invalid_search_terms {
-            get {
-                return ResourceManager.GetString("Invalid search terms", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Inverted.
-        /// </summary>
-        public static string INVERTED {
-            get {
-                return ResourceManager.GetString("INVERTED", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Investigation phase options ticker tape.
-        /// </summary>
-        public static string Investigation_phase_options_ticker_tape {
-            get {
-                return ResourceManager.GetString("Investigation phase options ticker tape", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Investigation Phase Results.
-        /// </summary>
-        public static string Investigation_Phase_Results {
-            get {
-                return ResourceManager.GetString("Investigation Phase Results", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Is Large.
-        /// </summary>
-        public static string Is_Large {
-            get {
-                return ResourceManager.GetString("Is Large", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Italian.
-        /// </summary>
-        public static string Italian {
-            get {
-                return ResourceManager.GetString("Italian", resourceCulture);
+                return ResourceManager.GetString("IOCreatingDirectoriesMessage", resourceCulture);
             }
         }
         
@@ -4822,11 +3030,29 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Item Names List.
+        ///   Looks up a localized string similar to Export Item Image.
         /// </summary>
-        public static string Item_Names_List {
+        public static string ItemEditorExportFileDialogTitle {
             get {
-                return ResourceManager.GetString("Item Names List", resourceCulture);
+                return ResourceManager.GetString("ItemEditorExportFileDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import Item Image.
+        /// </summary>
+        public static string ItemEditorImportImage {
+            get {
+                return ResourceManager.GetString("ItemEditorImportImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Setting item image….
+        /// </summary>
+        public static string ItemEditorReplaceProgressMessage {
+            get {
+                return ResourceManager.GetString("ItemEditorReplaceProgressMessage", resourceCulture);
             }
         }
         
@@ -4867,119 +3093,191 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to References to {0}.
+        /// </summary>
+        public static string ItemReferencesDialogTitle {
+            get {
+                return ResourceManager.GetString("ItemReferencesDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Backgrounds.
+        /// </summary>
+        public static string ItemsPanelBackgrounds {
+            get {
+                return ResourceManager.GetString("ItemsPanelBackgrounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BGMs.
+        /// </summary>
+        public static string ItemsPanelBGMs {
+            get {
+                return ResourceManager.GetString("ItemsPanelBGMs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Characters.
+        /// </summary>
+        public static string ItemsPanelCharacters {
+            get {
+                return ResourceManager.GetString("ItemsPanelCharacters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Character Sprites.
+        /// </summary>
+        public static string ItemsPanelCharacterSprites {
+            get {
+                return ResourceManager.GetString("ItemsPanelCharacterSprites", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chess Puzzles.
+        /// </summary>
+        public static string ItemsPanelChessPuzzles {
+            get {
+                return ResourceManager.GetString("ItemsPanelChessPuzzles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chibis.
+        /// </summary>
+        public static string ItemsPanelChibis {
+            get {
+                return ResourceManager.GetString("ItemsPanelChibis", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find References….
+        /// </summary>
+        public static string ItemsPanelContextFindItems {
+            get {
+                return ResourceManager.GetString("ItemsPanelContextFindItems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Group Selections.
+        /// </summary>
+        public static string ItemsPanelGroupSelections {
+            get {
+                return ResourceManager.GetString("ItemsPanelGroupSelections", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Items.
         /// </summary>
-        public static string Items {
+        public static string ItemsPanelItems {
             get {
-                return ResourceManager.GetString("Items", resourceCulture);
+                return ResourceManager.GetString("ItemsPanelItems", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Itsuki Koizumi event unlocked message box.
+        ///   Looks up a localized string similar to Layouts.
         /// </summary>
-        public static string Itsuki_Koizumi_event_unlocked_message_box {
+        public static string ItemsPanelLayouts {
             get {
-                return ResourceManager.GetString("Itsuki Koizumi event unlocked message box", resourceCulture);
+                return ResourceManager.GetString("ItemsPanelLayouts", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Japanese.
+        ///   Looks up a localized string similar to Maps.
         /// </summary>
-        public static string Japanese {
+        public static string ItemsPanelMaps {
             get {
-                return ResourceManager.GetString("Japanese", resourceCulture);
+                return ResourceManager.GetString("ItemsPanelMaps", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Koizumi companion selected description.
+        ///   Looks up a localized string similar to Places.
         /// </summary>
-        public static string Koizumi_companion_selected_description {
+        public static string ItemsPanelPlaces {
             get {
-                return ResourceManager.GetString("Koizumi companion selected description", resourceCulture);
+                return ResourceManager.GetString("ItemsPanelPlaces", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Koizumi Present.
+        ///   Looks up a localized string similar to Puzzles.
         /// </summary>
-        public static string Koizumi_Present {
+        public static string ItemsPanelPuzzles {
             get {
-                return ResourceManager.GetString("Koizumi Present", resourceCulture);
+                return ResourceManager.GetString("ItemsPanelPuzzles", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Koizumi puzzle phase selected description.
+        ///   Looks up a localized string similar to Scenario.
         /// </summary>
-        public static string Koizumi_puzzle_phase_selected_description {
+        public static string ItemsPanelScenario {
             get {
-                return ResourceManager.GetString("Koizumi puzzle phase selected description", resourceCulture);
+                return ResourceManager.GetString("ItemsPanelScenario", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Koizumi Time Percentage.
+        ///   Looks up a localized string similar to Scripts.
         /// </summary>
-        public static string Koizumi_Time_Percentage {
+        public static string ItemsPanelScripts {
             get {
-                return ResourceManager.GetString("Koizumi Time Percentage", resourceCulture);
+                return ResourceManager.GetString("ItemsPanelScripts", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kyon companion selected description.
+        ///   Looks up a localized string similar to SFXs.
         /// </summary>
-        public static string Kyon_companion_selected_description {
+        public static string ItemsPanelSFXs {
             get {
-                return ResourceManager.GetString("Kyon companion selected description", resourceCulture);
+                return ResourceManager.GetString("ItemsPanelSFXs", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kyon Present.
+        ///   Looks up a localized string similar to System Textures.
         /// </summary>
-        public static string Kyon_Present {
+        public static string ItemsPanelSystemTextures {
             get {
-                return ResourceManager.GetString("Kyon Present", resourceCulture);
+                return ResourceManager.GetString("ItemsPanelSystemTextures", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kyon&apos;s Dialogue Box Companion Selection.
+        ///   Looks up a localized string similar to Topics.
         /// </summary>
-        public static string Kyon_s_Dialogue_Box_Companion_Selection {
+        public static string ItemsPanelTopics {
             get {
-                return ResourceManager.GetString("Kyon\'s Dialogue Box Companion Selection", resourceCulture);
+                return ResourceManager.GetString("ItemsPanelTopics", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kyon&apos;s Dialogue Box Group Selection.
+        ///   Looks up a localized string similar to Transitions.
         /// </summary>
-        public static string Kyon_s_Dialogue_Box_Group_Selection {
+        public static string ItemsPanelTransitions {
             get {
-                return ResourceManager.GetString("Kyon\'s Dialogue Box Group Selection", resourceCulture);
+                return ResourceManager.GetString("ItemsPanelTransitions", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kyon Time Percentage.
+        ///   Looks up a localized string similar to Voices.
         /// </summary>
-        public static string Kyon_Time_Percentage {
+        public static string ItemsPanelVoices {
             get {
-                return ResourceManager.GetString("Kyon Time Percentage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Kyonless Topics.
-        /// </summary>
-        public static string Kyonless_Topics {
-            get {
-                return ResourceManager.GetString("Kyonless Topics", resourceCulture);
+                return ResourceManager.GetString("ItemsPanelVoices", resourceCulture);
             }
         }
         
@@ -4993,38 +3291,110 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Language Template.
+        ///   Looks up a localized string similar to Chinese (Simplified).
         /// </summary>
-        public static string Language_Template {
+        public static string LanguageChineseSimplified {
             get {
-                return ResourceManager.GetString("Language Template", resourceCulture);
+                return ResourceManager.GetString("LanguageChineseSimplified", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lavender.
+        ///   Looks up a localized string similar to English.
         /// </summary>
-        public static string LAVENDER {
+        public static string LanguageEnglish {
             get {
-                return ResourceManager.GetString("LAVENDER", resourceCulture);
+                return ResourceManager.GetString("LanguageEnglish", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Layout.
+        ///   Looks up a localized string similar to French.
         /// </summary>
-        public static string Layout {
+        public static string LanguageFrench {
             get {
-                return ResourceManager.GetString("Layout", resourceCulture);
+                return ResourceManager.GetString("LanguageFrench", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Layouts.
+        ///   Looks up a localized string similar to German.
         /// </summary>
-        public static string Layouts {
+        public static string LanguageGerman {
             get {
-                return ResourceManager.GetString("Layouts", resourceCulture);
+                return ResourceManager.GetString("LanguageGerman", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Greek.
+        /// </summary>
+        public static string LanguageGreek {
+            get {
+                return ResourceManager.GetString("LanguageGreek", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Italian.
+        /// </summary>
+        public static string LanguageItalian {
+            get {
+                return ResourceManager.GetString("LanguageItalian", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Japanese.
+        /// </summary>
+        public static string LanguageJapanese {
+            get {
+                return ResourceManager.GetString("LanguageJapanese", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Portuguese (Brazilian).
+        /// </summary>
+        public static string LanguagePtBr {
+            get {
+                return ResourceManager.GetString("LanguagePtBr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Russian.
+        /// </summary>
+        public static string LanguageRussian {
+            get {
+                return ResourceManager.GetString("LanguageRussian", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spanish.
+        /// </summary>
+        public static string LanguageSpanish {
+            get {
+                return ResourceManager.GetString("LanguageSpanish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export Layout Preview.
+        /// </summary>
+        public static string LayoutEditorExportPreviewButton {
+            get {
+                return ResourceManager.GetString("LayoutEditorExportPreviewButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export Source Preview.
+        /// </summary>
+        public static string LayoutEditorExportSourcePreviewButton {
+            get {
+                return ResourceManager.GetString("LayoutEditorExportSourcePreviewButton", resourceCulture);
             }
         }
         
@@ -5038,119 +3408,11 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Level.
-        /// </summary>
-        public static string Level {
-            get {
-                return ResourceManager.GetString("Level", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Light Bulb.
         /// </summary>
         public static string LIGHT_BULB {
             get {
                 return ResourceManager.GetString("LIGHT_BULB", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Listened to {0} (F{1:D2}).
-        /// </summary>
-        public static string Listened_to__0___F_1_D2__ {
-            get {
-                return ResourceManager.GetString("Listened to {0} (F{1:D2})", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Load Game menu ticker tape.
-        /// </summary>
-        public static string Load_Game_menu_ticker_tape {
-            get {
-                return ResourceManager.GetString("Load Game menu ticker tape", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Load Sound.
-        /// </summary>
-        public static string Load_Sound {
-            get {
-                return ResourceManager.GetString("Load Sound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Load this save prompt.
-        /// </summary>
-        public static string Load_this_save_prompt {
-            get {
-                return ResourceManager.GetString("Load this save prompt", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Loading: .
-        /// </summary>
-        public static string Loading_ {
-            get {
-                return ResourceManager.GetString("Loading:", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Loading Archives (dat.bin).
-        /// </summary>
-        public static string Loading_Archives__dat_bin_ {
-            get {
-                return ResourceManager.GetString("Loading Archives (dat.bin)", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Loading Archives (evt.bin).
-        /// </summary>
-        public static string Loading_Archives__evt_bin_ {
-            get {
-                return ResourceManager.GetString("Loading Archives (evt.bin)", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Loading Archives (grp.bin).
-        /// </summary>
-        public static string Loading_Archives__grp_bin_ {
-            get {
-                return ResourceManager.GetString("Loading Archives (grp.bin)", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Loading Project.
-        /// </summary>
-        public static string Loading_Project {
-            get {
-                return ResourceManager.GetString("Loading Project", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Loading Project: &quot;{0}&quot;.
-        /// </summary>
-        public static string Loading_Project____0__ {
-            get {
-                return ResourceManager.GetString("Loading Project: \"{0}\"", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Loading prompt message box.
-        /// </summary>
-        public static string Loading_prompt_message_box {
-            get {
-                return ResourceManager.GetString("Loading prompt message box", resourceCulture);
             }
         }
         
@@ -5164,11 +3426,20 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Location.
+        ///   Looks up a localized string similar to &quot;Failed to open log file directly. Logs can be found at {0}&quot;.
         /// </summary>
-        public static string Location {
+        public static string LogFailedDirectOpenMessage {
             get {
-                return ResourceManager.GetString("Location", resourceCulture);
+                return ResourceManager.GetString("LogFailedDirectOpenMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ERROR: {0}.
+        /// </summary>
+        public static string LoggerErrorMessage {
+            get {
+                return ResourceManager.GetString("LoggerErrorMessage", resourceCulture);
             }
         }
         
@@ -5191,254 +3462,380 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Loop?.
+        ///   Looks up a localized string similar to Are you sure you want to delete the map characters section?.
         /// </summary>
-        public static string Loop_ {
+        public static string MapCharactersEditorDeletePrompt {
             get {
-                return ResourceManager.GetString("Loop?", resourceCulture);
+                return ResourceManager.GetString("MapCharactersEditorDeletePrompt", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Main Topic.
+        ///   Looks up a localized string similar to BG Junk Layer.
         /// </summary>
-        public static string Main_Topic {
+        public static string MapEditorBGJunkLayerLabel {
             get {
-                return ResourceManager.GetString("Main Topic", resourceCulture);
+                return ResourceManager.GetString("MapEditorBGJunkLayerLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manage Loop.
+        ///   Looks up a localized string similar to BG Layer.
         /// </summary>
-        public static string Manage_Loop {
+        public static string MapEditorBGLayerLabel {
             get {
-                return ResourceManager.GetString("Manage Loop", resourceCulture);
+                return ResourceManager.GetString("MapEditorBGLayerLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Map.
+        ///   Looks up a localized string similar to BG Object Layer.
         /// </summary>
-        public static string Map {
+        public static string MapEditorBGObjectLayerLabel {
             get {
-                return ResourceManager.GetString("Map", resourceCulture);
+                return ResourceManager.GetString("MapEditorBGObjectLayerLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Map Character Set.
+        ///   Looks up a localized string similar to BG Occlusion Layer.
         /// </summary>
-        public static string Map_Character_Set {
+        public static string MapEditorBGOcclusionLayerLabel {
             get {
-                return ResourceManager.GetString("Map Character Set", resourceCulture);
+                return ResourceManager.GetString("MapEditorBGOcclusionLayerLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Map Characters.
+        ///   Looks up a localized string similar to Camera Trucking.
         /// </summary>
-        public static string Map_Characters {
+        public static string MapEditorCameraTruckingLayerLabel {
             get {
-                return ResourceManager.GetString("Map Characters", resourceCulture);
+                return ResourceManager.GetString("MapEditorCameraTruckingLayerLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Maps.
+        ///   Looks up a localized string similar to Draw Boundary.
         /// </summary>
-        public static string Maps {
+        public static string MapEditorDrawBoundaryLabel {
             get {
-                return ResourceManager.GetString("Maps", resourceCulture);
+                return ResourceManager.GetString("MapEditorDrawBoundaryLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Migrate.
+        ///   Looks up a localized string similar to Draw Origin.
         /// </summary>
-        public static string Migrate {
+        public static string MapEditorDrawOriginLabel {
             get {
-                return ResourceManager.GetString("Migrate", resourceCulture);
+                return ResourceManager.GetString("MapEditorDrawOriginLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Draw Pathing Map.
+        /// </summary>
+        public static string MapEditorDrawPathingMapLabel {
+            get {
+                return ResourceManager.GetString("MapEditorDrawPathingMapLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Draw Starting Point.
+        /// </summary>
+        public static string MapEditorDrawStartingPointLabel {
+            get {
+                return ResourceManager.GetString("MapEditorDrawStartingPointLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Info Layer.
+        /// </summary>
+        public static string MapEditorInfoLayerLabel {
+            get {
+                return ResourceManager.GetString("MapEditorInfoLayerLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Object Junk Layer.
+        /// </summary>
+        public static string MapEditorObjectJunkLayer {
+            get {
+                return ResourceManager.GetString("MapEditorObjectJunkLayer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Object Layer.
+        /// </summary>
+        public static string MapEditorObjectLayer {
+            get {
+                return ResourceManager.GetString("MapEditorObjectLayer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Object Locations.
+        /// </summary>
+        public static string MapEditorObjectLocations {
+            get {
+                return ResourceManager.GetString("MapEditorObjectLocations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scrolling BG.
+        /// </summary>
+        public static string MapEditorScrollingBg {
+            get {
+                return ResourceManager.GetString("MapEditorScrollingBg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Build.
+        /// </summary>
+        public static string MenuBuild {
+            get {
+                return ResourceManager.GetString("MenuBuild", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Check for Updates….
+        /// </summary>
+        public static string MenuCheckForUpdates {
+            get {
+                return ResourceManager.GetString("MenuCheckForUpdates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create ASM Hack.
+        /// </summary>
+        public static string MenuCreateAsmHackLabel {
+            get {
+                return ResourceManager.GetString("MenuCreateAsmHackLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Edit.
+        /// </summary>
+        public static string MenuEdit {
+            get {
+                return ResourceManager.GetString("MenuEdit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Save File.
+        /// </summary>
+        public static string MenuEditSaveFile {
+            get {
+                return ResourceManager.GetString("MenuEditSaveFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Save File….
+        /// </summary>
+        public static string MenuEditSaveFileDetails {
+            get {
+                return ResourceManager.GetString("MenuEditSaveFileDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Tutorial Mappings….
+        /// </summary>
+        public static string MenuEditTutorialMappings {
+            get {
+                return ResourceManager.GetString("MenuEditTutorialMappings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit UI Text….
+        /// </summary>
+        public static string MenuEditUIText {
+            get {
+                return ResourceManager.GetString("MenuEditUIText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export Patch.
+        /// </summary>
+        public static string MenuExportPatch {
+            get {
+                return ResourceManager.GetString("MenuExportPatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export Project.
+        /// </summary>
+        public static string MenuExportProject {
+            get {
+                return ResourceManager.GetString("MenuExportProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _File.
+        /// </summary>
+        public static string MenuFile {
+            get {
+                return ResourceManager.GetString("MenuFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Help.
+        /// </summary>
+        public static string MenuHelp {
+            get {
+                return ResourceManager.GetString("MenuHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import Project.
+        /// </summary>
+        public static string MenuImportProjectLabel {
+            get {
+                return ResourceManager.GetString("MenuImportProjectLabel", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Migrate Project.
         /// </summary>
-        public static string Migrate_Project {
+        public static string MenuMigrateProject {
             get {
-                return ResourceManager.GetString("Migrate Project", resourceCulture);
+                return ResourceManager.GetString("MenuMigrateProject", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Migrate to new ROM.
+        ///   Looks up a localized string similar to New Project….
         /// </summary>
-        public static string Migrate_to_new_ROM {
+        public static string MenuNewProject {
             get {
-                return ResourceManager.GetString("Migrate to new ROM", resourceCulture);
+                return ResourceManager.GetString("MenuNewProject", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Migrated to new ROM!.
+        ///   Looks up a localized string similar to Check for Updates.
         /// </summary>
-        public static string Migrated_to_new_ROM_ {
+        public static string MenuOptionCheckForUpdates {
             get {
-                return ResourceManager.GetString("Migrated to new ROM!", resourceCulture);
+                return ResourceManager.GetString("MenuOptionCheckForUpdates", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Migrating to new ROM.
+        ///   Looks up a localized string similar to _Preferences….
         /// </summary>
-        public static string Migrating_to_new_ROM {
+        public static string MenuPreferences {
             get {
-                return ResourceManager.GetString("Migrating to new ROM", resourceCulture);
+                return ResourceManager.GetString("MenuPreferences", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Migration Complete!.
+        ///   Looks up a localized string similar to _Project.
         /// </summary>
-        public static string Migration_Complete_ {
+        public static string MenuProject {
             get {
-                return ResourceManager.GetString("Migration Complete!", resourceCulture);
+                return ResourceManager.GetString("MenuProject", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mikuru Asahina event unlocked message box.
+        ///   Looks up a localized string similar to Open Project.
         /// </summary>
-        public static string Mikuru_Asahina_event_unlocked_message_box {
+        public static string MenuProjectOpen {
             get {
-                return ResourceManager.GetString("Mikuru Asahina event unlocked message box", resourceCulture);
+                return ResourceManager.GetString("MenuProjectOpen", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mikuru Time Percentage.
+        ///   Looks up a localized string similar to Project Settings….
         /// </summary>
-        public static string Mikuru_Time_Percentage {
+        public static string MenuProjectSettings {
             get {
-                return ResourceManager.GetString("Mikuru Time Percentage", resourceCulture);
+                return ResourceManager.GetString("MenuProjectSettings", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lose 2 Section.
+        ///   Looks up a localized string similar to Replace….
         /// </summary>
-        public static string Miss_2_Section {
+        public static string MenuReplace {
             get {
-                return ResourceManager.GetString("Miss 2 Section", resourceCulture);
+                return ResourceManager.GetString("MenuReplace", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lose Section.
+        ///   Looks up a localized string similar to Save Project.
         /// </summary>
-        public static string Miss_Section {
+        public static string MenuSaveProject {
             get {
-                return ResourceManager.GetString("Miss Section", resourceCulture);
+                return ResourceManager.GetString("MenuSaveProject", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Missing: .
+        ///   Looks up a localized string similar to Search….
         /// </summary>
-        public static string Missing_ {
+        public static string MenuSearch {
             get {
-                return ResourceManager.GetString("Missing:", resourceCulture);
+                return ResourceManager.GetString("MenuSearch", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mode.
+        ///   Looks up a localized string similar to _Tools.
         /// </summary>
-        public static string Mode {
+        public static string MenuTools {
             get {
-                return ResourceManager.GetString("Mode", resourceCulture);
+                return ResourceManager.GetString("MenuTools", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Modify by.
+        ///   Looks up a localized string similar to View Crash Log.
         /// </summary>
-        public static string Modify_by {
+        public static string MenuViewCrashLog {
             get {
-                return ResourceManager.GetString("Modify by", resourceCulture);
+                return ResourceManager.GetString("MenuViewCrashLog", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Most Recent Objectives.
+        ///   Looks up a localized string similar to View _Logs.
         /// </summary>
-        public static string Most_Recent_Objectives {
+        public static string MenuViewLogs {
             get {
-                return ResourceManager.GetString("Most Recent Objectives", resourceCulture);
+                return ResourceManager.GetString("MenuViewLogs", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Move 1.
+        ///   Looks up a localized string similar to Success!.
         /// </summary>
-        public static string Move_1 {
+        public static string MessageBoxTitleSuccessGeneric {
             get {
-                return ResourceManager.GetString("Move 1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Move 2.
-        /// </summary>
-        public static string Move_2 {
-            get {
-                return ResourceManager.GetString("Move 2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Move Command Down.
-        /// </summary>
-        public static string Move_Command_Down {
-            get {
-                return ResourceManager.GetString("Move Command Down", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Move Command Up.
-        /// </summary>
-        public static string Move_Command_Up {
-            get {
-                return ResourceManager.GetString("Move Command Up", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to MP3 files.
-        /// </summary>
-        public static string MP3_files {
-            get {
-                return ResourceManager.GetString("MP3 files", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Music.
-        /// </summary>
-        public static string Music {
-            get {
-                return ResourceManager.GetString("Music", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Music: .
-        /// </summary>
-        public static string Music_ {
-            get {
-                return ResourceManager.GetString("Music:", resourceCulture);
+                return ResourceManager.GetString("MessageBoxTitleSuccessGeneric", resourceCulture);
             }
         }
         
@@ -5452,146 +3849,11 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mystery girl voice added to config message box.
-        /// </summary>
-        public static string Mystery_girl_voice_added_to_config_message_box {
-            get {
-                return ResourceManager.GetString("Mystery girl voice added to config message box", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Nagato companion selected description.
-        /// </summary>
-        public static string Nagato_companion_selected_description {
-            get {
-                return ResourceManager.GetString("Nagato companion selected description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Nagato Present.
-        /// </summary>
-        public static string Nagato_Present {
-            get {
-                return ResourceManager.GetString("Nagato Present", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Nagato puzzle phase selected description.
-        /// </summary>
-        public static string Nagato_puzzle_phase_selected_description {
-            get {
-                return ResourceManager.GetString("Nagato puzzle phase selected description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Nagato Time Percentage.
-        /// </summary>
-        public static string Nagato_Time_Percentage {
-            get {
-                return ResourceManager.GetString("Nagato Time Percentage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Name.
-        /// </summary>
-        public static string Name {
-            get {
-                return ResourceManager.GetString("Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Name &apos;{0}&apos; is already in use!.
-        /// </summary>
-        public static string Name___0___is_already_in_use_ {
-            get {
-                return ResourceManager.GetString("Name \'{0}\' is already in use!", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to NDS ROM.
-        /// </summary>
-        public static string NDS_ROM {
-            get {
-                return ResourceManager.GetString("NDS ROM", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to New Base ROM.
         /// </summary>
-        public static string New_Base_ROM {
+        public static string NewBaseRom {
             get {
-                return ResourceManager.GetString("New Base ROM", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to New Command.
-        /// </summary>
-        public static string New_Command {
-            get {
-                return ResourceManager.GetString("New Command", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to New Name.
-        /// </summary>
-        public static string New_Name {
-            get {
-                return ResourceManager.GetString("New Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to New Project.
-        /// </summary>
-        public static string New_Project {
-            get {
-                return ResourceManager.GetString("New Project", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to New Project….
-        /// </summary>
-        public static string New_Project___ {
-            get {
-                return ResourceManager.GetString("New Project...", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to New Section.
-        /// </summary>
-        public static string New_Section {
-            get {
-                return ResourceManager.GetString("New Section", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to New Update Available: {0}.
-        /// </summary>
-        public static string New_Update_Available___0_ {
-            get {
-                return ResourceManager.GetString("New Update Available: {0}", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to NitroPacker failed to pack ROM with exception.
-        /// </summary>
-        public static string NitroPacker_failed_to_pack_ROM_with_exception {
-            get {
-                return ResourceManager.GetString("NitroPacker failed to pack ROM with exception", resourceCulture);
+                return ResourceManager.GetString("NewBaseRom", resourceCulture);
             }
         }
         
@@ -5605,139 +3867,11 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No base ROM selected!.
-        /// </summary>
-        public static string No_base_ROM_selected_ {
-            get {
-                return ResourceManager.GetString("No base ROM selected!", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to None.
-        /// </summary>
-        public static string No_Character {
-            get {
-                return ResourceManager.GetString("No Character", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No Crash Log.
-        /// </summary>
-        public static string No_Crash_Log {
-            get {
-                return ResourceManager.GetString("No Crash Log", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No Emulator Path.
-        /// </summary>
-        public static string No_Emulator_Path {
-            get {
-                return ResourceManager.GetString("No Emulator Path", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No emulator path/flatpak has been set.
-        ///Please set the path to a Nintendo DS emulator or specify a Nintendo DS emulator flatpak in Preferences to use Build &amp; Run..
-        /// </summary>
-        public static string No_emulator_path_has_been_set__nPlease_set_the_path_to_a_Nintendo_DS_emulator_in_Preferences_to_use_Build___Run_ {
-            get {
-                return ResourceManager.GetString("No emulator path has been set.\\nPlease set the path to a Nintendo DS emulator in " +
-                        "Preferences to use Build & Run.", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Don&apos;t Exit.
         /// </summary>
         public static string NO_EXIT {
             get {
                 return ResourceManager.GetString("NO_EXIT", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No exported project selected.
-        /// </summary>
-        public static string No_exported_project_selected {
-            get {
-                return ResourceManager.GetString("No exported project selected", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No hacks applied!.
-        /// </summary>
-        public static string No_hacks_applied_ {
-            get {
-                return ResourceManager.GetString("No hacks applied!", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No path to XDelta file selected!.
-        /// </summary>
-        public static string No_path_to_XDelta_file_selected_ {
-            get {
-                return ResourceManager.GetString("No path to XDelta file selected!", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No preview available.
-        /// </summary>
-        public static string No_preview_available {
-            get {
-                return ResourceManager.GetString("No preview available", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No Project Open.
-        /// </summary>
-        public static string No_Project_Open {
-            get {
-                return ResourceManager.GetString("No Project Open", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No recent projects. Create one and it will appear here..
-        /// </summary>
-        public static string No_recent_projects__Create_one_and_it_will_appear_here_ {
-            get {
-                return ResourceManager.GetString("No recent projects. Create one and it will appear here.", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No ROM Hash Recorded!.
-        /// </summary>
-        public static string No_ROM_Hash_Recorded_ {
-            get {
-                return ResourceManager.GetString("No ROM Hash Recorded!", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No save data ticker tape.
-        /// </summary>
-        public static string No_save_data_ticker_tape {
-            get {
-                return ResourceManager.GetString("No save data ticker tape", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No saves Load Game menu ticker tape.
-        /// </summary>
-        public static string No_saves_Load_Game_menu_ticker_tape {
-            get {
-                return ResourceManager.GetString("No saves Load Game menu ticker tape", resourceCulture);
             }
         }
         
@@ -5760,29 +3894,30 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No valid maps found..
+        ///   Looks up a localized string similar to No Crash Log.
         /// </summary>
-        public static string No_valid_maps_found_ {
+        public static string NoCrashLogMessageTitle {
             get {
-                return ResourceManager.GetString("No valid maps found.", resourceCulture);
+                return ResourceManager.GetString("NoCrashLogMessageTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to None.
+        ///   Looks up a localized string similar to No emulator path/flatpak has been set.
+        ///Please set the path to a Nintendo DS emulator or specify a Nintendo DS emulator flatpak in Preferences to use Build &amp; Run..
         /// </summary>
-        public static string None {
+        public static string NoEmulatorPathMessage {
             get {
-                return ResourceManager.GetString("None", resourceCulture);
+                return ResourceManager.GetString("NoEmulatorPathMessage", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to None Selected.
+        ///   Looks up a localized string similar to No Emulator Path.
         /// </summary>
-        public static string None_Selected {
+        public static string NoEmulatorPathMessageTitle {
             get {
-                return ResourceManager.GetString("None Selected", resourceCulture);
+                return ResourceManager.GetString("NoEmulatorPathMessageTitle", resourceCulture);
             }
         }
         
@@ -5792,69 +3927,6 @@ namespace SerialLoops.Assets {
         public static string NORMAL_TEXT_ENTRANCE {
             get {
                 return ResourceManager.GetString("NORMAL_TEXT_ENTRANCE", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Normalize.
-        /// </summary>
-        public static string Normalize {
-            get {
-                return ResourceManager.GetString("Normalize", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Note: When exporting an XDelta patch, the base ROM you should use is likely different than the one you used when creating the project. Please choose the base Japanese ROM (SHA-1 can be confirmed below) to ensure that people who want to play your hack only need to patch the game once..
-        /// </summary>
-        public static string Note__When_exporting_an_xdelta_patch__the_base_ROM_you_should_use_is_likely_different_than_the_one_you_used_when_creating_the_project__Please_choose_the_base_Japanese_ROM__SHA_1_can_be_confirmed_below__to_ensure_that_people_who_want_to_play_your_hack_only_need_to_patch_the_game_once_ {
-            get {
-                return ResourceManager.GetString(@"Note: When exporting an xdelta patch, the base ROM you should use is likely different than the one you used when creating the project. Please choose the base Japanese ROM (SHA-1 can be confirmed below) to ensure that people who want to play your hack only need to patch the game once.", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Number of Moves.
-        /// </summary>
-        public static string Number_of_Moves {
-            get {
-                return ResourceManager.GetString("Number of Moves", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Number of Saves: .
-        /// </summary>
-        public static string Number_of_Saves_ {
-            get {
-                return ResourceManager.GetString("Number of Saves:", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Number of Singularities.
-        /// </summary>
-        public static string Number_of_Singularities {
-            get {
-                return ResourceManager.GetString("Number of Singularities", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to objcopy exited with code {0}.
-        /// </summary>
-        public static string objcopy_exited_with_code__0_ {
-            get {
-                return ResourceManager.GetString("objcopy exited with code {0}", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to objcopy not found at &apos;{0}&apos;.
-        /// </summary>
-        public static string objcopy_not_found_at___0__ {
-            get {
-                return ResourceManager.GetString("objcopy not found at \'{0}\'", resourceCulture);
             }
         }
         
@@ -5877,47 +3949,11 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Object Junk Layer.
-        /// </summary>
-        public static string Object_Junk_Layer {
-            get {
-                return ResourceManager.GetString("Object Junk Layer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Object Layer.
-        /// </summary>
-        public static string Object_Layer {
-            get {
-                return ResourceManager.GetString("Object Layer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Object Locations.
-        /// </summary>
-        public static string Object_Locations {
-            get {
-                return ResourceManager.GetString("Object Locations", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Off.
         /// </summary>
         public static string Off {
             get {
                 return ResourceManager.GetString("Off", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Off White.
-        /// </summary>
-        public static string OFF_WHITE {
-            get {
-                return ResourceManager.GetString("OFF_WHITE", resourceCulture);
             }
         }
         
@@ -5931,119 +3967,11 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Opus or Vorbis-encoded OGG files.
-        /// </summary>
-        public static string OggFiles {
-            get {
-                return ResourceManager.GetString("OggFiles", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to On.
         /// </summary>
         public static string On {
             get {
                 return ResourceManager.GetString("On", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to One or more archives is null..
-        /// </summary>
-        public static string One_or_more_archives_is_null_ {
-            get {
-                return ResourceManager.GetString("One or more archives is null.", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Open an item using the explorer to start editing!.
-        /// </summary>
-        public static string Open_an_item_using_the_explorer_to_start_editing_ {
-            get {
-                return ResourceManager.GetString("Open an item using the explorer to start editing!", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Open Chokuretsu Save File.
-        /// </summary>
-        public static string Open_Chokuretsu_Save_File {
-            get {
-                return ResourceManager.GetString("Open Chokuretsu Save File", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Open Exported Project.
-        /// </summary>
-        public static string Open_Exported_Project {
-            get {
-                return ResourceManager.GetString("Open Exported Project", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Open Project.
-        /// </summary>
-        public static string Open_Project {
-            get {
-                return ResourceManager.GetString("Open Project", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Open ROM.
-        /// </summary>
-        public static string Open_ROM {
-            get {
-                return ResourceManager.GetString("Open ROM", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Optimal Group.
-        /// </summary>
-        public static string Optimal_Group {
-            get {
-                return ResourceManager.GetString("Optimal Group", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Option 1.
-        /// </summary>
-        public static string Option_1 {
-            get {
-                return ResourceManager.GetString("Option 1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Option 2.
-        /// </summary>
-        public static string Option_2 {
-            get {
-                return ResourceManager.GetString("Option 2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Option 3.
-        /// </summary>
-        public static string Option_3 {
-            get {
-                return ResourceManager.GetString("Option 3", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Option 4.
-        /// </summary>
-        public static string Option_4 {
-            get {
-                return ResourceManager.GetString("Option 4", resourceCulture);
             }
         }
         
@@ -6057,92 +3985,56 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Outline Color.
+        ///   Looks up a localized string similar to Default.
         /// </summary>
-        public static string Outline_Color {
+        public static string PalEffectDefault {
             get {
-                return ResourceManager.GetString("Outline Color", resourceCulture);
+                return ResourceManager.GetString("PalEffectDefault", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Output patch location.
+        ///   Looks up a localized string similar to Dimmed.
         /// </summary>
-        public static string Output_patch_location {
+        public static string PalEffectDimmed {
             get {
-                return ResourceManager.GetString("Output patch location", resourceCulture);
+                return ResourceManager.GetString("PalEffectDimmed", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Overwrite save prompt message box.
+        ///   Looks up a localized string similar to Grayscale.
         /// </summary>
-        public static string Overwrite_save_prompt_message_box {
+        public static string PalEffectGrayscale {
             get {
-                return ResourceManager.GetString("Overwrite save prompt message box", resourceCulture);
+                return ResourceManager.GetString("PalEffectGrayscale", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Packing ROM.
+        ///   Looks up a localized string similar to Inverted.
         /// </summary>
-        public static string Packing_ROM {
+        public static string PalEffectInverted {
             get {
-                return ResourceManager.GetString("Packing ROM", resourceCulture);
+                return ResourceManager.GetString("PalEffectInverted", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Palette.
+        ///   Looks up a localized string similar to Sepia.
         /// </summary>
-        public static string Palette {
+        public static string PalEffectSepia {
             get {
-                return ResourceManager.GetString("Palette", resourceCulture);
+                return ResourceManager.GetString("PalEffectSepia", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Parameter Name.
+        ///   Looks up a localized string similar to Script Section.
         /// </summary>
-        public static string Parameter_Name {
+        public static string ParamScriptSection {
             get {
-                return ResourceManager.GetString("Parameter Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Parameter Value.
-        /// </summary>
-        public static string Parameter_Value {
-            get {
-                return ResourceManager.GetString("Parameter Value", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Parameter Values.
-        /// </summary>
-        public static string Parameter_Values {
-            get {
-                return ResourceManager.GetString("Parameter Values", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Parameters.
-        /// </summary>
-        public static string Parameters {
-            get {
-                return ResourceManager.GetString("Parameters", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Past Description.
-        /// </summary>
-        public static string Past_Description {
-            get {
-                return ResourceManager.GetString("Past Description", resourceCulture);
+                return ResourceManager.GetString("ParamScriptSection", resourceCulture);
             }
         }
         
@@ -6156,56 +4048,11 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Patch Created!.
+        ///   Looks up a localized string similar to Note: When exporting an XDelta patch, the base ROM you should use is likely different than the one you used when creating the project. Please choose the base Japanese ROM (SHA-1 can be confirmed below) to ensure that people who want to play your hack only need to patch the game once..
         /// </summary>
-        public static string Patch_Created_ {
+        public static string PatchExportXdeltaNote {
             get {
-                return ResourceManager.GetString("Patch Created!", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Patching ARM9.
-        /// </summary>
-        public static string Patching_ARM9 {
-            get {
-                return ResourceManager.GetString("Patching ARM9", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Patching Overlay {0}.
-        /// </summary>
-        public static string Patching_Overlay__0_ {
-            get {
-                return ResourceManager.GetString("Patching Overlay {0}", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Pause menu Config ticker tape.
-        /// </summary>
-        public static string Pause_menu_Config_ticker_tape {
-            get {
-                return ResourceManager.GetString("Pause menu Config ticker tape", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Pause menu Load ticker tape.
-        /// </summary>
-        public static string Pause_menu_Load_ticker_tape {
-            get {
-                return ResourceManager.GetString("Pause menu Load ticker tape", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Pause menu Title ticker tape.
-        /// </summary>
-        public static string Pause_menu_Title_ticker_tape {
-            get {
-                return ResourceManager.GetString("Pause menu Title ticker tape", resourceCulture);
+                return ResourceManager.GetString("PatchExportXdeltaNote", resourceCulture);
             }
         }
         
@@ -6219,290 +4066,137 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Piece 1.
+        ///   Looks up a localized string similar to %.
         /// </summary>
-        public static string Piece_1 {
+        public static string PercentSign {
             get {
-                return ResourceManager.GetString("Piece 1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Piece 2.
-        /// </summary>
-        public static string Piece_2 {
-            get {
-                return ResourceManager.GetString("Piece 2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Piece 3.
-        /// </summary>
-        public static string Piece_3 {
-            get {
-                return ResourceManager.GetString("Piece 3", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Piece 4.
-        /// </summary>
-        public static string Piece_4 {
-            get {
-                return ResourceManager.GetString("Piece 4", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Place.
-        /// </summary>
-        public static string Place {
-            get {
-                return ResourceManager.GetString("Place", resourceCulture);
+                return ResourceManager.GetString("PercentSign", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Place Name.
         /// </summary>
-        public static string Place_Name {
+        public static string PlaceEditorPlaceName {
             get {
-                return ResourceManager.GetString("Place Name", resourceCulture);
+                return ResourceManager.GetString("PlaceEditorPlaceName", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Places.
+        ///   Looks up a localized string similar to Replace me.
         /// </summary>
-        public static string Places {
+        public static string PlaceholderDialogueText {
             get {
-                return ResourceManager.GetString("Places", resourceCulture);
+                return ResourceManager.GetString("PlaceholderDialogueText", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Plate Color.
+        ///   Looks up a localized string similar to Auto Re-Open Last Project.
         /// </summary>
-        public static string Plate_Color {
+        public static string PreferencesAutoReopenLabel {
             get {
-                return ResourceManager.GetString("Plate Color", resourceCulture);
+                return ResourceManager.GetString("PreferencesAutoReopenLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please choose a project name before creating the project..
+        ///   Looks up a localized string similar to Check for Updates on Startup.
         /// </summary>
-        public static string Please_choose_a_project_name_before_creating_the_project_ {
+        public static string PreferencesCheckForUpdatesOnStartup {
             get {
-                return ResourceManager.GetString("Please choose a project name before creating the project.", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Please enter a game name for the banner, between 1 and 128 characters..
-        /// </summary>
-        public static string Please_enter_a_game_name_for_the_banner__between_1_and_128_characters_ {
-            get {
-                return ResourceManager.GetString("Please enter a game name for the banner, between 1 and 128 characters.", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Please enter a value for the section name.
-        /// </summary>
-        public static string Please_enter_a_value_for_the_section_name {
-            get {
-                return ResourceManager.GetString("Please enter a value for the section name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Please select a base ROM before attempting to create the XDelta patch!.
-        /// </summary>
-        public static string Please_select_a_base_ROM_before_attempting_to_create_the_XDelta_patch_ {
-            get {
-                return ResourceManager.GetString("Please select a base ROM before attempting to create the XDelta patch!", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Please select a path to save the XDelta patch to before attempting to create it..
-        /// </summary>
-        public static string Please_select_a_path_to_save_the_XDelta_patch_to_before_attempting_to_create_it_ {
-            get {
-                return ResourceManager.GetString("Please select a path to save the XDelta patch to before attempting to create it.", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Please select a ROM before creating the project..
-        /// </summary>
-        public static string Please_select_a_ROM_before_creating_the_project_ {
-            get {
-                return ResourceManager.GetString("Please select a ROM before creating the project.", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Please select a template.
-        /// </summary>
-        public static string Please_select_a_template {
-            get {
-                return ResourceManager.GetString("Please select a template", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Please select at least one search scope and item filter..
-        /// </summary>
-        public static string Please_select_at_least_one_search_scope_and_item_filter_ {
-            get {
-                return ResourceManager.GetString("Please select at least one search scope and item filter.", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to PNG Image.
-        /// </summary>
-        public static string PNG_Image {
-            get {
-                return ResourceManager.GetString("PNG Image", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Portuguese (Brazilian).
-        /// </summary>
-        public static string Portuguese__Brazilian_ {
-            get {
-                return ResourceManager.GetString("Portuguese (Brazilian)", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Position:.
-        /// </summary>
-        public static string Position_ {
-            get {
-                return ResourceManager.GetString("Position:", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Position Image.
-        /// </summary>
-        public static string Position_Image {
-            get {
-                return ResourceManager.GetString("Position Image", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Power Character 1.
-        /// </summary>
-        public static string Power_Character_1 {
-            get {
-                return ResourceManager.GetString("Power Character 1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Power Character 2.
-        /// </summary>
-        public static string Power_Character_2 {
-            get {
-                return ResourceManager.GetString("Power Character 2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Pre-Release Channel.
-        /// </summary>
-        public static string Pre_Release_Channel {
-            get {
-                return ResourceManager.GetString("Pre-Release Channel", resourceCulture);
+                return ResourceManager.GetString("PreferencesCheckForUpdatesOnStartup", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Preferences.
         /// </summary>
-        public static string Preferences {
+        public static string PreferencesDialogTitle {
             get {
-                return ResourceManager.GetString("Preferences", resourceCulture);
+                return ResourceManager.GetString("PreferencesDialogTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Preserve Aspect Ratio:.
+        ///   Looks up a localized string similar to Display Font.
         /// </summary>
-        public static string Preserve_Aspect_Ratio_ {
+        public static string PreferencesDisplayFontLabel {
             get {
-                return ResourceManager.GetString("Preserve Aspect Ratio:", resourceCulture);
+                return ResourceManager.GetString("PreferencesDisplayFontLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Press ENTER to execute search.
+        ///   Looks up a localized string similar to Emulator Flatpak.
         /// </summary>
-        public static string Press_ENTER_to_execute_search {
+        public static string PreferencesEmulatorFlatpakLabel {
             get {
-                return ResourceManager.GetString("Press ENTER to execute search", resourceCulture);
+                return ResourceManager.GetString("PreferencesEmulatorFlatpakLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Project Creation Warning.
+        ///   Looks up a localized string similar to Emulator Path.
         /// </summary>
-        public static string Project_Creation_Warning {
+        public static string PreferencesEmulatorPathLabel {
             get {
-                return ResourceManager.GetString("Project Creation Warning", resourceCulture);
+                return ResourceManager.GetString("PreferencesEmulatorPathLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Project exported successfully!.
+        ///   Looks up a localized string similar to Projects.
         /// </summary>
-        public static string Project_exported_successfully_ {
+        public static string PreferencesProjectsTab {
             get {
-                return ResourceManager.GetString("Project exported successfully!", resourceCulture);
+                return ResourceManager.GetString("PreferencesProjectsTab", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Project not provided to project creation dialog.
+        ///   Looks up a localized string similar to Remember Project Workspace.
         /// </summary>
-        public static string Project_not_provided_to_project_creation_dialog {
+        public static string PreferencesRememberProjectWorkspace {
             get {
-                return ResourceManager.GetString("Project not provided to project creation dialog", resourceCulture);
+                return ResourceManager.GetString("PreferencesRememberProjectWorkspace", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Project Options.
+        ///   Looks up a localized string similar to Remove Missing Projects.
         /// </summary>
-        public static string Project_Options {
+        public static string PreferencesRemoveMissingProjects {
             get {
-                return ResourceManager.GetString("Project Options", resourceCulture);
+                return ResourceManager.GetString("PreferencesRemoveMissingProjects", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Project Settings.
+        ///   Looks up a localized string similar to The changes made will require Serial Loops to be restarted. Is that okay?.
         /// </summary>
-        public static string Project_Settings {
+        public static string PreferencesRestartMessage {
             get {
-                return ResourceManager.GetString("Project Settings", resourceCulture);
+                return ResourceManager.GetString("PreferencesRestartMessage", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Project Settings….
+        ///   Looks up a localized string similar to Restart required.
         /// </summary>
-        public static string Project_Settings___ {
+        public static string PreferencesRestartRequired {
             get {
-                return ResourceManager.GetString("Project Settings...", resourceCulture);
+                return ResourceManager.GetString("PreferencesRestartRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use Pre-Release Update Channel.
+        /// </summary>
+        public static string PreferencesUsePreReleaseUpdateChannel {
+            get {
+                return ResourceManager.GetString("PreferencesUsePreReleaseUpdateChannel", resourceCulture);
             }
         }
         
@@ -6521,6 +4215,96 @@ namespace SerialLoops.Assets {
         public static string ProjectAlreadyExistsErrorTitle {
             get {
                 return ResourceManager.GetString("ProjectAlreadyExistsErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create.
+        /// </summary>
+        public static string ProjectCreateButtonLabel {
+            get {
+                return ResourceManager.GetString("ProjectCreateButtonLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chokuretsu ROM.
+        /// </summary>
+        public static string ProjectCreationChokuretsuROMLabel {
+            get {
+                return ResourceManager.GetString("ProjectCreationChokuretsuROMLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create New Project.
+        /// </summary>
+        public static string ProjectCreationCreateNewProjectTitle {
+            get {
+                return ResourceManager.GetString("ProjectCreationCreateNewProjectTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language Template.
+        /// </summary>
+        public static string ProjectCreationLanguageTemplate {
+            get {
+                return ResourceManager.GetString("ProjectCreationLanguageTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Project.
+        /// </summary>
+        public static string ProjectCreationNewProject {
+            get {
+                return ResourceManager.GetString("ProjectCreationNewProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please choose a project name before creating the project..
+        /// </summary>
+        public static string ProjectCreationNoNameMessage {
+            get {
+                return ResourceManager.GetString("ProjectCreationNoNameMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to None Selected.
+        /// </summary>
+        public static string ProjectCreationNoRomSelected {
+            get {
+                return ResourceManager.GetString("ProjectCreationNoRomSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select a ROM before creating the project..
+        /// </summary>
+        public static string ProjectCreationNoROMSelectedMessage {
+            get {
+                return ResourceManager.GetString("ProjectCreationNoROMSelectedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Creating Project.
+        /// </summary>
+        public static string ProjectCreationProgressMessage {
+            get {
+                return ResourceManager.GetString("ProjectCreationProgressMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Project Creation Warning.
+        /// </summary>
+        public static string ProjectCreationWarning {
+            get {
+                return ResourceManager.GetString("ProjectCreationWarning", resourceCulture);
             }
         }
         
@@ -6579,6 +4363,15 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Duplicate.
+        /// </summary>
+        public static string ProjectDuplicateButtonLabel {
+            get {
+                return ResourceManager.GetString("ProjectDuplicateButtonLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to duplicated project. Please check the logs and file an issue if this is a recurring problem..
         /// </summary>
         public static string ProjectDuplicatedFailureText {
@@ -6624,6 +4417,224 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open Exported Project.
+        /// </summary>
+        public static string ProjectImportFileDialogTitle {
+            get {
+                return ResourceManager.GetString("ProjectImportFileDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ignore Hash?.
+        /// </summary>
+        public static string ProjectImportIgnoreHashCheckbox {
+            get {
+                return ResourceManager.GetString("ProjectImportIgnoreHashCheckbox", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import.
+        /// </summary>
+        public static string ProjectImportImportLabel {
+            get {
+                return ResourceManager.GetString("ProjectImportImportLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No exported project selected.
+        /// </summary>
+        public static string ProjectImportNoExportedProjectSelected {
+            get {
+                return ResourceManager.GetString("ProjectImportNoExportedProjectSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Importing Project.
+        /// </summary>
+        public static string ProjectImportProgressDialogMessage {
+            get {
+                return ResourceManager.GetString("ProjectImportProgressDialogMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The selected ROM&apos;s hash does not match the expected ROM hash. Please ensure you are using the correct base ROM.
+        ///
+        ///If you wish to ignore this, please check the &quot;Ignore Hash&quot; checkbox..
+        /// </summary>
+        public static string ProjectImportSelectedRomHashWarning {
+            get {
+                return ResourceManager.GetString("ProjectImportSelectedRomHashWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Build Unbuilt Files?.
+        /// </summary>
+        public static string ProjectLoadBuildUnbuiltFiles {
+            get {
+                return ResourceManager.GetString("ProjectLoadBuildUnbuiltFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Corrupted File Detected!.
+        /// </summary>
+        public static string ProjectLoadCorruptedFileDetectedTitle {
+            get {
+                return ResourceManager.GetString("ProjectLoadCorruptedFileDetectedTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading Archives (dat.bin).
+        /// </summary>
+        public static string ProjectLoadLoadingDatBin {
+            get {
+                return ResourceManager.GetString("ProjectLoadLoadingDatBin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading Archives (evt.bin).
+        /// </summary>
+        public static string ProjectLoadLoadingEvtBin {
+            get {
+                return ResourceManager.GetString("ProjectLoadLoadingEvtBin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading Archives (grp.bin).
+        /// </summary>
+        public static string ProjectLoadLoadingGrpBin {
+            get {
+                return ResourceManager.GetString("ProjectLoadLoadingGrpBin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading Project: &quot;{0}&quot;.
+        /// </summary>
+        public static string ProjectLoadProgressMessage {
+            get {
+                return ResourceManager.GetString("ProjectLoadProgressMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading: .
+        /// </summary>
+        public static string ProjectLoadProgressPrefix {
+            get {
+                return ResourceManager.GetString("ProjectLoadProgressPrefix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Saved but unbuilt files were detected in the project directory. Would you like to build before loading the project? Not building could result in these files being overwritten..
+        /// </summary>
+        public static string ProjectLoadSavedButUnbuiltFilesDetectedPrompt {
+            get {
+                return ResourceManager.GetString("ProjectLoadSavedButUnbuiltFilesDetectedPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open an item using the explorer to start editing!.
+        /// </summary>
+        public static string ProjectLoadStartEditingPrompt {
+            get {
+                return ResourceManager.GetString("ProjectLoadStartEditingPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Migrate.
+        /// </summary>
+        public static string ProjectMigrateMigrateButton {
+            get {
+                return ResourceManager.GetString("ProjectMigrateMigrateButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Migrating to new ROM.
+        /// </summary>
+        public static string ProjectMigrateProgressMessage {
+            get {
+                return ResourceManager.GetString("ProjectMigrateProgressMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Migrated to new ROM!.
+        /// </summary>
+        public static string ProjectMigrateSuccessMessage {
+            get {
+                return ResourceManager.GetString("ProjectMigrateSuccessMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Migration Complete!.
+        /// </summary>
+        public static string ProjectMigrateSuccessTitle {
+            get {
+                return ResourceManager.GetString("ProjectMigrateSuccessTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Migrate to new ROM.
+        /// </summary>
+        public static string ProjectMigrateTitle {
+            get {
+                return ResourceManager.GetString("ProjectMigrateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  (Missing).
+        /// </summary>
+        public static string ProjectMissingLabel {
+            get {
+                return ResourceManager.GetString("ProjectMissingLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Missing: .
+        /// </summary>
+        public static string ProjectMissingPrefix {
+            get {
+                return ResourceManager.GetString("ProjectMissingPrefix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Project Options.
+        /// </summary>
+        public static string ProjectOptions {
+            get {
+                return ResourceManager.GetString("ProjectOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string ProjectOrHackName {
+            get {
+                return ResourceManager.GetString("ProjectOrHackName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You must enter a name for the project!.
         /// </summary>
         public static string ProjectRenameDuplicateMustEnterNameErrorText {
@@ -6651,155 +4662,200 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Projects.
+        ///   Looks up a localized string similar to Haroohie.
         /// </summary>
-        public static string Projects {
+        public static string ProjectRenameWatermark {
             get {
-                return ResourceManager.GetString("Projects", resourceCulture);
+                return ResourceManager.GetString("ProjectRenameWatermark", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Puzzle.
+        ///   Looks up a localized string similar to Project Settings.
         /// </summary>
-        public static string Puzzle {
+        public static string ProjectSettings {
             get {
-                return ResourceManager.GetString("Puzzle", resourceCulture);
+                return ResourceManager.GetString("ProjectSettings", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Puzzle Interrupt Scenes.
+        ///   Looks up a localized string similar to Game Banner.
         /// </summary>
-        public static string Puzzle_Interrupt_Scenes {
+        public static string ProjectSettingsGameBanner {
             get {
-                return ResourceManager.GetString("Puzzle Interrupt Scenes", resourceCulture);
+                return ResourceManager.GetString("ProjectSettingsGameBanner", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Puzzle Interrupt Scenes Off.
+        ///   Looks up a localized string similar to Game title can only contain up to three lines..
         /// </summary>
-        public static string Puzzle_Interrupt_Scenes_Off {
+        public static string ProjectSettingsGameBannerNameLimitMessages {
             get {
-                return ResourceManager.GetString("Puzzle Interrupt Scenes Off", resourceCulture);
+                return ResourceManager.GetString("ProjectSettingsGameBannerNameLimitMessages", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Puzzle Interrupt Scenes On.
+        ///   Looks up a localized string similar to Please enter a game name for the banner, between 1 and 128 characters..
         /// </summary>
-        public static string Puzzle_Interrupt_Scenes_On {
+        public static string ProjectSettingsGameNameInvalidMessage {
             get {
-                return ResourceManager.GetString("Puzzle Interrupt Scenes On", resourceCulture);
+                return ResourceManager.GetString("ProjectSettingsGameNameInvalidMessage", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Puzzle Interrupt Scenes setting.
+        ///   Looks up a localized string similar to Game Title.
         /// </summary>
-        public static string Puzzle_Interrupt_Scenes_setting {
+        public static string ProjectSettingsGameTitleLabel {
             get {
-                return ResourceManager.GetString("Puzzle Interrupt Scenes setting", resourceCulture);
+                return ResourceManager.GetString("ProjectSettingsGameTitleLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Puzzle Interrupt Scenes ticker tape.
+        ///   Looks up a localized string similar to Replace Game Icon.
         /// </summary>
-        public static string Puzzle_Interrupt_Scenes_ticker_tape {
+        public static string ProjectSettingsReplaceGameIcon {
             get {
-                return ResourceManager.GetString("Puzzle Interrupt Scenes ticker tape", resourceCulture);
+                return ResourceManager.GetString("ProjectSettingsReplaceGameIcon", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Puzzle Interrupt Scenes Unseen Only.
+        ///   Looks up a localized string similar to Accompanying Character.
         /// </summary>
-        public static string Puzzle_Interrupt_Scenes_Unseen_Only {
+        public static string PuzzleEditorAccompanyingCharacterLabel {
             get {
-                return ResourceManager.GetString("Puzzle Interrupt Scenes Unseen Only", resourceCulture);
+                return ResourceManager.GetString("PuzzleEditorAccompanyingCharacterLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Puzzle phase character description.
+        ///   Looks up a localized string similar to Associated Main Topics.
         /// </summary>
-        public static string Puzzle_phase_character_description {
+        public static string PuzzleEditorAssociatedMainTopicsHeader {
             get {
-                return ResourceManager.GetString("Puzzle phase character description", resourceCulture);
+                return ResourceManager.GetString("PuzzleEditorAssociatedMainTopicsHeader", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Puzzle Phase Group.
+        ///   Looks up a localized string similar to Base Time.
         /// </summary>
-        public static string Puzzle_Phase_Group {
+        public static string PuzzleEditorBaseTimeLabel {
             get {
-                return ResourceManager.GetString("Puzzle Phase Group", resourceCulture);
+                return ResourceManager.GetString("PuzzleEditorBaseTimeLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Puzzle phase options ticker tape.
+        ///   Looks up a localized string similar to Continue on Failure.
         /// </summary>
-        public static string Puzzle_phase_options_ticker_tape {
+        public static string PuzzleEditorContinueOnFailureLabel {
             get {
-                return ResourceManager.GetString("Puzzle phase options ticker tape", resourceCulture);
+                return ResourceManager.GetString("PuzzleEditorContinueOnFailureLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Puzzles.
+        ///   Looks up a localized string similar to Haruhi Routes.
         /// </summary>
-        public static string Puzzles {
+        public static string PuzzleEditorHaruhiRoutes {
             get {
-                return ResourceManager.GetString("Puzzles", resourceCulture);
+                return ResourceManager.GetString("PuzzleEditorHaruhiRoutes", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Quick Save.
+        ///   Looks up a localized string similar to Number of Singularities.
         /// </summary>
-        public static string Quick_Save {
+        public static string PuzzleEditorNumSingularities {
             get {
-                return ResourceManager.GetString("Quick Save", resourceCulture);
+                return ResourceManager.GetString("PuzzleEditorNumSingularities", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Quick Save Data.
+        ///   Looks up a localized string similar to Power Character 1.
         /// </summary>
-        public static string Quick_Save_Data {
+        public static string PuzzleEditorPowerCharacter1 {
             get {
-                return ResourceManager.GetString("Quick Save Data", resourceCulture);
+                return ResourceManager.GetString("PuzzleEditorPowerCharacter1", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Quick Toggle.
+        ///   Looks up a localized string similar to Power Character 2.
         /// </summary>
-        public static string Quick_Toggle {
+        public static string PuzzleEditorPowerCharacter2 {
             get {
-                return ResourceManager.GetString("Quick Toggle", resourceCulture);
+                return ResourceManager.GetString("PuzzleEditorPowerCharacter2", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Quicksave data damaged &amp; reset message box.
+        ///   Looks up a localized string similar to Singularity.
         /// </summary>
-        public static string Quicksave_data_damaged___reset_message_box {
+        public static string PuzzleEditorSingularityImage {
             get {
-                return ResourceManager.GetString("Quicksave data damaged & reset message box", resourceCulture);
+                return ResourceManager.GetString("PuzzleEditorSingularityImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Topic Set.
+        /// </summary>
+        public static string PuzzleEditorTopicSet {
+            get {
+                return ResourceManager.GetString("PuzzleEditorTopicSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown 04.
+        /// </summary>
+        public static string PuzzleEditorUnknown04 {
+            get {
+                return ResourceManager.GetString("PuzzleEditorUnknown04", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown 15.
+        /// </summary>
+        public static string PuzzleEditorUnknown15 {
+            get {
+                return ResourceManager.GetString("PuzzleEditorUnknown15", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown 16.
+        /// </summary>
+        public static string PuzzleEditorUnknown16 {
+            get {
+                return ResourceManager.GetString("PuzzleEditorUnknown16", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown 17.
+        /// </summary>
+        public static string PuzzleEditorUnknown17 {
+            get {
+                return ResourceManager.GetString("PuzzleEditorUnknown17", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Recent Projects.
         /// </summary>
-        public static string Recent_Projects {
+        public static string RecentProjects {
             get {
-                return ResourceManager.GetString("Recent Projects", resourceCulture);
+                return ResourceManager.GetString("RecentProjects", resourceCulture);
             }
         }
         
@@ -6813,155 +4869,11 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Red.
-        /// </summary>
-        public static string RED {
-            get {
-                return ResourceManager.GetString("RED", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to References to {0}.
-        /// </summary>
-        public static string References_to__0_ {
-            get {
-                return ResourceManager.GetString("References to {0}", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Refresh Maps List.
-        /// </summary>
-        public static string Refresh_Maps_List {
-            get {
-                return ResourceManager.GetString("Refresh Maps List", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Remaining Uses.
-        /// </summary>
-        public static string Remaining_Uses {
-            get {
-                return ResourceManager.GetString("Remaining Uses", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Remember Project Workspace.
-        /// </summary>
-        public static string Remember_Project_Workspace {
-            get {
-                return ResourceManager.GetString("Remember Project Workspace", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Remove Chibi.
-        /// </summary>
-        public static string Remove_Chibi {
-            get {
-                return ResourceManager.GetString("Remove Chibi", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Remove Command.
-        /// </summary>
-        public static string Remove_Command {
-            get {
-                return ResourceManager.GetString("Remove Command", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Remove Command/Section.
-        /// </summary>
-        public static string Remove_Command_Section {
-            get {
-                return ResourceManager.GetString("Remove Command/Section", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Remove Interactable Object.
-        /// </summary>
-        public static string Remove_Interactable_Object {
-            get {
-                return ResourceManager.GetString("Remove Interactable Object", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Remove Interactable Objects.
-        /// </summary>
-        public static string Remove_Interactable_Objects {
-            get {
-                return ResourceManager.GetString("Remove Interactable Objects", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Remove Map Characters.
-        /// </summary>
-        public static string Remove_Map_Characters {
-            get {
-                return ResourceManager.GetString("Remove Map Characters", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Remove Missing Projects.
-        /// </summary>
-        public static string Remove_Missing_Projects {
-            get {
-                return ResourceManager.GetString("Remove Missing Projects", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Remove Read Flag.
-        /// </summary>
-        public static string Remove_Read_Flag {
-            get {
-                return ResourceManager.GetString("Remove Read Flag", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Remove Starting Chibis.
-        /// </summary>
-        public static string Remove_Starting_Chibis {
-            get {
-                return ResourceManager.GetString("Remove Starting Chibis", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Remove Talk Link.
-        /// </summary>
-        public static string Remove_Talk_Link {
-            get {
-                return ResourceManager.GetString("Remove Talk Link", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Rename.
         /// </summary>
         public static string Rename {
             get {
                 return ResourceManager.GetString("Rename", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Rename Item.
-        /// </summary>
-        public static string Rename_Item {
-            get {
-                return ResourceManager.GetString("Rename Item", resourceCulture);
             }
         }
         
@@ -6975,137 +4887,11 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Replace….
-        /// </summary>
-        public static string Replace___ {
-            get {
-                return ResourceManager.GetString("Replace...", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Replace Background Image.
-        /// </summary>
-        public static string Replace_Background_Image {
-            get {
-                return ResourceManager.GetString("Replace Background Image", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Replace BGM.
-        /// </summary>
-        public static string Replace_BGM {
-            get {
-                return ResourceManager.GetString("Replace BGM", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Replace BGM track.
-        /// </summary>
-        public static string Replace_BGM_track {
-            get {
-                return ResourceManager.GetString("Replace BGM track", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Replace Frames.
-        /// </summary>
-        public static string Replace_Frames {
-            get {
-                return ResourceManager.GetString("Replace Frames", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Replace Game Icon.
-        /// </summary>
-        public static string Replace_Game_Icon {
-            get {
-                return ResourceManager.GetString("Replace Game Icon", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Replace me.
-        /// </summary>
-        public static string Replace_me {
-            get {
-                return ResourceManager.GetString("Replace me", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Replace Sprite.
-        /// </summary>
-        public static string Replace_Sprite {
-            get {
-                return ResourceManager.GetString("Replace Sprite", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Replace System Texture.
-        /// </summary>
-        public static string Replace_System_Texture {
-            get {
-                return ResourceManager.GetString("Replace System Texture", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Replace voiced line.
-        /// </summary>
-        public static string Replace_voiced_line {
-            get {
-                return ResourceManager.GetString("Replace voiced line", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Replace with Palette.
-        /// </summary>
-        public static string Replace_with_Palette {
-            get {
-                return ResourceManager.GetString("Replace with Palette", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Replace as AHX.
-        /// </summary>
-        public static string ReplaceAsAhx {
-            get {
-                return ResourceManager.GetString("ReplaceAsAhx", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Replacing {0}….
         /// </summary>
-        public static string Replacing__0____ {
+        public static string ReplacingItemProgressMessage {
             get {
-                return ResourceManager.GetString("Replacing {0}...", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Replacing BGM.
-        /// </summary>
-        public static string Replacing_BGM {
-            get {
-                return ResourceManager.GetString("Replacing BGM", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Replacing Files.
-        /// </summary>
-        public static string Replacing_Files {
-            get {
-                return ResourceManager.GetString("Replacing Files", resourceCulture);
+                return ResourceManager.GetString("ReplacingItemProgressMessage", resourceCulture);
             }
         }
         
@@ -7119,83 +4905,11 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Reset:.
-        /// </summary>
-        public static string Reset_ {
-            get {
-                return ResourceManager.GetString("Reset:", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Reset options to default title.
-        /// </summary>
-        public static string Reset_options_to_default_title {
-            get {
-                return ResourceManager.GetString("Reset options to default title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Reset settings to default ticker tape.
-        /// </summary>
-        public static string Reset_settings_to_default_ticker_tape {
-            get {
-                return ResourceManager.GetString("Reset settings to default ticker tape", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Reset to default config ticker tape.
-        /// </summary>
-        public static string Reset_to_default_config_ticker_tape {
-            get {
-                return ResourceManager.GetString("Reset to default config ticker tape", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Resetting save data message box.
-        /// </summary>
-        public static string Resetting_save_data_message_box {
-            get {
-                return ResourceManager.GetString("Resetting save data message box", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Restart required.
-        /// </summary>
-        public static string Restart_required {
-            get {
-                return ResourceManager.GetString("Restart required", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Restore.
         /// </summary>
         public static string Restore {
             get {
                 return ResourceManager.GetString("Restore", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Restoring Workspace.
-        /// </summary>
-        public static string Restoring_Workspace {
-            get {
-                return ResourceManager.GetString("Restoring Workspace", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Results.
-        /// </summary>
-        public static string Results {
-            get {
-                return ResourceManager.GetString("Results", resourceCulture);
             }
         }
         
@@ -7209,65 +4923,20 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ROM Hash Mismatch.
+        ///   Looks up a localized string similar to Open ROM.
         /// </summary>
-        public static string ROM_Hash_Mismatch {
+        public static string RomOpenFileDialogTitle {
             get {
-                return ResourceManager.GetString("ROM Hash Mismatch", resourceCulture);
+                return ResourceManager.GetString("RomOpenFileDialogTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Route &quot;{0}&quot; Completed (F{1:D2}).
+        ///   Looks up a localized string similar to Select ROM.
         /// </summary>
-        public static string Route___0___Completed__F_1_D2__ {
+        public static string RomSelectButton {
             get {
-                return ResourceManager.GetString("Route \"{0}\" Completed (F{1:D2})", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Routes.
-        /// </summary>
-        public static string Routes {
-            get {
-                return ResourceManager.GetString("Routes", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Run.
-        /// </summary>
-        public static string Run {
-            get {
-                return ResourceManager.GetString("Run", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Russian.
-        /// </summary>
-        public static string Russian {
-            get {
-                return ResourceManager.GetString("Russian", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Application is sandboxed so logs cannot be directly opened. Logs are located in the Flatpak data directory, which is typically ~/.var/app/club.haroohie.SerialLoops/SerialLoops.
-        /// </summary>
-        public static string SandboxedLogLocationMboxMessage {
-            get {
-                return ResourceManager.GetString("SandboxedLogLocationMboxMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sandboxed App Cannot Launch Log Viewer.
-        /// </summary>
-        public static string SandboxedLogLocationMboxTitle {
-            get {
-                return ResourceManager.GetString("SandboxedLogLocationMboxTitle", resourceCulture);
+                return ResourceManager.GetString("RomSelectButton", resourceCulture);
             }
         }
         
@@ -7281,256 +4950,489 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Save BGM as WAV.
+        ///   Looks up a localized string similar to Asahina Present.
         /// </summary>
-        public static string Save_BGM_as_WAV {
+        public static string SaveEditorAsahinaPresent {
             get {
-                return ResourceManager.GetString("Save BGM as WAV", resourceCulture);
+                return ResourceManager.GetString("SaveEditorAsahinaPresent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Level.
+        /// </summary>
+        public static string SaveEditorCharacterPowerLevel {
+            get {
+                return ResourceManager.GetString("SaveEditorCharacterPowerLevel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Character Power Statuses.
+        /// </summary>
+        public static string SaveEditorCharacterPowerStatusesHeader {
+            get {
+                return ResourceManager.GetString("SaveEditorCharacterPowerStatusesHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Common Save Data….
+        /// </summary>
+        public static string SaveEditorCommonSaveDataEditButtonLabel {
+            get {
+                return ResourceManager.GetString("SaveEditorCommonSaveDataEditButtonLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Common Save Data.
+        /// </summary>
+        public static string SaveEditorCommonSaveDataLabel {
+            get {
+                return ResourceManager.GetString("SaveEditorCommonSaveDataLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Config Data.
+        /// </summary>
+        public static string SaveEditorConfigDataLabel {
+            get {
+                return ResourceManager.GetString("SaveEditorConfigDataLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dialogue Skipping.
+        /// </summary>
+        public static string SaveEditorDialogueSkippingSetting {
+            get {
+                return ResourceManager.GetString("SaveEditorDialogueSkippingSetting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dialogue: .
+        /// </summary>
+        public static string SaveEditorDialogueVolumeConfigLabel {
+            get {
+                return ResourceManager.GetString("SaveEditorDialogueVolumeConfigLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fast Forward.
+        /// </summary>
+        public static string SaveEditorFastForwardLabel {
+            get {
+                return ResourceManager.GetString("SaveEditorFastForwardLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filter.
+        /// </summary>
+        public static string SaveEditorFilterFlagsButton {
+            get {
+                return ResourceManager.GetString("SaveEditorFilterFlagsButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to First Selection.
+        /// </summary>
+        public static string SaveEditorFirstSelectionLabel {
+            get {
+                return ResourceManager.GetString("SaveEditorFirstSelectionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Flag Description.
+        /// </summary>
+        public static string SaveEditorFlagDescriptionLabel {
+            get {
+                return ResourceManager.GetString("SaveEditorFlagDescriptionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Friendship Levels.
+        /// </summary>
+        public static string SaveEditorFriendshipLevelsHeader {
+            get {
+                return ResourceManager.GetString("SaveEditorFriendshipLevelsHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide Unset Flags.
+        /// </summary>
+        public static string SaveEditorHideUnsetFlagsLabel {
+            get {
+                return ResourceManager.GetString("SaveEditorHideUnsetFlagsLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Koizumi Present.
+        /// </summary>
+        public static string SaveEditorKoizumiPresentLabel {
+            get {
+                return ResourceManager.GetString("SaveEditorKoizumiPresentLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kyon Present.
+        /// </summary>
+        public static string SaveEditorKyonPresentLabel {
+            get {
+                return ResourceManager.GetString("SaveEditorKyonPresentLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Chokuretsu Save File.
+        /// </summary>
+        public static string SaveEditorLoadSaveFileDialogTitle {
+            get {
+                return ResourceManager.GetString("SaveEditorLoadSaveFileDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Most Recent Objectives.
+        /// </summary>
+        public static string SaveEditorMostRecentObjectives {
+            get {
+                return ResourceManager.GetString("SaveEditorMostRecentObjectives", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nagato Present.
+        /// </summary>
+        public static string SaveEditorNagatoPresentLabel {
+            get {
+                return ResourceManager.GetString("SaveEditorNagatoPresentLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of Saves: .
+        /// </summary>
+        public static string SaveEditorNumSavesLabel {
+            get {
+                return ResourceManager.GetString("SaveEditorNumSavesLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Batch Dialogue Display.
+        /// </summary>
+        public static string SaveEditorOptionBatchDialogueDisplay {
+            get {
+                return ResourceManager.GetString("SaveEditorOptionBatchDialogueDisplay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uses Since Level Up.
+        /// </summary>
+        public static string SaveEditorPowerUsesSinceLevelUp {
+            get {
+                return ResourceManager.GetString("SaveEditorPowerUsesSinceLevelUp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uses to Level Up.
+        /// </summary>
+        public static string SaveEditorPowerUsesToLevelUp {
+            get {
+                return ResourceManager.GetString("SaveEditorPowerUsesToLevelUp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In order to edit this save file, Serial Loops needs to make a temporary project. However, a project called &quot;{0}&quot; already exists. Would you like to overwrite this project?.
+        /// </summary>
+        public static string SaveEditorProjectAlreadyExistsWarning {
+            get {
+                return ResourceManager.GetString("SaveEditorProjectAlreadyExistsWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Music: .
+        /// </summary>
+        public static string SaveEditorQuicksaveMusic {
+            get {
+                return ResourceManager.GetString("SaveEditorQuicksaveMusic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quick Save.
+        /// </summary>
+        public static string SaveEditorQuickSaveTab {
+            get {
+                return ResourceManager.GetString("SaveEditorQuickSaveTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remaining Uses.
+        /// </summary>
+        public static string SaveEditorRemainingPowerUses {
+            get {
+                return ResourceManager.GetString("SaveEditorRemainingPowerUses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Would you like to save your changes to the save file?.
+        /// </summary>
+        public static string SaveEditorSaveChangesPrompt {
+            get {
+                return ResourceManager.GetString("SaveEditorSaveChangesPrompt", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Save changes to save file?.
         /// </summary>
-        public static string Save_changes_to_save_file_ {
+        public static string SaveEditorSaveChangesPromptTitle {
             get {
-                return ResourceManager.GetString("Save changes to save file?", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Save character sprite GIF.
-        /// </summary>
-        public static string Save_character_sprite_GIF {
-            get {
-                return ResourceManager.GetString("Save character sprite GIF", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Save chibi GIF.
-        /// </summary>
-        public static string Save_chibi_GIF {
-            get {
-                return ResourceManager.GetString("Save chibi GIF", resourceCulture);
+                return ResourceManager.GetString("SaveEditorSaveChangesPromptTitle", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Save Data.
         /// </summary>
-        public static string Save_Data {
+        public static string SaveEditorSaveDataHeader {
             get {
-                return ResourceManager.GetString("Save Data", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Save data 1 damaged &amp; reset message box.
-        /// </summary>
-        public static string Save_data_1_damaged___reset_message_box {
-            get {
-                return ResourceManager.GetString("Save data 1 damaged & reset message box", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Save data 2 damaged &amp; reset message box.
-        /// </summary>
-        public static string Save_data_2_damaged___reset_message_box {
-            get {
-                return ResourceManager.GetString("Save data 2 damaged & reset message box", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Save data damaged &amp; reset message box.
-        /// </summary>
-        public static string Save_data_damaged___reset_message_box {
-            get {
-                return ResourceManager.GetString("Save data damaged & reset message box", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Save Files.
-        /// </summary>
-        public static string Save_Files {
-            get {
-                return ResourceManager.GetString("Save Files", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Save game read fail message box.
-        /// </summary>
-        public static string Save_game_read_fail_message_box {
-            get {
-                return ResourceManager.GetString("Save game read fail message box", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Save game ticker tape.
-        /// </summary>
-        public static string Save_game_ticker_tape {
-            get {
-                return ResourceManager.GetString("Save game ticker tape", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Save game write fail message box.
-        /// </summary>
-        public static string Save_game_write_fail_message_box {
-            get {
-                return ResourceManager.GetString("Save game write fail message box", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Save loaded message box.
-        /// </summary>
-        public static string Save_loaded_message_box {
-            get {
-                return ResourceManager.GetString("Save loaded message box", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Save progress prompt end game message box.
-        /// </summary>
-        public static string Save_progress_prompt_end_game_message_box {
-            get {
-                return ResourceManager.GetString("Save progress prompt end game message box", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Save progress prompt message box.
-        /// </summary>
-        public static string Save_progress_prompt_message_box {
-            get {
-                return ResourceManager.GetString("Save progress prompt message box", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Save Project.
-        /// </summary>
-        public static string Save_Project {
-            get {
-                return ResourceManager.GetString("Save Project", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Save prompt.
-        /// </summary>
-        public static string Save_prompt {
-            get {
-                return ResourceManager.GetString("Save prompt", resourceCulture);
+                return ResourceManager.GetString("SaveEditorSaveDataHeader", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Save Save File.
         /// </summary>
-        public static string Save_Save_File {
+        public static string SaveEditorSaveFileLabel {
             get {
-                return ResourceManager.GetString("Save Save File", resourceCulture);
+                return ResourceManager.GetString("SaveEditorSaveFileLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save Files.
+        /// </summary>
+        public static string SaveEditorSaveFilesHeader {
+            get {
+                return ResourceManager.GetString("SaveEditorSaveFilesHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Save File - {0} - {1}.
+        /// </summary>
+        public static string SaveEditorSaveSlotEditTitle {
+            get {
+                return ResourceManager.GetString("SaveEditorSaveSlotEditTitle", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Save Time: .
         /// </summary>
-        public static string Save_Time_ {
+        public static string SaveEditorSaveTimeLabel {
             get {
-                return ResourceManager.GetString("Save Time:", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Save voiced line as WAV.
-        /// </summary>
-        public static string Save_voiced_line_as_WAV {
-            get {
-                return ResourceManager.GetString("Save voiced line as WAV", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Saved but unbuilt files were detected in the project directory. Would you like to build before loading the project? Not building could result in these files being overwritten..
-        /// </summary>
-        public static string Saved_but_unbuilt_files_were_detected_in_the_project_directory__Would_you_like_to_build_before_loading_the_project__Not_building_could_result_in_these_files_being_overwritten_ {
-            get {
-                return ResourceManager.GetString("Saved but unbuilt files were detected in the project directory. Would you like to" +
-                        " build before loading the project? Not building could result in these files bein" +
-                        "g overwritten.", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Saving GIF….
-        /// </summary>
-        public static string Saving_GIF___ {
-            get {
-                return ResourceManager.GetString("Saving GIF...", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Saving prompt message box.
-        /// </summary>
-        public static string Saving_prompt_message_box {
-            get {
-                return ResourceManager.GetString("Saving prompt message box", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Scale Image.
-        /// </summary>
-        public static string Scale_Image {
-            get {
-                return ResourceManager.GetString("Scale Image", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Scale to Fit:.
-        /// </summary>
-        public static string Scale_to_Fit_ {
-            get {
-                return ResourceManager.GetString("Scale to Fit:", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Scenario.
-        /// </summary>
-        public static string Scenario {
-            get {
-                return ResourceManager.GetString("Scenario", resourceCulture);
+                return ResourceManager.GetString("SaveEditorSaveTimeLabel", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Scenario Command Index: .
         /// </summary>
-        public static string Scenario_Command_Index_ {
+        public static string SaveEditorScenarioCommandIndex {
             get {
-                return ResourceManager.GetString("Scenario Command Index:", resourceCulture);
+                return ResourceManager.GetString("SaveEditorScenarioCommandIndex", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Scenarios.
+        ///   Looks up a localized string similar to Script: .
         /// </summary>
-        public static string Scenarios {
+        public static string SaveEditorScript {
             get {
-                return ResourceManager.GetString("Scenarios", resourceCulture);
+                return ResourceManager.GetString("SaveEditorScript", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Script Position.
+        /// </summary>
+        public static string SaveEditorScriptPosition {
+            get {
+                return ResourceManager.GetString("SaveEditorScriptPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Section:.
+        /// </summary>
+        public static string SaveEditorScriptSectionQuicksave {
+            get {
+                return ResourceManager.GetString("SaveEditorScriptSectionQuicksave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Second Selection.
+        /// </summary>
+        public static string SaveEditorSecondSelectionLabel {
+            get {
+                return ResourceManager.GetString("SaveEditorSecondSelectionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Skip Already Read.
+        /// </summary>
+        public static string SaveEditorSkipAlreadyReadSetting {
+            get {
+                return ResourceManager.GetString("SaveEditorSkipAlreadyReadSetting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File {0}.
+        /// </summary>
+        public static string SaveEditorSlotName {
+            get {
+                return ResourceManager.GetString("SaveEditorSlotName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sound Effects: .
+        /// </summary>
+        public static string SaveEditorSoundEffectsLabel {
+            get {
+                return ResourceManager.GetString("SaveEditorSoundEffectsLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Temporary Project Already Exists!.
+        /// </summary>
+        public static string SaveEditorTemporaryProjectExistsMessageTitle {
+            get {
+                return ResourceManager.GetString("SaveEditorTemporaryProjectExistsMessageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Topic Stock Mode.
+        /// </summary>
+        public static string SaveEditorTopicStockModeOption {
+            get {
+                return ResourceManager.GetString("SaveEditorTopicStockModeOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unseen Only.
+        /// </summary>
+        public static string SaveEditorUnseenOnlySetting {
+            get {
+                return ResourceManager.GetString("SaveEditorUnseenOnlySetting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Voices Config.
+        /// </summary>
+        public static string SaveEditorVoicesConfigHeader {
+            get {
+                return ResourceManager.GetString("SaveEditorVoicesConfigHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Voices: .
+        /// </summary>
+        public static string SaveEditorVoicesLabel {
+            get {
+                return ResourceManager.GetString("SaveEditorVoicesLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Volume Config.
+        /// </summary>
+        public static string SaveEditorVolumeConfigHeader {
+            get {
+                return ResourceManager.GetString("SaveEditorVolumeConfigHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EPISODE: {0}.
+        /// </summary>
+        public static string SaveFilePreviewText {
+            get {
+                return ResourceManager.GetString("SaveFilePreviewText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Flags.
+        /// </summary>
+        public static string SaveSlotEditorFlagsHeader {
+            get {
+                return ResourceManager.GetString("SaveSlotEditorFlagsHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Puzzle Interrupt Scenes.
+        /// </summary>
+        public static string SaveSlotEditorPuzzleInterruptScenes {
+            get {
+                return ResourceManager.GetString("SaveSlotEditorPuzzleInterruptScenes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear all commands from the game scenario?
+        ///This action is irreversible..
+        /// </summary>
+        public static string ScenarioEditorClearCommandsMessage {
+            get {
+                return ResourceManager.GetString("ScenarioEditorClearCommandsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear Scenario.
+        /// </summary>
+        public static string ScenarioEditorClearScenarioLabel {
+            get {
+                return ResourceManager.GetString("ScenarioEditorClearScenarioLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Script.
+        /// </summary>
+        public static string ScenarioParamScript {
+            get {
+                return ResourceManager.GetString("ScenarioParamScript", resourceCulture);
             }
         }
         
@@ -7661,83 +5563,38 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Scene.
+        ///   Looks up a localized string similar to Both.
         /// </summary>
-        public static string Scene {
+        public static string ScreenSelectorBothScreens {
             get {
-                return ResourceManager.GetString("Scene", resourceCulture);
+                return ResourceManager.GetString("ScreenSelectorBothScreens", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Scenes to Skip.
+        ///   Looks up a localized string similar to Bottom Screen.
         /// </summary>
-        public static string Scenes_to_Skip {
+        public static string ScreenSelectorBottomScreen {
             get {
-                return ResourceManager.GetString("Scenes to Skip", resourceCulture);
+                return ResourceManager.GetString("ScreenSelectorBottomScreen", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Screen Position.
+        ///   Looks up a localized string similar to Top Screen.
         /// </summary>
-        public static string Screen_Position {
+        public static string ScreenSelectorTopScreen {
             get {
-                return ResourceManager.GetString("Screen Position", resourceCulture);
+                return ResourceManager.GetString("ScreenSelectorTopScreen", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Script.
+        ///   Looks up a localized string similar to Target Screen.
         /// </summary>
-        public static string Script {
+        public static string ScreenSelectTarget {
             get {
-                return ResourceManager.GetString("Script", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Script: .
-        /// </summary>
-        public static string Script_ {
-            get {
-                return ResourceManager.GetString("Script:", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Script {0} Section {1} Completed (F{2:D2}).
-        /// </summary>
-        public static string Script__0__Section__1__Completed__F_2_D2__ {
-            get {
-                return ResourceManager.GetString("Script {0} Section {1} Completed (F{2:D2})", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Script Position.
-        /// </summary>
-        public static string Script_Position {
-            get {
-                return ResourceManager.GetString("Script Position", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Script Section.
-        /// </summary>
-        public static string Script_Section {
-            get {
-                return ResourceManager.GetString("Script Section", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Section:.
-        /// </summary>
-        public static string Script_Section_ {
-            get {
-                return ResourceManager.GetString("Script Section:", resourceCulture);
+                return ResourceManager.GetString("ScreenSelectTarget", resourceCulture);
             }
         }
         
@@ -7765,15 +5622,6 @@ namespace SerialLoops.Assets {
         public static string ScriptCommandEditorSelectParam6 {
             get {
                 return ResourceManager.GetString("ScriptCommandEditorSelectParam6", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Conditional 4.
-        /// </summary>
-        public static string ScriptCommandEditorSelectParam7 {
-            get {
-                return ResourceManager.GetString("ScriptCommandEditorSelectParam7", resourceCulture);
             }
         }
         
@@ -8475,6 +6323,196 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Choice.
+        /// </summary>
+        public static string ScriptEditorAddChoiceLabel {
+            get {
+                return ResourceManager.GetString("ScriptEditorAddChoiceLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Command Type.
+        /// </summary>
+        public static string ScriptEditorAddCommandDialogTitle {
+            get {
+                return ResourceManager.GetString("ScriptEditorAddCommandDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Command.
+        /// </summary>
+        public static string ScriptEditorAddCommandLabel {
+            get {
+                return ResourceManager.GetString("ScriptEditorAddCommandLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Interactable Object.
+        /// </summary>
+        public static string ScriptEditorAddInteractableObjectLabel {
+            get {
+                return ResourceManager.GetString("ScriptEditorAddInteractableObjectLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Map Characters.
+        /// </summary>
+        public static string ScriptEditorAddMapCharactersSectionLabel {
+            get {
+                return ResourceManager.GetString("ScriptEditorAddMapCharactersSectionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Section Name:.
+        /// </summary>
+        public static string ScriptEditorAddScriptSectionLabel {
+            get {
+                return ResourceManager.GetString("ScriptEditorAddScriptSectionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Section.
+        /// </summary>
+        public static string ScriptEditorAddScriptSectionToolTip {
+            get {
+                return ResourceManager.GetString("ScriptEditorAddScriptSectionToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Starting Chibis.
+        /// </summary>
+        public static string ScriptEditorAddStartingChibisSectionLabel {
+            get {
+                return ResourceManager.GetString("ScriptEditorAddStartingChibisSectionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apply Template.
+        /// </summary>
+        public static string ScriptEditorApplyTemplateLabel {
+            get {
+                return ResourceManager.GetString("ScriptEditorApplyTemplateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot Delete Root Section!.
+        /// </summary>
+        public static string ScriptEditorCannotDeleteRootSection {
+            get {
+                return ResourceManager.GetString("ScriptEditorCannotDeleteRootSection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The root section cannot be deleted!.
+        /// </summary>
+        public static string ScriptEditorCannotDeleteRootWarning {
+            get {
+                return ResourceManager.GetString("ScriptEditorCannotDeleteRootWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chess File.
+        /// </summary>
+        public static string ScriptEditorChessFileLabel {
+            get {
+                return ResourceManager.GetString("ScriptEditorChessFileLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Win Section.
+        /// </summary>
+        public static string ScriptEditorChessWinSectionLabel {
+            get {
+                return ResourceManager.GetString("ScriptEditorChessWinSectionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choices.
+        /// </summary>
+        public static string ScriptEditorChoicesLabel {
+            get {
+                return ResourceManager.GetString("ScriptEditorChoicesLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear All Guides.
+        /// </summary>
+        public static string ScriptEditorClearAllChessGuidesLabel {
+            get {
+                return ResourceManager.GetString("ScriptEditorClearAllChessGuidesLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear Move.
+        /// </summary>
+        public static string ScriptEditorClearChessMoveLabel {
+            get {
+                return ResourceManager.GetString("ScriptEditorClearChessMoveLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear Script.
+        /// </summary>
+        public static string ScriptEditorClearScriptLabel {
+            get {
+                return ResourceManager.GetString("ScriptEditorClearScriptLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to clear the script?
+        ///This action is irreversible..
+        /// </summary>
+        public static string ScriptEditorClearScriptPrompt {
+            get {
+                return ResourceManager.GetString("ScriptEditorClearScriptPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear Script?.
+        /// </summary>
+        public static string ScriptEditorClearScriptPromptTitle {
+            get {
+                return ResourceManager.GetString("ScriptEditorClearScriptPromptTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Conditional.
+        /// </summary>
+        public static string ScriptEditorConditionalParameterLabel {
+            get {
+                return ResourceManager.GetString("ScriptEditorConditionalParameterLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Map Characters?.
+        /// </summary>
+        public static string ScriptEditorDeleteMapChacatersPromptTitle {
+            get {
+                return ResourceManager.GetString("ScriptEditorDeleteMapChacatersPromptTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The sprite entrance transition is necessary for making the sprite appear on the screen when first entering a scene. It plays before the dialogue is shown..
         /// </summary>
         public static string ScriptEditorDialogueSpriteEntranceHelp {
@@ -8489,6 +6527,51 @@ namespace SerialLoops.Assets {
         public static string ScriptEditorDialogueSpriteExitHelp {
             get {
                 return ResourceManager.GetString("ScriptEditorDialogueSpriteExitHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duplicate Section Name.
+        /// </summary>
+        public static string ScriptEditorDupeSectionNameErrorTitle {
+            get {
+                return ResourceManager.GetString("ScriptEditorDupeSectionNameErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Interactable Objects.
+        /// </summary>
+        public static string ScriptEditorInteractableObjects {
+            get {
+                return ResourceManager.GetString("ScriptEditorInteractableObjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Map Characters.
+        /// </summary>
+        public static string ScriptEditorMapCharactersLabel {
+            get {
+                return ResourceManager.GetString("ScriptEditorMapCharactersLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move Command Down.
+        /// </summary>
+        public static string ScriptEditorMoveCommandDown {
+            get {
+                return ResourceManager.GetString("ScriptEditorMoveCommandDown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move Command Up.
+        /// </summary>
+        public static string ScriptEditorMoveCommandUp {
+            get {
+                return ResourceManager.GetString("ScriptEditorMoveCommandUp", resourceCulture);
             }
         }
         
@@ -8511,11 +6594,92 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This script is not included in the event table..
+        /// </summary>
+        public static string ScriptEditorNotInEventTableWarning {
+            get {
+                return ResourceManager.GetString("ScriptEditorNotInEventTableWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select a Topic.
+        /// </summary>
+        public static string ScriptEditorNoTopicYetButton {
+            get {
+                return ResourceManager.GetString("ScriptEditorNoTopicYetButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Refresh Maps List.
+        /// </summary>
+        public static string ScriptEditorRefreshMapsList {
+            get {
+                return ResourceManager.GetString("ScriptEditorRefreshMapsList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove Chibi.
+        /// </summary>
+        public static string ScriptEditorRemoveChibi {
+            get {
+                return ResourceManager.GetString("ScriptEditorRemoveChibi", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove Command.
+        /// </summary>
+        public static string ScriptEditorRemoveCommand {
+            get {
+                return ResourceManager.GetString("ScriptEditorRemoveCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove Command or Section.
         /// </summary>
         public static string ScriptEditorRemoveCommandOrSectionTip {
             get {
                 return ResourceManager.GetString("ScriptEditorRemoveCommandOrSectionTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove Interactable Object.
+        /// </summary>
+        public static string ScriptEditorRemoveInteractableObject {
+            get {
+                return ResourceManager.GetString("ScriptEditorRemoveInteractableObject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove Map Characters.
+        /// </summary>
+        public static string ScriptEditorRemoveMapCharacters {
+            get {
+                return ResourceManager.GetString("ScriptEditorRemoveMapCharacters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove Starting Chibis.
+        /// </summary>
+        public static string ScriptEditorRemoveStartingChibis {
+            get {
+                return ResourceManager.GetString("ScriptEditorRemoveStartingChibis", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove Talk Link.
+        /// </summary>
+        public static string ScriptEditorRemoveTalkLink {
+            get {
+                return ResourceManager.GetString("ScriptEditorRemoveTalkLink", resourceCulture);
             }
         }
         
@@ -8529,38 +6693,686 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Scripts.
+        ///   Looks up a localized string similar to Section name already exists! Please pick a different name for this section..
         /// </summary>
-        public static string Scripts {
+        public static string ScriptEditorSectionNameExistsWarning {
             get {
-                return ResourceManager.GetString("Scripts", resourceCulture);
+                return ResourceManager.GetString("ScriptEditorSectionNameExistsWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter a value for the section name.
+        /// </summary>
+        public static string ScriptEditorSectionNameInvalid {
+            get {
+                return ResourceManager.GetString("ScriptEditorSectionNameInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Starting Chibis.
+        /// </summary>
+        public static string ScriptEditorStartingChibis {
+            get {
+                return ResourceManager.GetString("ScriptEditorStartingChibis", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Chibi.
+        /// </summary>
+        public static string ScriptMapEditorAddChibiLabel {
+            get {
+                return ResourceManager.GetString("ScriptMapEditorAddChibiLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move 1.
+        /// </summary>
+        public static string ScriptParamChessMove1 {
+            get {
+                return ResourceManager.GetString("ScriptParamChessMove1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move 2.
+        /// </summary>
+        public static string ScriptParamChessMove2 {
+            get {
+                return ResourceManager.GetString("ScriptParamChessMove2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter/Exit.
+        /// </summary>
+        public static string ScriptParamChibiEnterExit {
+            get {
+                return ResourceManager.GetString("ScriptParamChibiEnterExit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dialogue.
+        /// </summary>
+        public static string ScriptParamDialogue {
+            get {
+                return ResourceManager.GetString("ScriptParamDialogue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disable Lip Flap.
+        /// </summary>
+        public static string ScriptParamDisableLipFlap {
+            get {
+                return ResourceManager.GetString("ScriptParamDisableLipFlap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Display?.
+        /// </summary>
+        public static string ScriptParamDisplay {
+            get {
+                return ResourceManager.GetString("ScriptParamDisplay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Display from Bottom.
+        /// </summary>
+        public static string ScriptParamDisplayFromBottom {
+            get {
+                return ResourceManager.GetString("ScriptParamDisplayFromBottom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Don&apos;t Clear Text.
+        /// </summary>
+        public static string ScriptParamDontClearText {
+            get {
+                return ResourceManager.GetString("ScriptParamDontClearText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duration (Frames).
+        /// </summary>
+        public static string ScriptParamDuration {
+            get {
+                return ResourceManager.GetString("ScriptParamDuration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Emote.
+        /// </summary>
+        public static string ScriptParamEmote {
+            get {
+                return ResourceManager.GetString("ScriptParamEmote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to End Script Section.
+        /// </summary>
+        public static string ScriptParamEndScriptSection {
+            get {
+                return ResourceManager.GetString("ScriptParamEndScriptSection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Episode Header.
+        /// </summary>
+        public static string ScriptParamEpisodeHeader {
+            get {
+                return ResourceManager.GetString("ScriptParamEpisodeHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Crossfade Time (Frames).
+        /// </summary>
+        public static string ScriptParameterCrossfadeTime {
+            get {
+                return ResourceManager.GetString("ScriptParameterCrossfadeTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delay (Frames).
+        /// </summary>
+        public static string ScriptParameterDelay {
+            get {
+                return ResourceManager.GetString("ScriptParameterDelay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text Entrance Effect.
+        /// </summary>
+        public static string ScriptParameterTextEntranceEffect {
+            get {
+                return ResourceManager.GetString("ScriptParameterTextEntranceEffect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fade In Percentage.
+        /// </summary>
+        public static string ScriptParamFadeInPercentage {
+            get {
+                return ResourceManager.GetString("ScriptParamFadeInPercentage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fade In Time (Frames).
+        /// </summary>
+        public static string ScriptParamFadeInTime {
+            get {
+                return ResourceManager.GetString("ScriptParamFadeInTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fade Out Percentage.
+        /// </summary>
+        public static string ScriptParamFadeOutPercentage {
+            get {
+                return ResourceManager.GetString("ScriptParamFadeOutPercentage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fade Out Time (Frames).
+        /// </summary>
+        public static string ScriptParamFadeOutTime {
+            get {
+                return ResourceManager.GetString("ScriptParamFadeOutTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fade Time (Frames).
+        /// </summary>
+        public static string ScriptParamFadeTime {
+            get {
+                return ResourceManager.GetString("ScriptParamFadeTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Flag.
+        /// </summary>
+        public static string ScriptParamFlag {
+            get {
+                return ResourceManager.GetString("ScriptParamFlag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hold Time (Frames).
+        /// </summary>
+        public static string ScriptParamHoldTime {
+            get {
+                return ResourceManager.GetString("ScriptParamHoldTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Horizontal Intensity.
+        /// </summary>
+        public static string ScriptParamHorizontalIntensity {
+            get {
+                return ResourceManager.GetString("ScriptParamHorizontalIntensity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Location.
+        /// </summary>
+        public static string ScriptParamItemLocation {
+            get {
+                return ResourceManager.GetString("ScriptParamItemLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load Sound.
+        /// </summary>
+        public static string ScriptParamLoadSound {
+            get {
+                return ResourceManager.GetString("ScriptParamLoadSound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Map.
+        /// </summary>
+        public static string ScriptParamMap {
+            get {
+                return ResourceManager.GetString("ScriptParamMap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Map Character Set.
+        /// </summary>
+        public static string ScriptParamMapCharacterSet {
+            get {
+                return ResourceManager.GetString("ScriptParamMapCharacterSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lose 2 Section.
+        /// </summary>
+        public static string ScriptParamMiss2Section {
+            get {
+                return ResourceManager.GetString("ScriptParamMiss2Section", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lose Section.
+        /// </summary>
+        public static string ScriptParamMissSection {
+            get {
+                return ResourceManager.GetString("ScriptParamMissSection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mode.
+        /// </summary>
+        public static string ScriptParamMode {
+            get {
+                return ResourceManager.GetString("ScriptParamMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modify by.
+        /// </summary>
+        public static string ScriptParamModifyBy {
+            get {
+                return ResourceManager.GetString("ScriptParamModifyBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Music.
+        /// </summary>
+        public static string ScriptParamMusic {
+            get {
+                return ResourceManager.GetString("ScriptParamMusic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Option 1.
+        /// </summary>
+        public static string ScriptParamOption1 {
+            get {
+                return ResourceManager.GetString("ScriptParamOption1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Option 2.
+        /// </summary>
+        public static string ScriptParamOption2 {
+            get {
+                return ResourceManager.GetString("ScriptParamOption2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Option 3.
+        /// </summary>
+        public static string ScriptParamOption3 {
+            get {
+                return ResourceManager.GetString("ScriptParamOption3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Place.
+        /// </summary>
+        public static string ScriptParamPlace {
+            get {
+                return ResourceManager.GetString("ScriptParamPlace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Puzzle.
+        /// </summary>
+        public static string ScriptParamPuzzle {
+            get {
+                return ResourceManager.GetString("ScriptParamPuzzle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scene.
+        /// </summary>
+        public static string ScriptParamScene {
+            get {
+                return ResourceManager.GetString("ScriptParamScene", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scenes to Skip.
+        /// </summary>
+        public static string ScriptParamScenesToSkip {
+            get {
+                return ResourceManager.GetString("ScriptParamScenesToSkip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Location.
+        /// </summary>
+        public static string ScriptParamScreenFadeLocation {
+            get {
+                return ResourceManager.GetString("ScriptParamScreenFadeLocation", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Scroll Direction.
         /// </summary>
-        public static string Scroll_Direction {
+        public static string ScriptParamScrollDirection {
             get {
-                return ResourceManager.GetString("Scroll Direction", resourceCulture);
+                return ResourceManager.GetString("ScriptParamScrollDirection", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Scroll Speed.
         /// </summary>
-        public static string Scroll_Speed {
+        public static string ScriptParamScrollSpeed {
             get {
-                return ResourceManager.GetString("Scroll Speed", resourceCulture);
+                return ResourceManager.GetString("ScriptParamScrollSpeed", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Scrolling BG.
+        ///   Looks up a localized string similar to Set/Clear.
         /// </summary>
-        public static string Scrolling_BG {
+        public static string ScriptParamSetClear {
             get {
-                return ResourceManager.GetString("Scrolling BG", resourceCulture);
+                return ResourceManager.GetString("ScriptParamSetClear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show.
+        /// </summary>
+        public static string ScriptParamShow {
+            get {
+                return ResourceManager.GetString("ScriptParamShow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sound.
+        /// </summary>
+        public static string ScriptParamSound {
+            get {
+                return ResourceManager.GetString("ScriptParamSound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sprite.
+        /// </summary>
+        public static string ScriptParamSprite {
+            get {
+                return ResourceManager.GetString("ScriptParamSprite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sprite Layer.
+        /// </summary>
+        public static string ScriptParamSpriteLayer {
+            get {
+                return ResourceManager.GetString("ScriptParamSpriteLayer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sprite Shake.
+        /// </summary>
+        public static string ScriptParamSpriteShake {
+            get {
+                return ResourceManager.GetString("ScriptParamSpriteShake", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text Speed.
+        /// </summary>
+        public static string ScriptParamTextDisplaySpeed {
+            get {
+                return ResourceManager.GetString("ScriptParamTextDisplaySpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text Voice Font.
+        /// </summary>
+        public static string ScriptParamTextVoiceFont {
+            get {
+                return ResourceManager.GetString("ScriptParamTextVoiceFont", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transition Time (Frames).
+        /// </summary>
+        public static string ScriptParamTime {
+            get {
+                return ResourceManager.GetString("ScriptParamTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Topic.
+        /// </summary>
+        public static string ScriptParamTopic {
+            get {
+                return ResourceManager.GetString("ScriptParamTopic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transition.
+        /// </summary>
+        public static string ScriptParamTransition {
+            get {
+                return ResourceManager.GetString("ScriptParamTransition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to unknown01.
+        /// </summary>
+        public static string ScriptParamUnknown01 {
+            get {
+                return ResourceManager.GetString("ScriptParamUnknown01", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to unknown02.
+        /// </summary>
+        public static string ScriptParamUnknown02 {
+            get {
+                return ResourceManager.GetString("ScriptParamUnknown02", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to unknown03.
+        /// </summary>
+        public static string ScriptParamUnknown03 {
+            get {
+                return ResourceManager.GetString("ScriptParamUnknown03", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vertical Intensity.
+        /// </summary>
+        public static string ScriptParamVerticalIntensity {
+            get {
+                return ResourceManager.GetString("ScriptParamVerticalIntensity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visible?.
+        /// </summary>
+        public static string ScriptParamVisible {
+            get {
+                return ResourceManager.GetString("ScriptParamVisible", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Voice Line.
+        /// </summary>
+        public static string ScriptParamVoiceLine {
+            get {
+                return ResourceManager.GetString("ScriptParamVoiceLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Volume.
+        /// </summary>
+        public static string ScriptParamVolume {
+            get {
+                return ResourceManager.GetString("ScriptParamVolume", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wait Time (Frames).
+        /// </summary>
+        public static string ScriptParamWaitTime {
+            get {
+                return ResourceManager.GetString("ScriptParamWaitTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Command.
+        /// </summary>
+        public static string ScriptScenarioNewCommand {
+            get {
+                return ResourceManager.GetString("ScriptScenarioNewCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is already a template with that name. Please choose a different name for your template..
+        /// </summary>
+        public static string ScriptTemplateAlreadyExistsMessage {
+            get {
+                return ResourceManager.GetString("ScriptTemplateAlreadyExistsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Template Already Exists.
+        /// </summary>
+        public static string ScriptTemplateAlreadyExistsTitle {
+            get {
+                return ResourceManager.GetString("ScriptTemplateAlreadyExistsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create.
+        /// </summary>
+        public static string ScriptTemplateCreateButtonLabel {
+            get {
+                return ResourceManager.GetString("ScriptTemplateCreateButtonLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Template Description.
+        /// </summary>
+        public static string ScriptTemplateDescription {
+            get {
+                return ResourceManager.GetString("ScriptTemplateDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Generate Template.
+        /// </summary>
+        public static string ScriptTemplateGenerateLabel {
+            get {
+                return ResourceManager.GetString("ScriptTemplateGenerateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Template Name.
+        /// </summary>
+        public static string ScriptTemplateName {
+            get {
+                return ResourceManager.GetString("ScriptTemplateName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Template Properties.
+        /// </summary>
+        public static string ScriptTemplateProperties {
+            get {
+                return ResourceManager.GetString("ScriptTemplateProperties", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select a template.
+        /// </summary>
+        public static string ScriptTemplateSelectPrompt {
+            get {
+                return ResourceManager.GetString("ScriptTemplateSelectPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Template to Apply.
+        /// </summary>
+        public static string ScriptTemplateSelectToApply {
+            get {
+                return ResourceManager.GetString("ScriptTemplateSelectToApply", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Template.
+        /// </summary>
+        public static string ScriptTemplateToolbarText {
+            get {
+                return ResourceManager.GetString("ScriptTemplateToolbarText", resourceCulture);
             }
         }
         
@@ -8583,344 +7395,137 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search….
+        ///   Looks up a localized string similar to Toggle All Off.
         /// </summary>
-        public static string Search___ {
+        public static string SearchDialogAllBooleansOff {
             get {
-                return ResourceManager.GetString("Search...", resourceCulture);
+                return ResourceManager.GetString("SearchDialogAllBooleansOff", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search for items by name, ID, or type..
+        ///   Looks up a localized string similar to Toggle All On.
         /// </summary>
-        public static string Search_for_items_by_name__ID__or_type_ {
+        public static string SearchDialogAllBooleansOn {
             get {
-                return ResourceManager.GetString("Search for items by name, ID, or type.", resourceCulture);
+                return ResourceManager.GetString("SearchDialogAllBooleansOn", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search Project.
+        ///   Looks up a localized string similar to Press ENTER to execute search.
         /// </summary>
-        public static string Search_Project {
+        public static string SearchDialogDefaultSearchMessage {
             get {
-                return ResourceManager.GetString("Search Project", resourceCulture);
+                return ResourceManager.GetString("SearchDialogDefaultSearchMessage", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search Scope.
+        ///   Looks up a localized string similar to Filter by Item.
         /// </summary>
-        public static string Search_Scope {
+        public static string SearchDialogFilterByItem {
             get {
-                return ResourceManager.GetString("Search Scope", resourceCulture);
+                return ResourceManager.GetString("SearchDialogFilterByItem", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Searching.
+        ///   Looks up a localized string similar to Invalid search terms.
         /// </summary>
-        public static string Searching {
+        public static string SearchDialogInvalidTermsLabel {
             get {
-                return ResourceManager.GetString("Searching", resourceCulture);
+                return ResourceManager.GetString("SearchDialogInvalidTermsLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select at least one search scope and item filter..
+        /// </summary>
+        public static string SearchDialogNoScopeOrFilterMessage {
+            get {
+                return ResourceManager.GetString("SearchDialogNoScopeOrFilterMessage", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Searching {0}….
         /// </summary>
-        public static string Searching__0____ {
+        public static string SearchDialogProgressMessage {
             get {
-                return ResourceManager.GetString("Searching {0}...", resourceCulture);
+                return ResourceManager.GetString("SearchDialogProgressMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} results found.
+        /// </summary>
+        public static string SearchDialogResultsDisplay {
+            get {
+                return ResourceManager.GetString("SearchDialogResultsDisplay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search Scope.
+        /// </summary>
+        public static string SearchDialogSearchScope {
+            get {
+                return ResourceManager.GetString("SearchDialogSearchScope", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search Project.
+        /// </summary>
+        public static string SearchProjectLabel {
+            get {
+                return ResourceManager.GetString("SearchProjectLabel", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to sec.
         /// </summary>
-        public static string sec {
+        public static string SecondsLabel {
             get {
-                return ResourceManager.GetString("sec", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Second prompt on data being erased.
-        /// </summary>
-        public static string Second_prompt_on_data_being_erased {
-            get {
-                return ResourceManager.GetString("Second prompt on data being erased", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Second Selection.
-        /// </summary>
-        public static string Second_Selection {
-            get {
-                return ResourceManager.GetString("Second Selection", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Section Label.
-        /// </summary>
-        public static string Section_Label {
-            get {
-                return ResourceManager.GetString("Section Label", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Section Name:.
-        /// </summary>
-        public static string Section_Name_ {
-            get {
-                return ResourceManager.GetString("Section Name:", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Section name already exists! Please pick a different name for this section..
-        /// </summary>
-        public static string Section_name_already_exists__Please_pick_a_different_name_for_this_section_ {
-            get {
-                return ResourceManager.GetString("Section name already exists! Please pick a different name for this section.", resourceCulture);
+                return ResourceManager.GetString("SecondsLabel", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Select….
         /// </summary>
-        public static string Select___ {
+        public static string SelectButtonLabel {
             get {
-                return ResourceManager.GetString("Select...", resourceCulture);
+                return ResourceManager.GetString("SelectButtonLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select a Topic.
+        ///   Looks up a localized string similar to There are no Serial Loops crash logs. No crashes so far!.
         /// </summary>
-        public static string Select_a_Topic {
+        public static string SerialLoopsNoCrashLogsMessage {
             get {
-                return ResourceManager.GetString("Select a Topic", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select an exported project to see expected ROM hash.
-        /// </summary>
-        public static string Select_an_exported_project_to_see_expected_ROM_hash {
-            get {
-                return ResourceManager.GetString("Select an exported project to see expected ROM hash", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select base ROM.
-        /// </summary>
-        public static string Select_base_ROM {
-            get {
-                return ResourceManager.GetString("Select base ROM", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select character sprite export folder.
-        /// </summary>
-        public static string Select_character_sprite_export_folder {
-            get {
-                return ResourceManager.GetString("Select character sprite export folder", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select chibi export folder.
-        /// </summary>
-        public static string Select_chibi_export_folder {
-            get {
-                return ResourceManager.GetString("Select chibi export folder", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select Command Type.
-        /// </summary>
-        public static string Select_Command_Type {
-            get {
-                return ResourceManager.GetString("Select Command Type", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select frames.
-        /// </summary>
-        public static string Select_frames {
-            get {
-                return ResourceManager.GetString("Select frames", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select Graphic.
-        /// </summary>
-        public static string Select_Graphic {
-            get {
-                return ResourceManager.GetString("Select Graphic", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select Hack Files.
-        /// </summary>
-        public static string Select_Hack_Files {
-            get {
-                return ResourceManager.GetString("Select Hack Files", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select Icon.
-        /// </summary>
-        public static string Select_Icon {
-            get {
-                return ResourceManager.GetString("Select Icon", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select ROM.
-        /// </summary>
-        public static string Select_ROM {
-            get {
-                return ResourceManager.GetString("Select ROM", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select Template to Apply.
-        /// </summary>
-        public static string Select_Template_to_Apply {
-            get {
-                return ResourceManager.GetString("Select Template to Apply", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sepia.
-        /// </summary>
-        public static string SEPIA {
-            get {
-                return ResourceManager.GetString("SEPIA", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Serial Loops ASM Hack.
-        /// </summary>
-        public static string Serial_Loops_ASM_Hack {
-            get {
-                return ResourceManager.GetString("Serial Loops ASM Hack", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Serial Loops Exported Project.
-        /// </summary>
-        public static string Serial_Loops_Exported_Project {
-            get {
-                return ResourceManager.GetString("Serial Loops Exported Project", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Serial Loops Project.
-        /// </summary>
-        public static string Serial_Loops_Project {
-            get {
-                return ResourceManager.GetString("Serial Loops Project", resourceCulture);
+                return ResourceManager.GetString("SerialLoopsNoCrashLogsMessage", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Serial Loops v{0}.
         /// </summary>
-        public static string Serial_Loops_v_0_ {
+        public static string SerialLoopsVersionString {
             get {
-                return ResourceManager.GetString("Serial Loops v{0}", resourceCulture);
+                return ResourceManager.GetString("SerialLoopsVersionString", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Set.
         /// </summary>
-        public static string Set {
+        public static string SetAmountLabel {
             get {
-                return ResourceManager.GetString("Set", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Set BGM loop info.
-        /// </summary>
-        public static string Set_BGM_loop_info {
-            get {
-                return ResourceManager.GetString("Set BGM loop info", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Set BGM volume.
-        /// </summary>
-        public static string Set_BGM_volume {
-            get {
-                return ResourceManager.GetString("Set BGM volume", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Set/Clear.
-        /// </summary>
-        public static string Set_Clear {
-            get {
-                return ResourceManager.GetString("Set/Clear", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Setting CG single image….
-        /// </summary>
-        public static string Setting_CG_single_image___ {
-            get {
-                return ResourceManager.GetString("Setting CG single image...", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Setting item image….
-        /// </summary>
-        public static string Setting_item_image___ {
-            get {
-                return ResourceManager.GetString("Setting item image...", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Setting palettes and images….
-        /// </summary>
-        public static string Setting_palettes_and_images___ {
-            get {
-                return ResourceManager.GetString("Setting palettes and images...", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Setting screen image….
-        /// </summary>
-        public static string Setting_screen_image___ {
-            get {
-                return ResourceManager.GetString("Setting screen image...", resourceCulture);
+                return ResourceManager.GetString("SetAmountLabel", resourceCulture);
             }
         }
         
@@ -8934,29 +7539,38 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SFX.
+        ///   Looks up a localized string similar to Bank.
         /// </summary>
-        public static string SFX {
+        public static string SfxEditorBank {
             get {
-                return ResourceManager.GetString("SFX", resourceCulture);
+                return ResourceManager.GetString("SfxEditorBank", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SFX Group.
+        ///   Looks up a localized string similar to Export SFX.
         /// </summary>
-        public static string SFX_Group {
+        public static string SfxEditorExportButton {
             get {
-                return ResourceManager.GetString("SFX Group", resourceCulture);
+                return ResourceManager.GetString("SfxEditorExportButton", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SFXs.
+        ///   Looks up a localized string similar to Groups.
         /// </summary>
-        public static string SFXs {
+        public static string SfxEditorGroupsLabel {
             get {
-                return ResourceManager.GetString("SFXs", resourceCulture);
+                return ResourceManager.GetString("SfxEditorGroupsLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Groups: {0}.
+        /// </summary>
+        public static string SfxEditorGroupsList {
+            get {
+                return ResourceManager.GetString("SfxEditorGroupsList", resourceCulture);
             }
         }
         
@@ -8988,56 +7602,11 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Show.
-        /// </summary>
-        public static string Show {
-            get {
-                return ResourceManager.GetString("Show", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Shrink In.
         /// </summary>
         public static string SHRINK_IN {
             get {
                 return ResourceManager.GetString("SHRINK_IN", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Singularity.
-        /// </summary>
-        public static string Singularity {
-            get {
-                return ResourceManager.GetString("Singularity", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Size:.
-        /// </summary>
-        public static string Size_ {
-            get {
-                return ResourceManager.GetString("Size:", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Skip Already Read.
-        /// </summary>
-        public static string Skip_Already_Read {
-            get {
-                return ResourceManager.GetString("Skip Already Read", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Skip Update.
-        /// </summary>
-        public static string Skip_Update {
-            get {
-                return ResourceManager.GetString("Skip Update", resourceCulture);
             }
         }
         
@@ -9177,56 +7746,29 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sound.
+        ///   Looks up a localized string similar to Converting from MP3….
         /// </summary>
-        public static string Sound {
+        public static string SoundEditorConvertingFromMp3Message {
             get {
-                return ResourceManager.GetString("Sound", resourceCulture);
+                return ResourceManager.GetString("SoundEditorConvertingFromMp3Message", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sound (Options).
+        ///   Looks up a localized string similar to Converting from Opus....
         /// </summary>
-        public static string Sound__Options_ {
+        public static string SoundEditorConvertingFromOpusMessage {
             get {
-                return ResourceManager.GetString("Sound (Options)", resourceCulture);
+                return ResourceManager.GetString("SoundEditorConvertingFromOpusMessage", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sound effect volume options ticker tape.
+        ///   Looks up a localized string similar to Converting from Vorbis….
         /// </summary>
-        public static string Sound_effect_volume_options_ticker_tape {
+        public static string SoundEditorConvertingFromVorbisMessage {
             get {
-                return ResourceManager.GetString("Sound effect volume options ticker tape", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sound Effects: .
-        /// </summary>
-        public static string Sound_Effects_ {
-            get {
-                return ResourceManager.GetString("Sound Effects:", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sound options ticker tape.
-        /// </summary>
-        public static string Sound_options_ticker_tape {
-            get {
-                return ResourceManager.GetString("Sound options ticker tape", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Spanish.
-        /// </summary>
-        public static string Spanish {
-            get {
-                return ResourceManager.GetString("Spanish", resourceCulture);
+                return ResourceManager.GetString("SoundEditorConvertingFromVorbisMessage", resourceCulture);
             }
         }
         
@@ -9236,33 +7778,6 @@ namespace SerialLoops.Assets {
         public static string Speaker_Name {
             get {
                 return ResourceManager.GetString("Speaker_Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sprite.
-        /// </summary>
-        public static string Sprite {
-            get {
-                return ResourceManager.GetString("Sprite", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sprite Layer.
-        /// </summary>
-        public static string Sprite_Layer {
-            get {
-                return ResourceManager.GetString("Sprite Layer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sprite Shake.
-        /// </summary>
-        public static string Sprite_Shake {
-            get {
-                return ResourceManager.GetString("Sprite Shake", resourceCulture);
             }
         }
         
@@ -9294,97 +7809,6 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Start Read Flag.
-        /// </summary>
-        public static string Start_Read_Flag {
-            get {
-                return ResourceManager.GetString("Start Read Flag", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Starting Chibis.
-        /// </summary>
-        public static string Starting_Chibis {
-            get {
-                return ResourceManager.GetString("Starting Chibis", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Stop.
-        /// </summary>
-        public static string Stop {
-            get {
-                return ResourceManager.GetString("Stop", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sub-Topic.
-        /// </summary>
-        public static string Sub_Topic {
-            get {
-                return ResourceManager.GetString("Sub-Topic", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Subtitle Text.
-        /// </summary>
-        public static string Subtitle_Text {
-            get {
-                return ResourceManager.GetString("Subtitle Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Success!.
-        /// </summary>
-        public static string Success_ {
-            get {
-                return ResourceManager.GetString("Success!", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Successfully applied hacks!.
-        /// </summary>
-        public static string Successfully_applied_hacks_ {
-            get {
-                return ResourceManager.GetString("Successfully applied hacks!", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Successfully applied the following hacks:
-        ///{0}.
-        /// </summary>
-        public static string Successfully_applied_the_following_hacks__n_0_ {
-            get {
-                return ResourceManager.GetString("Successfully applied the following hacks:\\n{0}", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Supported Audio Files.
-        /// </summary>
-        public static string Supported_Audio_Files {
-            get {
-                return ResourceManager.GetString("Supported Audio Files", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Supported Images.
-        /// </summary>
-        public static string Supported_Images {
-            get {
-                return ResourceManager.GetString("Supported Images", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Sweat Drop.
         /// </summary>
         public static string SWEAT_DROP {
@@ -9394,47 +7818,11 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Symbols.
+        ///   Looks up a localized string similar to Export System Texture.
         /// </summary>
-        public static string Symbols {
+        public static string SystemTextureEditorExportFileDialogTitle {
             get {
-                return ResourceManager.GetString("Symbols", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to System data damaged &amp; reset message box.
-        /// </summary>
-        public static string System_data_damaged___reset_message_box {
-            get {
-                return ResourceManager.GetString("System data damaged & reset message box", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to System Texture.
-        /// </summary>
-        public static string System_Texture {
-            get {
-                return ResourceManager.GetString("System_Texture", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to System Textures.
-        /// </summary>
-        public static string System_Textures {
-            get {
-                return ResourceManager.GetString("System_Textures", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Systems architect &amp; reverse engineering work.
-        /// </summary>
-        public static string Systems_architect___reverse_engineering_work {
-            get {
-                return ResourceManager.GetString("Systems architect & reverse engineering work", resourceCulture);
+                return ResourceManager.GetString("SystemTextureEditorExportFileDialogTitle", resourceCulture);
             }
         }
         
@@ -9502,6 +7890,24 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Palette.
+        /// </summary>
+        public static string SysTexEditorPaletteLabel {
+            get {
+                return ResourceManager.GetString("SysTexEditorPaletteLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace System Texture.
+        /// </summary>
+        public static string SysTexEditorReplaceSysTex {
+            get {
+                return ResourceManager.GetString("SysTexEditorReplaceSysTex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Close All.
         /// </summary>
         public static string TabaloniaCloseAll {
@@ -9547,78 +7953,6 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Target Number.
-        /// </summary>
-        public static string Target_Number {
-            get {
-                return ResourceManager.GetString("Target Number", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Target Screen.
-        /// </summary>
-        public static string Target_Screen {
-            get {
-                return ResourceManager.GetString("Target Screen", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Template.
-        /// </summary>
-        public static string Template {
-            get {
-                return ResourceManager.GetString("Template", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Template Already Exists.
-        /// </summary>
-        public static string Template_Already_Exists {
-            get {
-                return ResourceManager.GetString("Template Already Exists", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Template Description.
-        /// </summary>
-        public static string Template_Description {
-            get {
-                return ResourceManager.GetString("Template Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Template Name.
-        /// </summary>
-        public static string Template_Name {
-            get {
-                return ResourceManager.GetString("Template Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Template Properties.
-        /// </summary>
-        public static string Template_Properties {
-            get {
-                return ResourceManager.GetString("Template Properties", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Temporary Project Already Exists!.
-        /// </summary>
-        public static string Temporary_Project_Already_Exists_ {
-            get {
-                return ResourceManager.GetString("Temporary Project Already Exists!", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Terminal Typing.
         /// </summary>
         public static string TERMINAL_TYPING {
@@ -9628,382 +7962,38 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Text Color.
+        ///   Looks up a localized string similar to Base Time Gain.
         /// </summary>
-        public static string Text_Color {
+        public static string TopicEditorBaseTimeGainLabel {
             get {
-                return ResourceManager.GetString("Text Color", resourceCulture);
+                return ResourceManager.GetString("TopicEditorBaseTimeGainLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Text Entrance Effect.
+        ///   Looks up a localized string similar to Episode Group.
         /// </summary>
-        public static string Text_Entrance_Effect {
+        public static string TopicEditorEpisodeGroup {
             get {
-                return ResourceManager.GetString("Text Entrance Effect", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Text Speed.
-        /// </summary>
-        public static string Text_Speed {
-            get {
-                return ResourceManager.GetString("Text Speed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Text Timer.
-        /// </summary>
-        public static string Text_Timer {
-            get {
-                return ResourceManager.GetString("Text Timer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Text Voice Font.
-        /// </summary>
-        public static string Text_Voice_Font {
-            get {
-                return ResourceManager.GetString("Text Voice Font", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The base ROM hash does not match the expected hash! Please check the &quot;Ignore Hash&quot; checkbox if you wish to override this..
-        /// </summary>
-        public static string The_base_ROM_hash_does_not_match_the_expected_hash__Please_check_the___Ignore_Hash___checkbox_if_you_wish_to_override_this_ {
-            get {
-                return ResourceManager.GetString("The base ROM hash does not match the expected hash! Please check the \\\"Ignore Has" +
-                        "h\\\" checkbox if you wish to override this.", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The changes made will require Serial Loops to be restarted. Is that okay?.
-        /// </summary>
-        public static string The_changes_made_will_require_Serial_Loops_to_be_restarted__Is_that_okay_ {
-            get {
-                return ResourceManager.GetString("The changes made will require Serial Loops to be restarted. Is that okay?", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The hack file has been successfully created. To import it, open the ASM hacks dialog and select &quot;Import Hack&quot;..
-        /// </summary>
-        public static string The_hack_file_has_been_successfully_created__To_import_it__open_the_ASM_hacks_dialog_and_select__Import_Hack__ {
-            get {
-                return ResourceManager.GetString("The hack file has been successfully created. To import it, open the ASM hacks dia" +
-                        "log and select \"Import Hack\".", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The root section cannot be deleted!.
-        /// </summary>
-        public static string The_root_section_cannot_be_deleted_ {
-            get {
-                return ResourceManager.GetString("The root section cannot be deleted!", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The selected ROM&apos;s hash does not match the expected ROM hash. Please ensure you are using the correct base ROM.
-        ///
-        ///If you wish to ignore this, please check the &quot;Ignore Hash&quot; checkbox..
-        /// </summary>
-        public static string The_selected_ROM_s_hash_does_not_match_the_expected_ROM_hash__Please_ensure_you_are_using_the_correct_base_ROM__n_nIf_you_wish_to_ignore_this__please_check_the___Ignore_Hash___checkbox_ {
-            get {
-                return ResourceManager.GetString("The selected ROM\'s hash does not match the expected ROM hash. Please ensure you a" +
-                        "re using the correct base ROM.\\n\\nIf you wish to ignore this, please check the \\" +
-                        "\"Ignore Hash\\\" checkbox.", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to There are no Serial Loops crash logs. No crashes so far!.
-        /// </summary>
-        public static string There_are_no_Serial_Loops_crash_logs__No_crashes_so_far_ {
-            get {
-                return ResourceManager.GetString("There are no Serial Loops crash logs. No crashes so far!", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to There is already a template with that name. Please choose a different name for your template..
-        /// </summary>
-        public static string There_is_already_a_template_with_that_name__Please_choose_a_different_name_for_your_template_ {
-            get {
-                return ResourceManager.GetString("There is already a template with that name. Please choose a different name for yo" +
-                        "ur template.", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to There is no recorded base ROM hash for this project. This is likely because this project was created with an older version of Serial Loops. Please select the base ROM used for this project so the hash can be recorded now..
-        /// </summary>
-        public static string There_is_no_recorded_base_ROM_hash_for_this_project__This_is_likely_because_this_project_was_created_with_an_older_version_of_Serial_Loops__Please_select_the_base_ROM_used_for_this_project_so_the_hash_can_be_recorded_now_ {
-            get {
-                return ResourceManager.GetString("There is no recorded base ROM hash for this project. This is likely because this " +
-                        "project was created with an older version of Serial Loops. Please select the bas" +
-                        "e ROM used for this project so the hash can be recorded now.", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to This script is not included in the event table..
-        /// </summary>
-        public static string This_script_is_not_included_in_the_event_table_ {
-            get {
-                return ResourceManager.GetString("This script is not included in the event table.", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Transition Time (Frames).
-        /// </summary>
-        public static string Time__Frames_ {
-            get {
-                return ResourceManager.GetString("Time (Frames)", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Time Limit.
-        /// </summary>
-        public static string Time_Limit {
-            get {
-                return ResourceManager.GetString("Time Limit", resourceCulture);
+                return ResourceManager.GetString("TopicEditorEpisodeGroup", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Times.
         /// </summary>
-        public static string Times {
+        public static string TopicEditorGainedTimesTable {
             get {
-                return ResourceManager.GetString("Times", resourceCulture);
+                return ResourceManager.GetString("TopicEditorGainedTimesTable", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Title.
+        ///   Looks up a localized string similar to Hidden ID.
         /// </summary>
-        public static string Title {
+        public static string TopicEditorHiddenID {
             get {
-                return ResourceManager.GetString("Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Title screen Extra ticker tape.
-        /// </summary>
-        public static string Title_screen_Extra_ticker_tape {
-            get {
-                return ResourceManager.GetString("Title screen Extra ticker tape", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Title screen Load Game ticker tape.
-        /// </summary>
-        public static string Title_screen_Load_Game_ticker_tape {
-            get {
-                return ResourceManager.GetString("Title screen Load Game ticker tape", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Title screen New Game ticker tape.
-        /// </summary>
-        public static string Title_screen_New_Game_ticker_tape {
-            get {
-                return ResourceManager.GetString("Title screen New Game ticker tape", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Title screen Options ticker tape.
-        /// </summary>
-        public static string Title_screen_Options_ticker_tape {
-            get {
-                return ResourceManager.GetString("Title screen Options ticker tape", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Title screen return unsaved progress lost prompt message box.
-        /// </summary>
-        public static string Title_screen_return_unsaved_progress_lost_prompt_message_box {
-            get {
-                return ResourceManager.GetString("Title screen return unsaved progress lost prompt message box", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to To edit Save Files, you need to have a project open.
-        ///No project is currently open. Would you like to create a new project?.
-        /// </summary>
-        public static string To_edit_Save_Files__you_need_to_have_a_project_open__nNo_project_is_currently_open__Would_you_like_to_create_a_new_project_ {
-            get {
-                return ResourceManager.GetString("To edit Save Files, you need to have a project open.\\nNo project is currently ope" +
-                        "n. Would you like to create a new project?", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Toggle Haruhi&apos;s voice ticker tape.
-        /// </summary>
-        public static string Toggle_Haruhi_s_voice_ticker_tape {
-            get {
-                return ResourceManager.GetString("Toggle Haruhi\'s voice ticker tape", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Toggle Koizumi&apos;s voice ticker tape.
-        /// </summary>
-        public static string Toggle_Koizumi_s_voice_ticker_tape {
-            get {
-                return ResourceManager.GetString("Toggle Koizumi\'s voice ticker tape", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Toggle Kunikida&apos;s voice ticker tape.
-        /// </summary>
-        public static string Toggle_Kunikida_s_voice_ticker_tape {
-            get {
-                return ResourceManager.GetString("Toggle Kunikida\'s voice ticker tape", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Toggle Kyon&apos;s sister&apos;s voice ticker tape.
-        /// </summary>
-        public static string Toggle_Kyon_s_sister_s_voice_ticker_tape {
-            get {
-                return ResourceManager.GetString("Toggle Kyon\'s sister\'s voice ticker tape", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Toggle Kyon&apos;s voice ticker tape.
-        /// </summary>
-        public static string Toggle_Kyon_s_voice_ticker_tape {
-            get {
-                return ResourceManager.GetString("Toggle Kyon\'s voice ticker tape", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Toggle Mikuru&apos;s voice ticker tape.
-        /// </summary>
-        public static string Toggle_Mikuru_s_voice_ticker_tape {
-            get {
-                return ResourceManager.GetString("Toggle Mikuru\'s voice ticker tape", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Toggle Mysterious Girl&apos;s voice ticker tape.
-        /// </summary>
-        public static string Toggle_Mysterious_Girl_s_voice_ticker_tape {
-            get {
-                return ResourceManager.GetString("Toggle Mysterious Girl\'s voice ticker tape", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Toggle Nagato&apos;s voice ticker tape.
-        /// </summary>
-        public static string Toggle_Nagato_s_voice_ticker_tape {
-            get {
-                return ResourceManager.GetString("Toggle Nagato\'s voice ticker tape", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Toggle Taniguchi&apos;s voice ticker tape.
-        /// </summary>
-        public static string Toggle_Taniguchi_s_voice_ticker_tape {
-            get {
-                return ResourceManager.GetString("Toggle Taniguchi\'s voice ticker tape", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Toggle Tsuruya&apos;s voice ticker tape.
-        /// </summary>
-        public static string Toggle_Tsuruya_s_voice_ticker_tape {
-            get {
-                return ResourceManager.GetString("Toggle Tsuruya\'s voice ticker tape", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Top.
-        /// </summary>
-        public static string Top {
-            get {
-                return ResourceManager.GetString("Top", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Top Screen.
-        /// </summary>
-        public static string Top_Screen {
-            get {
-                return ResourceManager.GetString("Top Screen", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Topic.
-        /// </summary>
-        public static string Topic {
-            get {
-                return ResourceManager.GetString("Topic", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Topic Set.
-        /// </summary>
-        public static string Topic_Set {
-            get {
-                return ResourceManager.GetString("Topic Set", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Topic Stock Mode.
-        /// </summary>
-        public static string Topic_Stock_Mode {
-            get {
-                return ResourceManager.GetString("Topic Stock Mode", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Topic Stock Mode option.
-        /// </summary>
-        public static string Topic_Stock_Mode_option {
-            get {
-                return ResourceManager.GetString("Topic Stock Mode option", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Topic Stock Mode ticker tape.
-        /// </summary>
-        public static string Topic_Stock_Mode_ticker_tape {
-            get {
-                return ResourceManager.GetString("Topic Stock Mode ticker tape", resourceCulture);
+                return ResourceManager.GetString("TopicEditorHiddenID", resourceCulture);
             }
         }
         
@@ -10017,11 +8007,74 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Topics.
+        ///   Looks up a localized string similar to Koizumi Time Percentage.
         /// </summary>
-        public static string Topics {
+        public static string TopicEditorKoizumiTimePercentage {
             get {
-                return ResourceManager.GetString("Topics", resourceCulture);
+                return ResourceManager.GetString("TopicEditorKoizumiTimePercentage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kyon Time Percentage.
+        /// </summary>
+        public static string TopicEditorKyonTimePercentage {
+            get {
+                return ResourceManager.GetString("TopicEditorKyonTimePercentage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mikuru Time Percentage.
+        /// </summary>
+        public static string TopicEditorMikuruTimePercentage {
+            get {
+                return ResourceManager.GetString("TopicEditorMikuruTimePercentage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nagato Time Percentage.
+        /// </summary>
+        public static string TopicEditorNagatoTimePercentage {
+            get {
+                return ResourceManager.GetString("TopicEditorNagatoTimePercentage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Puzzle Phase Group.
+        /// </summary>
+        public static string TopicEditorPuzzlePhaseGroup {
+            get {
+                return ResourceManager.GetString("TopicEditorPuzzlePhaseGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID.
+        /// </summary>
+        public static string TopicEditorTopicIdLabel {
+            get {
+                return ResourceManager.GetString("TopicEditorTopicIdLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string TopicEditorTopicTitle {
+            get {
+                return ResourceManager.GetString("TopicEditorTopicTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type.
+        /// </summary>
+        public static string TopicEditorTopicTypeLabel {
+            get {
+                return ResourceManager.GetString("TopicEditorTopicTypeLabel", resourceCulture);
             }
         }
         
@@ -10035,74 +8088,38 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Transition.
+        ///   Looks up a localized string similar to Blinds.
         /// </summary>
-        public static string Transition {
+        public static string TransitionBlinds {
             get {
-                return ResourceManager.GetString("Transition", resourceCulture);
+                return ResourceManager.GetString("TransitionBlinds", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Transitions.
+        ///   Looks up a localized string similar to Blinds (Alternative).
         /// </summary>
-        public static string Transitions {
+        public static string TransitionBlinds2 {
             get {
-                return ResourceManager.GetString("Transitions", resourceCulture);
+                return ResourceManager.GetString("TransitionBlinds2", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Translation.
+        ///   Looks up a localized string similar to Diagonal Up Left.
         /// </summary>
-        public static string Translation {
+        public static string TransitionWipeDiagonalLeftUp {
             get {
-                return ResourceManager.GetString("Translation", resourceCulture);
+                return ResourceManager.GetString("TransitionWipeDiagonalLeftUp", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Try again prompt message box.
+        ///   Looks up a localized string similar to Diagonal Down Right.
         /// </summary>
-        public static string Try_again_prompt_message_box {
+        public static string TransitionWipeDiagonalWipeDown {
             get {
-                return ResourceManager.GetString("Try again prompt message box", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tsuruya event unlocked message box.
-        /// </summary>
-        public static string Tsuruya_event_unlocked_message_box {
-            get {
-                return ResourceManager.GetString("Tsuruya event unlocked message box", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tutorial {0}.
-        /// </summary>
-        public static string Tutorial__0_ {
-            get {
-                return ResourceManager.GetString("Tutorial {0}", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tutorial {0} Completed (F{1:D2}).
-        /// </summary>
-        public static string Tutorial__0__Completed__F_1_D2__ {
-            get {
-                return ResourceManager.GetString("Tutorial {0} Completed (F{1:D2})", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Type.
-        /// </summary>
-        public static string Type {
-            get {
-                return ResourceManager.GetString("Type", resourceCulture);
+                return ResourceManager.GetString("TransitionWipeDiagonalWipeDown", resourceCulture);
             }
         }
         
@@ -10117,20 +8134,1100 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unable to create command.
+        ///   Looks up a localized string similar to Main Topic.
         /// </summary>
-        public static string Unable_to_create_command {
+        public static string UiMessage02Label {
             get {
-                return ResourceManager.GetString("Unable to create command", resourceCulture);
+                return ResourceManager.GetString("UiMessage02Label", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unable to select asset URL for download.
+        ///   Looks up a localized string similar to Haruhi Topic.
         /// </summary>
-        public static string Unable_to_select_asset_URL_for_download {
+        public static string UiMessage03Label {
             get {
-                return ResourceManager.GetString("Unable to select asset URL for download", resourceCulture);
+                return ResourceManager.GetString("UiMessage03Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Character Topic.
+        /// </summary>
+        public static string UiMessage04Label {
+            get {
+                return ResourceManager.GetString("UiMessage04Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sub-Topic.
+        /// </summary>
+        public static string UiMessage05Label {
+            get {
+                return ResourceManager.GetString("UiMessage05Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Character Distribution.
+        /// </summary>
+        public static string UiMessage06Label {
+            get {
+                return ResourceManager.GetString("UiMessage06Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Investigation Phase Results.
+        /// </summary>
+        public static string UiMessage07Label {
+            get {
+                return ResourceManager.GetString("UiMessage07Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Companion Selection.
+        /// </summary>
+        public static string UiMessage08Label {
+            get {
+                return ResourceManager.GetString("UiMessage08Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Character distribution instructions.
+        /// </summary>
+        public static string UiMessage09Label {
+            get {
+                return ResourceManager.GetString("UiMessage09Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Puzzle Interrupt Scenes ticker tape.
+        /// </summary>
+        public static string UiMessage100Label {
+            get {
+                return ResourceManager.GetString("UiMessage100Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Topic Stock Mode ticker tape.
+        /// </summary>
+        public static string UiMessage101Label {
+            get {
+                return ResourceManager.GetString("UiMessage101Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Batch Dialogue Display Off.
+        /// </summary>
+        public static string UiMessage102Label {
+            get {
+                return ResourceManager.GetString("UiMessage102Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Batch Dialogue Display On.
+        /// </summary>
+        public static string UiMessage103Label {
+            get {
+                return ResourceManager.GetString("UiMessage103Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Puzzle Interrupt Scenes Off.
+        /// </summary>
+        public static string UiMessage104Label {
+            get {
+                return ResourceManager.GetString("UiMessage104Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Puzzle Interrupt Scenes Unseen Only.
+        /// </summary>
+        public static string UiMessage105Label {
+            get {
+                return ResourceManager.GetString("UiMessage105Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Puzzle Interrupt Scenes On.
+        /// </summary>
+        public static string UiMessage106Label {
+            get {
+                return ResourceManager.GetString("UiMessage106Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dialogue Skipping Fast Forward.
+        /// </summary>
+        public static string UiMessage107Label {
+            get {
+                return ResourceManager.GetString("UiMessage107Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dialogue Skipping Skip Already Read.
+        /// </summary>
+        public static string UiMessage108Label {
+            get {
+                return ResourceManager.GetString("UiMessage108Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kyon&apos;s Dialogue Box Group Selection.
+        /// </summary>
+        public static string UiMessage109Label {
+            get {
+                return ResourceManager.GetString("UiMessage109Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title screen New Game ticker tape.
+        /// </summary>
+        public static string UiMessage10Label {
+            get {
+                return ResourceManager.GetString("UiMessage10Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Group selection impossible selection made ticker tape.
+        /// </summary>
+        public static string UiMessage111Label {
+            get {
+                return ResourceManager.GetString("UiMessage111Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kyon&apos;s Dialogue Box Companion Selection.
+        /// </summary>
+        public static string UiMessage112Label {
+            get {
+                return ResourceManager.GetString("UiMessage112Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chess Mode Unlocked message box.
+        /// </summary>
+        public static string UiMessage115Label {
+            get {
+                return ResourceManager.GetString("UiMessage115Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Haruhi Suzumiya event unlocked message box.
+        /// </summary>
+        public static string UiMessage116Label {
+            get {
+                return ResourceManager.GetString("UiMessage116Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mikuru Asahina event unlocked message box.
+        /// </summary>
+        public static string UiMessage117Label {
+            get {
+                return ResourceManager.GetString("UiMessage117Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yuki Nagato event unlocked message box.
+        /// </summary>
+        public static string UiMessage118Label {
+            get {
+                return ResourceManager.GetString("UiMessage118Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Itsuki Koizumi event unlocked message box.
+        /// </summary>
+        public static string UiMessage119Label {
+            get {
+                return ResourceManager.GetString("UiMessage119Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title screen Load Game ticker tape.
+        /// </summary>
+        public static string UiMessage11Label {
+            get {
+                return ResourceManager.GetString("UiMessage11Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tsuruya event unlocked message box.
+        /// </summary>
+        public static string UiMessage120Label {
+            get {
+                return ResourceManager.GetString("UiMessage120Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Collected all Haruhi topics message box.
+        /// </summary>
+        public static string UiMessage121Label {
+            get {
+                return ResourceManager.GetString("UiMessage121Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Collected all Mikuru topics message box.
+        /// </summary>
+        public static string UiMessage122Label {
+            get {
+                return ResourceManager.GetString("UiMessage122Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Collected all Nagato topics message box.
+        /// </summary>
+        public static string UiMessage123Label {
+            get {
+                return ResourceManager.GetString("UiMessage123Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Collected all Koizumi topics message box.
+        /// </summary>
+        public static string UiMessage124Label {
+            get {
+                return ResourceManager.GetString("UiMessage124Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Collected all main topics message box.
+        /// </summary>
+        public static string UiMessage125Label {
+            get {
+                return ResourceManager.GetString("UiMessage125Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cleared all chess puzzles message box.
+        /// </summary>
+        public static string UiMessage126Label {
+            get {
+                return ResourceManager.GetString("UiMessage126Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 100%&apos;d game message box.
+        /// </summary>
+        public static string UiMessage127Label {
+            get {
+                return ResourceManager.GetString("UiMessage127Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Extras unlocked message box.
+        /// </summary>
+        public static string UiMessage128Label {
+            get {
+                return ResourceManager.GetString("UiMessage128Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mystery girl voice added to config message box.
+        /// </summary>
+        public static string UiMessage129Label {
+            get {
+                return ResourceManager.GetString("UiMessage129Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title screen Extra ticker tape.
+        /// </summary>
+        public static string UiMessage12Label {
+            get {
+                return ResourceManager.GetString("UiMessage12Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title screen Options ticker tape.
+        /// </summary>
+        public static string UiMessage13Label {
+            get {
+                return ResourceManager.GetString("UiMessage13Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pause menu Load ticker tape.
+        /// </summary>
+        public static string UiMessage14Label {
+            get {
+                return ResourceManager.GetString("UiMessage14Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pause menu Config ticker tape.
+        /// </summary>
+        public static string UiMessage15Label {
+            get {
+                return ResourceManager.GetString("UiMessage15Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pause menu Title ticker tape.
+        /// </summary>
+        public static string UiMessage16Label {
+            get {
+                return ResourceManager.GetString("UiMessage16Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Episode 1 title.
+        /// </summary>
+        public static string UiMessage17Label {
+            get {
+                return ResourceManager.GetString("UiMessage17Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Episode 2 title.
+        /// </summary>
+        public static string UiMessage18Label {
+            get {
+                return ResourceManager.GetString("UiMessage18Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Episode 3 title.
+        /// </summary>
+        public static string UiMessage19Label {
+            get {
+                return ResourceManager.GetString("UiMessage19Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Episode 4 title.
+        /// </summary>
+        public static string UiMessage20Label {
+            get {
+                return ResourceManager.GetString("UiMessage20Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Episode 5 title.
+        /// </summary>
+        public static string UiMessage21Label {
+            get {
+                return ResourceManager.GetString("UiMessage21Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Episode 1 ticker tape.
+        /// </summary>
+        public static string UiMessage22Label {
+            get {
+                return ResourceManager.GetString("UiMessage22Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Episode 2 ticker tape.
+        /// </summary>
+        public static string UiMessage23Label {
+            get {
+                return ResourceManager.GetString("UiMessage23Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Episode 3 ticker tape.
+        /// </summary>
+        public static string UiMessage24Label {
+            get {
+                return ResourceManager.GetString("UiMessage24Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Episode 4 ticker tape.
+        /// </summary>
+        public static string UiMessage25Label {
+            get {
+                return ResourceManager.GetString("UiMessage25Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Episode 5 ticker tape.
+        /// </summary>
+        public static string UiMessage26Label {
+            get {
+                return ResourceManager.GetString("UiMessage26Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No save data ticker tape.
+        /// </summary>
+        public static string UiMessage27Label {
+            get {
+                return ResourceManager.GetString("UiMessage27Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No saves Load Game menu ticker tape.
+        /// </summary>
+        public static string UiMessage28Label {
+            get {
+                return ResourceManager.GetString("UiMessage28Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load Game menu ticker tape.
+        /// </summary>
+        public static string UiMessage29Label {
+            get {
+                return ResourceManager.GetString("UiMessage29Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save game ticker tape.
+        /// </summary>
+        public static string UiMessage30Label {
+            get {
+                return ResourceManager.GetString("UiMessage30Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load this save prompt.
+        /// </summary>
+        public static string UiMessage33Label {
+            get {
+                return ResourceManager.GetString("UiMessage33Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save progress prompt message box.
+        /// </summary>
+        public static string UiMessage34Label {
+            get {
+                return ResourceManager.GetString("UiMessage34Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save progress prompt end game message box.
+        /// </summary>
+        public static string UiMessage35Label {
+            get {
+                return ResourceManager.GetString("UiMessage35Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save prompt.
+        /// </summary>
+        public static string UiMessage36Label {
+            get {
+                return ResourceManager.GetString("UiMessage36Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Overwrite save prompt message box.
+        /// </summary>
+        public static string UiMessage37Label {
+            get {
+                return ResourceManager.GetString("UiMessage37Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading prompt message box.
+        /// </summary>
+        public static string UiMessage38Label {
+            get {
+                return ResourceManager.GetString("UiMessage38Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Saving prompt message box.
+        /// </summary>
+        public static string UiMessage39Label {
+            get {
+                return ResourceManager.GetString("UiMessage39Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Accessing save data prompt message box.
+        /// </summary>
+        public static string UiMessage40Label {
+            get {
+                return ResourceManager.GetString("UiMessage40Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save loaded message box.
+        /// </summary>
+        public static string UiMessage41Label {
+            get {
+                return ResourceManager.GetString("UiMessage41Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Game saved message box.
+        /// </summary>
+        public static string UiMessage42Label {
+            get {
+                return ResourceManager.GetString("UiMessage42Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title screen return unsaved progress lost prompt message box.
+        /// </summary>
+        public static string UiMessage43Label {
+            get {
+                return ResourceManager.GetString("UiMessage43Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Try again prompt message box.
+        /// </summary>
+        public static string UiMessage44Label {
+            get {
+                return ResourceManager.GetString("UiMessage44Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resetting save data message box.
+        /// </summary>
+        public static string UiMessage46Label {
+            get {
+                return ResourceManager.GetString("UiMessage46Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deleting all data message box.
+        /// </summary>
+        public static string UiMessage47Label {
+            get {
+                return ResourceManager.GetString("UiMessage47Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save game read fail message box.
+        /// </summary>
+        public static string UiMessage48Label {
+            get {
+                return ResourceManager.GetString("UiMessage48Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save game write fail message box.
+        /// </summary>
+        public static string UiMessage49Label {
+            get {
+                return ResourceManager.GetString("UiMessage49Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save data damaged &amp; reset message box.
+        /// </summary>
+        public static string UiMessage50Label {
+            get {
+                return ResourceManager.GetString("UiMessage50Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to System data damaged &amp; reset message box.
+        /// </summary>
+        public static string UiMessage51Label {
+            get {
+                return ResourceManager.GetString("UiMessage51Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save data 1 damaged &amp; reset message box.
+        /// </summary>
+        public static string UiMessage52Label {
+            get {
+                return ResourceManager.GetString("UiMessage52Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save data 2 damaged &amp; reset message box.
+        /// </summary>
+        public static string UiMessage53Label {
+            get {
+                return ResourceManager.GetString("UiMessage53Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quicksave data damaged &amp; reset message box.
+        /// </summary>
+        public static string UiMessage54Label {
+            get {
+                return ResourceManager.GetString("UiMessage54Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Companion selection description.
+        /// </summary>
+        public static string UiMessage55Label {
+            get {
+                return ResourceManager.GetString("UiMessage55Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kyon companion selected description.
+        /// </summary>
+        public static string UiMessage56Label {
+            get {
+                return ResourceManager.GetString("UiMessage56Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Asahina companion selected description.
+        /// </summary>
+        public static string UiMessage57Label {
+            get {
+                return ResourceManager.GetString("UiMessage57Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nagato companion selected description.
+        /// </summary>
+        public static string UiMessage58Label {
+            get {
+                return ResourceManager.GetString("UiMessage58Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Koizumi companion selected description.
+        /// </summary>
+        public static string UiMessage59Label {
+            get {
+                return ResourceManager.GetString("UiMessage59Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Puzzle phase character description.
+        /// </summary>
+        public static string UiMessage60Label {
+            get {
+                return ResourceManager.GetString("UiMessage60Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Asahina puzzle phase selected description.
+        /// </summary>
+        public static string UiMessage61Label {
+            get {
+                return ResourceManager.GetString("UiMessage61Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nagato puzzle phase selected description.
+        /// </summary>
+        public static string UiMessage62Label {
+            get {
+                return ResourceManager.GetString("UiMessage62Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Koizumi puzzle phase selected description.
+        /// </summary>
+        public static string UiMessage63Label {
+            get {
+                return ResourceManager.GetString("UiMessage63Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sound (Options).
+        /// </summary>
+        public static string UiMessage64Label {
+            get {
+                return ResourceManager.GetString("UiMessage64Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Game Investigation Phase (Options).
+        /// </summary>
+        public static string UiMessage65Label {
+            get {
+                return ResourceManager.GetString("UiMessage65Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Game Puzzle Phase (Options).
+        /// </summary>
+        public static string UiMessage66Label {
+            get {
+                return ResourceManager.GetString("UiMessage66Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset options to default title.
+        /// </summary>
+        public static string UiMessage67Label {
+            get {
+                return ResourceManager.GetString("UiMessage67Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Erase data options title.
+        /// </summary>
+        public static string UiMessage68Label {
+            get {
+                return ResourceManager.GetString("UiMessage68Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sound options ticker tape.
+        /// </summary>
+        public static string UiMessage69Label {
+            get {
+                return ResourceManager.GetString("UiMessage69Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Investigation phase options ticker tape.
+        /// </summary>
+        public static string UiMessage70Label {
+            get {
+                return ResourceManager.GetString("UiMessage70Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Puzzle phase options ticker tape.
+        /// </summary>
+        public static string UiMessage71Label {
+            get {
+                return ResourceManager.GetString("UiMessage71Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset to default config ticker tape.
+        /// </summary>
+        public static string UiMessage72Label {
+            get {
+                return ResourceManager.GetString("UiMessage72Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Erase data options ticker tape.
+        /// </summary>
+        public static string UiMessage73Label {
+            get {
+                return ResourceManager.GetString("UiMessage73Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Background music volume options ticker tape.
+        /// </summary>
+        public static string UiMessage74Label {
+            get {
+                return ResourceManager.GetString("UiMessage74Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sound effect volume options ticker tape.
+        /// </summary>
+        public static string UiMessage75Label {
+            get {
+                return ResourceManager.GetString("UiMessage75Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unvoiced dialogue volume options ticker tape.
+        /// </summary>
+        public static string UiMessage76Label {
+            get {
+                return ResourceManager.GetString("UiMessage76Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Voiced dialogue volume options ticker tape.
+        /// </summary>
+        public static string UiMessage77Label {
+            get {
+                return ResourceManager.GetString("UiMessage77Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Character voice toggle options ticker tape.
+        /// </summary>
+        public static string UiMessage78Label {
+            get {
+                return ResourceManager.GetString("UiMessage78Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toggle Kyon&apos;s voice ticker tape.
+        /// </summary>
+        public static string UiMessage79Label {
+            get {
+                return ResourceManager.GetString("UiMessage79Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toggle Haruhi&apos;s voice ticker tape.
+        /// </summary>
+        public static string UiMessage80Label {
+            get {
+                return ResourceManager.GetString("UiMessage80Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toggle Mikuru&apos;s voice ticker tape.
+        /// </summary>
+        public static string UiMessage81Label {
+            get {
+                return ResourceManager.GetString("UiMessage81Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toggle Nagato&apos;s voice ticker tape.
+        /// </summary>
+        public static string UiMessage82Label {
+            get {
+                return ResourceManager.GetString("UiMessage82Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toggle Koizumi&apos;s voice ticker tape.
+        /// </summary>
+        public static string UiMessage83Label {
+            get {
+                return ResourceManager.GetString("UiMessage83Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toggle Kyon&apos;s sister&apos;s voice ticker tape.
+        /// </summary>
+        public static string UiMessage84Label {
+            get {
+                return ResourceManager.GetString("UiMessage84Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toggle Tsuruya&apos;s voice ticker tape.
+        /// </summary>
+        public static string UiMessage85Label {
+            get {
+                return ResourceManager.GetString("UiMessage85Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toggle Taniguchi&apos;s voice ticker tape.
+        /// </summary>
+        public static string UiMessage86Label {
+            get {
+                return ResourceManager.GetString("UiMessage86Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toggle Kunikida&apos;s voice ticker tape.
+        /// </summary>
+        public static string UiMessage87Label {
+            get {
+                return ResourceManager.GetString("UiMessage87Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toggle Mysterious Girl&apos;s voice ticker tape.
+        /// </summary>
+        public static string UiMessage88Label {
+            get {
+                return ResourceManager.GetString("UiMessage88Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset settings to default ticker tape.
+        /// </summary>
+        public static string UiMessage89Label {
+            get {
+                return ResourceManager.GetString("UiMessage89Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All data will be erased prompt message box.
+        /// </summary>
+        public static string UiMessage90Label {
+            get {
+                return ResourceManager.GetString("UiMessage90Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Second prompt on data being erased.
+        /// </summary>
+        public static string UiMessage91Label {
+            get {
+                return ResourceManager.GetString("UiMessage91Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data reset message box.
+        /// </summary>
+        public static string UiMessage92Label {
+            get {
+                return ResourceManager.GetString("UiMessage92Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All data erased message box.
+        /// </summary>
+        public static string UiMessage93Label {
+            get {
+                return ResourceManager.GetString("UiMessage93Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Batch Dialogue Display option.
+        /// </summary>
+        public static string UiMessage94Label {
+            get {
+                return ResourceManager.GetString("UiMessage94Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dialogue Skipping setting.
+        /// </summary>
+        public static string UiMessage95Label {
+            get {
+                return ResourceManager.GetString("UiMessage95Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Puzzle Interrupt Scenes setting.
+        /// </summary>
+        public static string UiMessage96Label {
+            get {
+                return ResourceManager.GetString("UiMessage96Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Topic Stock Mode option.
+        /// </summary>
+        public static string UiMessage97Label {
+            get {
+                return ResourceManager.GetString("UiMessage97Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Batch Dialogue Display ticker tape.
+        /// </summary>
+        public static string UiMessage98Label {
+            get {
+                return ResourceManager.GetString("UiMessage98Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dialogue Skipping ticker tape.
+        /// </summary>
+        public static string UiMessage99Label {
+            get {
+                return ResourceManager.GetString("UiMessage99Label", resourceCulture);
             }
         }
         
@@ -10140,105 +9237,6 @@ namespace SerialLoops.Assets {
         public static string Unknown {
             get {
                 return ResourceManager.GetString("Unknown", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Unknown 03.
-        /// </summary>
-        public static string Unknown_03 {
-            get {
-                return ResourceManager.GetString("Unknown 03", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Unknown 04.
-        /// </summary>
-        public static string Unknown_04 {
-            get {
-                return ResourceManager.GetString("Unknown 04", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Unknown 15.
-        /// </summary>
-        public static string Unknown_15 {
-            get {
-                return ResourceManager.GetString("Unknown 15", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Unknown 16.
-        /// </summary>
-        public static string Unknown_16 {
-            get {
-                return ResourceManager.GetString("Unknown 16", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Unknown 17.
-        /// </summary>
-        public static string Unknown_17 {
-            get {
-                return ResourceManager.GetString("Unknown 17", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Unknown Extras Byte: {0}.
-        /// </summary>
-        public static string Unknown_Extras_Byte___0_ {
-            get {
-                return ResourceManager.GetString("Unknown Extras Byte: {0}", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Unknown Extras Short: {0}.
-        /// </summary>
-        public static string Unknown_Extras_Short___0_ {
-            get {
-                return ResourceManager.GetString("Unknown Extras Short: {0}", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to unknown01.
-        /// </summary>
-        public static string unknown01 {
-            get {
-                return ResourceManager.GetString("unknown01", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to unknown02.
-        /// </summary>
-        public static string unknown02 {
-            get {
-                return ResourceManager.GetString("unknown02", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to unknown03.
-        /// </summary>
-        public static string unknown03 {
-            get {
-                return ResourceManager.GetString("unknown03", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to unknown04.
-        /// </summary>
-        public static string unknown04 {
-            get {
-                return ResourceManager.GetString("unknown04", resourceCulture);
             }
         }
         
@@ -10253,29 +9251,11 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unseen Only.
+        ///   Looks up a localized string similar to You have unsaved changes in {0} item(s). Would you like to save before closing the project?.
         /// </summary>
-        public static string Unseen_Only {
+        public static string UnsavedChangesPrompt {
             get {
-                return ResourceManager.GetString("Unseen Only", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Unsure what to do with file &apos;{0}&apos;.
-        /// </summary>
-        public static string Unsure_what_to_do_with_file___0__ {
-            get {
-                return ResourceManager.GetString("Unsure what to do with file \'{0}\'", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Unvoiced dialogue volume options ticker tape.
-        /// </summary>
-        public static string Unvoiced_dialogue_volume_options_ticker_tape {
-            get {
-                return ResourceManager.GetString("Unvoiced dialogue volume options ticker tape", resourceCulture);
+                return ResourceManager.GetString("UnsavedChangesPrompt", resourceCulture);
             }
         }
         
@@ -10289,245 +9269,137 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update Now.
+        ///   Looks up a localized string similar to Download from GitHub.
         /// </summary>
-        public static string Update_Now {
+        public static string UpdaterDownloadFromGitHubLabel {
             get {
-                return ResourceManager.GetString("Update Now", resourceCulture);
+                return ResourceManager.GetString("UpdaterDownloadFromGitHubLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update on Close.
+        ///   Looks up a localized string similar to Download release from GitHub.
         /// </summary>
-        public static string Update_on_Close {
+        public static string UpdaterDownloadReleaseFromGitHubTitle {
             get {
-                return ResourceManager.GetString("Update on Close", resourceCulture);
+                return ResourceManager.GetString("UpdaterDownloadReleaseFromGitHubTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Use Docker for ASM Hacks.
+        ///   Looks up a localized string similar to New Update Available: {0}.
         /// </summary>
-        public static string Use_Docker_for_ASM_Hacks {
+        public static string UpdaterNewUpdateAvailableTitle {
             get {
-                return ResourceManager.GetString("Use Docker for ASM Hacks", resourceCulture);
+                return ResourceManager.GetString("UpdaterNewUpdateAvailableTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Use Pre-Release Update Channel.
+        ///   Looks up a localized string similar to Pre-Release Channel.
         /// </summary>
-        public static string Use_Pre_Release_Update_Channel {
+        public static string UpdaterPreReleaseChannel {
             get {
-                return ResourceManager.GetString("Use Pre-Release Update Channel", resourceCulture);
+                return ResourceManager.GetString("UpdaterPreReleaseChannel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Uses Since Level Up.
+        ///   Looks up a localized string similar to Skip Update.
         /// </summary>
-        public static string Uses_Since_Level_Up {
+        public static string UpdaterSkipUpdateLabel {
             get {
-                return ResourceManager.GetString("Uses Since Level Up", resourceCulture);
+                return ResourceManager.GetString("UpdaterSkipUpdateLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Uses to Level Up.
+        ///   Looks up a localized string similar to A new update for Serial Loops is available!.
         /// </summary>
-        public static string Uses_to_Level_Up {
+        public static string UpdaterTitleMessage {
             get {
-                return ResourceManager.GetString("Uses to Level Up", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to UX architect &amp; design work.
-        /// </summary>
-        public static string UX_architect___design_work {
-            get {
-                return ResourceManager.GetString("UX architect & design work", resourceCulture);
+                return ResourceManager.GetString("UpdaterTitleMessage", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Value.
         /// </summary>
-        public static string Value {
+        public static string ValueString {
             get {
-                return ResourceManager.GetString("Value", resourceCulture);
+                return ResourceManager.GetString("ValueString", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Vertical Intensity.
+        ///   Looks up a localized string similar to Edit Subtitle.
         /// </summary>
-        public static string Vertical_Intensity {
+        public static string VoicedLineEditorEditSubtitleHeader {
             get {
-                return ResourceManager.GetString("Vertical Intensity", resourceCulture);
+                return ResourceManager.GetString("VoicedLineEditorEditSubtitleHeader", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to View _Logs.
+        ///   Looks up a localized string similar to Replace as AHX.
         /// </summary>
-        public static string View__Logs {
+        public static string VoicedLineEditorReplaceAsAhxButton {
             get {
-                return ResourceManager.GetString("View _Logs", resourceCulture);
+                return ResourceManager.GetString("VoicedLineEditorReplaceAsAhxButton", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to View Crash Log.
+        ///   Looks up a localized string similar to Replace voiced line.
         /// </summary>
-        public static string View_Crash_Log {
+        public static string VoicedLineEditorReplaceLine {
             get {
-                return ResourceManager.GetString("View Crash Log", resourceCulture);
+                return ResourceManager.GetString("VoicedLineEditorReplaceLine", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to View Logs.
+        ///   Looks up a localized string similar to Save voiced line as WAV.
         /// </summary>
-        public static string View_Logs {
+        public static string VoicedLineEditorSaveAsWavLabel {
             get {
-                return ResourceManager.GetString("View Logs", resourceCulture);
+                return ResourceManager.GetString("VoicedLineEditorSaveAsWavLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Visible?.
+        ///   Looks up a localized string similar to Force Drop Shadow.
         /// </summary>
-        public static string Visible_ {
+        public static string VoicedLineEditorSubtitleForceDropShadow {
             get {
-                return ResourceManager.GetString("Visible?", resourceCulture);
+                return ResourceManager.GetString("VoicedLineEditorSubtitleForceDropShadow", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Voice.
+        ///   Looks up a localized string similar to Screen Position.
         /// </summary>
-        public static string Voice {
+        public static string VoicedLineEditorSubtitleScreenPosition {
             get {
-                return ResourceManager.GetString("Voice", resourceCulture);
+                return ResourceManager.GetString("VoicedLineEditorSubtitleScreenPosition", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Voice Font.
+        ///   Looks up a localized string similar to Subtitle Text.
         /// </summary>
-        public static string Voice_Font {
+        public static string VoicedLineEditorSubtitleTextLabel {
             get {
-                return ResourceManager.GetString("Voice Font", resourceCulture);
+                return ResourceManager.GetString("VoicedLineEditorSubtitleTextLabel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Voice Line.
+        ///   Looks up a localized string similar to Enter subtitle text….
         /// </summary>
-        public static string Voice_Line {
+        public static string VoicedLineEditorSubtitleWatermark {
             get {
-                return ResourceManager.GetString("Voice Line", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Voiced dialogue volume options ticker tape.
-        /// </summary>
-        public static string Voiced_dialogue_volume_options_ticker_tape {
-            get {
-                return ResourceManager.GetString("Voiced dialogue volume options ticker tape", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Voices.
-        /// </summary>
-        public static string Voices {
-            get {
-                return ResourceManager.GetString("Voices", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Voices: .
-        /// </summary>
-        public static string Voices_ {
-            get {
-                return ResourceManager.GetString("Voices:", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Voices Config.
-        /// </summary>
-        public static string Voices_Config {
-            get {
-                return ResourceManager.GetString("Voices Config", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Volume.
-        /// </summary>
-        public static string Volume {
-            get {
-                return ResourceManager.GetString("Volume", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Volume Config.
-        /// </summary>
-        public static string Volume_Config {
-            get {
-                return ResourceManager.GetString("Volume Config", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Wait Time (Frames).
-        /// </summary>
-        public static string Wait_Time__Frames_ {
-            get {
-                return ResourceManager.GetString("Wait Time (Frames)", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to WAV File.
-        /// </summary>
-        public static string WAV_File {
-            get {
-                return ResourceManager.GetString("WAV File", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to WAV files.
-        /// </summary>
-        public static string WAV_files {
-            get {
-                return ResourceManager.GetString("WAV files", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to While attempting to build, file #{0:X3} in archive {1} was found to be corrupt. Serial Loops can delete this file from your base directory automatically which may allow you to load the rest of the project, but any changes made to that file will be lost. Alternatively, you can attempt to edit the file manually to fix it. How would you like to proceed? Press OK to proceed with deleting the file and Cancel to attempt to deal with it manually..
-        /// </summary>
-        public static string While_attempting_to_build___file___0_X3__in_archive__1__was_found_to_be_corrupt__Serial_Loops_can_delete_this_file_from_your_base_directory_automatically_which_may_allow_you_to_load_the_rest_of_the_project__but_any_changes_made_to_that_file_will_be_lost__Alternatively__you_can_attempt_to_edit_the_file_manually_to_fix_it__How_would_you_like_to_proceed__Press_OK_to_proceed_with_deleting_the_file_and_Cancel_to_attempt_to_deal_with_it_manually_ {
-            get {
-                return ResourceManager.GetString(@"While attempting to build,  file #{0:X3} in archive {1} was found to be corrupt. Serial Loops can delete this file from your base directory automatically which may allow you to load the rest of the project, but any changes made to that file will be lost. Alternatively, you can attempt to edit the file manually to fix it. How would you like to proceed? Press OK to proceed with deleting the file and Cancel to attempt to deal with it manually.", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to White.
-        /// </summary>
-        public static string WHITE {
-            get {
-                return ResourceManager.GetString("WHITE", resourceCulture);
+                return ResourceManager.GetString("VoicedLineEditorSubtitleWatermark", resourceCulture);
             }
         }
         
@@ -10586,60 +9458,6 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Worst Group.
-        /// </summary>
-        public static string Worst_Group {
-            get {
-                return ResourceManager.GetString("Worst Group", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Would you like to save your changes to the save file?.
-        /// </summary>
-        public static string Would_you_like_to_save_your_changes_to_the_save_file_ {
-            get {
-                return ResourceManager.GetString("Would you like to save your changes to the save file?", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Writing Includes.
-        /// </summary>
-        public static string Writing_Includes {
-            get {
-                return ResourceManager.GetString("Writing Includes", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Writing NitroPacker Project File.
-        /// </summary>
-        public static string Writing_NitroPacker_Project_File {
-            get {
-                return ResourceManager.GetString("Writing NitroPacker Project File", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Writing Replaced Archives.
-        /// </summary>
-        public static string Writing_Replaced_Archives {
-            get {
-                return ResourceManager.GetString("Writing Replaced Archives", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to XDelta patch.
-        /// </summary>
-        public static string XDelta_patch {
-            get {
-                return ResourceManager.GetString("XDelta patch", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Above Bottom.
         /// </summary>
         public static string Y_ABOVE_BOTTOM {
@@ -10676,39 +9494,11 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Yellow.
-        /// </summary>
-        public static string YELLOW {
-            get {
-                return ResourceManager.GetString("YELLOW", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Yes.
         /// </summary>
         public static string Yes {
             get {
                 return ResourceManager.GetString("Yes", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You have unsaved changes in {0} item(s). Would you like to save before closing the project?.
-        /// </summary>
-        public static string You_have_unsaved_changes_in__0__item_s___Would_you_like_to_save_before_closing_the_project_ {
-            get {
-                return ResourceManager.GetString("You have unsaved changes in {0} item(s). Would you like to save before closing th" +
-                        "e project?", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Yuki Nagato event unlocked message box.
-        /// </summary>
-        public static string Yuki_Nagato_event_unlocked_message_box {
-            get {
-                return ResourceManager.GetString("Yuki Nagato event unlocked message box", resourceCulture);
             }
         }
     }

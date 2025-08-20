@@ -32,8 +32,8 @@ public class ItemEditorViewModel : EditorViewModel
 
     private async Task Export()
     {
-        string exportPath = (await Window.Window.ShowSaveFilePickerAsync(Strings.Export_Item_Image,
-            [new(Strings.PNG_Image) { Patterns = ["*.png"] }]))?.TryGetLocalPath();
+        string exportPath = (await Window.Window.ShowSaveFilePickerAsync(Strings.ItemEditorExportFileDialogTitle,
+            [new(Strings.FiletypePng) { Patterns = ["*.png"] }]))?.TryGetLocalPath();
         if (!string.IsNullOrEmpty(exportPath))
         {
             await using FileStream fs = File.Create(exportPath);
@@ -43,8 +43,8 @@ public class ItemEditorViewModel : EditorViewModel
 
     private async Task Import()
     {
-        string importPath = (await Window.Window.ShowOpenFilePickerAsync(Strings.Import_Item_Image,
-            [new(Strings.Supported_Images) { Patterns = Shared.SupportedImageFiletypes }]))?.TryGetLocalPath();
+        string importPath = (await Window.Window.ShowOpenFilePickerAsync(Strings.ItemEditorImportImage,
+            [new(Strings.FiletypeSupportedImages) { Patterns = Shared.SupportedImageFiletypes }]))?.TryGetLocalPath();
         if (!string.IsNullOrEmpty(importPath))
         {
             SKBitmap original = _item.GetImage();
@@ -57,8 +57,8 @@ public class ItemEditorViewModel : EditorViewModel
             {
                 try
                 {
-                    ProgressDialogViewModel tracker = new(string.Format(Strings.Replacing__0____, _item.DisplayName));
-                    tracker.InitializeTasks(() => _item.SetImage(finalImage, tracker, _log),
+                    ProgressDialogViewModel tracker = new(string.Format(Strings.ReplacingItemProgressMessage, _item.DisplayName));
+                    tracker.InitializeTasks(() => _item.SetImage(finalImage, tracker, _log, _project.Localize),
                         () => { });
                     await new ProgressDialog { DataContext = tracker }.ShowDialog(Window.Window);
                     this.RaisePropertyChanged(nameof(ItemBitmap));
@@ -66,7 +66,7 @@ public class ItemEditorViewModel : EditorViewModel
                 }
                 catch (Exception ex)
                 {
-                    _log.LogException(string.Format(Strings.Failed_to_replace_background__0__with_file__1_, _item.DisplayName, importPath), ex);
+                    _log.LogException(string.Format(Strings.ErrorFailedReplacingItem, _item.DisplayName, importPath), ex);
                 }
             }
         }

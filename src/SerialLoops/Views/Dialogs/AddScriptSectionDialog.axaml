@@ -13,14 +13,14 @@
         ExtendClientAreaChromeHints="NoChrome"
         x:DataType="vm:AddScriptSectionDialogViewModel"
         x:Class="SerialLoops.Views.Dialogs.AddScriptSectionDialog"
-        Title="{x:Static assets:Strings.Add_Section}"
+        Title="{x:Static assets:Strings.ScriptEditorAddScriptSectionToolTip}"
         Name="AddSectionDialog">
     <Panel>
         <controls:AcrylicBorderHandler/>
 
         <StackPanel Orientation="Vertical" Spacing="20" Margin="15">
             <StackPanel Orientation="Vertical" Spacing="3">
-                <TextBlock Text="{x:Static assets:Strings.Section_Name_}"/>
+                <TextBlock Text="{x:Static assets:Strings.ScriptEditorAddScriptSectionLabel}"/>
                 <StackPanel Orientation="Horizontal" Spacing="2">
                     <TextBox Text="{Binding SectionName}" Name="NameBox"/>
                 </StackPanel>
@@ -28,7 +28,7 @@
             <StackPanel Orientation="Horizontal" Spacing="5">
                 <Button Content="{x:Static assets:Strings.Cancel}" Command="{Binding CancelCommand}"
                         CommandParameter="{Binding #AddSectionDialog}" IsCancel="True"/>
-                <Button Content="{x:Static assets:Strings.Create}" Command="{Binding CreateCommand}"
+                <Button Content="{x:Static assets:Strings.AddItemLabel}" Command="{Binding CreateCommand}"
                         CommandParameter="{Binding #AddSectionDialog}" IsDefault="True"/>
             </StackPanel>
         </StackPanel>

@@ -59,7 +59,7 @@ public class ScriptItem : Item
         catch (Exception ex)
         {
             log.LogException(
-                string.Format(project.Localize("Error getting script command tree for script {0} ({1}): {2} {3}"),
+                string.Format(project.Localize("ErrorScriptCommandTree"),
                     DisplayName, Name, currentCommand?.Command.Mnemonic ?? "NULL_COMMAND", string.Join(", ", currentCommand?.Parameters ?? [])), ex);
             return null;
         }
@@ -199,7 +199,7 @@ public class ScriptItem : Item
         }
         catch (Exception ex)
         {
-            log.LogException("Failed to calculate graph edges!", ex);
+            log.LogException(_localize("ErrorFailedCalculatingScriptGraph"), ex);
             log.Log($"Script: {Name}, DisplayName: {DisplayName}");
         }
     }
@@ -246,8 +246,8 @@ public class ScriptItem : Item
                 {
                     preview.FadedColor = ((ColorMonochromeScriptParameter)prevFade.Parameters[4]).ColorType switch
                     {
-                        ColorMonochromeScriptParameter.ColorMonochrome.CUSTOM_COLOR => ((ColorScriptParameter)prevFade.Parameters[2]).Color,
-                        ColorMonochromeScriptParameter.ColorMonochrome.BLACK => SKColors.Black,
+                        ColorMonochromeScriptParameter.ColorMonochrome.ColorMonoParamCustom => ((ColorScriptParameter)prevFade.Parameters[2]).Color,
+                        ColorMonochromeScriptParameter.ColorMonochrome.ColorMonoParamBlack => SKColors.Black,
                         _ => SKColors.White,
                     };
                 }
@@ -267,8 +267,8 @@ public class ScriptItem : Item
                 ScriptItemCommand lastFadeOut = commands.FindLast(c => c.Verb == CommandVerb.SCREEN_FADEOUT);
                 preview.FadedColor = ((ColorMonochromeScriptParameter)lastFadeOut.Parameters[4]).ColorType switch
                 {
-                    ColorMonochromeScriptParameter.ColorMonochrome.CUSTOM_COLOR => ((ColorScriptParameter)lastFadeOut.Parameters[2]).Color,
-                    ColorMonochromeScriptParameter.ColorMonochrome.BLACK => SKColors.Black,
+                    ColorMonochromeScriptParameter.ColorMonochrome.ColorMonoParamCustom => ((ColorScriptParameter)lastFadeOut.Parameters[2]).Color,
+                    ColorMonochromeScriptParameter.ColorMonochrome.ColorMonoParamBlack => SKColors.Black,
                     _ => SKColors.White,
                 };
                 preview.FadedScreens = ((ScreenScriptParameter)lastFadeOut.Parameters[3]).Screen;
@@ -737,12 +737,12 @@ public class ScriptItem : Item
                 {
                     spritePaint = ((PaletteEffectScriptParameter)palCommand.Parameters[0]).Effect switch
                     {
-                        PaletteEffectScriptParameter.PaletteEffect.INVERTED => PaletteEffectScriptParameter
+                        PaletteEffectScriptParameter.PaletteEffect.PalEffectInverted => PaletteEffectScriptParameter
                             .InvertedPaint,
-                        PaletteEffectScriptParameter.PaletteEffect.GRAYSCALE => PaletteEffectScriptParameter
+                        PaletteEffectScriptParameter.PaletteEffect.PalEffectGrayscale => PaletteEffectScriptParameter
                             .GrayscalePaint,
-                        PaletteEffectScriptParameter.PaletteEffect.SEPIA => PaletteEffectScriptParameter.SepiaPaint,
-                        PaletteEffectScriptParameter.PaletteEffect.DIMMED => PaletteEffectScriptParameter
+                        PaletteEffectScriptParameter.PaletteEffect.PalEffectSepia => PaletteEffectScriptParameter.SepiaPaint,
+                        PaletteEffectScriptParameter.PaletteEffect.PalEffectDimmed => PaletteEffectScriptParameter
                             .DimmedPaint,
                         _ => null,
                     };
@@ -1144,7 +1144,7 @@ public class ScriptItem : Item
                     SKBitmap dualScreenBg = preview.Background.GetBackground();
                     if (preview.BgScrollCommand is not null &&
                         ((BgScrollDirectionScriptParameter)preview.BgScrollCommand.Parameters[0]).ScrollDirection ==
-                        BgScrollDirectionScriptParameter.BgScrollDirection.DOWN)
+                        BgScrollDirectionScriptParameter.BgScrollDirection.BgScrollDown)
                     {
                         canvas.DrawBitmap(dualScreenBg,
                             new(0, preview.Background.Graphic2.Height - 192, 256,
@@ -1167,7 +1167,7 @@ public class ScriptItem : Item
                     if (preview.BgPositionBool || (preview.BgScrollCommand is not null &&
                                                    ((BgScrollDirectionScriptParameter)preview.BgScrollCommand
                                                        .Parameters[0]).ScrollDirection ==
-                                                   BgScrollDirectionScriptParameter.BgScrollDirection.DOWN))
+                                                   BgScrollDirectionScriptParameter.BgScrollDirection.BgScrollDown))
                     {
                         SKBitmap bgBitmap = preview.Background.GetBackground();
                         canvas.DrawBitmap(bgBitmap,
@@ -1184,7 +1184,7 @@ public class ScriptItem : Item
                 case BgType.TEX_CG_WIDE:
                     if (preview.BgScrollCommand is not null &&
                         ((BgScrollDirectionScriptParameter)preview.BgScrollCommand.Parameters[0]).ScrollDirection ==
-                        BgScrollDirectionScriptParameter.BgScrollDirection.RIGHT)
+                        BgScrollDirectionScriptParameter.BgScrollDirection.BgScrollRight)
                     {
                         SKBitmap bgBitmap = preview.Background.GetBackground();
                         canvas.DrawBitmap(bgBitmap, new(bgBitmap.Width - 256, 0, bgBitmap.Width, 192),
@@ -1328,11 +1328,11 @@ public class ScriptItem : Item
             }
         }
 
-            if (preview.HaruhiMeterVisible)
-            {
-                SKBitmap haruhiMeterBitmap = ((SystemTextureItem)project.Items.First(i => i.Name == "SYSTEX_SYS_CMN_B14")).GetTexture();
-                canvas.DrawBitmap(haruhiMeterBitmap, 0, 192);
-            }
+        if (preview.HaruhiMeterVisible)
+        {
+            SKBitmap haruhiMeterBitmap = ((SystemTextureItem)project.Items.First(i => i.Name == "SYSTEX_SYS_CMN_B14")).GetTexture();
+            canvas.DrawBitmap(haruhiMeterBitmap, 0, 192);
+        }
 
         canvas.Flush();
         return (previewBitmap, null);
@@ -1383,7 +1383,7 @@ public class ScriptItem : Item
             }
             catch (Exception ex)
             {
-                log.LogException("Error pruning labels!", ex);
+                log.LogException(_localize("ErrorScriptItemPruningLabels"), ex);
                 log.LogWarning($"Script: {Name}, DisplayName: {DisplayName}");
             }
         }

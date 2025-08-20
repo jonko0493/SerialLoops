@@ -84,7 +84,7 @@ public partial class MainWindowViewModel : ViewModelBase
     public EditorTabsPanelViewModel EditorTabs { get; set; }
     public ItemExplorerPanelViewModel ItemExplorer { get; set; }
 
-    public NativeMenuItem RecentProjectsMenu { get; set; } = new(Strings.Recent_Projects);
+    public NativeMenuItem RecentProjectsMenu { get; set; } = new(Strings.RecentProjects);
     public LoopyLogger Log { get; set; }
 
     private SKBitmap _blankNameplate, _blankNameplateBaseArrow;
@@ -192,7 +192,7 @@ public partial class MainWindowViewModel : ViewModelBase
             }
             catch (Exception ex)
             {
-                Log.LogException(string.Format(Strings._Failed_to_open_log_file_directly__Logs_can_be_found_at__0__,
+                Log.LogException(string.Format(Strings.LogFailedDirectOpenMessage,
                     Path.Combine(CurrentConfig.UserDirectory, "Logs", "SerialLoops.log")), ex);
             }
         });
@@ -200,8 +200,8 @@ public partial class MainWindowViewModel : ViewModelBase
         {
             if (!File.Exists(LoopyLogger.CrashLogLocation))
             {
-                await Window.ShowMessageBoxAsync(Strings.No_Crash_Log,
-                    Strings.There_are_no_Serial_Loops_crash_logs__No_crashes_so_far_, ButtonEnum.Ok, Icon.Info, Log);
+                await Window.ShowMessageBoxAsync(Strings.NoCrashLogMessageTitle,
+                    Strings.SerialLoopsNoCrashLogsMessage, ButtonEnum.Ok, Icon.Info, Log);
                 return;
             }
 
@@ -225,7 +225,7 @@ public partial class MainWindowViewModel : ViewModelBase
             }
             catch (Exception ex)
             {
-                Log.LogException(string.Format(Strings._Failed_to_open_log_file_directly__Logs_can_be_found_at__0__,
+                Log.LogException(string.Format(Strings.LogFailedDirectOpenMessage,
                     LoopyLogger.CrashLogLocation), ex);
             }
         });
@@ -241,7 +241,7 @@ public partial class MainWindowViewModel : ViewModelBase
         Log.Initialize(CurrentConfig);
 
         var fontStyle = new Style(x => x.OfType<Window>());
-        var font = FontFamily.Parse(string.IsNullOrEmpty(CurrentConfig.DisplayFont) ? Strings.Default_Font : CurrentConfig.DisplayFont);
+        var font = FontFamily.Parse(string.IsNullOrEmpty(CurrentConfig.DisplayFont) ? Strings.DefaultFont : CurrentConfig.DisplayFont);
         fontStyle.Add(new Setter(Avalonia.Controls.Primitives.TemplatedControl.FontFamilyProperty, font));
         Application.Current!.Styles.Add(fontStyle);
 
@@ -352,7 +352,7 @@ public partial class MainWindowViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            Log.LogException(Strings.Failed_to_load_cached_data, ex);
+            Log.LogException(Strings.ErrorFailedLoadingCachedData, ex);
             ProjectsCache.RecentWorkspaces.Remove(OpenProject.ProjectFile);
             ProjectsCache.RecentProjects.Remove(OpenProject.ProjectFile);
             ProjectsCache.Save(Log);
@@ -395,7 +395,7 @@ public partial class MainWindowViewModel : ViewModelBase
                     {
                         e.Cancel = true;
                     }
-                    result = await Window.ShowMessageBoxAsync(Strings.Confirm, string.Format(Strings.You_have_unsaved_changes_in__0__item_s___Would_you_like_to_save_before_closing_the_project_, unsavedItems.Count()),
+                    result = await Window.ShowMessageBoxAsync(Strings.Confirm, string.Format(Strings.UnsavedChangesPrompt, unsavedItems.Count()),
                         ButtonEnum.YesNoCancel, Icon.Warning, Log);
                 }
                 switch (result)
@@ -484,8 +484,8 @@ public partial class MainWindowViewModel : ViewModelBase
             InjectionSites = [.. hackFiles.SelectMany(f => f.InjectionSites)],
         };
 
-        string hackSaveFile = (await Window.ShowSaveFilePickerAsync(Strings.Export_Hack,
-            [new(Strings.Serial_Loops_ASM_Hack) { Patterns = ["*.slhack"] }],
+        string hackSaveFile = (await Window.ShowSaveFilePickerAsync(Strings.AsmHackExportDialogTitle,
+            [new(Strings.FiletypeAsmHack) { Patterns = ["*.slhack"] }],
             $"{asmHack.Name}.slhack"))?.TryGetLocalPath();
         if (!string.IsNullOrEmpty(hackSaveFile))
         {
@@ -501,7 +501,7 @@ public partial class MainWindowViewModel : ViewModelBase
             using FileStream fs = File.Create(hackSaveFile);
             ZipFile.CreateFromDirectory(tempDir, fs);
 
-            await Window.ShowMessageBoxAsync(Strings.Hack_Created_Successfully_, Strings.The_hack_file_has_been_successfully_created__To_import_it__open_the_ASM_hacks_dialog_and_select__Import_Hack__,
+            await Window.ShowMessageBoxAsync(Strings.AsmHackCreatedSuccessfullyTitle, Strings.AsmHackCreationSuccessMessage,
                 ButtonEnum.Ok, Icon.Success, Log);
         }
     }
@@ -542,7 +542,7 @@ public partial class MainWindowViewModel : ViewModelBase
         (string newRom, string newLangCode) = await new ProjectCreationDialog { DataContext = migrateDialogVm }.ShowDialog<(string, string)>(Window);
         if (!string.IsNullOrEmpty(newRom))
         {
-            ProgressDialogViewModel tracker = new(Strings.Migrating_to_new_ROM);
+            ProgressDialogViewModel tracker = new(Strings.ProjectMigrateProgressMessage);
             tracker.InitializeTasks(() =>
             {
                 OpenProject.MigrateProject(newRom, CurrentConfig, Log, tracker);
@@ -550,7 +550,7 @@ public partial class MainWindowViewModel : ViewModelBase
                 OpenProject.Load(CurrentConfig, Log, tracker);
                 OpenProject.SetBaseRomHash(newRom);
                 OpenProject.Save(Log);
-            }, async void () => await Window.ShowMessageBoxAsync(Strings.Migration_Complete_, Strings.Migrated_to_new_ROM_, ButtonEnum.Ok, Icon.Success, Log));
+            }, async void () => await Window.ShowMessageBoxAsync(Strings.ProjectMigrateSuccessTitle, Strings.ProjectMigrateSuccessMessage, ButtonEnum.Ok, Icon.Success, Log));
             await new ProgressDialog { DataContext = tracker }.ShowDialog(Window);
             OpenProjectView(OpenProject, tracker);
         }
@@ -558,8 +558,8 @@ public partial class MainWindowViewModel : ViewModelBase
 
     private async Task ExportProjectCommand_Executed()
     {
-        string exportPath = (await Window.ShowSaveFilePickerAsync(Strings.Export_Project,
-            [new(Strings.Exported_Project) { Patterns = ["*.slzip"] }], $"{OpenProject.Name}.slzip"))?.TryGetLocalPath();
+        string exportPath = (await Window.ShowSaveFilePickerAsync(Strings.MenuExportProject,
+            [new(Strings.FiletypeExportedProject) { Patterns = [$"*.{Project.EXPORT_FORMAT}"] }], $"{OpenProject.Name}.{Project.EXPORT_FORMAT}"))?.TryGetLocalPath();
         if (!string.IsNullOrEmpty(exportPath))
         {
             OpenProject.Export(exportPath, Log);
@@ -602,9 +602,9 @@ public partial class MainWindowViewModel : ViewModelBase
                 .First(m => m is NativeMenuItem nm && nm.Header?.Equals(Strings.ProjectDeleteText) == true);
 
             NativeMenuItem projectSaveItem = (NativeMenuItem)WindowMenu[MenuHeader.FILE].Menu!.Items
-                .First(m => m is NativeMenuItem nm && nm.Header?.Equals(Strings.Save_Project) == true);
+                .First(m => m is NativeMenuItem nm && nm.Header?.Equals(Strings.MenuSaveProject) == true);
             NativeMenuItem projectCloseItem = (NativeMenuItem)WindowMenu[MenuHeader.FILE].Menu.Items
-                .First(m => m is NativeMenuItem nm && nm.Header?.Equals(Strings.Close_Project) == true);
+                .First(m => m is NativeMenuItem nm && nm.Header?.Equals(Strings.CloseProjectLabel) == true);
             int projectAreaIndex = WindowMenu[MenuHeader.FILE].Menu.Items.IndexOf(projectSaveItem);
 
             WindowMenu[MenuHeader.PROJECT].Menu.Items.Remove(projectRenameItem);
@@ -665,7 +665,7 @@ public partial class MainWindowViewModel : ViewModelBase
                 }
 
                 recentProject.IsEnabled = false;
-                recentProject.Header += Strings.Missing_;
+                recentProject.Header += Strings.ProjectMissingPrefix;
                 recentProject.Icon = ControlGenerator.GetIcon("Warning", Log);
             }
 
@@ -702,13 +702,13 @@ public partial class MainWindowViewModel : ViewModelBase
         if (newProject is not null)
         {
             OpenProject = newProject;
-            OpenProjectView(OpenProject, new ProgressDialogViewModel(Strings.Open_Project));
+            OpenProjectView(OpenProject, new ProgressDialogViewModel(Strings.MenuProjectOpen));
         }
     }
 
     public async Task OpenProjectCommand_Executed()
     {
-        IStorageFile projectFile = await Window.ShowOpenFilePickerAsync(Strings.Open_Project, [new(Strings.Serial_Loops_Project) { Patterns = [$"*.{Project.PROJECT_FORMAT}"] }], CurrentConfig.ProjectsDirectory);
+        IStorageFile projectFile = await Window.ShowOpenFilePickerAsync(Strings.MenuProjectOpen, [new(Strings.FiletypeProject) { Patterns = [$"*.{Project.PROJECT_FORMAT}"] }], CurrentConfig.ProjectsDirectory);
         if (projectFile is not null)
         {
             await OpenProjectFromPath(projectFile.Path.LocalPath);
@@ -724,32 +724,32 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         Project.LoadProjectResult result = new(Project.LoadProjectState.FAILED); // start us off with a failure
         string projectFileName = Path.GetFileName(path);
-        ProgressDialogViewModel tracker = new(string.Format(Strings.Loading_Project____0__, projectFileName));
+        ProgressDialogViewModel tracker = new(string.Format(Strings.ProjectLoadProgressMessage, projectFileName));
         tracker.InitializeTasks(() => (OpenProject, result) = Project.OpenProject(path, CurrentConfig, Strings.ResourceManager.GetString, Log, tracker),
             () => { });
         await new ProgressDialog { DataContext = tracker }.ShowDialog(Window);
         if (OpenProject is not null && result.State == Project.LoadProjectState.LOOSELEAF_FILES)
         {
             if (await Window.ShowMessageBoxAsync(
-                    Strings.Build_Unbuilt_Files_,
-                    Strings.Saved_but_unbuilt_files_were_detected_in_the_project_directory__Would_you_like_to_build_before_loading_the_project__Not_building_could_result_in_these_files_being_overwritten_,
+                    Strings.ProjectLoadBuildUnbuiltFiles,
+                    Strings.ProjectLoadSavedButUnbuiltFilesDetectedPrompt,
                     ButtonEnum.YesNo, Icon.Question, Log) == ButtonResult.Yes)
             {
-                ProgressDialogViewModel secondTracker = new(string.Format(Strings.Loading_Project____0__, projectFileName));
+                ProgressDialogViewModel secondTracker = new(string.Format(Strings.ProjectLoadProgressMessage, projectFileName));
                 secondTracker.InitializeTasks(() => Build.BuildIterative(OpenProject, CurrentConfig, Log, secondTracker),
                     () => { });
                 await new ProgressDialog { DataContext = secondTracker }.ShowDialog(Window);
             }
 
-            ProgressDialogViewModel thirdTracker = new(string.Format(Strings.Loading_Project____0__, projectFileName));
+            ProgressDialogViewModel thirdTracker = new(string.Format(Strings.ProjectLoadProgressMessage, projectFileName));
             thirdTracker.InitializeTasks(() => OpenProject.LoadArchives(Log, thirdTracker),
                 () => { });
             await new ProgressDialog { DataContext = thirdTracker }.ShowDialog(Window);
         }
         else if (result.State == Project.LoadProjectState.CORRUPTED_FILE)
         {
-            if ((await Window.ShowMessageBoxAsync(Strings.Corrupted_File_Detected_,
-                    string.Format(Strings.While_attempting_to_build___file___0_X3__in_archive__1__was_found_to_be_corrupt__Serial_Loops_can_delete_this_file_from_your_base_directory_automatically_which_may_allow_you_to_load_the_rest_of_the_project__but_any_changes_made_to_that_file_will_be_lost__Alternatively__you_can_attempt_to_edit_the_file_manually_to_fix_it__How_would_you_like_to_proceed__Press_OK_to_proceed_with_deleting_the_file_and_Cancel_to_attempt_to_deal_with_it_manually_,
+            if ((await Window.ShowMessageBoxAsync(Strings.ProjectLoadCorruptedFileDetectedTitle,
+                    string.Format(Strings.BuildCorruptedFileDetectedPrompt,
                         result.BadFileIndex, result.BadArchive),
                     ButtonEnum.OkCancel, Icon.Warning, Log)) == ButtonResult.Ok)
             {
@@ -803,7 +803,7 @@ public partial class MainWindowViewModel : ViewModelBase
             await CloseProject_Executed(null);
 
             Project.LoadProjectResult result = new() { State = Project.LoadProjectState.FAILED };
-            ProgressDialogViewModel tracker = new(Strings.Importing_Project);
+            ProgressDialogViewModel tracker = new(Strings.ProjectImportProgressDialogMessage);
             tracker.InitializeTasks(() => (OpenProject, result) = Project.Import(slzipPath, romPath, CurrentConfig,
                     Strings.ResourceManager.GetString, Log, tracker),
                 () => { });
@@ -830,7 +830,7 @@ public partial class MainWindowViewModel : ViewModelBase
         else
         {
             projectPath = (await Window.ShowOpenFilePickerAsync(Strings.ProjectRenameText,
-                [new(Strings.Serial_Loops_Project) { Patterns = [$"*.{Project.PROJECT_FORMAT}"] }],
+                [new(Strings.FiletypeProject) { Patterns = [$"*.{Project.PROJECT_FORMAT}"] }],
                 CurrentConfig.ProjectsDirectory))?.TryGetLocalPath();
             if (string.IsNullOrEmpty(projectPath))
             {
@@ -875,7 +875,7 @@ public partial class MainWindowViewModel : ViewModelBase
         else
         {
             projectPath = (await Window.ShowOpenFilePickerAsync(Strings.ProjectRenameText,
-                [new(Strings.Serial_Loops_Project) { Patterns = [$"*.{Project.PROJECT_FORMAT}"] }],
+                [new(Strings.FiletypeProject) { Patterns = [$"*.{Project.PROJECT_FORMAT}"] }],
                 CurrentConfig.ProjectsDirectory))?.TryGetLocalPath();
             if (string.IsNullOrEmpty(projectPath))
             {
@@ -903,7 +903,7 @@ public partial class MainWindowViewModel : ViewModelBase
         if (OpenProject is null)
         {
             projFile = (await Window.ShowOpenFilePickerAsync(Strings.ProjectDeleteText,
-                [new(Strings.Serial_Loops_Project) { Patterns = [$"*.{Project.PROJECT_FORMAT}"] }],
+                [new(Strings.FiletypeProject) { Patterns = [$"*.{Project.PROJECT_FORMAT}"] }],
                 CurrentConfig.ProjectsDirectory))?.TryGetLocalPath();
             if (string.IsNullOrEmpty(projFile))
             {
@@ -934,7 +934,7 @@ public partial class MainWindowViewModel : ViewModelBase
             CurrentConfig = preferencesDialogViewModel.Configuration;
             if (preferencesDialogViewModel.RequireRestart)
             {
-                if ((await Window.ShowMessageBoxAsync(Strings.Restart_required, Strings.The_changes_made_will_require_Serial_Loops_to_be_restarted__Is_that_okay_, ButtonEnum.YesNo, Icon.Setting, Log)) == ButtonResult.Yes)
+                if ((await Window.ShowMessageBoxAsync(Strings.PreferencesRestartRequired, Strings.PreferencesRestartMessage, ButtonEnum.YesNo, Icon.Setting, Log)) == ButtonResult.Yes)
                 {
                     Window.RestartOnClose = true;
                     Window.Close();
@@ -947,8 +947,8 @@ public partial class MainWindowViewModel : ViewModelBase
 
     public async Task EditSaveFileCommand_Executed()
     {
-        IStorageFile saveFile = await Window.ShowOpenFilePickerAsync(Strings.Open_Chokuretsu_Save_File,
-            [new(Strings.Chokuretsu_Save_File) { Patterns = ["*.sav"] }]);
+        IStorageFile saveFile = await Window.ShowOpenFilePickerAsync(Strings.SaveEditorLoadSaveFileDialogTitle,
+            [new(Strings.FiletypeChokuretsuSave) { Patterns = ["*.sav"] }]);
         if (saveFile is null)
         {
             return;
@@ -966,8 +966,8 @@ public partial class MainWindowViewModel : ViewModelBase
             string rom = Path.Combine(Path.GetDirectoryName(savePath) ?? string.Empty, $"{Path.GetFileNameWithoutExtension(savePath)}.nds");
             if (!File.Exists(rom))
             {
-                IStorageFile romFile = await Window.ShowOpenFilePickerAsync(Strings.Open_ROM,
-                    [new(Strings.NDS_ROM) { Patterns = ["*.nds"] }]);
+                IStorageFile romFile = await Window.ShowOpenFilePickerAsync(Strings.RomOpenFileDialogTitle,
+                    [new(Strings.FiletypeNdsRom) { Patterns = ["*.nds"] }]);
                 if (romFile is null)
                 {
                     return;
@@ -979,9 +979,9 @@ public partial class MainWindowViewModel : ViewModelBase
             string tempProjectDirectory = Path.Combine(CurrentConfig.ProjectsDirectory, projectName);
             if (Directory.Exists(tempProjectDirectory))
             {
-                if (await Window.ShowMessageBoxAsync(Strings.Temporary_Project_Already_Exists_,
+                if (await Window.ShowMessageBoxAsync(Strings.SaveEditorTemporaryProjectExistsMessageTitle,
                         string.Format(
-                            Strings.In_order_to_edit_this_save_file__Serial_Loops_needs_to_make_a_temporary_project__However__a_project_called___0___already_exists__Would_you_like_to_overwrite_this_project_,
+                            Strings.SaveEditorProjectAlreadyExistsWarning,
                             projectName),
                         ButtonEnum.YesNo, Icon.Warning, Log) == ButtonResult.Yes)
                 {
@@ -993,10 +993,10 @@ public partial class MainWindowViewModel : ViewModelBase
                 }
             }
             OpenProject = new(projectName, "en", CurrentConfig, Strings.ResourceManager.GetString, Log);
-            ProgressDialogViewModel tracker = new(Strings.Creating_Project);
+            ProgressDialogViewModel tracker = new(Strings.ProjectCreationProgressMessage);
             tracker.InitializeTasks(() =>
             {
-                ((IProgressTracker)tracker).Focus(Strings.Creating_Project, 1);
+                ((IProgressTracker)tracker).Focus(Strings.ProjectCreationProgressMessage, 1);
                 IO.OpenRom(OpenProject, rom, Log, tracker);
                 tracker.Finished++;
                 OpenProject.Load(CurrentConfig, Log, tracker);
@@ -1017,26 +1017,26 @@ public partial class MainWindowViewModel : ViewModelBase
 
                 // Add a few commands to the menu
                 NativeMenu menu = NativeMenu.GetMenu(Window);
-                int insertionPoint = menu.Items.Count;
-                if (((NativeMenuItem)menu.Items.Last()).Header.Equals(Strings._Help))
+                int insertionPoint = menu!.Items.Count;
+                if (((NativeMenuItem)menu.Items.Last()).Header!.Equals(Strings.MenuHelp))
                 {
                     insertionPoint--;
                 }
 
                 // PROJECT
-                WindowMenu.Add(MenuHeader.PROJECT, new(Strings._Project));
+                WindowMenu.Add(MenuHeader.PROJECT, new(Strings.MenuProject));
                 WindowMenu[MenuHeader.PROJECT].Menu =
                 [
                     new NativeMenuItem
                     {
-                        Header = Strings.Save_Save_File,
+                        Header = Strings.SaveEditorSaveFileLabel,
                         Command = SaveProjectCommand,
                         Icon = ControlGenerator.GetIcon("Save", Log),
                         Gesture = SaveHotKey,
                     },
                     new NativeMenuItem
                     {
-                        Header = Strings.Close_Save_File,
+                        Header = Strings.CloseSaveFileLabel,
                         Command = CloseProjectCommand,
                         Icon = ControlGenerator.GetIcon("Close", Log),
                         Gesture = CloseProjectKey,
@@ -1224,7 +1224,7 @@ public partial class MainWindowViewModel : ViewModelBase
                     }
                     catch (Exception ex)
                     {
-                        Log.LogException(Strings.Failed_to_save_Chokuretsu_save_file_, ex);
+                        Log.LogException(Strings.ErrorFailedSavingChokuSave, ex);
                     }
                     break;
                 default:
@@ -1284,17 +1284,17 @@ public partial class MainWindowViewModel : ViewModelBase
         if (OpenProject is not null)
         {
             bool buildSucceeded = true; // imo it's better to have a false negative than a false positive here
-            ProgressDialogViewModel tracker = new(Strings.Building_Iteratively, Strings.Building_);
+            ProgressDialogViewModel tracker = new(Strings.BuildingIterativelyMessage, Strings.BuildingPrefix);
             tracker.InitializeTasks(() => buildSucceeded = Build.BuildIterative(OpenProject, CurrentConfig, Log, tracker), async () =>
             {
                 if (buildSucceeded)
                 {
                     Log.Log("Build succeeded!");
-                    await Window.ShowMessageBoxAsync(Strings.Build_Result, Strings.Build_succeeded_, ButtonEnum.Ok, Icon.Success, Log);
+                    await Window.ShowMessageBoxAsync(Strings.BuildResult, Strings.BuildSucceeded, ButtonEnum.Ok, Icon.Success, Log);
                 }
                 else
                 {
-                    Log.LogError(Strings.Build_failed_);
+                    Log.LogError(Strings.BuildFailed);
                 }
             });
             await new ProgressDialog { DataContext = tracker }.ShowDialog(Window);
@@ -1306,17 +1306,17 @@ public partial class MainWindowViewModel : ViewModelBase
         if (OpenProject is not null)
         {
             bool buildSucceeded = true;
-            ProgressDialogViewModel tracker = new(Strings.Building_from_Scratch, Strings.Building_);
+            ProgressDialogViewModel tracker = new(Strings.BuildingFromScratchMessage, Strings.BuildingPrefix);
             tracker.InitializeTasks(() => buildSucceeded = Build.BuildBase(OpenProject, CurrentConfig, Log, tracker), async () =>
             {
                 if (buildSucceeded)
                 {
                     Log.Log("Build succeeded!");
-                    await Window.ShowMessageBoxAsync(Strings.Build_Result, Strings.Build_succeeded_, ButtonEnum.Ok, Icon.Success, Log);
+                    await Window.ShowMessageBoxAsync(Strings.BuildResult, Strings.BuildSucceeded, ButtonEnum.Ok, Icon.Success, Log);
                 }
                 else
                 {
-                    Log.LogError(Strings.Build_failed_);
+                    Log.LogError(Strings.BuildFailed);
                 }
             });
             await new ProgressDialog { DataContext = tracker } .ShowDialog(Window);
@@ -1330,13 +1330,13 @@ public partial class MainWindowViewModel : ViewModelBase
             if (string.IsNullOrWhiteSpace(CurrentConfig.SysConfig.EmulatorPath) && string.IsNullOrWhiteSpace(CurrentConfig.SysConfig.EmulatorFlatpak))
             {
                 Log.LogWarning("Attempted to build and run project while no emulator path/flatpak was set.");
-                await Window.ShowMessageBoxAsync(Strings.No_Emulator_Path, Strings.No_emulator_path_has_been_set__nPlease_set_the_path_to_a_Nintendo_DS_emulator_in_Preferences_to_use_Build___Run_,
+                await Window.ShowMessageBoxAsync(Strings.NoEmulatorPathMessageTitle, Strings.NoEmulatorPathMessage,
                     ButtonEnum.Ok, Icon.Warning, Log);
                 await PreferencesCommand_Executed();
                 return;
             }
             bool buildSucceeded = true;
-            ProgressDialogViewModel tracker = new(Strings.Building_and_Running, Strings.Building_);
+            ProgressDialogViewModel tracker = new(Strings.BuildingAndRunningMessage, Strings.BuildingPrefix);
             tracker.InitializeTasks(() => buildSucceeded = Build.BuildIterative(OpenProject, CurrentConfig, Log, tracker), () =>
                 {
                     if (buildSucceeded)
@@ -1394,7 +1394,7 @@ public partial class MainWindowViewModel : ViewModelBase
                     }
                     else
                     {
-                        Log.LogError(Strings.Build_failed_);
+                        Log.LogError(Strings.BuildFailed);
                     }
                 });
             await new ProgressDialog { DataContext = tracker }.ShowDialog(Window);
@@ -1410,11 +1410,11 @@ public partial class MainWindowViewModel : ViewModelBase
         }
         NativeMenu menu = NativeMenu.GetMenu(Window);
         int insertionPoint = menu!.Items.Count;
-        if (((NativeMenuItem)menu.Items.Last()).Header!.Equals(Strings._Help))
+        if (((NativeMenuItem)menu.Items.Last()).Header!.Equals(Strings.MenuHelp))
         {
             insertionPoint--;
         }
-        NativeMenu fileMenu = ((NativeMenuItem)menu.Items.First(m => m is NativeMenuItem nm && nm.Header == Strings._File)).Menu;
+        NativeMenu fileMenu = ((NativeMenuItem)menu.Items.First(m => m is NativeMenuItem nm && nm.Header == Strings.MenuFile)).Menu;
 
         // FILE (additions and removals)
         NativeMenuItem projectRenameItem = (NativeMenuItem)WindowMenu[MenuHeader.FILE].Menu!.Items
@@ -1433,14 +1433,14 @@ public partial class MainWindowViewModel : ViewModelBase
 
         NativeMenuItem projectSaveItem = new()
         {
-            Header = Strings.Save_Project,
+            Header = Strings.MenuSaveProject,
             Command = SaveProjectCommand,
             Icon = ControlGenerator.GetIcon("Save", Log),
             Gesture = SaveHotKey,
         };
         NativeMenuItem projectCloseItem = new()
         {
-            Header = Strings.Close_Project,
+            Header = Strings.CloseProjectLabel,
             Command = CloseProjectCommand,
             Icon = ControlGenerator.GetIcon("Close", Log),
             Gesture = CloseProjectKey,
@@ -1449,30 +1449,30 @@ public partial class MainWindowViewModel : ViewModelBase
         WindowMenu[MenuHeader.FILE].Menu.Items.Insert(projectAreaIndex + 1, projectCloseItem);
 
         // PROJECT
-        WindowMenu.Add(MenuHeader.PROJECT, new(Strings._Project));
+        WindowMenu.Add(MenuHeader.PROJECT, new(Strings.MenuProject));
         WindowMenu[MenuHeader.PROJECT].Menu =
         [
             new NativeMenuItem
             {
-                Header = Strings.Project_Settings___,
+                Header = Strings.MenuProjectSettings,
                 Command = ProjectSettingsCommand,
                 Icon = ControlGenerator.GetIcon("Project_Options", Log),
             },
             new NativeMenuItem
             {
-                Header = Strings.Migrate_to_new_ROM,
+                Header = Strings.ProjectMigrateTitle,
                 Command = MigrateProjectCommand,
                 Icon = ControlGenerator.GetIcon("Migrate_ROM", Log),
             },
             new NativeMenuItem
             {
-                Header = Strings.Export_Project,
+                Header = Strings.MenuExportProject,
                 Command = ExportProjectCommand,
                 Icon = ControlGenerator.GetIcon("Export_Project", Log),
             },
             new NativeMenuItem
             {
-                Header = Strings.Export_Patch,
+                Header = Strings.MenuExportPatch,
                 Command = ExportPatchCommand,
                 Icon = ControlGenerator.GetIcon("Export_Patch", Log),
             },
@@ -1485,23 +1485,23 @@ public partial class MainWindowViewModel : ViewModelBase
         insertionPoint++;
 
         // TOOLS
-        WindowMenu.Add(MenuHeader.TOOLS, new(Strings._Tools));
+        WindowMenu.Add(MenuHeader.TOOLS, new(Strings.MenuTools));
         WindowMenu[MenuHeader.TOOLS].Menu =
         [
             new NativeMenuItem
             {
-                Header = Strings.Apply_Hacks___,
+                Header = Strings.AssemblyHacksApplyDetails,
                 Command = ApplyHacksCommand,
                 Icon = ControlGenerator.GetIcon("Apply_Hacks", Log),
             },
             new NativeMenuItem
             {
-                Header = Strings.Create_ASM_Hack,
+                Header = Strings.MenuCreateAsmHackLabel,
                 Command = CreateAsmHackCommand,
             },
             new NativeMenuItem
             {
-                Header = Strings.Edit_UI_Text___,
+                Header = Strings.MenuEditUIText,
                 Command = EditUiTextCommand,
                 Icon = ControlGenerator.GetIcon("Edit_UI_Text", Log),
             },
@@ -1512,13 +1512,13 @@ public partial class MainWindowViewModel : ViewModelBase
             },
             new NativeMenuItem
             {
-                Header = Strings.Edit_Tutorial_Mappings___,
+                Header = Strings.MenuEditTutorialMappings,
                 Command = EditTutorialMappingsCommand,
                 Icon = ControlGenerator.GetIcon("Tutorial", Log),
             },
             new NativeMenuItem
             {
-                Header = Strings.Search___,
+                Header = Strings.MenuSearch,
                 Command = SearchProjectCommand,
                 Icon = ControlGenerator.GetIcon("Search", Log),
                 Gesture = SearchHotKey,
@@ -1528,7 +1528,7 @@ public partial class MainWindowViewModel : ViewModelBase
         insertionPoint++;
 
         // BUILD
-        WindowMenu.Add(MenuHeader.BUILD, new(Strings._Build));
+        WindowMenu.Add(MenuHeader.BUILD, new(Strings.MenuBuild));
         WindowMenu[MenuHeader.BUILD].Menu =
         [
             new NativeMenuItem
@@ -1539,13 +1539,13 @@ public partial class MainWindowViewModel : ViewModelBase
             },
             new NativeMenuItem
             {
-                Header = Strings.Build_from_Scratch,
+                Header = Strings.BuildFromScratch,
                 Command = BuildBaseCommand,
                 Icon = ControlGenerator.GetIcon("Build_Scratch", Log),
             },
             new NativeMenuItem
             {
-                Header = Strings.Build_and_Run,
+                Header = Strings.BuildAndRun,
                 Command = BuildAndRunCommand,
                 Icon = ControlGenerator.GetIcon("Build_Run", Log),
             },
@@ -1571,8 +1571,8 @@ public partial class MainWindowViewModel : ViewModelBase
         });
         ToolBar.Items.Add(new ToolbarButton
         {
-            DataContext = Strings.Build_and_Run,
-            Text = Strings.Build_and_Run,
+            DataContext = Strings.BuildAndRun,
+            Text = Strings.BuildAndRun,
             Command = BuildAndRunCommand,
             Icon = ControlGenerator.GetVectorIcon("Build_Run", Log),
         });

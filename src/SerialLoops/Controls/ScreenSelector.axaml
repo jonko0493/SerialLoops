@@ -14,20 +14,20 @@
         <StackPanel Orientation="Vertical" Spacing="2">
             <Border BorderThickness="2" CornerRadius="3"
                     BorderBrush="{Binding #TopButton.IsEnabled, Converter={x:Static utility:SLConverters.BooleanBrushConverter}}">
-                <Button Name="TopButton" Width="35" Height="20" Command="{Binding SelectTopCommand}" ToolTip.Tip="{x:Static assets:Strings.Top_Screen}"
+                <Button Name="TopButton" Width="35" Height="20" Command="{Binding SelectTopCommand}" ToolTip.Tip="{x:Static assets:Strings.ScreenSelectorTopScreen}"
                         IsEnabled="{Binding SelectedScreen, Converter={x:Static utility:SLConverters.TopScreenSelectableConverter}}">
                     <Svg Path="avares://SerialLoops/Assets/Icons/Top_Screen.svg" Width="35" Height="20"/>
                 </Button>
             </Border>
             <Border BorderThickness="2" CornerRadius="3"
                     BorderBrush="{Binding #BottomButton.IsEnabled, Converter={x:Static utility:SLConverters.BooleanBrushConverter}}">
-                <Button Name="BottomButton" Width="35" Height="20" Command="{Binding SelectBottomCommand}" ToolTip.Tip="{x:Static assets:Strings.Bottom_Screen}"
+                <Button Name="BottomButton" Width="35" Height="20" Command="{Binding SelectBottomCommand}" ToolTip.Tip="{x:Static assets:Strings.ScreenSelectorBottomScreen}"
                         IsEnabled="{Binding SelectedScreen, Converter={x:Static utility:SLConverters.BottomScreenSelectableConverter}}">
                     <Svg Path="avares://SerialLoops/Assets/Icons/Bottom_Screen.svg" Width="35" Height="20"/>
                 </Button>
             </Border>
         </StackPanel>
-        <CheckBox Name="BothCheckBox" IsVisible="{Binding AllowSelectingBoth}" Content="{x:Static assets:Strings.Both}"
+        <CheckBox Name="BothCheckBox" IsVisible="{Binding AllowSelectingBoth}" Content="{x:Static assets:Strings.ScreenSelectorBothScreens}"
                   IsChecked="{Binding SelectedScreen, Converter={x:Static utility:SLConverters.BothScreensSelectedConverter}}">
             <i:Interaction.Behaviors>
                 <ia:EventTriggerBehavior EventName="IsCheckedChanged" SourceObject="{Binding #BothCheckBox}">
