@@ -1608,6 +1608,17 @@ public partial class Project
 
     private bool ScriptIsInEpisode(ScriptItem script, int scenarioEpIndex, int scenarioNextEpIndex)
     {
+        int scriptFileScenarioIndex = GetScriptScenarioIndex(script);
+        if (scenarioNextEpIndex < 0)
+        {
+            scenarioNextEpIndex = int.MaxValue;
+        }
+
+        return scriptFileScenarioIndex > scenarioEpIndex && scriptFileScenarioIndex < scenarioNextEpIndex;
+    }
+
+    private int GetScriptScenarioIndex(ScriptItem script)
+    {
         int scriptFileScenarioIndex = Scenario.Commands.FindIndex(c => c.Verb == ScenarioCommand.ScenarioVerb.LOAD_SCENE && c.Parameter == script.Event.Index);
         if (scriptFileScenarioIndex < 0)
         {
@@ -1617,13 +1628,14 @@ public partial class Project
             {
                 scriptFileScenarioIndex = Scenario.Commands.FindIndex(c => c.Verb == ScenarioCommand.ScenarioVerb.ROUTE_SELECT && c.Parameter == ((GroupSelectionItem)groupSelection).Index);
             }
-        }
-        if (scenarioNextEpIndex < 0)
-        {
-            scenarioNextEpIndex = int.MaxValue;
+            ItemDescription otherScript = references.Find(r => r.Type == ItemType.Script);
+            if (otherScript is not null)
+            {
+                scriptFileScenarioIndex = GetScriptScenarioIndex((ScriptItem)otherScript);
+            }
         }
 
-        return scriptFileScenarioIndex > scenarioEpIndex && scriptFileScenarioIndex < scenarioNextEpIndex;
+        return scriptFileScenarioIndex;
     }
 
     [GeneratedRegex(@"\((?<num>\d+)\)")]

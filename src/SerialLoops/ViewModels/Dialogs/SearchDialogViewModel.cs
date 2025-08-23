@@ -201,7 +201,7 @@ public class LocalizedItemScope(ItemDescription.ItemType type) : ReactiveObject
 {
     public ItemDescription.ItemType Type { get; } = type;
     public string Icon => $"avares://SerialLoops/Assets/Icons/{Type.ToString()}.svg";
-    public string DisplayText { get; } = Strings.ResourceManager.GetString($"{type.ToString()}s");
+    public string DisplayText { get; } = Strings.ResourceManager.GetString($"ItemsPanel{type.ToString().Replace("_", "")}s");
     [Reactive]
     public bool IsActive { get; set; } = true;
 }
