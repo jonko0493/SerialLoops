@@ -1103,6 +1103,15 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to replace nameplate for character {0} with image {1}.
+        /// </summary>
+        public static string CharacterEditorNameplateReplaceErrorMessage {
+            get {
+                return ResourceManager.GetString("CharacterEditorNameplateReplaceErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Text Color.
         /// </summary>
         public static string CharacterEditorNameplateTextColor {
@@ -1121,24 +1130,6 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Text Timer.
-        /// </summary>
-        public static string CharacterEditorTextTimer {
-            get {
-                return ResourceManager.GetString("CharacterEditorTextTimer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to replace nameplate for character {0} with image {1}.
-        /// </summary>
-        public static string CharacterEditorNameplateReplaceErrorMessage {
-            get {
-                return ResourceManager.GetString("CharacterEditorNameplateReplaceErrorMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Override Nameplate.
         /// </summary>
         public static string CharacterEditorOverrideNameplateText {
@@ -1153,6 +1144,15 @@ namespace SerialLoops.Assets {
         public static string CharacterEditorSelectNameplateFilePickerTitle {
             get {
                 return ResourceManager.GetString("CharacterEditorSelectNameplateFilePickerTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text Timer.
+        /// </summary>
+        public static string CharacterEditorTextTimer {
+            get {
+                return ResourceManager.GetString("CharacterEditorTextTimer", resourceCulture);
             }
         }
         

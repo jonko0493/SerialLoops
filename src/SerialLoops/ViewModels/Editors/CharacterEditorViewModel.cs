@@ -177,7 +177,7 @@ public class CharacterEditorViewModel : EditorViewModel
     private async Task OverrideNameplate()
     {
         string nameplateFile = (await Window.Window.ShowOpenFilePickerAsync(Strings.CharacterEditorSelectNameplateFilePickerTitle,
-            [new(Strings.Supported_Images) { Patterns = Shared.SupportedImageFiletypes }]))?.TryGetLocalPath();
+            [new(Strings.FiletypeSupportedImages) { Patterns = Shared.SupportedImageFiletypes }]))?.TryGetLocalPath();
         if (string.IsNullOrEmpty(nameplateFile))
         {
             return;
