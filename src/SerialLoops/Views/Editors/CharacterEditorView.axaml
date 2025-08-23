@@ -48,11 +48,10 @@
             <Svg Path="avares://SerialLoops/Assets/Icons/Help.svg" Width="16" VerticalAlignment="Center" ToolTip.Tip="{x:Static assets:Strings.CharacterEditorVoiceFontHelp}"/>
         </StackPanel>
         <ComboBox Grid.Row="6" Grid.Column="1" ItemsSource="{Binding Sfxs}" SelectedItem="{Binding VoiceFont}"/>
-        <controls:ItemLink Grid.Row="5" Grid.Column="2" Item="{Binding VoiceFont}"
+        <controls:ItemLink Grid.Row="6" Grid.Column="2" Item="{Binding VoiceFont}"
                            Tabs="{Binding Tabs}"/>
 
         <StackPanel Grid.Row="7" Grid.Column="0" Orientation="Horizontal" Spacing="3" Margin="0 0 10 0">
-            <TextBlock VerticalAlignment="Center" Text="{x:Static assets:Strings.CharacterEditorTextTimer}"/>
             <TextBlock VerticalAlignment="Center" Text="{x:Static assets:Strings.CharacterEditorTextTimer}"/>
             <Svg Path="avares://SerialLoops/Assets/Icons/Help.svg" Width="16" VerticalAlignment="Center" ToolTip.Tip="{x:Static assets:Strings.CharacterEditorTextTimerHelp}"/>
         </StackPanel>
