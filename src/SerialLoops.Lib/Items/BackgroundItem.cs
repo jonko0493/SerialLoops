@@ -54,11 +54,11 @@ public class BackgroundItem : Item, IPreviewableGraphic
         else if (BackgroundType == BgType.TEX_CG_DUAL_SCREEN)
         {
             SKBitmap bitmap = new(Graphic1.Width, Graphic1.Height + Graphic2.Height);
-            SKCanvas canvas = new(bitmap);
+            using SKCanvas canvas = new(bitmap);
 
             SKBitmap tileBitmap = new(Graphic2.Width, Graphic2.Height);
             SKBitmap tiles = Graphic2.GetImage(width: 64);
-            SKCanvas tileCanvas = new(tileBitmap);
+            using SKCanvas tileCanvas = new(tileBitmap);
             int currentTile = 0;
             for (int y = 0; y < tileBitmap.Height; y += 64)
             {
@@ -85,7 +85,7 @@ public class BackgroundItem : Item, IPreviewableGraphic
         else
         {
             SKBitmap bitmap = new(Graphic1.Width, Graphic1.Height + Graphic2.Height);
-            SKCanvas canvas = new(bitmap);
+            using SKCanvas canvas = new(bitmap);
 
             canvas.DrawBitmap(Graphic1.GetImage(), new SKPoint(0, 0));
             canvas.DrawBitmap(Graphic2.GetImage(), new SKPoint(0, Graphic1.Height));
@@ -102,17 +102,17 @@ public class BackgroundItem : Item, IPreviewableGraphic
         switch (BackgroundType)
         {
             case BgType.KINETIC_SCREEN:
-                tracker.Focus(localize("Setting screen image..."), 1);
+                tracker.Focus(localize("BackgroundEditorSettingScreenImage"), 1);
                 if (Graphic2.SetScreenImage(image, quantizer, Graphic1, suppressErrors: true) < 0)
                 {
-                    log.LogError(localize("Failed to replace screen image: image too complex (generated more than 255 tiles); please use a simpler image"));
+                    log.LogError(localize("ErrorFailedReplacingKbg"));
                     return false;
                 }
                 tracker.Finished++;
                 break;
 
             case BgType.TEX_CG_SINGLE:
-                tracker.Focus(localize("Setting CG single image..."), 1);
+                tracker.Focus(localize("BackgroundEditorCGSingleReplaceProgressMessage"), 1);
                 List<SKColor> singlePalette = Helpers.GetPaletteFromImage(image, transparentIndex == 0 ? 255 : 256, log);
                 if (singlePalette.Count == 255)
                 {
@@ -124,22 +124,23 @@ public class BackgroundItem : Item, IPreviewableGraphic
                 break;
 
             case BgType.TEX_CG_DUAL_SCREEN:
+            {
                 SKBitmap newTextureBitmap = new(Graphic1.Width, Graphic1.Height);
                 SKBitmap newTileBitmap = new(64, Graphic2.Height * Graphic2.Width / 64);
                 SKBitmap tileSource = new(image.Width, image.Height - Graphic1.Height);
 
-                tracker.Focus(localize("Drawing bottom screen texture..."), 1);
-                SKCanvas textureCanvas = new(newTextureBitmap);
+                tracker.Focus(localize("BgItemBottomScreenProgressMessage"), 1);
+                using SKCanvas textureCanvas = new(newTextureBitmap);
                 textureCanvas.DrawBitmap(image, new(0, image.Height - newTextureBitmap.Height, newTextureBitmap.Width, image.Height), new SKRect(0, 0, newTextureBitmap.Width, newTextureBitmap.Height));
                 textureCanvas.Flush();
                 tracker.Finished++;
 
-                SKCanvas tileSourceCanvas = new(tileSource);
+                using SKCanvas tileSourceCanvas = new(tileSource);
                 tileSourceCanvas.DrawBitmap(image, 0, 0);
                 tileSourceCanvas.Flush();
 
-                tracker.Focus(localize("Drawing top screen tiles..."), newTileBitmap.Height / 64 * newTileBitmap.Width / 64);
-                SKCanvas tileCanvas = new(newTileBitmap);
+                tracker.Focus(localize("BgEditorTopScreenProgressMessage"), newTileBitmap.Height / 64 * newTileBitmap.Width / 64);
+                using SKCanvas tileCanvas = new(newTileBitmap);
                 int currentTile = 0;
                 for (int y = 0; y < tileSource.Height; y += 64)
                 {
@@ -154,7 +155,7 @@ public class BackgroundItem : Item, IPreviewableGraphic
                 }
                 tileCanvas.Flush();
 
-                tracker.Focus(localize("Setting palettes and images..."), 5);
+                tracker.Focus(localize("BackgroundEditorSettingPalettesAndImages"), 5);
                 List<SKColor> tilePalette = Helpers.GetPaletteFromImage(image, transparentIndex == 0 ? 255 : 256, log);
                 if (tilePalette.Count == 255)
                 {
@@ -170,28 +171,34 @@ public class BackgroundItem : Item, IPreviewableGraphic
                 Graphic2.SetImage(newTileBitmap);
                 tracker.Finished++;
                 break;
+            }
 
             default:
+            {
                 SKBitmap newGraphic1 = new(Graphic1.Width, Graphic1.Height);
                 SKBitmap newGraphic2 = new(Graphic2.Width, Graphic2.Height);
 
-                tracker.Focus(localize("Drawing textures..."), 2);
-                SKCanvas canvas1 = new(newGraphic1);
-                canvas1.DrawBitmap(image, new(0, 0, newGraphic1.Width, newGraphic1.Height), new SKRect(0, 0, newGraphic1.Width, newGraphic1.Height));
+                tracker.Focus(localize("BgItemDrawingTexturesProgressMessage"), 2);
+                using SKCanvas canvas1 = new(newGraphic1);
+                canvas1.DrawBitmap(image, new(0, 0, newGraphic1.Width, newGraphic1.Height),
+                    new SKRect(0, 0, newGraphic1.Width, newGraphic1.Height));
                 canvas1.Flush();
                 tracker.Finished++;
 
-                SKCanvas canvas2 = new(newGraphic2);
-                canvas2.DrawBitmap(image, new(0, newGraphic1.Height, newGraphic2.Width, newGraphic1.Height + newGraphic2.Height), new SKRect(0, 0, newGraphic2.Width, newGraphic2.Height));
+                using SKCanvas canvas2 = new(newGraphic2);
+                canvas2.DrawBitmap(image,
+                    new(0, newGraphic1.Height, newGraphic2.Width, newGraphic1.Height + newGraphic2.Height),
+                    new SKRect(0, 0, newGraphic2.Width, newGraphic2.Height));
                 canvas2.Flush();
                 tracker.Finished++;
 
-                tracker.Focus(localize("Setting palettes and images..."), 5);
+                tracker.Focus(localize("BackgroundEditorSettingPalettesAndImages"), 5);
                 List<SKColor> texPalette = Helpers.GetPaletteFromImage(image, transparentIndex == 0 ? 255 : 256, log);
                 if (texPalette.Count == 255)
                 {
                     texPalette.Insert(0, new(0, 248, 0));
                 }
+
                 tracker.Finished++;
                 Graphic1.SetPalette(texPalette);
                 tracker.Finished++;
@@ -202,6 +209,7 @@ public class BackgroundItem : Item, IPreviewableGraphic
                 Graphic2.SetImage(newGraphic2);
                 tracker.Finished++;
                 break;
+            }
         }
         return true;
     }

@@ -14,7 +14,7 @@ namespace SerialLoops.Utility;
 public class LoopyLogger : ILogger
 {
     private readonly Window _owner;
-    private Config _config;
+    private ConfigUser _configUser;
     private string _logFile;
 
     /// <summary>
@@ -29,18 +29,18 @@ public class LoopyLogger : ILogger
         _owner = window;
     }
 
-    public void Initialize(Config config)
+    public void Initialize(ConfigUser configUser)
     {
-        _config = config;
-        if (!Directory.Exists(_config.LogsDirectory))
+        _configUser = configUser;
+        if (!Directory.Exists(_configUser.LogsDirectory))
         {
-            Directory.CreateDirectory(_config.LogsDirectory);
+            Directory.CreateDirectory(_configUser.LogsDirectory);
         }
-        _logFile = Path.Combine(_config.LogsDirectory, $"SerialLoops.log");
+        _logFile = Path.Combine(_configUser.LogsDirectory, "SerialLoops.log");
     }
 
     private static string Stamp => $"\n({Environment.ProcessId}) {DateTimeOffset.Now} - ";
-    public static string CrashLogLocation => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "sl_crash.log");
+    public static string CrashLogLocation => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "SerialLoops", "sl_crash.log");
 
     public virtual void Log(string message)
     {
@@ -83,7 +83,7 @@ public class LoopyLogger : ILogger
                 }
             }
         }
-        await _owner.ShowMessageBoxAsync(Strings.Error, string.Format(Strings.ERROR___0_, message), ButtonEnum.Ok, Icon.Error, this);
+        await _owner.ShowMessageBoxAsync(Strings.Error, string.Format(Strings.LoggerErrorMessage, message), ButtonEnum.Ok, Icon.Error, this);
     }
 
     public void LogException(string message, Exception exception)
@@ -115,6 +115,15 @@ public class LoopyLogger : ILogger
     {
         string crashLog = $"{Stamp}SERIAL LOOPS CRASH: {ex.Message}\n\n{ex.StackTrace}";
         Console.WriteLine(crashLog);
+        if (!Directory.Exists(Path.GetDirectoryName(CrashLogLocation)))
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(CrashLogLocation)!);
+        }
         File.AppendAllText(CrashLogLocation, crashLog);
+    }
+
+    public string ReadLog()
+    {
+        return File.ReadAllText(_logFile);
     }
 }

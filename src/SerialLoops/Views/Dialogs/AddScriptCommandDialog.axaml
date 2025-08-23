@@ -14,14 +14,14 @@
         ExtendClientAreaChromeHints="NoChrome"
         x:DataType="vm:AddScriptCommandDialogViewModel"
         x:Class="SerialLoops.Views.Dialogs.AddScriptCommandDialog"
-        Title="{x:Static assets:Strings.Add_Command}"
+        Title="{x:Static assets:Strings.ScriptEditorAddCommandLabel}"
         Name="AddCommandDialog">
     <Panel>
         <controls:AcrylicBorderHandler/>
 
         <StackPanel Orientation="Vertical" Spacing="20" Margin="15">
             <StackPanel Orientation="Vertical" Spacing="3">
-                <TextBlock Text="{x:Static assets:Strings.Select_Command_Type}"/>
+                <TextBlock Text="{x:Static assets:Strings.ScriptEditorAddCommandDialogTitle}"/>
                 <StackPanel Orientation="Horizontal" Spacing="3">
                     <ComboBox ItemsSource="{Binding CommandVerbs}" SelectedItem="{Binding SelectedCommandVerb}"
                               IsDropDownOpen="True" Name="CommandBox"/>
@@ -32,7 +32,7 @@
             <StackPanel Orientation="Horizontal" Spacing="5">
                 <Button Content="{x:Static assets:Strings.Cancel}" Command="{Binding CancelCommand}"
                         CommandParameter="{Binding #AddCommandDialog}" IsCancel="True"/>
-                <Button Content="{x:Static assets:Strings.Create}" Command="{Binding CreateCommand}"
+                <Button Content="{x:Static assets:Strings.AddItemLabel}" Command="{Binding CreateCommand}"
                         CommandParameter="{Binding #AddCommandDialog}" IsDefault="True"/>
             </StackPanel>
             <TextBlock Text="{x:Static assets:Strings.TypeToSearchHelp}" VerticalAlignment="Center" TextAlignment="Center"

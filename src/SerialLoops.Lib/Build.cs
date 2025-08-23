@@ -20,11 +20,11 @@ namespace SerialLoops.Lib;
 
 public static class Build
 {
-    public static bool BuildIterative(Project project, Config config, ILogger log, IProgressTracker tracker)
+    public static bool BuildIterative(Project project, ConfigUser configUser, ILogger log, IProgressTracker tracker)
     {
-        bool result = DoBuild(project.IterativeDirectory, project, config, log, tracker);
+        bool result = DoBuild(project.IterativeDirectory, project, configUser, log, tracker);
         CopyToArchivesToIterativeOriginal(Path.Combine(project.IterativeDirectory, "rom", "data"),
-            Path.Combine(project.IterativeDirectory, "original", "archives"), log, tracker);
+            Path.Combine(project.IterativeDirectory, "original", "archives"), project, log, tracker);
         ReplicateProjectSettingsAndBanner(Path.Combine(project.IterativeDirectory, "rom"),
             Path.Combine(project.BaseDirectory, "rom"), project.Name, log, tracker);
         if (result)
@@ -34,11 +34,11 @@ public static class Build
         return result;
     }
 
-    public static bool BuildBase(Project project, Config config, ILogger log, IProgressTracker tracker)
+    public static bool BuildBase(Project project, ConfigUser configUser, ILogger log, IProgressTracker tracker)
     {
-        bool result = DoBuild(project.BaseDirectory, project, config, log, tracker);
+        bool result = DoBuild(project.BaseDirectory, project, configUser, log, tracker);
         CopyToArchivesToIterativeOriginal(Path.Combine(project.BaseDirectory, "rom", "data"),
-            Path.Combine(project.IterativeDirectory, "original", "archives"), log, tracker);
+            Path.Combine(project.IterativeDirectory, "original", "archives"), project, log, tracker);
         ReplicateProjectSettingsAndBanner(Path.Combine(project.BaseDirectory, "rom"),
             Path.Combine(project.IterativeDirectory, "rom"), project.Name, log, tracker);
         if (result)
@@ -52,7 +52,7 @@ public static class Build
     {
         string[] preservedFiles = [];
         string[] cleanableFiles = Directory.GetFiles(Path.Combine(project.IterativeDirectory, "assets"), "*", SearchOption.AllDirectories);
-        tracker.Focus("Cleaning Iterative Directory", cleanableFiles.Length);
+        tracker.Focus("BuildCleaningIterativeDirectory", cleanableFiles.Length);
         foreach (string file in cleanableFiles)
         {
             if (!preservedFiles.Contains(Path.GetFileName(file)))
@@ -70,7 +70,7 @@ public static class Build
         }
     }
 
-    private static bool DoBuild(string directory, Project project, Config config, ILogger log, IProgressTracker tracker)
+    private static bool DoBuild(string directory, Project project, ConfigUser configUser, ILogger log, IProgressTracker tracker)
     {
         // Export includes
         StringBuilder commandsIncSb = new();
@@ -79,22 +79,22 @@ public static class Build
             commandsIncSb.AppendLine(command.GetMacro());
         }
 
-        tracker.Focus("Loading Archives (dat.bin)", 3);
+        tracker.Focus(project.Localize("ProjectLoadLoadingDatBin"), 3);
         var dat = ArchiveFile<DataFile>.FromFile(Path.Combine(directory, "original", "archives", "dat.bin"), log);
         tracker.Finished++;
-        tracker.CurrentlyLoading = "Loading Archives (evt.bin)";
+        tracker.CurrentlyLoading = project.Localize("ProjectLoadLoadingEvtBin");
         var evt = ArchiveFile<EventFile>.FromFile(Path.Combine(directory, "original", "archives", "evt.bin"), log);
         tracker.Finished++;
-        tracker.CurrentlyLoading = "Loading Archives (grp.bin)";
+        tracker.CurrentlyLoading = project.Localize("ProjectLoadLoadingGrpBin");
         var grp = ArchiveFile<GraphicsFile>.FromFile(Path.Combine(directory, "original", "archives", "grp.bin"), log);
 
         if (dat is null || evt is null || grp is null)
         {
-            log.LogError("One or more archives is null.");
+            log.LogError(project.Localize("ErrorArchivesNull"));
             return false;
         }
 
-        tracker.Focus("Writing Includes", 4);
+        tracker.Focus(project.Localize("BuildWritingIncludesProgressMessage"), 4);
         try
         {
             File.WriteAllText(Path.Combine(directory, "COMMANDS.INC"), commandsIncSb.ToString());
@@ -104,14 +104,14 @@ public static class Build
         }
         catch (IOException exc)
         {
-            log.LogException("Failed to write include files to disk.", exc);
+            log.LogException(project.Localize("ErrorFailedWritingIncludeFiles"), exc);
             return false;
         }
         tracker.Finished += 4;
 
         // Replace files
         string[] files = Directory.GetFiles(Path.Combine(directory, "assets"), "*.*", SearchOption.AllDirectories);
-        tracker.Focus("Replacing Files", files.Length);
+        tracker.Focus(project.Localize("BuildReplacingFilesProgressMessage"), files.Length);
         foreach (string file in files)
         {
             if (int.TryParse(Path.GetFileNameWithoutExtension(file).Split('_')[0], NumberStyles.HexNumber, new CultureInfo("en-US"), out int index) || Path.GetFileName(file).StartsWith("new", StringComparison.OrdinalIgnoreCase))
@@ -136,18 +136,18 @@ public static class Build
                     }
                     else if (Path.GetExtension(file).Equals(".s", StringComparison.OrdinalIgnoreCase))
                     {
-                        if (string.IsNullOrEmpty(config.DevkitArmPath))
+                        if (string.IsNullOrEmpty(configUser.SysConfig.LlvmPath))
                         {
-                            log.LogError("DevkitARM must be supplied in order to build!");
+                            log.LogError("LLVM must be supplied in order to build!");
                             return false;
                         }
                         if (file.Contains("events"))
                         {
-                            ReplaceSingleSourceFile(evt, file, index, config.DevkitArmPath, directory, project.Localize, log);
+                            ReplaceSingleSourceFile(evt, file, index, configUser.SysConfig.LlvmPath, directory, project.Localize, log);
                         }
                         else if (file.Contains("data"))
                         {
-                            ReplaceSingleSourceFile(dat, file, index, config.DevkitArmPath, directory, project.Localize, log);
+                            ReplaceSingleSourceFile(dat, file, index, configUser.SysConfig.LlvmPath, directory, project.Localize, log);
                         }
                         else
                         {
@@ -160,7 +160,7 @@ public static class Build
                     }
                     else
                     {
-                        log.LogError(string.Format(project.Localize("Unsure what to do with file '{0}'"), Path.GetFileName(file)));
+                        log.LogError(string.Format(project.Localize("BuildUnsureWhatToDoWithFileMessage"), Path.GetFileName(file)));
                         return false;
                     }
                 }
@@ -173,7 +173,7 @@ public static class Build
         }
 
         // Save files to disk
-        tracker.Focus("Writing Replaced Archives", 3);
+        tracker.Focus("BuildWritingReplacedArchivesProgressMessage", 3);
         if (!IO.WriteBinaryFile(Path.Combine(directory, "rom", "data", "dat.bin"), dat?.GetBytes(), log))
         {
             return false;
@@ -190,26 +190,26 @@ public static class Build
 
         // Save project file to disk
         string ndsProjectFile = Path.Combine(directory, "rom", $"{project.Name}.json");
-        tracker.Focus("Writing NitroPacker Project File", 1);
+        tracker.Focus(project.Localize("BuildWritingNPProjectFile"), 1);
         try
         {
             project.Settings.File.Serialize(ndsProjectFile);
         }
         catch (IOException exc)
         {
-            log.LogException("Failed to write NitroPacker NDS project file to disk", exc);
+            log.LogException(project.Localize("ErrorFailedWritingNPProjectFile"), exc);
             return false;
         }
         tracker.Finished++;
 
-        tracker.Focus("Packing ROM", 1);
+        tracker.Focus(project.Localize("BuildPackingRomProgressMessage"), 1);
         try
         {
             NdsProjectFile.Pack(Path.Combine(project.MainDirectory, $"{project.Name}.nds"), ndsProjectFile);
         }
         catch (Exception exc)
         {
-            log.LogException("NitroPacker failed to pack ROM with exception", exc);
+            log.LogException(project.Localize("BuildNitroPackerFailedPacking"), exc);
             return false;
         }
         tracker.Finished++;
@@ -217,9 +217,9 @@ public static class Build
         return true;
     }
 
-    private static void CopyToArchivesToIterativeOriginal(string newDataDir, string iterativeOriginalDir, ILogger log, IProgressTracker tracker)
+    private static void CopyToArchivesToIterativeOriginal(string newDataDir, string iterativeOriginalDir, Project project, ILogger log, IProgressTracker tracker)
     {
-        tracker.Focus("Copying Archives to Iterative Originals", 4);
+        tracker.Focus(project.Localize("BuildCopyingArchivesMessage"), 4);
         try
         {
             File.Copy(Path.Combine(newDataDir, "dat.bin"), Path.Combine(iterativeOriginalDir, "dat.bin"), overwrite: true);
@@ -233,7 +233,7 @@ public static class Build
         }
         catch (IOException exc)
         {
-            log.LogException($"Failed to copy newly built archives to the iterative originals directory", exc);
+            log.LogException(project.Localize("ErrorFailedCopyingArchivesToIterativeDir"), exc);
         }
     }
 
@@ -273,7 +273,7 @@ public static class Build
         }
         catch (Exception ex)
         {
-            log.LogException(string.Format(localize("Failed replacing graphics file {0} with file '{1}'"), index, filePath), ex);
+            log.LogException(string.Format(localize("ErrorFailedReplacingGraphicsFile"), index, filePath), ex);
         }
     }
 
@@ -290,7 +290,7 @@ public static class Build
         }
         catch (Exception ex)
         {
-            log.LogException(string.Format(localize("Failed replacing graphics file {0} with file '{1}'"), index, filePath), ex);
+            log.LogException(string.Format(localize("ErrorFailedReplacingGraphicsFile"), index, filePath), ex);
         }
     }
 
@@ -309,18 +309,18 @@ public static class Build
         }
         catch (Exception ex)
         {
-            log.LogException(string.Format(localize("Failed replacing graphics file {0} with file '{1}'"), index, filePath), ex);
+            log.LogException(string.Format(localize("ErrorFailedReplacingGraphicsFile"), index, filePath), ex);
         }
     }
 
-    private static bool ReplaceSingleSourceFile(ArchiveFile<EventFile> archive, string filePath, int index, string devkitArm, string workingDirectory, Func<string, string> localize, ILogger log)
+    private static bool ReplaceSingleSourceFile(ArchiveFile<EventFile> archive, string filePath, int index, string llvm, string workingDirectory, Func<string, string> localize, ILogger log)
     {
         try
         {
-            (string objFile, string binFile) = CompileSourceFile(filePath, devkitArm, workingDirectory, localize, log);
+            (string objFile, string binFile) = CompileSourceFile(filePath, llvm, workingDirectory, localize, log);
             if (!File.Exists(binFile))
             {
-                log.LogError(string.Format(localize("Compiled file {0} does not exist!"), binFile));
+                log.LogError(string.Format(localize("BuildErrorCompiledFileNotExist"), binFile));
                 return false;
             }
             ReplaceSingleFile(archive, binFile, index, localize, log);
@@ -330,18 +330,18 @@ public static class Build
         }
         catch (Exception ex)
         {
-            log.LogException(string.Format(localize("Failed replacing source file {0} in evt.bin with file '{1}'"), index, filePath), ex);
+            log.LogException(string.Format(localize("ErrorFailedReplacingEvtSourceFile"), index, filePath), ex);
             return false;
         }
     }
-    private static bool ReplaceSingleSourceFile(ArchiveFile<DataFile> archive, string filePath, int index, string devkitArm, string workingDirectory, Func<string, string> localize, ILogger log)
+    private static bool ReplaceSingleSourceFile(ArchiveFile<DataFile> archive, string filePath, int index, string llvm, string workingDirectory, Func<string, string> localize, ILogger log)
     {
         try
         {
-            (string objFile, string binFile) = CompileSourceFile(filePath, devkitArm, workingDirectory, localize, log);
+            (string objFile, string binFile) = CompileSourceFile(filePath, llvm, workingDirectory, localize, log);
             if (!File.Exists(binFile))
             {
-                log.LogError(string.Format(localize("Compiled file {0} does not exist!"), binFile));
+                log.LogError(string.Format(localize("BuildErrorCompiledFileNotExist"), binFile));
                 return false;
             }
             ReplaceSingleFile(archive, binFile, index, localize, log);
@@ -351,43 +351,43 @@ public static class Build
         }
         catch (Exception ex)
         {
-            log.LogException(string.Format(localize("Failed replacing source file {0} in dat.bin with file '{1}'"), index, filePath), ex);
+            log.LogException(string.Format(localize("ErrorFailedReplacingDatFile"), index, filePath), ex);
             return false;
         }
     }
 
-    private static (string, string) CompileSourceFile(string filePath, string devkitArm, string workingDirectory, Func<string, string> localize, ILogger log)
+    private static (string, string) CompileSourceFile(string filePath, string llvm, string workingDirectory, Func<string, string> localize, ILogger log)
     {
         string exeExtension = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? ".exe" : string.Empty;
 
-        string objFile = $"{Path.Combine(Path.GetDirectoryName(filePath), Path.GetFileNameWithoutExtension(filePath))}.o";
-        string binFile = $"{Path.Combine(Path.GetDirectoryName(filePath), Path.GetFileNameWithoutExtension(filePath))}.bin";
-        ProcessStartInfo gccStartInfo = new(Path.Combine(devkitArm, "bin", $"arm-none-eabi-gcc{exeExtension}"), $"-c -nostdlib -static \"{filePath}\" -o \"{objFile}")
+        string objFile = $"{Path.Combine(Path.GetDirectoryName(filePath)!, Path.GetFileNameWithoutExtension(filePath))}.o";
+        string binFile = $"{Path.Combine(Path.GetDirectoryName(filePath)!, Path.GetFileNameWithoutExtension(filePath))}.bin";
+        ProcessStartInfo clangStartInfo = new(Path.Combine(llvm, "bin", $"clang{exeExtension}"), $"-target armv5-none-eabi -nodefaultlibs -I. -static -c -o \"{objFile}\" \"{filePath}\"")
         {
             CreateNoWindow = true,
             WorkingDirectory = workingDirectory,
             RedirectStandardOutput = true,
             RedirectStandardError = true,
         };
-        if (!File.Exists(gccStartInfo.FileName))
+        if (!File.Exists(clangStartInfo.FileName))
         {
-            log.LogError(string.Format(localize("gcc not found at '{0}'"), gccStartInfo.FileName));
+            log.LogError(string.Format(localize("ClangNotFoundMessage"), clangStartInfo.FileName));
             return (string.Empty, string.Empty);
         }
-        log.Log($"Compiling '{filePath}' to '{objFile}' with '{gccStartInfo.FileName}'...");
-        Process gcc = new() { StartInfo = gccStartInfo };
-        gcc.OutputDataReceived += (object sender, DataReceivedEventArgs e) => log.Log(e.Data);
-        gcc.ErrorDataReceived += (object sender, DataReceivedEventArgs e) => log.LogWarning(e.Data);
-        gcc.Start();
-        gcc.WaitForExit();
+        log.Log($"Compiling '{filePath}' to '{objFile}' with '{clangStartInfo.FileName}'...");
+        Process clang = new() { StartInfo = clangStartInfo };
+        clang.OutputDataReceived += (_, e) => log.Log(e.Data);
+        clang.ErrorDataReceived += (_, e) => log.LogWarning(e.Data);
+        clang.Start();
+        clang.WaitForExit();
         Task.Delay(50); // ensures process is actually complete
-        if (gcc.ExitCode != 0)
+        if (clang.ExitCode != 0)
         {
-            log.LogError(string.Format(localize("gcc exited with code {0}"), gcc.ExitCode));
+            log.LogError(string.Format(localize("ClangExitedWithFailureMessage"), clang.ExitCode));
             return (string.Empty, string.Empty);
         }
 
-        ProcessStartInfo objcopyStartInfo = new(Path.Combine(devkitArm, "bin", $"arm-none-eabi-objcopy{exeExtension}"), $"-O binary \"{objFile}\" \"{binFile}")
+        ProcessStartInfo objcopyStartInfo = new(Path.Combine(llvm, "bin", $"llvm-objcopy{exeExtension}"), $"-O binary \"{objFile}\" \"{binFile}\"")
         {
             CreateNoWindow = true,
             WorkingDirectory = workingDirectory,
@@ -396,19 +396,19 @@ public static class Build
         };
         if (!File.Exists(objcopyStartInfo.FileName))
         {
-            log.LogError(string.Format(localize("objcopy not found at '{0}'"), objcopyStartInfo.FileName));
+            log.LogError(string.Format(localize("ObjcopyNotFoundMessage"), objcopyStartInfo.FileName));
             return (string.Empty, string.Empty);
         }
         log.Log($"Objcopying '{objFile}' to '{binFile}' with '{objcopyStartInfo.FileName}'...");
         Process objcopy = new() { StartInfo = objcopyStartInfo };
-        objcopy.OutputDataReceived += (object sender, DataReceivedEventArgs e) => log.Log(e.Data);
-        objcopy.ErrorDataReceived += (object sender, DataReceivedEventArgs e) => log.LogWarning(e.Data);
+        objcopy.OutputDataReceived += (_, e) => log.Log(e.Data);
+        objcopy.ErrorDataReceived += (_, e) => log.LogWarning(e.Data);
         objcopy.Start();
         objcopy.WaitForExit();
         Task.Delay(50); // ensures process is actually complete
         if (objcopy.ExitCode != 0)
         {
-            log.LogError(string.Format(localize("objcopy exited with code {0}"), objcopy.ExitCode));
+            log.LogError(string.Format(localize("ObjcopyExitedWithFailureMessage"), objcopy.ExitCode));
             return (string.Empty, string.Empty);
         }
 
@@ -426,7 +426,7 @@ public static class Build
         }
         catch (Exception ex)
         {
-            log.LogException(string.Format(localize("Failed replacing file {0} in evt.bin with file '{1}'"), index, filePath), ex);
+            log.LogException(string.Format(localize("ErrorFailedReplacingEvtFile"), index, filePath), ex);
         }
     }
     private static void ReplaceSingleFile(ArchiveFile<DataFile> archive, string filePath, int index, Func<string, string> localize, ILogger log)
@@ -440,7 +440,7 @@ public static class Build
         }
         catch (Exception ex)
         {
-            log.LogException(string.Format(localize("Failed replacing source file {0} in dat.bin with file '{1}'"), index, filePath), ex);
+            log.LogException(string.Format(localize("ErrorFailedReplacingDatFile"), index, filePath), ex);
         }
     }
     private static void ReplaceSingleBinaryFile(ArchiveFile<GraphicsFile> archive, string filePath, int index, Func<string, string> localize, ILogger log)
@@ -459,7 +459,7 @@ public static class Build
         }
         catch (Exception ex)
         {
-            log.LogException(string.Format(localize("Failed replacing animation file {0} in grp.bin with file '{1}'"), index, filePath), ex);
+            log.LogException(string.Format(localize("ErrorFailedReplacingAnimationFile"), index, filePath), ex);
         }
     }
 }

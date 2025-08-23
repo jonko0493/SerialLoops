@@ -50,7 +50,8 @@
             <ItemsControl.DataTemplates>
                 <DataTemplate DataType="vm:ChessPieceOnBoard">
                     <Panel PointerEntered="ChessPiece_OnPointerEntered" PointerExited="ChessPiece_OnPointerExited" Opacity="0.5">
-                        <Image Source="{Binding Image, Converter={x:Static utility:SLConverters.SKBitmapToAvaloniaConverter}}"/>
+                        <Image Source="{Binding Image, Converter={x:Static utility:SLConverters.SKBitmapToAvaloniaConverter}}"
+                               Opacity="2.0"/>
                     </Panel>
                 </DataTemplate>
             </ItemsControl.DataTemplates>
@@ -62,7 +63,7 @@
             </ItemsControl.Styles>
         </ItemsControl>
         <Grid Grid.Column="1" Grid.Row="0" ColumnDefinitions="Auto,Auto,Auto" RowDefinitions="Auto,Auto,Auto">
-            <TextBlock Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Text="{x:Static assets:Strings.Number_of_Moves}"/>
+            <TextBlock Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Text="{x:Static assets:Strings.ChessPuzzleEditorNumMoves}"/>
             <NumericUpDown Grid.Column="1" Grid.Row="0" Margin="10,0,0,0" Value="{Binding NumMoves}"
                            Minimum="0" Maximum="{Binding NumMovesLimit}" FormatString="N0" Increment="1" ParsingNumberStyle="Integer"/>
             <StackPanel Grid.Column="2" Grid.Row="0" Orientation="Horizontal" Spacing="3" Margin="5 0 0 0">
@@ -72,7 +73,7 @@
                      ToolTip.Tip="{x:Static assets:Strings.ChessPuzzleEditorRemoveLimitHelp}"/>
             </StackPanel>
 
-            <TextBlock Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Text="{x:Static assets:Strings.Time_Limit}"/>
+            <TextBlock Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Text="{x:Static assets:Strings.ChessPuzzleEditorTimeLimitLabel}"/>
             <NumericUpDown Grid.Column="1" Grid.Row="1" Margin="10,0,0,0" Value="{Binding TimeLimit}"
                            Minimum="0" Maximum="999" FormatString="N0" Increment="1" ParsingNumberStyle="Integer"/>
 

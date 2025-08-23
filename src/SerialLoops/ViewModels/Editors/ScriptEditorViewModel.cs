@@ -13,7 +13,6 @@ using Avalonia.Controls.Models.TreeDataGrid;
 using Avalonia.Controls.Selection;
 using Avalonia.Controls.Templates;
 using Avalonia.Input;
-using Avalonia.Platform;
 using DynamicData;
 using HaruhiChokuretsuLib.Archive.Event;
 using HaruhiChokuretsuLib.Util;
@@ -30,6 +29,7 @@ using SerialLoops.Utility;
 using SerialLoops.ViewModels.Controls;
 using SerialLoops.ViewModels.Dialogs;
 using SerialLoops.ViewModels.Editors.ScriptCommandEditors;
+using SerialLoops.Views;
 using SerialLoops.Views.Dialogs;
 using SkiaSharp;
 using SoftCircuits.Collections;
@@ -82,8 +82,8 @@ public class ScriptEditorViewModel : EditorViewModel
     [Reactive]
     public ReactiveScriptSection SelectedSection { get; set; }
 
-    [Reactive]
-    public SKBitmap PreviewBitmap { get; set; }
+    public ScriptPreviewCanvasViewModel ScriptPreviewCanvas { get; set; }
+
     [Reactive]
     public ScriptCommandEditorViewModel CurrentCommandViewModel { get; set; }
 
@@ -158,8 +158,9 @@ public class ScriptEditorViewModel : EditorViewModel
     public ScriptEditorViewModel(ScriptItem script, MainWindowViewModel window, ILogger log) : base(script, window, log)
     {
         _script = script;
-        ScriptSections = new(script.Event.ScriptSections.Select(s => new ReactiveScriptSection(s)));
+        ScriptSections = new(script.Event.ScriptSections.Select(s => new ReactiveScriptSection(s, log, Window.Window)));
         _project = window.OpenProject;
+        ScriptPreviewCanvas = new(_project);
         Commands = _script.GetScriptCommandTree(_project, _log);
         _script.CalculateGraphEdges(_commands, _log);
         foreach (ReactiveScriptSection section in ScriptSections)
@@ -318,11 +319,13 @@ public class ScriptEditorViewModel : EditorViewModel
         {
             if (_selectedCommand is null)
             {
-                PreviewBitmap = null;
+                ScriptPreviewCanvas.Preview = null;
             }
             else
             {
                 ScriptPreview preview = _script.GetScriptPreview(_commands, _selectedCommand, _project, _log);
+                _selectedCommand.CurrentPreview = preview;
+
                 CurrentChessBoard = preview.ChessPuzzle;
                 CurrentGuidePieces.Clear();
                 CurrentGuidePieces.AddRange(preview.ChessGuidePieces);
@@ -331,23 +334,12 @@ public class ScriptEditorViewModel : EditorViewModel
                 CurrentCrossedSpaces.Clear();
                 CurrentCrossedSpaces.AddRange(preview.ChessCrossedSpaces);
 
-                (SKBitmap previewBitmap, string errorImage) = ScriptItem.GeneratePreviewImage(preview, _project);
-                if (previewBitmap is null)
-                {
-                    previewBitmap = new(256, 384);
-                    SKCanvas canvas = new(previewBitmap);
-                    canvas.DrawColor(SKColors.Black);
-                    using Stream noPreviewStream = AssetLoader.Open(new(errorImage));
-                    canvas.DrawImage(SKImage.FromEncodedData(noPreviewStream), new SKPoint(0, 0));
-                    canvas.Flush();
-                }
-
-                PreviewBitmap = previewBitmap;
+                ScriptPreviewCanvas.Preview = preview;
             }
         }
         catch (Exception ex)
         {
-            _log.LogException("Failed to update preview!", ex);
+            _log.LogException(Strings.ErrorFailedUpdatingPreview, ex);
         }
     }
 
@@ -535,8 +527,8 @@ public class ScriptEditorViewModel : EditorViewModel
         sectionName = $"NONE{sectionName}";
         if (ScriptSections.Any(s => s.Name.Equals(sectionName)))
         {
-            await Window.Window.ShowMessageBoxAsync(Strings.Duplicate_Section_Name,
-                Strings.Section_name_already_exists__Please_pick_a_different_name_for_this_section_,
+            await Window.Window.ShowMessageBoxAsync(Strings.ScriptEditorDupeSectionNameErrorTitle,
+                Strings.ScriptEditorSectionNameExistsWarning,
                 ButtonEnum.Ok, Icon.Warning, _log);
             return;
         }
@@ -556,7 +548,7 @@ public class ScriptEditorViewModel : EditorViewModel
             Name = sectionName,
             CommandsAvailable = CommandsAvailable,
         };
-        ReactiveScriptSection reactiveSection = new(section);
+        ReactiveScriptSection reactiveSection = new(section, _log, Window.Window);
 
         _script.Event.ScriptSections.Insert(sectionIndex, section);
         _script.Event.NumSections++;
@@ -607,8 +599,8 @@ public class ScriptEditorViewModel : EditorViewModel
             int sectionIndex = ScriptSections.IndexOf(SelectedSection);
             if (sectionIndex == 0)
             {
-                await Window.Window.ShowMessageBoxAsync(Strings.Cannot_Delete_Root_Section_,
-                    Strings.The_root_section_cannot_be_deleted_, ButtonEnum.Ok,
+                await Window.Window.ShowMessageBoxAsync(Strings.ScriptEditorCannotDeleteRootSection,
+                    Strings.ScriptEditorCannotDeleteRootWarning, ButtonEnum.Ok,
                     Icon.Warning, _log);
                 return;
             }
@@ -669,8 +661,8 @@ public class ScriptEditorViewModel : EditorViewModel
 
     private async Task Clear()
     {
-        if (await Window.Window.ShowMessageBoxAsync(Strings.Clear_Script_,
-                Strings.Are_you_sure_you_want_to_clear_the_script__nThis_action_is_irreversible_,
+        if (await Window.Window.ShowMessageBoxAsync(Strings.ScriptEditorClearScriptPromptTitle,
+                Strings.ScriptEditorClearScriptPrompt,
                 ButtonEnum.YesNo, Icon.Question, _log) != ButtonResult.Yes)
         {
             return;
@@ -687,7 +679,7 @@ public class ScriptEditorViewModel : EditorViewModel
             CommandsAvailable = CommandsAvailable,
         });
         ScriptSections.Clear();
-        ScriptSections.Add(new(_script.Event.ScriptSections[0]));
+        ScriptSections.Add(new(_script.Event.ScriptSections[0], _log, Window.Window));
         if (_script.Event.LabelsSection?.Objects?.Count > 2)
         {
             _script.Event.LabelsSection.Objects.RemoveRange(1, _script.Event.LabelsSection.Objects.Count - 2);
@@ -920,7 +912,7 @@ public class ScriptEditorViewModel : EditorViewModel
         Source.RowSelection?.Select(new());
         template.Apply(_script, _project, _log);
         ScriptSections.Clear();
-        ScriptSections.AddRange(_script.Event.ScriptSections.Select(s => new ReactiveScriptSection(s)));
+        ScriptSections.AddRange(_script.Event.ScriptSections.Select(s => new ReactiveScriptSection(s, _log, Window.Window)));
         Commands = _script.GetScriptCommandTree(_project, _log);
         foreach (ReactiveScriptSection section in ScriptSections)
         {
@@ -940,9 +932,9 @@ public class ScriptEditorViewModel : EditorViewModel
             return;
         }
 
-        Lib.IO.WriteStringFile(Path.Combine(_project.Config.ScriptTemplatesDirectory, $"{template.Name.Replace("/", "-")}.slscr"),
+        Lib.IO.WriteStringFile(Path.Combine(_project.ConfigUser.ScriptTemplatesDirectory, $"{template.Name.Replace("/", "-")}.slscr"),
             JsonSerializer.Serialize(template), _log);
-        _project.Config.ScriptTemplates.Add(template);
+        _project.ConfigUser.ScriptTemplates.Add(template);
     }
 
     private void AddStartingChibis()
@@ -976,7 +968,7 @@ public class ScriptEditorViewModel : EditorViewModel
         ChoicesSectionEntry choice = new()
         {
             Id = _script.Event.LabelsSection.Objects.FirstOrDefault(i => i.Id > 0)?.Id ?? 0,
-            Text = "Replace me",
+            Text = _project.Localize("Replace me"),
         };
         if (_script.Event.ChoicesSection.Objects.Count > 0)
         {
@@ -993,7 +985,7 @@ public class ScriptEditorViewModel : EditorViewModel
     private async Task AddInteractableObject()
     {
         AddInteractableObjectDialogViewModel addInteractableObjectDialogViewModel = new(UnusedInteractableObjects,
-            _project.Config.Hacks.FirstOrDefault(h => h.Name.Equals("Sensible Interactable Object Selection"))?.IsApplied ?? false);
+            _project.ConfigUser.Hacks.FirstOrDefault(h => h.Name.Equals("Sensible Interactable Object Selection"))?.IsApplied ?? false);
         ReactiveInteractableObject obj =
             await new AddInteractableObjectDialog { DataContext = addInteractableObjectDialogViewModel }
                 .ShowDialog<ReactiveInteractableObject>(Window.Window);
@@ -1021,7 +1013,7 @@ public class ScriptEditorViewModel : EditorViewModel
     }
 }
 
-public class ReactiveScriptSection(ScriptSection section) : ReactiveObject
+public class ReactiveScriptSection(ScriptSection section, ILogger log, MainWindow window) : ReactiveObject
 {
     public ScriptSection Section { get; } = section;
 
@@ -1047,7 +1039,7 @@ public class ReactiveScriptSection(ScriptSection section) : ReactiveObject
 
     public void InsertCommand(int index, ScriptItemCommand command, OrderedDictionary<ScriptSection, List<ScriptItemCommand>> commands)
     {
-        Commands.Insert(index, new ScriptCommandTreeItem(command));
+        Commands.Insert(index, new ScriptCommandTreeItem(command, log, window));
         Section.Objects.Insert(index, command.Invocation);
         commands[Section].Insert(index, command);
         for (int i = index + 1; i < commands[Section].Count; i++)
@@ -1091,7 +1083,7 @@ public class ReactiveScriptSection(ScriptSection section) : ReactiveObject
     internal void SetCommands(IEnumerable<ScriptItemCommand> commands)
     {
         Commands.Clear();
-        Commands.AddRange(commands.Select(c => new ScriptCommandTreeItem(c)));
+        Commands.AddRange(commands.Select(c => new ScriptCommandTreeItem(c, log, window)));
     }
 
     public override string ToString() => DisplayName;

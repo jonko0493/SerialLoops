@@ -54,7 +54,7 @@ public class ProjectSettingsDialogViewModel : ViewModelBase
 
     private async void ReplaceCommand_Executed()
     {
-        IStorageFile image = await _settingsDialog.ShowOpenFilePickerAsync(Strings.Replace_Game_Icon, [new(Strings.Supported_Images) { Patterns = Shared.SupportedImageFiletypes }]);
+        IStorageFile image = await _settingsDialog.ShowOpenFilePickerAsync(Strings.ProjectSettingsReplaceGameIcon, [new(Strings.FiletypeSupportedImages) { Patterns = Shared.SupportedImageFiletypes }]);
         if (image is null)
         {
             return;
@@ -67,20 +67,20 @@ public class ProjectSettingsDialogViewModel : ViewModelBase
             Icon = newIcon;
             return;
         }
-        Log.LogError(Strings.Invalid_image_file_selected);
+        Log.LogError(Strings.ErrorInvalidImageSelected);
     }
 
     private void ApplyCommand_Executed()
     {
         if (GameTitle.Length is < 1 or > 127)
         {
-            Log.LogError(Strings.Please_enter_a_game_name_for_the_banner__between_1_and_128_characters_);
+            Log.LogError(Strings.ProjectSettingsGameNameInvalidMessage);
             return;
         }
 
         if (GameTitle.Split('\n').Length > 3)
         {
-            Log.LogError(Strings.Game_banner_can_only_contain_up_to_three_lines_);
+            Log.LogError(Strings.ProjectSettingsGameBannerNameLimitMessages);
             return;
         }
         _settings.Name = GameTitle;

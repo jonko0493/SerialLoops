@@ -13,8 +13,10 @@ using SerialLoops.Lib.Script;
 
 namespace SerialLoops.Lib;
 
-public class Config
+public class ConfigUser
 {
+    [JsonIgnore]
+    public ConfigSystem SysConfig { get; set; }
     [JsonIgnore]
     public string ConfigPath { get; set; }
     public string UserDirectory { get; set; }
@@ -33,17 +35,13 @@ public class Config
     [JsonIgnore]
     public ObservableCollection<ScriptTemplate> ScriptTemplates { get; set; }
     public string CurrentCultureName { get; set; }
-    public string DevkitArmPath { get; set; }
-    public bool UseDocker { get; set; }
-    public string DevkitArmDockerTag { get; set; }
-    public string EmulatorFlatpak { get; set; }
-    public string EmulatorPath { get; set; }
     public bool AutoReopenLastProject { get; set; }
     public bool RememberProjectWorkspace { get; set; }
     public bool RemoveMissingProjects { get; set; }
     public bool CheckForUpdates { get; set; }
     public bool PreReleaseChannel { get; set; }
     public string DisplayFont { get; set; }
+    public bool FirstTimeFlatpak { get; set; }
 
     public void Save(ILogger log)
     {
@@ -75,16 +73,16 @@ public class Config
 
         // Pull in new hacks in case we've updated the program with more
         List<AsmHack> builtinHacks = JsonSerializer.Deserialize<List<AsmHack>>(File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Sources", "hacks.json")));
-        IEnumerable<AsmHack> missingHacks = builtinHacks.Where(h => !Hacks.Contains(h));
-        if (missingHacks.Any())
+        AsmHack[] missingHacks = builtinHacks.Where(h => !Hacks.Contains(h)).ToArray();
+        if (missingHacks.Length != 0)
         {
             IO.CopyFiles(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Sources", "Hacks"), HacksDirectory, log);
             Hacks.AddRange(missingHacks);
             File.WriteAllText(Path.Combine(HacksDirectory, "hacks.json"), JsonSerializer.Serialize(Hacks));
         }
 
-        IEnumerable<AsmHack> updatedHacks = builtinHacks.Where(h => !Hacks.FirstOrDefault(o => h.Name == o.Name)?.DeepEquals(h) ?? false);
-        if (updatedHacks.Any())
+        AsmHack[] updatedHacks = builtinHacks.Where(h => !Hacks.FirstOrDefault(o => h.Name == o.Name)?.DeepEquals(h) ?? false).ToArray();
+        if (updatedHacks.Length != 0)
         {
             IO.CopyFiles(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Sources", "Hacks"), HacksDirectory, log);
             foreach (AsmHack updatedHack in updatedHacks)
@@ -123,7 +121,7 @@ public class Config
             }
             catch (Exception ex)
             {
-                log.LogException(string.Format(localize("Failed to deserialize script template file '{0}'"), scriptTemplateFile), ex);
+                log.LogException(string.Format(localize("ErrorFailedDeserializingScriptTemplate"), scriptTemplateFile), ex);
             }
         }
         ScriptTemplates = new(templates);

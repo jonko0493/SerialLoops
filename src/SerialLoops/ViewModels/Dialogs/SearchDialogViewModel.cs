@@ -31,7 +31,7 @@ public class SearchDialogViewModel : ViewModelBase
     public ICommand CloseCommand { get; }
 
     [Reactive]
-    public string SearchStatusLabel { get; private set; } = Strings.Search_Project;
+    public string SearchStatusLabel { get; private set; } = Strings.SearchProjectLabel;
     [Reactive]
     public KeyGesture CloseHotKey { get; private set; }
     [Reactive]
@@ -119,13 +119,13 @@ public class SearchDialogViewModel : ViewModelBase
                 scope.IsActive = _toggleScopesTo;
             }
             _toggleScopesTo = !_toggleScopesTo;
-            ToggleText = _toggleScopesTo ? Strings.All_On : Strings.All_Off;
+            ToggleText = _toggleScopesTo ? Strings.SearchDialogAllBooleansOn : Strings.SearchDialogAllBooleansOff;
         });
         CloseHotKey = new(Key.Escape);
         DeepSearchHotKey = new(Key.Enter);
 
         SearchScopes[0].IsActive = true;
-        ToggleText = Strings.All_Off;
+        ToggleText = Strings.SearchDialogAllBooleansOff;
     }
 
     public async Task DeepSearch(SearchDialog dialog) => await Search(dialog, true);
@@ -138,11 +138,11 @@ public class SearchDialogViewModel : ViewModelBase
         switch (query.QuickSearch)
         {
             case false when !force:
-                SearchStatusLabel = Strings.Press_ENTER_to_execute_search;
+                SearchStatusLabel = Strings.SearchDialogDefaultSearchMessage;
                 return;
             case true when string.IsNullOrWhiteSpace(SearchText):
             {
-                SearchStatusLabel = Strings.Search_Project;
+                SearchStatusLabel = Strings.SearchProjectLabel;
                 Items = [];
                 break;
             }
@@ -150,26 +150,26 @@ public class SearchDialogViewModel : ViewModelBase
             {
                 var results = _project.GetSearchResults(query, _log);
                 Items = new(results);
-                SearchStatusLabel = string.Format(Strings._0__results_found, _items.Count);
+                SearchStatusLabel = string.Format(Strings.SearchDialogResultsDisplay, _items.Count);
                 break;
             }
             default:
             {
-                SearchStatusLabel = Strings.Press_ENTER_to_execute_search;
+                SearchStatusLabel = Strings.SearchDialogDefaultSearchMessage;
                 if (query.Scopes.Count is 0 || query.Types.Count is 0)
                 {
-                    await dialog.ShowMessageBoxAsync(Strings.Please_select_at_least_one_search_scope_and_item_filter_,
-                        Strings.Invalid_search_terms, ButtonEnum.Ok, Icon.Error, _log);
+                    await dialog.ShowMessageBoxAsync(Strings.SearchDialogNoScopeOrFilterMessage,
+                        Strings.SearchDialogInvalidTermsLabel, ButtonEnum.Ok, Icon.Error, _log);
                     return;
                 }
 
-                ProgressDialogViewModel tracker = new(string.Format(Strings.Searching__0____, _project.Name));
+                ProgressDialogViewModel tracker = new(string.Format(Strings.SearchDialogProgressMessage, _project.Name));
                 List<ItemDescription> results = [];
                 tracker.InitializeTasks(() => results = _project.GetSearchResults(query, _log, tracker),
                     () =>
                     {
                         Items = new(results);
-                        SearchStatusLabel = string.Format(Strings._0__results_found, _items.Count);
+                        SearchStatusLabel = string.Format(Strings.SearchDialogResultsDisplay, _items.Count);
                     });
                 await new ProgressDialog { DataContext = tracker }.ShowDialog(dialog);
                 break;
@@ -201,7 +201,7 @@ public class LocalizedItemScope(ItemDescription.ItemType type) : ReactiveObject
 {
     public ItemDescription.ItemType Type { get; } = type;
     public string Icon => $"avares://SerialLoops/Assets/Icons/{Type.ToString()}.svg";
-    public string DisplayText { get; } = Strings.ResourceManager.GetString($"{type.ToString()}s");
+    public string DisplayText { get; } = Strings.ResourceManager.GetString($"ItemsPanel{type.ToString().Replace("_", "")}s");
     [Reactive]
     public bool IsActive { get; set; } = true;
 }

@@ -19,7 +19,7 @@ public class SaveSlotPreviewViewModel : ViewModelBase
 
     [Reactive]
     public SKBitmap SaveSlotPreview { get; set; }
-    public string SlotName => _slotNum == 3 ? Strings.Quick_Save : string.Format(Strings.File__0_, _slotNum);
+    public string SlotName => _slotNum == 3 ? Strings.SaveEditorQuickSaveTab : string.Format(Strings.SaveEditorSlotName, _slotNum);
 
     private MainWindowViewModel _window;
 
@@ -40,7 +40,7 @@ public class SaveSlotPreviewViewModel : ViewModelBase
 
     private async Task EditSlot()
     {
-        await new SaveSlotEditorDialog()
+        await new SaveSlotEditorDialog
         {
             DataContext = new SaveSlotEditorDialogViewModel(_save, SlotData, _save.DisplayName, SlotName,
                 _window.OpenProject, _window.Log, _window.EditorTabs),

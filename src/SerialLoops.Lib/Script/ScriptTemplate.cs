@@ -278,11 +278,11 @@ public class TemplateScriptParameter
                 break;
 
             case ScriptParameter.ParameterType.SPRITE_ENTRANCE:
-                Value = $"{(short)((SpriteEntranceScriptParameter)parameter).EntranceTransition}";
+                Value = $"{(short)((SpritePreTransitionScriptParameter)parameter).PreTransition}";
                 break;
 
             case ScriptParameter.ParameterType.SPRITE_EXIT:
-                Value = $"{(short)((SpriteExitScriptParameter)parameter).ExitTransition}";
+                Value = $"{(short)((SpritePostTransitionScriptParameter)parameter).PostTransition}";
                 break;
 
             case ScriptParameter.ParameterType.SPRITE:
@@ -438,10 +438,10 @@ public class TemplateScriptParameter
                     return new ShortScriptParameter(localizedName, short.Parse(value));
 
                 case ScriptParameter.ParameterType.SPRITE_ENTRANCE:
-                    return new SpriteEntranceScriptParameter(localizedName, short.Parse(value));
+                    return new SpritePreTransitionScriptParameter(localizedName, short.Parse(value));
 
                 case ScriptParameter.ParameterType.SPRITE_EXIT:
-                    return new SpriteExitScriptParameter(localizedName, short.Parse(value));
+                    return new SpritePostTransitionScriptParameter(localizedName, short.Parse(value));
 
                 case ScriptParameter.ParameterType.SPRITE:
                     return new SpriteScriptParameter(localizedName, (CharacterSpriteItem)project.Items.FirstOrDefault(i => i.Type == ItemDescription.ItemType.Character_Sprite && ((CharacterSpriteItem)i).Index == short.Parse(value)));
@@ -467,7 +467,7 @@ public class TemplateScriptParameter
         }
         catch (Exception ex)
         {
-            log.LogException(string.Format(project.Localize("Failed to parse script parameter {0} of type {1} with parameter '{2}'!"), ParameterName, ParameterType, Value), ex);
+            log.LogException(string.Format(project.Localize("ErrorFailedParsingScriptParameter"), ParameterName, ParameterType, Value), ex);
             return null;
         }
     }

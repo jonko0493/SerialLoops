@@ -40,9 +40,9 @@ public class GenerateTemplateDialogViewModel : ViewModelBase
 
     private async Task GenerateTemplate(GenerateTemplateDialog dialog)
     {
-        if (_project.Config.ScriptTemplates.Any(t => t.Name.Equals(TemplateName, StringComparison.OrdinalIgnoreCase)))
+        if (_project.ConfigUser.ScriptTemplates.Any(t => t.Name.Equals(TemplateName, StringComparison.OrdinalIgnoreCase)))
         {
-            await dialog.ShowMessageBoxAsync(Strings.Template_Already_Exists, Strings.There_is_already_a_template_with_that_name__Please_choose_a_different_name_for_your_template_,
+            await dialog.ShowMessageBoxAsync(Strings.ScriptTemplateAlreadyExistsTitle, Strings.ScriptTemplateAlreadyExistsMessage,
                 ButtonEnum.Ok, Icon.Warning, _log);
             return;
         }

@@ -26,7 +26,7 @@
                 RowDefinitions="Auto,Auto,Auto,Auto,*,Auto" ColumnDefinitions="Auto,Auto,Auto,Auto" Name="UpdateGrid"
                 Margin="20 40">
             <TextBlock Classes="h2" Text="{Binding Header}" Grid.Row="0" Grid.Column="0"/>
-            <controls:LabelWithIcon Text="{x:Static assets:Strings.A_new_update_for_Serial_Loops_is_available_}"
+            <controls:LabelWithIcon Text="{x:Static assets:Strings.UpdaterTitleMessage}"
                                     Icon="Update" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left"/>
             <md:MarkdownScrollViewer Width="750" Height="350" Grid.Row="2" Grid.Column="0"
                                      Markdown="{Binding Changelog}"
@@ -38,14 +38,14 @@
                     </md:MdAvPlugins>
                 </md:MarkdownScrollViewer.Plugins>
             </md:MarkdownScrollViewer>
-            <controls:LinkButton Text="{x:Static assets:Strings.Download_release_from_GitHub}"
+            <controls:LinkButton Text="{x:Static assets:Strings.UpdaterDownloadReleaseFromGitHubTitle}"
                         Grid.Row="3" Grid.Column="0" Command="{Binding OpenReleaseLinkCommand}"/>
             <StackPanel Grid.Row="5" Grid.Column="0" Orientation="Horizontal" Spacing="20">
-                <Button Content="{x:Static assets:Strings.Download_from_GitHub}" Command="{Binding OpenReleaseLinkCommand}"/>
-                <Button Content="{x:Static assets:Strings.Skip_Update}" Command="{Binding CloseCommand}"
+                <Button Content="{x:Static assets:Strings.UpdaterDownloadFromGitHubLabel}" Command="{Binding OpenReleaseLinkCommand}"/>
+                <Button Content="{x:Static assets:Strings.UpdaterSkipUpdateLabel}" Command="{Binding CloseCommand}"
                         CommandParameter="{Binding #Dialog}" IsCancel="True"/>
-                <CheckBox Content="{x:Static assets:Strings.Check_for_Updates}" IsChecked="{Binding CheckForUpdates}"/>
-                <CheckBox Content="{x:Static assets:Strings.Pre_Release_Channel}" IsChecked="{Binding UsePreReleaseChannel}"/>
+                <CheckBox Content="{x:Static assets:Strings.MenuOptionCheckForUpdates}" IsChecked="{Binding CheckForUpdates}"/>
+                <CheckBox Content="{x:Static assets:Strings.UpdaterPreReleaseChannel}" IsChecked="{Binding UsePreReleaseChannel}"/>
             </StackPanel>
         </Grid>
     </Panel>

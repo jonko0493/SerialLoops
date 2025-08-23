@@ -30,7 +30,7 @@
 
         <StackPanel Grid.Column="0" Grid.Row="0" Margin="5" Spacing="5" HorizontalAlignment="Left" Orientation="Horizontal">
             <Button Command="{Binding AddScriptCommandCommand}" HotKey="{Binding AddCommandHotKey}"
-                    ToolTip.Tip="{x:Static assets:Strings.Add_Command}" ToolTip.ShowOnDisabled="True">
+                    ToolTip.Tip="{x:Static assets:Strings.ScriptEditorAddCommandLabel}" ToolTip.ShowOnDisabled="True">
                 <Button.IsEnabled>
                     <MultiBinding Converter="{x:Static BoolConverters.Or}">
                         <Binding Path="SelectedCommand" Converter="{x:Static ObjectConverters.IsNotNull}"/>
@@ -39,7 +39,7 @@
                 </Button.IsEnabled>
                 <Svg Path="avares://SerialLoops/Assets/Icons/Add.svg" Width="22"/>
             </Button>
-            <Button Command="{Binding AddScriptSectionCommand}" ToolTip.Tip="{x:Static assets:Strings.Add_Section}">
+            <Button Command="{Binding AddScriptSectionCommand}" ToolTip.Tip="{x:Static assets:Strings.ScriptEditorAddScriptSectionToolTip}">
                 <Svg Path="avares://SerialLoops/Assets/Icons/Add_Section.svg" Width="22"/>
             </Button>
             <Button Command="{Binding DeleteScriptCommandOrSectionCommand}" ToolTip.ShowOnDisabled="True"
@@ -52,7 +52,7 @@
                 </Button.IsEnabled>
                 <Svg Path="avares://SerialLoops/Assets/Icons/Remove.svg" Width="22"/>
             </Button>
-            <Button Command="{Binding ClearScriptCommand}" ToolTip.Tip="{x:Static assets:Strings.Clear_Script}">
+            <Button Command="{Binding ClearScriptCommand}" ToolTip.Tip="{x:Static assets:Strings.ScriptEditorClearScriptLabel}">
                 <Svg Path="avares://SerialLoops/Assets/Icons/Clear.svg" Width="22"/>
             </Button>
             <Button Command="{Binding MoveUpCommand}" ToolTip.ShowOnDisabled="True"
@@ -85,17 +85,16 @@
         <GridSplitter Grid.Column="1" Grid.Row="0" Grid.RowSpan="4" Background="{StaticResource GroupLineColor}" ResizeDirection="Columns"/>
 
         <Grid Grid.Column="2" Grid.Row="1" ColumnDefinitions="Auto,*" RowDefinitions="*">
-            <Image Source="{Binding PreviewBitmap, Converter={x:Static utility:SLConverters.SKBitmapToAvaloniaConverter}}"
-                   Grid.Column="0" Grid.Row="0" Width="256" VerticalAlignment="Top"/>
+            <controls:ScriptPreviewCanvas DataContext="{Binding ScriptPreviewCanvas}" Grid.Column="0" Grid.Row="0" Width="256" VerticalAlignment="Top"/>
             <TabControl Grid.Column="1" Grid.Row="0">
                 <TabControl.Items>
 
-                    <TabItem Header="{x:Static assets:Strings.Starting_Chibis}">
+                    <TabItem Header="{x:Static assets:Strings.ScriptEditorStartingChibis}">
                         <ScrollViewer>
                             <Panel>
                                 <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,Auto" IsVisible="{Binding HasStartingChibis}"
                                       Margin="0 0 0 10">
-                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="{x:Static assets:Strings.Starting_Chibis}"
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="{x:Static assets:Strings.ScriptEditorStartingChibis}"
                                                VerticalAlignment="Center"/>
                                     <ItemsRepeater Grid.Row="0" Grid.Column="1" ItemsSource="{Binding StartingChibis}" Width="256" Height="86">
                                         <ItemsRepeater.Layout>
@@ -116,7 +115,7 @@
                                         </ItemsRepeater.ItemTemplate>
                                     </ItemsRepeater>
 
-                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="{x:Static assets:Strings.Chibis}"
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="{x:Static assets:Strings.ItemsPanelChibis}"
                                                VerticalAlignment="Center"/>
                                     <ItemsRepeater Grid.Row="1" Grid.Column="1" ItemsSource="{Binding UnusedChibis}" Width="256" Height="86">
                                         <ItemsRepeater.Layout>
@@ -137,17 +136,17 @@
                                         </ItemsRepeater.ItemTemplate>
                                     </ItemsRepeater>
 
-                                    <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Content="{x:Static assets:Strings.Remove_Starting_Chibis}"
+                                    <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Content="{x:Static assets:Strings.ScriptEditorRemoveStartingChibis}"
                                             Command="{Binding RemoveStartingChibisCommand}"/>
                                 </Grid>
 
-                                <Button Content="{x:Static assets:Strings.Add_Starting_Chibis}" IsVisible="{Binding !HasStartingChibis}"
+                                <Button Content="{x:Static assets:Strings.ScriptEditorAddStartingChibisSectionLabel}" IsVisible="{Binding !HasStartingChibis}"
                                         Command="{Binding AddStartingChibisCommand}"/>
                             </Panel>
                         </ScrollViewer>
                     </TabItem>
 
-                    <TabItem Header="{x:Static assets:Strings.Choices}">
+                    <TabItem Header="{x:Static assets:Strings.ScriptEditorChoicesLabel}">
                         <ScrollViewer>
                             <StackPanel Orientation="Vertical" Spacing="5" Margin="0 0 0 10">
                                 <ItemsRepeater ItemsSource="{Binding Choices}">
@@ -173,18 +172,18 @@
                                 <Button Command="{Binding AddChoiceCommand}">
                                     <StackPanel Orientation="Horizontal">
                                         <Svg Path="avares://SerialLoops/Assets/Icons/Add.svg" Width="20"/>
-                                        <TextBlock VerticalAlignment="Center" Text="{x:Static assets:Strings.AddChoice}"/>
+                                        <TextBlock VerticalAlignment="Center" Text="{x:Static assets:Strings.ScriptEditorAddChoiceLabel}"/>
                                     </StackPanel>
                                 </Button>
                             </StackPanel>
                         </ScrollViewer>
                     </TabItem>
 
-                    <TabItem Header="{x:Static assets:Strings.Map_Characters}">
+                    <TabItem Header="{x:Static assets:Strings.ScriptEditorMapCharactersLabel}">
                         <controls:MapCharactersSubEditor DataContext="{Binding MapCharactersSubEditorVm}" Margin="0 0 0 10"/>
                     </TabItem>
 
-                    <TabItem Header="{x:Static assets:Strings.Interactable_Objects}">
+                    <TabItem Header="{x:Static assets:Strings.ScriptEditorInteractableObjects}">
                         <ScrollViewer>
                             <Panel>
                                 <Grid RowDefinitions="*,Auto,Auto" ColumnDefinitions="Auto,Auto" Margin="0 0 0 10">
@@ -201,8 +200,8 @@
                                             </DataTemplate>
                                         </ListBox.ItemTemplate>
                                     </ListBox>
-                                    <Button Grid.Row="1" Grid.Column="0" Content="{x:Static assets:Strings.Add_Interactable_Object}" Command="{Binding AddInteractableObjectCommand}"/>
-                                    <Button Grid.Row="1" Grid.Column="1" Content="{x:Static assets:Strings.Remove_Interactable_Object}" Command="{Binding RemoveInteractableObjectCommand}"/>
+                                    <Button Grid.Row="1" Grid.Column="0" Content="{x:Static assets:Strings.ScriptEditorAddInteractableObjectLabel}" Command="{Binding AddInteractableObjectCommand}"/>
+                                    <Button Grid.Row="1" Grid.Column="1" Content="{x:Static assets:Strings.ScriptEditorRemoveInteractableObject}" Command="{Binding RemoveInteractableObjectCommand}"/>
                                 </Grid>
                             </Panel>
                         </ScrollViewer>

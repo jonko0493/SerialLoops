@@ -7,52 +7,52 @@
   <launchable type="desktop-id">club.haroohie.SerialLoops.desktop</launchable>
   <summary>Editor for Suzumiya Haruhi no Chokuretsu</summary>
   <description>
-    <p>Serial Loops is a full-fledged editor for the Nintendo DS game Suzumiya Haruhi no Chokuretsu (The Series of Haruhi Suzumiya).</p>
+    <p>
+      Serial Loops is a full-fledged editor for the Nintendo DS game Suzumiya Haruhi no Chokuretsu (The Series of Haruhi Suzumiya).
+      In its current state, it allows you to edit nearly everything about the game, and more is planned for the future. Please check
+      our documentation on our website for more information on how to use it!
+    </p>
+    <ul>
+      <li>Fully edit the game's scripts, completely rewriting your own Haruhi visual novel with a powerful preview feature!</li>
+      <li>Completely change the game's scenario, moving events around in the order you'd like them to occur!</li>
+      <li>Replace the game's graphics, including backgrounds, CGs, character sprites, chibis, and more!</li>
+      <li>Edit the game's soundtrack, swapping out background music and voice lines! (SFX coming in a future release!)</li>
+      <li>Edit character nameplates, topics, UI text, tutorial mappings, and dialogue colors!</li>
+      <li>Apply pre-written assembly hacks for even greater control of the game!</li>
+      <li>Partial editing of group selections, puzzles, and chess puzzles, and viewable maps!</li>
+      <li>A full save editor for editing save games as well!</li>
+    </ul>
   </description>
   <branding>
     <color type="primary" scheme_preference="light">#9accfe</color>
     <color type="primary" scheme_preference="dark">#042058</color>
   </branding>
   <screenshots>
-    <screenshot>
-      <screenshot type="default">
-        <caption>Serial Loops script editor</caption>
-        <image>https://raw.githubusercontent.com/haroohie-club/SerialLoops/main/install/linux/flatpak/screenshots/script_editor.png</image>
-      </screenshot>
+    <screenshot type="default">
+      <caption>Serial Loops script editor</caption>
+      <image>https://raw.githubusercontent.com/haroohie-club/SerialLoops/0.3.3/install/linux/flatpak/screenshots/script_editor.png</image>
     </screenshot>
     <screenshot type="default">
       <caption>Serial Loops startup screen</caption>
-      <image>https://raw.githubusercontent.com/haroohie-club/SerialLoops/main/install/linux/flatpak/screenshots/main_screen.png</image>
+      <image>https://raw.githubusercontent.com/haroohie-club/SerialLoops/0.3.3/install/linux/flatpak/screenshots/main_screen.png</image>
     </screenshot>
-    <screenshot>
-      <screenshot type="default">
-        <caption>Serial Loops map editor</caption>
-        <image>https://raw.githubusercontent.com/haroohie-club/SerialLoops/main/install/linux/flatpak/screenshots/map_editor.png</image>
-      </screenshot>
+    <screenshot type="default">
+      <caption>Serial Loops map editor</caption>
+      <image>https://raw.githubusercontent.com/haroohie-club/SerialLoops/0.3.3/install/linux/flatpak/screenshots/map_editor.png</image>
     </screenshot>
   </screenshots>
   <developer_name>The Haroohie Translation Club</developer_name>
   <url type="homepage">https://haroohie.club/chokuretsu/serial-loops</url>
-  <content_rating type="oars-1.0">
-    <content_attribute id="violence-cartoon">none</content_attribute>
-    <content_attribute id="violence-fantasy">none</content_attribute>
-    <content_attribute id="violence-realistic">none</content_attribute>
-    <content_attribute id="violence-bloodshed">none</content_attribute>
-    <content_attribute id="violence-sexual">none</content_attribute>
-    <content_attribute id="drugs-alcohol">none</content_attribute>
-    <content_attribute id="drugs-narcotics">none</content_attribute>
-    <content_attribute id="drugs-tobacco">none</content_attribute>
-    <content_attribute id="sex-nudity">none</content_attribute>
-    <content_attribute id="sex-themes">none</content_attribute>
-    <content_attribute id="language-profanity">none</content_attribute>
-    <content_attribute id="language-humor">none</content_attribute>
-    <content_attribute id="language-discrimination">none</content_attribute>
-    <content_attribute id="social-chat">none</content_attribute>
-    <content_attribute id="social-info">none</content_attribute>
-    <content_attribute id="social-audio">none</content_attribute>
-    <content_attribute id="social-location">none</content_attribute>
-    <content_attribute id="social-contacts">none</content_attribute>
-    <content_attribute id="money-purchasing">none</content_attribute>
-    <content_attribute id="money-gambling">none</content_attribute>
-  </content_rating>
+  <content_rating type="oars-1.1" />
+  <releases>
+    <release version="v0.3.3" date="2025-08-20">
+      <description>
+        <p>
+          We removed our dependencies on devkitARM and make and have switched to using LLVM and ninja. This makes it easier
+          to use Serial Loops on all platforms as it significantly easier to install and use these dependencies.
+        </p>
+        <p>This is also our initial release on Flathub!</p>
+      </description>
+    </release>
+  </releases>
 </component>

@@ -18,28 +18,28 @@ public partial class ProjectCreationDialogViewModel : ViewModelBase
 {
     private ILogger _log;
     private MainWindowViewModel _mainWindow;
-    private Config _config;
+    private ConfigUser _configUser;
 
     public string ProjectName { get; set; }
     public ComboBoxItem LanguageTemplateItem { get; set; }
     public string LanguageTemplateCode => (string)LanguageTemplateItem?.Tag ?? "";
     [Reactive]
-    public string RomPath { get; set; } = Strings.None_Selected;
+    public string RomPath { get; set; } = Strings.ProjectCreationNoRomSelected;
 
     public bool Migrate { get; set; }
 
-    public string Title => Migrate ? Strings.Migrate_Project : Strings.Create_New_Project;
-    public string ButtonText => Migrate ? Strings.Migrate : Strings.Create;
+    public string Title => Migrate ? Strings.MenuMigrateProject : Strings.ProjectCreationCreateNewProjectTitle;
+    public string ButtonText => Migrate ? Strings.ProjectMigrateMigrateButton : Strings.ProjectCreateButtonLabel;
 
     public ICommand PickRomCommand { get; set; }
     public ICommand CreateCommand { get; set; }
     public ICommand CancelCommand { get; set; }
 
-    public ProjectCreationDialogViewModel(Config config, MainWindowViewModel mainWindow, ILogger log, bool migrate = false)
+    public ProjectCreationDialogViewModel(ConfigUser configUser, MainWindowViewModel mainWindow, ILogger log, bool migrate = false)
     {
         _log = log;
         _mainWindow = mainWindow;
-        _config = config;
+        _configUser = configUser;
         Migrate = migrate;
         PickRomCommand = ReactiveCommand.CreateFromTask(PickRom);
         CreateCommand = Migrate ? ReactiveCommand.Create<ProjectCreationDialog>(dialog => dialog.Close((RomPath, LanguageTemplateCode))) : ReactiveCommand.CreateFromTask<ProjectCreationDialog>(CreateProject);
@@ -48,7 +48,7 @@ public partial class ProjectCreationDialogViewModel : ViewModelBase
 
     private async Task PickRom()
     {
-        IStorageFile rom = await _mainWindow.Window.ShowOpenFilePickerAsync(Strings.Open_ROM, [new(Strings.Chokuretsu_ROM) { Patterns = ["*.nds"] }]);
+        IStorageFile rom = await _mainWindow.Window.ShowOpenFilePickerAsync(Strings.RomOpenFileDialogTitle, [new(Strings.ProjectCreationChokuretsuROMLabel) { Patterns = ["*.nds"] }]);
         if (rom is not null)
         {
             RomPath = rom.Path.LocalPath;
@@ -57,24 +57,24 @@ public partial class ProjectCreationDialogViewModel : ViewModelBase
 
     private async Task CreateProject(ProjectCreationDialog dialog)
     {
-        if (string.IsNullOrEmpty(RomPath) || RomPath.Equals(Strings.None_Selected))
+        if (string.IsNullOrEmpty(RomPath) || RomPath.Equals(Strings.ProjectCreationNoRomSelected))
         {
-            await _mainWindow.Window.ShowMessageBoxAsync(Strings.Project_Creation_Warning, Strings.Please_select_a_ROM_before_creating_the_project_, ButtonEnum.Ok, Icon.Warning, _log);
+            await _mainWindow.Window.ShowMessageBoxAsync(Strings.ProjectCreationWarning, Strings.ProjectCreationNoROMSelectedMessage, ButtonEnum.Ok, Icon.Warning, _log);
         }
         else if (string.IsNullOrWhiteSpace(ProjectName))
         {
-            await _mainWindow.Window.ShowMessageBoxAsync(Strings.Project_Creation_Warning, Strings.Please_choose_a_project_name_before_creating_the_project_, ButtonEnum.Ok, Icon.Warning, _log);
+            await _mainWindow.Window.ShowMessageBoxAsync(Strings.ProjectCreationWarning, Strings.ProjectCreationNoNameMessage, ButtonEnum.Ok, Icon.Warning, _log);
         }
         else
         {
-            Project newProject = new(ProjectName, LanguageTemplateCode, _config, Strings.ResourceManager.GetString, _log);
-            ProgressDialogViewModel tracker = new(Strings.Creating_Project);
+            Project newProject = new(ProjectName, LanguageTemplateCode, _configUser, Strings.ResourceManager.GetString, _log);
+            ProgressDialogViewModel tracker = new(Strings.ProjectCreationProgressMessage);
             tracker.InitializeTasks(() =>
             {
-                ((IProgressTracker)tracker).Focus(Strings.Creating_Project, 1);
+                ((IProgressTracker)tracker).Focus(Strings.ProjectCreationProgressMessage, 1);
                 Lib.IO.OpenRom(newProject, RomPath, _log, tracker);
                 tracker.Finished++;
-                newProject.Load(_config, _log, tracker);
+                newProject.Load(_configUser, _log, tracker);
                 newProject.SetBaseRomHash(RomPath);
                 newProject.Save(_log);
             }, () => dialog.Close(newProject));

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 using HaruhiChokuretsuLib.Archive;
 using HaruhiChokuretsuLib.Archive.Data;
 using HaruhiChokuretsuLib.Archive.Graphics;
@@ -57,7 +58,7 @@ public class CharacterSpriteItem(CharacterSprite sprite, CharacterDataFile chrda
         Graphics.MouthAnimation.AnimationX = mouthX;
         Graphics.MouthAnimation.AnimationY = mouthY;
     }
-        
+
     public SKBitmap GetPreview(Project project)
     {
         return GetClosedMouthAnimation(project).First().Frame;
@@ -90,7 +91,7 @@ public class CharacterSpriteItem(CharacterSprite sprite, CharacterDataFile chrda
                 continue;
             }
 
-            SKCanvas textureCanvas = new(texture);
+            using SKCanvas textureCanvas = new(texture);
 
             for (short y = 0; y < texture.Height; y += 32)
             {
@@ -186,7 +187,7 @@ public class CharacterSpriteGraphics(CharacterSprite sprite, ArchiveFile<Graphic
 
     public void Write(Project project, ILogger log)
     {
-        IO.WriteBinaryFile(Path.Combine("assets", "graphics", $"{BodyLayout.Index:X3}.lay"), BodyLayout.GetBytes(), project, log);
+        IO.WriteStringFile(Path.Combine("assets", "graphics", $"{BodyLayout.Index:X3}.lay"), JsonSerializer.Serialize(BodyLayout.LayoutEntries, Project.SERIALIZER_OPTIONS), project, log);
 
         foreach (GraphicsFile bodyTexture in BodyTextures)
         {

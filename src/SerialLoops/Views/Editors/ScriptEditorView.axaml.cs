@@ -32,22 +32,22 @@ public partial class ScriptEditorView : UserControl
         ScriptEditorViewModel vm = (ScriptEditorViewModel)DataContext!;
 
         int insertionPoint = menu.Items.Count;
-        if (((NativeMenuItem)menu.Items.Last()).Header!.Equals(Strings._Help))
+        if (((NativeMenuItem)menu.Items.Last()).Header!.Equals(Strings.MenuHelp))
         {
             insertionPoint--;
         }
 
-        window.WindowMenu.Add(MenuHeader.EDIT, new(Strings._Edit));
+        window.WindowMenu.Add(MenuHeader.EDIT, new(Strings.MenuEdit));
         window.WindowMenu[MenuHeader.EDIT].Menu =
         [
             new NativeMenuItem
             {
-                Header = Strings.Generate_Template,
+                Header = Strings.ScriptTemplateGenerateLabel,
                 Command = vm.GenerateTemplateCommand,
             },
             new NativeMenuItem
             {
-                Header = Strings.Apply_Template,
+                Header = Strings.ScriptEditorApplyTemplateLabel,
                 Command = vm.ApplyTemplateCommand,
                 Icon = ControlGenerator.GetIcon("Template", window.Log),
             },
@@ -76,7 +76,8 @@ public partial class ScriptEditorView : UserControl
 
         ToolbarButton applyTemplateButton = new()
         {
-            DataContext = Strings.Apply_Template,
+            DataContext = Strings.ScriptEditorApplyTemplateLabel,
+            Text = Strings.ScriptTemplateToolbarText,
             Command = vm.ApplyTemplateCommand,
             Icon = ControlGenerator.GetVectorIcon("Template", window.Log),
         };
@@ -104,7 +105,7 @@ public partial class ScriptEditorView : UserControl
         NativeMenu menu = NativeMenu.GetMenu(((ScriptEditorViewModel)DataContext!).Window.Window)!;
 
         window.WindowMenu.Remove(MenuHeader.EDIT);
-        menu.Items.Remove(menu.Items.First(i => ((NativeMenuItem)i).Header!.Equals(Strings._Edit)));
+        menu.Items.Remove(menu.Items.First(i => ((NativeMenuItem)i).Header!.Equals(Strings.MenuEdit)));
 
         window.ToolBar.Items.RemoveAt(0);
         ((ScriptEditorViewModel)DataContext!).ScrollPosition = CommandTree.Scroll?.Offset;

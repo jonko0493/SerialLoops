@@ -74,14 +74,14 @@ public class SaveFilePreview(SaveSlotData slotData, Project project)
         if (project.Items.Find(item => item.Type == ItemDescription.ItemType.System_Texture
                                         && item.Name == "SYSTEX_SYS_CMN_B38") is not SystemTextureItem graphic)
         {
-            DrawText(canvas, string.Format(project.Localize("EPISODE: {0}"), number));
+            DrawText(canvas, string.Format(project.Localize("SaveFilePreviewText"), number));
             return;
         }
 
         // Draw the top half of the image onto the canvas, treating (0, 255, 0) as transparent
         var bitmap = graphic.Grp.GetImage(transparentIndex: 0);
         SKBitmap episodeNumber = new(bitmap.Width + 8, bitmap.Height / 2);
-        SKCanvas episodeCanvas = new(episodeNumber);
+        using SKCanvas episodeCanvas = new(episodeNumber);
 
         // Draw "EPISODE: (number)"
         var numberXOffSet = 8 * (number - 1);
@@ -109,7 +109,7 @@ public class SaveFilePreview(SaveSlotData slotData, Project project)
         }
         SKBitmap bitmap = graphic.Grp.GetImage(transparentIndex: 0);
         SKBitmap timeBitmap = new(WIDTH, 16);
-        SKCanvas timeCanvas = new(timeBitmap);
+        using SKCanvas timeCanvas = new(timeBitmap);
         // Draw date, for each char
         for (int i = 0; i < date.Length; i++)
         {

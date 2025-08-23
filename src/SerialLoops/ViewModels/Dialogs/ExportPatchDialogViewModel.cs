@@ -31,7 +31,7 @@ public class ExportPatchDialogViewModel : ViewModelBase
     [Reactive]
     public string XDeltaPath { get; set; }
 
-    public string ExpectedRomHashString { get; } = string.Format(Strings.Expected_ROM_SHA_1_Hash___0_, EXPECTED_HASH);
+    public string ExpectedRomHashString { get; } = string.Format(Strings.ExpectedRomHashLabel, EXPECTED_HASH);
 
     public ICommand OpenRomCommand { get; }
     public ICommand SelectXdeltaPathCommand { get; }
@@ -52,8 +52,8 @@ public class ExportPatchDialogViewModel : ViewModelBase
     private async Task OpenRom(ExportPatchDialog dialog)
     {
         string romPath =
-            (await dialog.ShowOpenFilePickerAsync(Strings.Select_base_ROM,
-                [new(Strings.NDS_ROM) { Patterns = ["*.nds"] }]))?.TryGetLocalPath();
+            (await dialog.ShowOpenFilePickerAsync(Strings.ExportPatchSelectBaseRom,
+                [new(Strings.FiletypeNdsRom) { Patterns = ["*.nds"] }]))?.TryGetLocalPath();
         if (!string.IsNullOrEmpty(romPath))
         {
             RomPath = romPath;
@@ -71,8 +71,8 @@ public class ExportPatchDialogViewModel : ViewModelBase
 
     private async Task SelectXDeltaPath(ExportPatchDialog dialog)
     {
-        string xDeltaPath = (await dialog.ShowSaveFilePickerAsync(Strings.XDelta_patch,
-            [new(Strings.XDelta_patch) { Patterns = ["*.xdelta"] }], $"{_project.Name}.xdelta"))?.TryGetLocalPath();
+        string xDeltaPath = (await dialog.ShowSaveFilePickerAsync(Strings.FiletypeXdelta,
+            [new(Strings.FiletypeXdelta) { Patterns = ["*.xdelta"] }], $"{_project.Name}.xdelta"))?.TryGetLocalPath();
         if (!string.IsNullOrEmpty(xDeltaPath))
         {
             XDeltaPath = xDeltaPath;
@@ -83,20 +83,20 @@ public class ExportPatchDialogViewModel : ViewModelBase
     {
         if (string.IsNullOrEmpty(RomPath))
         {
-            await dialog.ShowMessageBoxAsync(Strings.No_base_ROM_selected_,
-                Strings.Please_select_a_base_ROM_before_attempting_to_create_the_XDelta_patch_, ButtonEnum.Ok,
+            await dialog.ShowMessageBoxAsync(Strings.ExportPatchNoBaseRomSelected,
+                Strings.ExportPatchSelectBaseRomMessage, ButtonEnum.Ok,
                 Icon.Warning, _log);
             return;
         }
         if (string.IsNullOrEmpty(XDeltaPath))
         {
-            await dialog.ShowMessageBoxAsync(Strings.No_path_to_XDelta_file_selected_,
-                Strings.Please_select_a_path_to_save_the_XDelta_patch_to_before_attempting_to_create_it_, ButtonEnum.Ok,
+            await dialog.ShowMessageBoxAsync(Strings.ExportPatchNoXdeltaSelected,
+                Strings.ExportPatchNoXdeltaMessage, ButtonEnum.Ok,
                 Icon.Warning, _log);
             return;
         }
 
-        ProgressDialogViewModel tracker = new(Strings.Creating_Patch);
+        ProgressDialogViewModel tracker = new(Strings.ExportPatchProgressMessage);
         tracker.InitializeTasks(
             () => Patch.CreatePatch(RomPath, Path.Combine(_project.MainDirectory, $"{_project.Name}.nds"),
                 XDeltaPath, _log),
@@ -104,12 +104,12 @@ public class ExportPatchDialogViewModel : ViewModelBase
         try
         {
             await new ProgressDialog { DataContext = tracker }.ShowDialog(dialog);
-            await dialog.ShowMessageBoxAsync(Strings.Patch_Created_, Strings.Success_, ButtonEnum.Ok, Icon.Success,
+            await dialog.ShowMessageBoxAsync(Strings.ExportPatchSuccessMessageTitle, Strings.MessageBoxTitleSuccessGeneric, ButtonEnum.Ok, Icon.Success,
                 _log);
         }
         catch (Exception ex)
         {
-            _log.LogException(Strings.Failed_to_create_XDelta_patch_, ex);
+            _log.LogException(Strings.ErrorFailedCreatingXdelta, ex);
         }
 
         dialog.Close();

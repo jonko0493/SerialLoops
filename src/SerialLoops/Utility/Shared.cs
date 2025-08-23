@@ -41,10 +41,10 @@ public static class Shared
         using Image<Rgba32> gif = new(frames.Max(f => f.Width), frames.Max(f => f.Height));
         gif.Metadata.GetGifMetadata().RepeatCount = 0;
 
-        tracker.Focus(Strings.Converting_frames___, 1);
+        tracker.Focus(Strings.EditorConvertingFramesMessage, 1);
         IEnumerable<Image<Rgba32>> gifFrames = frames.Select(f => Image.LoadPixelData<Rgba32>(f.Pixels.Select(c => new Rgba32(c.Red, c.Green, c.Blue, c.Alpha)).ToArray(), f.Width, f.Height));
         tracker.Finished++;
-        tracker.Focus(Strings.Adding_frames_to_GIF___, gifFrames.Count());
+        tracker.Focus(Strings.GifExportAddingFramesStatusMessage, gifFrames.Count());
         foreach (Image<Rgba32> gifFrame in gifFrames)
         {
             GifFrameMetadata metadata = gifFrame.Frames.RootFrame.Metadata.GetGifMetadata();
@@ -55,7 +55,7 @@ public static class Shared
         }
         gif.Frames.RemoveFrame(0);
 
-        tracker.Focus(Strings.Saving_GIF___, 1);
+        tracker.Focus(Strings.AnimationGifSavingProgressMessage, 1);
         gif.SaveAsGif(fileName);
         tracker.Finished++;
     }
@@ -65,7 +65,7 @@ public static class Shared
         ItemDescription id = project.Items.Find(i => i.Name.Equals("SYSTEX_SYS_CMN_B46"));
         if (id is not SystemTextureItem tex)
         {
-            log.LogError(string.Format(Strings.Failed_to_load_character_progress_voice_for__0__, character.DisplayName));
+            log.LogError(string.Format(Strings.ErrorFailedLoadingCharacterProgressVoice, character.DisplayName));
             return null;
         }
         SKBitmap bitmap = tex.GetTexture();

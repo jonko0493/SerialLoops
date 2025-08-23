@@ -30,10 +30,10 @@ public class SaveEditorViewModel : EditorViewModel
 
     private async Task EditCommonData()
     {
-        await new SaveSlotEditorDialog()
+        await new SaveSlotEditorDialog
         {
             DataContext = new SaveSlotEditorDialogViewModel(Save, Save.Save.CommonData, Save.DisplayName,
-                Strings.Common_Save_Data, Window.OpenProject, _log, _tabs),
+                Strings.SaveEditorCommonSaveDataLabel, Window.OpenProject, _log, _tabs),
         }.ShowDialog(Window.Window);
     }
 }

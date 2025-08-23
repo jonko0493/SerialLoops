@@ -15,7 +15,7 @@ public static class IO
         public IODirectory[] Subdirectories { get; set; } = subdirectories;
         public IOFile[] Files { get; set; } = files;
 
-        public void Create(string basePath, ILogger log)
+        public void Create(string basePath, ILogger log, Func<string, string> localize)
         {
             try
             {
@@ -27,12 +27,12 @@ public static class IO
                 }
                 foreach (IODirectory subdirectory in Subdirectories)
                 {
-                    subdirectory.Create(dirPath, log);
+                    subdirectory.Create(dirPath, log, localize);
                 }
             }
             catch (Exception ex)
             {
-                log.LogException($"Failed to create directory on specified path!", ex);
+                log.LogException(localize("ErrorFailedCreatingDir"), ex);
                 log.LogWarning(basePath);
             }
         }
@@ -67,7 +67,7 @@ public static class IO
         }
         catch (Exception ex)
         {
-            log.LogException("Failed to unpack ROM", ex);
+            log.LogException(project.Localize("ErrorFailedUnpackingRom"), ex);
             return;
         }
         tracker.Finished += 2;
@@ -90,13 +90,11 @@ public static class IO
                 new("overlays", [],
                 [
                     new(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Sources", "linker.x")),
-                    new(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Sources", "Makefile_overlay"), "Makefile"),
                 ]),
             ],
             [
                 new(Path.Combine(project.BaseDirectory, "rom", "arm9.bin")),
                 new(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Sources", "linker.x")),
-                new(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Sources", "Makefile_main"), "Makefile"),
             ]);
         IODirectory assetsDirectoryTree = new("assets",
         [
@@ -108,16 +106,16 @@ public static class IO
             new("scn", [], []),
         ], []);
 
-        originalDirectoryTree.Create(project.BaseDirectory, log);
-        originalDirectoryTree.Create(project.IterativeDirectory, log);
-        srcDirectoryTree.Create(project.BaseDirectory, log);
-        srcDirectoryTree.Create(project.IterativeDirectory, log);
-        assetsDirectoryTree.Create(project.BaseDirectory, log);
-        assetsDirectoryTree.Create(project.IterativeDirectory, log);
+        originalDirectoryTree.Create(project.BaseDirectory, log, project.Localize);
+        originalDirectoryTree.Create(project.IterativeDirectory, log, project.Localize);
+        srcDirectoryTree.Create(project.BaseDirectory, log, project.Localize);
+        srcDirectoryTree.Create(project.IterativeDirectory, log, project.Localize);
+        assetsDirectoryTree.Create(project.BaseDirectory, log, project.Localize);
+        assetsDirectoryTree.Create(project.IterativeDirectory, log, project.Localize);
         tracker.Finished += 6;
 
         // Copy out the files we need to build the ROM
-        tracker.Focus("Copying Files", 4);
+        tracker.Focus(project.Localize("IOCopyingFilesMessage"), 4);
         CopyFiles(Path.Combine(project.BaseDirectory, "rom", "data"), Path.Combine(project.BaseDirectory, "original", "archives"), log, "*.bin");
         tracker.Finished++;
 
@@ -167,21 +165,16 @@ public static class IO
         string iterativeFile = Path.Combine(project.IterativeDirectory, relativePath);
         try
         {
-            if (!Directory.Exists(Path.GetDirectoryName(baseFile)))
-            {
-                Directory.CreateDirectory(Path.GetDirectoryName(baseFile));
-            }
-            if (!Directory.Exists(Path.GetDirectoryName(iterativeFile)))
-            {
-                Directory.CreateDirectory(Path.GetDirectoryName(iterativeFile));
-            }
+
+            CreateDirectory(baseFile);
+            CreateDirectory(iterativeFile);
 
             File.Copy(sourceFile, baseFile, true);
             File.Copy(sourceFile, iterativeFile, true);
         }
         catch (Exception ex)
         {
-            log.LogException(string.Format(project.Localize("Failed copying file '{0}' to base and iterative directories at path '{1}'"), sourceFile, relativePath), ex);
+            log.LogException(string.Format(project.Localize("ErrorFailedCopyingFile"), sourceFile, relativePath), ex);
         }
     }
 
@@ -196,7 +189,7 @@ public static class IO
             }
             catch (Exception ex)
             {
-                log.LogException(string.Format(project.Localize("Failed to delete file '{0}'"), file), ex);
+                log.LogException(string.Format(project.Localize("ErrorFailedDeletingFile"), file), ex);
             }
         }
     }
@@ -272,6 +265,7 @@ public static class IO
     {
         try
         {
+            CreateDirectory(file);
             File.WriteAllText(file, str);
             return true;
         }
@@ -286,6 +280,7 @@ public static class IO
     {
         try
         {
+            CreateDirectory(file);
             File.WriteAllBytes(file, bytes);
             return true;
         }
@@ -293,6 +288,14 @@ public static class IO
         {
             log.LogException($"Exception occurred while writing file '{file}' to disk.", ex);
             return false;
+        }
+    }
+
+    private static void CreateDirectory(string file)
+    {
+        if (!string.IsNullOrEmpty(Path.GetDirectoryName(file)) && !Directory.Exists(Path.GetDirectoryName(file)))
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(file)!);
         }
     }
 }

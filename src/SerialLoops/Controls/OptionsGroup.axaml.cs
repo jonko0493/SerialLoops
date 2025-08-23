@@ -65,7 +65,7 @@ public abstract class Option
 {
     public string OptionName { get; set; }
 
-    public bool Enabled { get; set; } = true;
+    public bool Enabled { get; init; } = true;
 
     protected abstract Control GetControl();
 
@@ -225,7 +225,7 @@ public class BooleanToggleOption : BooleanOption
 {
 
     public LinkButton ToggleButton;
-    private string _buttonText => Value ? Strings.All_On : Strings.All_Off;
+    private string _buttonText => Value ? Strings.SearchDialogAllBooleansOn : Strings.SearchDialogAllBooleansOff;
 
     public BooleanToggleOption(List<Option> options)
     {
@@ -264,11 +264,15 @@ public class FileOption : Option
     public FileOption(Window window)
     {
         _pathBox = new() { Text = "", Width = 225 };
-        _pathBox.TextChanged += (sender, args) => { OnChange?.Invoke(Path); };
+        _pathBox.TextChanged += (_, _) => { OnChange?.Invoke(Path); };
         _pathBox.IsEnabled = Enabled;
 
-        _pickerButton = new() { Content = "Select...", IsEnabled = Enabled };
-        _pickerButton.Command = ReactiveCommand.Create(SelectButton_OnClick);
+        _pickerButton = new()
+        {
+            Content = "Select...",
+            IsEnabled = Enabled,
+            Command = ReactiveCommand.Create(SelectButton_OnClick),
+        };
         _window = window;
     }
 
@@ -280,6 +284,7 @@ public class FileOption : Option
             Spacing = 5,
             Orientation = Orientation.Horizontal,
             VerticalAlignment = VerticalAlignment.Center,
+            IsEnabled = Enabled,
         };
         panel.Children.Add(_pathBox);
         panel.Children.Add(_pickerButton);

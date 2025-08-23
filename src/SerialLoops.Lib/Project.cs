@@ -19,6 +19,7 @@ using HaruhiChokuretsuLib.Font;
 using HaruhiChokuretsuLib.Util;
 using HaruhiChokuretsuLib.Util.Exceptions;
 using SerialLoops.Lib.Items;
+using SerialLoops.Lib.SaveFile;
 using SerialLoops.Lib.Script.Parameters;
 using SerialLoops.Lib.Util;
 using SkiaSharp;
@@ -40,7 +41,7 @@ public partial class Project
 
     // SL settings
     [JsonIgnore]
-    public string MainDirectory => Path.Combine(Config.ProjectsDirectory, Name);
+    public string MainDirectory => Path.Combine(ConfigUser.ProjectsDirectory, Name);
     [JsonIgnore]
     public string BaseDirectory => Path.Combine(MainDirectory, "base");
     [JsonIgnore]
@@ -48,7 +49,7 @@ public partial class Project
     [JsonIgnore]
     public string ProjectFile => Path.Combine(MainDirectory, $"{Name}.{PROJECT_FORMAT}");
     [JsonIgnore]
-    public Config Config { get; set; }
+    public ConfigUser ConfigUser { get; set; }
     [JsonIgnore]
     public ProjectSettings Settings { get; set; }
     [JsonIgnore]
@@ -77,6 +78,8 @@ public partial class Project
     public GraphicInfo NameplateInfo { get; set; }
     [JsonIgnore]
     public SKBitmap DialogueBitmap { get; set; }
+    [JsonIgnore]
+    public SKBitmap DialogueArrow { get; set; }
     [JsonIgnore]
     public SKBitmap FontBitmap { get; set; }
 
@@ -111,6 +114,8 @@ public partial class Project
     public SKColor[] DialogueColors { get; set; } = new SKColor[16];
     [JsonIgnore]
     public SKPaint[] DialogueColorFilters { get; set; } = new SKPaint[16];
+    [JsonIgnore]
+    public SaveItem ProjectSaveFile { get; set; }
 
     public float AverageBgmMaxAmplitude { get; set; }
 
@@ -125,11 +130,11 @@ public partial class Project
     {
     }
 
-    public Project(string name, string langCode, Config config, Func<string, string> localize, ILogger log)
+    public Project(string name, string langCode, ConfigUser configUser, Func<string, string> localize, ILogger log)
     {
         Name = name;
         LangCode = langCode;
-        Config = config;
+        ConfigUser = configUser;
         Localize = localize;
         log.Log("Creating project directories...");
         try
@@ -181,17 +186,11 @@ public partial class Project
         return JsonSerializer.Deserialize<Project>(File.ReadAllText(path), SERIALIZER_OPTIONS);
     }
 
-    public LoadProjectResult Load(Config config, ILogger log, IProgressTracker tracker)
+    public LoadProjectResult Load(ConfigUser configUser, ILogger log, IProgressTracker tracker)
     {
-        Config = config;
+        ConfigUser = configUser;
         LoadProjectSettings(log, tracker);
-        ClearOrCreateCaches(config.CachesDirectory, log);
-        string makefile = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Sources", "Makefile_main"));
-        if (!makefile.Equals(File.ReadAllText(Path.Combine(BaseDirectory, "src", "Makefile"))))
-        {
-            IO.CopyFileToDirectories(this, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Sources", "Makefile_main"), Path.Combine("src", "Makefile"), log);
-            IO.CopyFileToDirectories(this, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Sources", "Makefile_overlay"), Path.Combine("src", "overlays", "Makefile"), log);
-        }
+        ClearOrCreateCaches(configUser.CachesDirectory, log);
         if (Directory.GetFiles(Path.Combine(IterativeDirectory, "assets"), "*", SearchOption.AllDirectories).Length > 0)
         {
             return new(LoadProjectState.LOOSELEAF_FILES);
@@ -369,6 +368,7 @@ public partial class Project
         try
         {
             DialogueBitmap = Grp.GetFileByName("SYS_CMN_B02DNX").GetImage(transparentIndex: 0);
+            DialogueArrow = Grp.GetFileByName("SYS_CMN_B17DNX").GetImage(transparentIndex: 0);
         }
         catch (Exception ex)
         {
@@ -1144,7 +1144,7 @@ public partial class Project
         Items.Where(i => i.Type == ItemType.Script).Cast<ScriptItem>().ToList().ForEach(s => s.UpdateEventTableInfo(EventTableFile.EvtTbl));
     }
 
-    public void MigrateProject(string newRom, Config config, ILogger log, IProgressTracker tracker)
+    public void MigrateProject(string newRom, ConfigUser configUser, ILogger log, IProgressTracker tracker)
     {
         log.Log($"Attempting to migrate base ROM to {newRom}");
 
@@ -1160,7 +1160,7 @@ public partial class Project
         File.Copy(Path.Combine(tempDir, "arm9.bin"), Path.Combine(IterativeDirectory, "rom", "arm9.bin"), overwrite: true);
         File.Copy(Path.Combine(tempDir, "arm9.bin"), Path.Combine(IterativeDirectory, "src", "arm9.bin"), overwrite: true);
 
-        Build.BuildBase(this, config, log, tracker);
+        Build.BuildBase(this, configUser, log, tracker);
 
         Directory.Delete(tempDir, true);
     }
@@ -1194,7 +1194,7 @@ public partial class Project
         return Items.FirstOrDefault(i => i.DisplayName == name);
     }
 
-    public static (Project Project, LoadProjectResult Result) OpenProject(string projFile, Config config, Func<string, string> localize, ILogger log, IProgressTracker tracker)
+    public static (Project Project, LoadProjectResult Result) OpenProject(string projFile, ConfigUser configUser, Func<string, string> localize, ILogger log, IProgressTracker tracker)
     {
         log.Log($"Loading project from '{projFile}'...");
         if (!File.Exists(projFile))
@@ -1210,14 +1210,14 @@ public partial class Project
             tracker.Finished++;
 
             // If we detect an old NP format, auto-migrate it
-            if (!File.Exists(Path.Combine(config.ProjectsDirectory, project.Name, "base", "rom", $"{project.Name}.json")))
+            if (!File.Exists(Path.Combine(configUser.ProjectsDirectory, project.Name, "base", "rom", $"{project.Name}.json")))
             {
-                NdsProjectFile.ConvertProjectFile(Path.Combine(config.ProjectsDirectory, project.Name, "base", "rom", $"{project.Name}.xml"));
-                NdsProjectFile.ConvertProjectFile(Path.Combine(config.ProjectsDirectory, project.Name, "iterative", "rom", $"{project.Name}.xml"));
-                NdsProjectFile.ConvertProjectFile(Path.Combine(config.ProjectsDirectory, project.Name, "base", "original", $"{project.Name}.xml"));
+                NdsProjectFile.ConvertProjectFile(Path.Combine(configUser.ProjectsDirectory, project.Name, "base", "rom", $"{project.Name}.xml"));
+                NdsProjectFile.ConvertProjectFile(Path.Combine(configUser.ProjectsDirectory, project.Name, "iterative", "rom", $"{project.Name}.xml"));
+                NdsProjectFile.ConvertProjectFile(Path.Combine(configUser.ProjectsDirectory, project.Name, "base", "original", $"{project.Name}.xml"));
             }
 
-            LoadProjectResult result = project.Load(config, log, tracker);
+            LoadProjectResult result = project.Load(configUser, log, tracker);
             if (result.State == LoadProjectState.LOOSELEAF_FILES)
             {
                 log.LogWarning("Found looseleaf files in iterative directory; prompting user for build before loading archives...");
@@ -1230,7 +1230,7 @@ public partial class Project
         }
         catch (Exception ex)
         {
-            log.LogException(localize("Error while loading project"), ex);
+            log.LogException(localize("ErrorLoadingProject"), ex);
             return (null, new(LoadProjectState.FAILED));
         }
     }
@@ -1298,11 +1298,11 @@ public partial class Project
         }
         catch (Exception ex)
         {
-            log.LogException(Localize("Failed to export project"), ex);
+            log.LogException(Localize("ErrorExportProjectFailed"), ex);
         }
     }
 
-    public static (Project Project, LoadProjectResult LoadResult) Import(string slzipFile, string romPath, Config config, Func<string, string> localize, ILogger log, IProgressTracker tracker)
+    public static (Project Project, LoadProjectResult LoadResult) Import(string slzipFile, string romPath, ConfigUser configUser, Func<string, string> localize, ILogger log, IProgressTracker tracker)
     {
         try
         {
@@ -1311,7 +1311,7 @@ public partial class Project
             string slprojTemp = Path.GetTempFileName();
             slzip.Entries.FirstOrDefault(f => f.Name.EndsWith(".slproj"))?.ExtractToFile(slprojTemp, overwrite: true);
             Project project = Deserialize(slprojTemp);
-            project.Config = config;
+            project.ConfigUser = configUser;
             File.Delete(slprojTemp);
             string oldProjectName = project.Name;
             while (Directory.Exists(project.MainDirectory))
@@ -1338,13 +1338,13 @@ public partial class Project
             project.Settings = new(NdsProjectFile.Deserialize(Path.Combine(project.BaseDirectory, newNdsProjFile)), log);
             Directory.CreateDirectory(project.IterativeDirectory);
             IO.CopyFiles(project.BaseDirectory, project.IterativeDirectory, log, recursive: true);
-            Build.BuildBase(project, config, log, tracker);
+            Build.BuildBase(project, configUser, log, tracker);
 
-            return (project, project.Load(config, log, tracker));
+            return (project, project.Load(configUser, log, tracker));
         }
         catch (Exception ex)
         {
-            log.LogException(localize("Failed to import project"), ex);
+            log.LogException(localize("ErrorFailedImportingProject"), ex);
             return (null, new() { State = LoadProjectState.FAILED });
         }
     }
@@ -1388,6 +1388,18 @@ public partial class Project
     public CharacterItem GetCharacterBySpeaker(Speaker speaker)
     {
         return (CharacterItem)Items.First(i => i.Type == ItemType.Character && i.DisplayName == $"CHR_{Characters[(int)speaker].Name}");
+    }
+
+    public bool LoadProjectSave()
+    {
+        string savPath = Path.Combine(MainDirectory, $"{Name}.sav");
+        if (!File.Exists(savPath))
+        {
+            return false;
+        }
+
+        ProjectSaveFile = new(savPath, $"{Name}.sav");
+        return ProjectSaveFile is not null;
     }
 
     private bool ItemMatches(ItemDescription item, string term, SearchQuery.DataHolder scope, ILogger logger)
@@ -1667,6 +1679,17 @@ public partial class Project
 
     private bool ScriptIsInEpisode(ScriptItem script, int scenarioEpIndex, int scenarioNextEpIndex)
     {
+        int scriptFileScenarioIndex = GetScriptScenarioIndex(script);
+        if (scenarioNextEpIndex < 0)
+        {
+            scenarioNextEpIndex = int.MaxValue;
+        }
+
+        return scriptFileScenarioIndex > scenarioEpIndex && scriptFileScenarioIndex < scenarioNextEpIndex;
+    }
+
+    private int GetScriptScenarioIndex(ScriptItem script)
+    {
         int scriptFileScenarioIndex = Scenario.Commands.FindIndex(c => c.Verb == ScenarioCommand.ScenarioVerb.LOAD_SCENE && c.Parameter == script.Event.Index);
         if (scriptFileScenarioIndex < 0)
         {
@@ -1676,13 +1699,14 @@ public partial class Project
             {
                 scriptFileScenarioIndex = Scenario.Commands.FindIndex(c => c.Verb == ScenarioCommand.ScenarioVerb.ROUTE_SELECT && c.Parameter == ((GroupSelectionItem)groupSelection).Index);
             }
-        }
-        if (scenarioNextEpIndex < 0)
-        {
-            scenarioNextEpIndex = int.MaxValue;
+            ItemDescription otherScript = references.Find(r => r.Type == ItemType.Script);
+            if (otherScript is not null)
+            {
+                scriptFileScenarioIndex = GetScriptScenarioIndex((ScriptItem)otherScript);
+            }
         }
 
-        return scriptFileScenarioIndex > scenarioEpIndex && scriptFileScenarioIndex < scenarioNextEpIndex;
+        return scriptFileScenarioIndex;
     }
 
     [GeneratedRegex(@"\((?<num>\d+)\)")]

@@ -34,7 +34,10 @@ public class LayoutEditorViewModel : EditorViewModel
                 _selectedLayoutEntry.IsSelected = false;
             }
             this.RaiseAndSetIfChanged(ref _selectedLayoutEntry, value);
-            _selectedLayoutEntry.IsSelected = true;
+            if (_selectedLayoutEntry is not null)
+            {
+                _selectedLayoutEntry.IsSelected = true;
+            }
         }
     }
 
@@ -66,8 +69,8 @@ public class LayoutEditorViewModel : EditorViewModel
 
     private async Task ExportLayout()
     {
-        IStorageFile savePng = await _mainWindow.Window.ShowSaveFilePickerAsync(Strings.Export_Layout_Preview,
-            [new(Strings.PNG_Image) { Patterns = ["*.png"] }], $"{_layout.DisplayName}.png");
+        IStorageFile savePng = await _mainWindow.Window.ShowSaveFilePickerAsync(Strings.LayoutEditorExportPreviewButton,
+            [new(Strings.FiletypePng) { Patterns = ["*.png"] }], $"{_layout.DisplayName}.png");
         string path = savePng?.TryGetLocalPath();
         if (!string.IsNullOrEmpty(path))
         {
@@ -82,14 +85,14 @@ public class LayoutEditorViewModel : EditorViewModel
         {
             return;
         }
-        IStorageFile savePng = await _mainWindow.Window.ShowSaveFilePickerAsync(Strings.Export_Source_Preview,
-            [new(Strings.PNG_Image) { Patterns = ["*.png"] }]);
+        IStorageFile savePng = await _mainWindow.Window.ShowSaveFilePickerAsync(Strings.LayoutEditorExportSourcePreviewButton,
+            [new(Strings.FiletypePng) { Patterns = ["*.png"] }]);
         string path = savePng?.TryGetLocalPath();
         if (!string.IsNullOrEmpty(path))
         {
             await using FileStream fs = File.Create(path);
             SKBitmap preview = SelectedLayoutEntry.FullImage.Copy();
-            SKCanvas canvas = new(preview);
+            using SKCanvas canvas = new(preview);
             canvas.DrawRect(SelectedLayoutEntry.TextureX, SelectedLayoutEntry.TextureY, SelectedLayoutEntry.TextureW, SelectedLayoutEntry.TextureH, new() { Color = SKColors.Red, Style = SKPaintStyle.Stroke });
             canvas.Flush();
             preview.Encode(fs, SKEncodedImageFormat.Png, GraphicsFile.PNG_QUALITY);

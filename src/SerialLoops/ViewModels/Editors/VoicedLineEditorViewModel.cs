@@ -202,14 +202,14 @@ public class VoicedLineEditorViewModel : EditorViewModel
 
     private async Task Replace(bool asAhx)
     {
-        IStorageFile openFile = await Window.Window.ShowOpenFilePickerAsync(Strings.Replace_voiced_line, [new(Strings.Supported_Audio_Files) { Patterns = Shared.SupportedAudioFiletypes },
-            new(Strings.WAV_files) { Patterns = ["*.wav"] }, new(Strings.FLAC_files) { Patterns = ["*.flac"] },
-            new(Strings.MP3_files) { Patterns = ["*.mp3"] }, new(Strings.OggFiles) { Patterns = ["*.ogg"] }]);
+        IStorageFile openFile = await Window.Window.ShowOpenFilePickerAsync(Strings.VoicedLineEditorReplaceLine, [new(Strings.FiletypeSupportedAudio) { Patterns = Shared.SupportedAudioFiletypes },
+            new(Strings.FiletypeWavs) { Patterns = ["*.wav"] }, new(Strings.FiletypeFlac) { Patterns = ["*.flac"] },
+            new(Strings.FiletypeMp3) { Patterns = ["*.mp3"] }, new(Strings.FiletypeOgg) { Patterns = ["*.ogg"] }]);
         if (openFile is not null)
         {
-            ProgressDialogViewModel tracker = new(Strings.Replace_voiced_line);
+            ProgressDialogViewModel tracker = new(Strings.VoicedLineEditorReplaceLine);
             VcePlayer.Stop();
-            tracker.InitializeTasks(() => _vce.Replace(openFile.Path.LocalPath, _project, Path.Combine(_project.Config.CachesDirectory, "vce", $"{_vce.Name}.wav"), _log,
+            tracker.InitializeTasks(() => _vce.Replace(openFile.Path.LocalPath, _project, Path.Combine(_project.ConfigUser.CachesDirectory, "vce", $"{_vce.Name}.wav"), _log,
                     _voiceMapEntry),
                 () => { });
             await new ProgressDialog { DataContext = tracker }.ShowDialog(Window.Window);
@@ -220,7 +220,7 @@ public class VoicedLineEditorViewModel : EditorViewModel
 
     private async Task Export()
     {
-        IStorageFile saveFile = await Window.Window.ShowSaveFilePickerAsync(Strings.Save_voiced_line_as_WAV, [new(Strings.WAV_File) { Patterns = ["*.wav"] }]);
+        IStorageFile saveFile = await Window.Window.ShowSaveFilePickerAsync(Strings.VoicedLineEditorSaveAsWavLabel, [new(Strings.FiletypeWav) { Patterns = ["*.wav"] }]);
         if (saveFile is not null)
         {
             WaveFileWriter.CreateWaveFile(saveFile.Path.LocalPath, _vce.GetWaveProvider(_log));
@@ -244,7 +244,7 @@ public class VoicedLineEditorViewModel : EditorViewModel
     private void UpdatePreview()
     {
         SubtitlesPreview = new(256, 384);
-        SKCanvas canvas = new(SubtitlesPreview);
+        using SKCanvas canvas = new(SubtitlesPreview);
         canvas.DrawColor(SKColors.DarkGray);
         canvas.DrawLine(new() { X = 0, Y = 192 }, new() { X = 256, Y = 192 }, _project.DialogueColorFilters[0]);
 

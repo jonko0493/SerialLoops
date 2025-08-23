@@ -14,7 +14,7 @@
         Background="{DynamicResource FallbackBackgroundColor}"
         ExtendClientAreaToDecorationsHint="True"
         Icon="/Assets/serial-loops.ico"
-        Title="{x:Static assets:Strings.Preferences}">
+        Title="{x:Static assets:Strings.PreferencesDialogTitle}">
     <Panel>
         <controls:AcrylicBorderHandler/>
 
@@ -25,7 +25,7 @@
                         <TabItem Header="Serial Loops" Name="SerialLoopsTab">
                             <controls:OptionsGroup Name="SerialLoopsOptions" Width="500"/>
                         </TabItem>
-                        <TabItem Header="{x:Static assets:Strings.Projects}" Name="ProjectsTab">
+                        <TabItem Header="{x:Static assets:Strings.PreferencesProjectsTab}" Name="ProjectsTab">
                             <controls:OptionsGroup Name="ProjectOptions" Width="500"/>
                         </TabItem>
                         <TabItem Header="{x:Static assets:Strings.Build}" Name="BuildTab">
@@ -39,7 +39,7 @@
                         <Button Content="{x:Static assets:Strings.Save}" Command="{Binding SaveCommand}" IsDefault="True" Name="SaveButton"/>
                     </StackPanel>
                     <controls:LabelWithIcon Name="RestartRequiredLabel" IsVisible="{Binding RequireRestart}"
-                                            Text="{x:Static assets:Strings.Restart_required}" Icon="Warning"/>
+                                            Text="{x:Static assets:Strings.PreferencesRestartRequired}" Icon="Warning"/>
                 </StackPanel>
             </StackPanel>
         </DockPanel>
