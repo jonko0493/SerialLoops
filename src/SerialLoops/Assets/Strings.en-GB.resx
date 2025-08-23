@@ -2084,4 +2084,199 @@
   <data name="AnimationExportGifButton" xml:space="preserve">
     <value>Export GIF</value>
   </data>
+  <data name="SLIDE_FROM_CENTER_TO_RIGHT_FADE_OUT" xml:space="preserve">
+    <value>Slide from Centre to Right and Fade Out</value>
+  </data>
+  <data name="SLIDE_FROM_CENTER_TO_LEFT_FADE_OUT" xml:space="preserve">
+    <value>Slide from Centre to Left and Fade Out</value>
+  </data>
+  <data name="SLIDE_CENTER_TO_RIGHT_AND_STAY" xml:space="preserve">
+    <value>Slide from Centre to Right and Stay (Transition)</value>
+  </data>
+  <data name="SLIDE_CENTER_TO_LEFT_AND_STAY" xml:space="preserve">
+    <value>Slide from Centre to Left and Stay (Transition)</value>
+  </data>
+  <data name="SLIDE_RIGHT_FADE_OUT" xml:space="preserve">
+    <value>Slide Right and Fade Out</value>
+  </data>
+  <data name="NO_TRANSITION" xml:space="preserve">
+    <value>No Transition</value>
+  </data>
+  <data name="BOUNCE_LEFT_TO_RIGHT" xml:space="preserve">
+    <value>Bounce Left to Right</value>
+  </data>
+  <data name="BOUNCE_RIGHT_TO_LEFT" xml:space="preserve">
+    <value>Bounce Right to Left</value>
+  </data>
+  <data name="SLIDE_LEFT" xml:space="preserve">
+    <value>Slide Left (Transition)</value>
+  </data>
+  <data name="SLIDE_RIGHT" xml:space="preserve">
+    <value>Slide Right (Transition)</value>
+  </data>
+  <data name="FADE_IN_LEFT" xml:space="preserve">
+    <value>Fade In Left</value>
+  </data>
+  <data name="SLIDE_LEFT_FADE_OUT" xml:space="preserve">
+    <value>Slide Left and Fade Out</value>
+  </data>
+  <data name="FADE_OUT_CENTER" xml:space="preserve">
+    <value>Fade Out Centre</value>
+  </data>
+  <data name="FADE_OUT_LEFT" xml:space="preserve">
+    <value>Fade Out Left</value>
+  </data>
+  <data name="NO_SHAKE" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="SLIDE_LEFT_TO_RIGHT_AND_STAY" xml:space="preserve">
+    <value>Slide Left to Right and Stay (Transition)</value>
+  </data>
+  <data name="SLIDE_RIGHT_TO_LEFT_AND_STAY" xml:space="preserve">
+    <value>Slide Right to Left and Stay (Transition)</value>
+  </data>
+  <data name="SHAKE_CENTER" xml:space="preserve">
+    <value>Shake (Centre)</value>
+  </data>
+  <data name="BOUNCE_HORIZONTAL_CENTER" xml:space="preserve">
+    <value>Bounce Horizontal (Centre)</value>
+  </data>
+  <data name="BOUNCE_HORIZONTAL_CENTER_WITH_SMALL_SHAKES" xml:space="preserve">
+    <value>Bounce Horizontal (Centre) with Small Shakes</value>
+  </data>
+  <data name="SHAKE_RIGHT" xml:space="preserve">
+    <value>Shake (Right)</value>
+  </data>
+  <data name="SLIDE_LEFT_TO_CENTER" xml:space="preserve">
+    <value>Slide Left to Centre</value>
+  </data>
+  <data name="SLIDE_RIGHT_TO_CENTER" xml:space="preserve">
+    <value>Slide Right to Centre</value>
+  </data>
+  <data name="SLIDE_LEFT_TO_RIGHT" xml:space="preserve">
+    <value>Slide Left to Right</value>
+  </data>
+  <data name="SLIDE_RIGHT_TO_LEFT" xml:space="preserve">
+    <value>Slide Right to Left</value>
+  </data>
+  <data name="FADE_TO_CENTER" xml:space="preserve">
+    <value>Fade to Centre</value>
+  </data>
+  <data name="PEEK_RIGHT_TO_LEFT" xml:space="preserve">
+    <value>Peek Right to Left</value>
+  </data>
+  <data name="NO_EXIT" xml:space="preserve">
+    <value>Don't Exit</value>
+  </data>
+  <data name="SearchDialogAllBooleansOff" xml:space="preserve">
+    <value>Toggle All Off</value>
+  </data>
+  <data name="SearchDialogAllBooleansOn" xml:space="preserve">
+    <value>Toggle All On</value>
+  </data>
+  <data name="ItemsPanelCharacters" xml:space="preserve">
+    <value>Characters</value>
+  </data>
+  <data name="DefaultFont" xml:space="preserve">
+    <value>Segoe UI</value>
+  </data>
+  <data name="DefaultFontDisplay" xml:space="preserve">
+    <value>Default ({0})</value>
+  </data>
+  <data name="AboutDialogDevelopmentHeader" xml:space="preserve">
+    <value>Development</value>
+  </data>
+  <data name="UiMessage18Label" xml:space="preserve">
+    <value>Episode 2 title</value>
+  </data>
+  <data name="ExportButtonLabel" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="BackgroundEditorExportFileDialogTitle" xml:space="preserve">
+    <value>Export Background Image</value>
+  </data>
+  <data name="SystemTextureEditorExportFileDialogTitle" xml:space="preserve">
+    <value>Export System Texture</value>
+  </data>
+  <data name="CharacterSpriteEditorIsLargeLabel" xml:space="preserve">
+    <value>Is Large</value>
+  </data>
+  <data name="ItemsPanelLayouts" xml:space="preserve">
+    <value>Layouts</value>
+  </data>
+  <data name="ProjectSettingsReplaceGameIcon" xml:space="preserve">
+    <value>Replace Game Icon</value>
+  </data>
+  <data name="CharacterSpriteEditorReplaceSprite" xml:space="preserve">
+    <value>Replace Sprite</value>
+  </data>
+  <data name="BgmEditorSaveBgmAsWavFileDialogTitle" xml:space="preserve">
+    <value>Save BGM as WAV</value>
+  </data>
+  <data name="AboutDialogCreditsJonkoRole" xml:space="preserve">
+    <value>Systems architect &amp; reverse engineering work</value>
+  </data>
+  <data name="MenuHelp" xml:space="preserve">
+    <value>_Help</value>
+  </data>
+  <data name="MenuProject" xml:space="preserve">
+    <value>_Project</value>
+  </data>
+  <data name="PreferencesEmulatorFlatpakLabel" xml:space="preserve">
+    <value>Emulator Flatpak</value>
+  </data>
+  <data name="ScriptParamLoadSound" xml:space="preserve">
+    <value>Load Sound</value>
+  </data>
+  <data name="BackgroundEditorKineticBackgroundLabel" xml:space="preserve">
+    <value>"Kinetic" Background</value>
+  </data>
+  <data name="AboutSerialLoops" xml:space="preserve">
+    <value>About Serial Loops</value>
+  </data>
+  <data name="BuildResult" xml:space="preserve">
+    <value>Build Result</value>
+  </data>
+  <data name="AboutDialogCredits" xml:space="preserve">
+    <value>Credits</value>
+  </data>
+  <data name="PreferencesDisplayFontLabel" xml:space="preserve">
+    <value>Display Font</value>
+  </data>
+  <data name="LoggerErrorMessage" xml:space="preserve">
+    <value>ERROR: {0}</value>
+  </data>
+  <data name="ErrorFailedSavingOverlay" xml:space="preserve">
+    <value>Failed saving overlay {0} to disk</value>
+  </data>
+  <data name="ErrorFailedExportingMouthAnimation" xml:space="preserve">
+    <value>Failed to export mouth animation {0} for sprite {1} to file</value>
+  </data>
+  <data name="ErrorInvalidImageSelected" xml:space="preserve">
+    <value>Invalid image file selected</value>
+  </data>
+  <data name="AsmHackParametersLabel" xml:space="preserve">
+    <value>Parameters</value>
+  </data>
+  <data name="BackgroundEditorReplaceBackgroundImage" xml:space="preserve">
+    <value>Replace Background Image</value>
+  </data>
+  <data name="SysTexEditorReplaceSysTex" xml:space="preserve">
+    <value>Replace System Texture</value>
+  </data>
+  <data name="ExportPatchSelectBaseRom" xml:space="preserve">
+    <value>Select base ROM</value>
+  </data>
+  <data name="SelectButtonLabel" xml:space="preserve">
+    <value>Select…</value>
+  </data>
+  <data name="AboutDialogTranslationCredits" xml:space="preserve">
+    <value>Translation</value>
+  </data>
+  <data name="AboutDialogCreditsWillRole" xml:space="preserve">
+    <value>UX architect &amp; design work</value>
+  </data>
+  <data name="ErrorFailedReplacingKbg" xml:space="preserve">
+    <value>Failed to replace screen image: image too complex (generated more than 255 tiles); please use a simpler image</value>
+  </data>
 </root>
