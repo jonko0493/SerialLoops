@@ -1580,6 +1580,15 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search scope.
+        /// </summary>
+        public static string Conditional {
+            get {
+                return ResourceManager.GetString("Conditional", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to LLVM Path.
         /// </summary>
         public static string ConfigOptionLlvmPath {
@@ -2769,6 +2778,15 @@ namespace SerialLoops.Assets {
         public static string FirstTimeFlatpakTitleMessage {
             get {
                 return ResourceManager.GetString("FirstTimeFlatpakTitleMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Flag.
+        /// </summary>
+        public static string Flag {
+            get {
+                return ResourceManager.GetString("Flag", resourceCulture);
             }
         }
         
@@ -7958,6 +7976,15 @@ namespace SerialLoops.Assets {
         public static string TERMINAL_TYPING {
             get {
                 return ResourceManager.GetString("TERMINAL_TYPING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string Title {
+            get {
+                return ResourceManager.GetString("Title", resourceCulture);
             }
         }
         

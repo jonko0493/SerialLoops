@@ -3336,4 +3336,13 @@ item in the dropdown!</value>
   <data name="PuzzleEditorUnknown04" xml:space="preserve">
     <value>Unknown 04</value>
   </data>
+  <data name="Title" xml:space="preserve">
+    <value>Title</value><comment>Search scope</comment>
+  </data>
+  <data name="Flag" xml:space="preserve">
+    <value>Flag</value><comment>Search scope</comment>
+  </data>
+  <data name="Conditional" xml:space="preserve">
+    <value>Search scope</value>
+  </data>
 </root>
