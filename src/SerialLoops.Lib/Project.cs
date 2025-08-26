@@ -924,6 +924,7 @@ public partial class Project
             // ADV bottom screen layouts
             LayoutFiles.Add(0xB5B, Grp.GetFileByIndex(0xB5B));
             LayoutFiles.Add(0xE42, Grp.GetFileByIndex(0xE42));
+            LayoutFiles.Add(2928, Grp.GetFileByIndex(2928));
 
             List <GraphicsFile> advBottomGraphics =
             [
@@ -978,6 +979,16 @@ public partial class Project
                 Grp.GetFileByIndex(0xB5D),
                 Grp.GetFileByIndex(0xB5E),
             ];
+
+            List<GraphicsFile> routeSelectGraphics =
+            [
+                Grp.GetFileByName("SYS_CMN_B02DNX"),
+                Grp.GetFileByName("SYS_CMN_B05DNX"),
+                Grp.GetFileByName("SYS_CMN_B22DNX"),
+                Grp.GetFileByName("SYS_CMN_B27DNX"),
+                Grp.GetFileByName("SYS_CMN_B36DNX"),
+            ];
+
             SystemTextureFile systexFile = Dat.GetFileByName("SYSTEXS").CastTo<SystemTextureFile>();
             List<GraphicsFile> xtrTpcGraphicFiles = systexFile.LoadOrders[0x120..0x12A]
                 .Select(l => Grp.GetFileByIndex(systexFile.SystemTextures[l].GrpIndex)).ToList();
@@ -1030,6 +1041,8 @@ public partial class Project
 
             Items.Add(new LayoutItem(0xB5B, advBottomGraphics, 0, 13, "LYT_CHOICE_SELECT_BOX", this));
             Items.Add(new LayoutItem(0xB5B, advBottomGraphics, 13, 2, "LYT_DIALOGUE_BOX", this));
+
+            Items.Add(new LayoutItem(2928, routeSelectGraphics, 0, 500, "LYT_ROUTE_SELECT", this));
 
             Items.Add(new LayoutItem(0xE42, xtrTpcGraphicFiles, 0, 104, "LYT_EXTRA_TOPIC_VIEWER", this));
             Items.Add(new LayoutItem(0xE42, xtrTpcGraphicFiles, 104, 36, "LYT_EXTRA_TOPIC_CHAR_SELECT", this));

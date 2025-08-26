@@ -21,6 +21,22 @@ public class LayoutEntryWithImage : ReactiveObject
     [Reactive]
     public bool HitTestVisible { get; set; } = true;
 
+    public short ShtxIndex
+    {
+        get => _layout.Layout.LayoutEntries[Index].RelativeShtxIndex;
+        set
+        {
+            if (_layout is null)
+            {
+                return;
+            }
+            this.RaisePropertyChanged();
+            _layout.Layout.LayoutEntries[Index].RelativeShtxIndex = value;
+            CroppedImage = _layout.GetLayoutEntryRender(Index);
+            _layout.UnsavedChanges = true;
+        }
+    }
+
     private short _screenX;
     public short ScreenX
     {

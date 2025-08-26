@@ -64,6 +64,7 @@
                           CanUserResizeColumns="True" CanUserSortColumns="False" IsReadOnly="False" GridLinesVisibility="All"
                           BorderThickness="1" BorderBrush="Gray" SelectedItem="{Binding SelectedLayoutEntry}">
                     <DataGrid.Columns>
+                        <DataGridTextColumn Header="SHTX Index" Binding="{Binding ShtxIndex}"/>
                         <DataGridTextColumn Header="Screen X" Binding="{Binding ScreenX}"/>
                         <DataGridTextColumn Header="Screen Y" Binding="{Binding ScreenY}"/>
                         <DataGridTextColumn Header="Screen Width" Binding="{Binding ScreenWidth}"/>
