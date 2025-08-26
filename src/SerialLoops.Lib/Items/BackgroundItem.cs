@@ -252,14 +252,17 @@ public class BackgroundItem : Item, IPreviewableGraphic
 
         SKBitmap centeredBitmap;
         SKCanvas canvas;
-        SKPaint paint = new() { IsAntialias = true, IsDither = true };
+        SKPaint paint = new() { IsAntialias = true, IsDither = true, ImageFilter = SKImageFilter.CreateBlur(0.75f, 0.75f) };
         switch (BackgroundType)
         {
             case BgType.TEX_CG:
             {
                 centeredBitmap = new(96, 128);
                 canvas = new(centeredBitmap);
-                canvas.DrawImage(SKImage.FromBitmap(image), new(0, 0, image.Width, image.Height), new SKRect(0, 12, 96, 84), new(SKCubicResampler.Mitchell), paint);
+                canvas.DrawImage(SKImage.FromBitmap(image),
+                    new((int)(image.Width * 0.02), (int)(image.Height * 0.03), (int)(image.Width * 0.95), (int)(image.Height * 0.96)),
+                    new SKRect(0, 12, 96, 84), new(SKCubicResampler.Mitchell),
+                    paint);
                 break;
             }
 
@@ -267,7 +270,10 @@ public class BackgroundItem : Item, IPreviewableGraphic
             {
                 centeredBitmap = new(96, 128);
                 canvas = new(centeredBitmap);
-                canvas.DrawImage(SKImage.FromBitmap(image), new(0, 0, image.Width, image.Height), new SKRect(0, 0, 96, 96), new(SKCubicResampler.Mitchell), paint);
+                canvas.DrawImage(SKImage.FromBitmap(image),
+                    new((int)(image.Width * 0.05), (int)(image.Height * 0.05), (int)(image.Width * 0.95), (int)(image.Height * 0.95)),
+                    new SKRect(0, 0, 96, 96),
+                    new(SKCubicResampler.Mitchell), paint);
                 break;
             }
 
@@ -275,7 +281,10 @@ public class BackgroundItem : Item, IPreviewableGraphic
             {
                 centeredBitmap = new(128, 128);
                 canvas = new(centeredBitmap);
-                canvas.DrawImage(SKImage.FromBitmap(image), new(0, 0, image.Width, image.Height), new SKRect(0, 12, 128, 84), new(SKCubicResampler.Mitchell), paint);
+                canvas.DrawImage(SKImage.FromBitmap(image),
+                    new((int)(image.Width * 0.10), (int)(image.Height * 0.03), (int)(image.Width * 0.90), (int)(image.Height * 0.96)),
+                    new SKRect((int)(image.Width * 0.02), 12, 128, 84),
+                    new(SKCubicResampler.Mitchell), paint);
                 break;
             }
 
@@ -283,7 +292,10 @@ public class BackgroundItem : Item, IPreviewableGraphic
             {
                 centeredBitmap = new(96, 128);
                 canvas = new(centeredBitmap);
-                canvas.DrawImage(SKImage.FromBitmap(image), new(0, 0, image.Width, image.Height), new SKRect(8, 2, 120, 126), new(SKCubicResampler.Mitchell), paint);
+                canvas.DrawImage(SKImage.FromBitmap(image),
+                    new((int)(image.Width * 0.05), (int)(image.Height * 0.10), (int)(image.Width * 0.95), (int)(image.Height * 0.90)),
+                    new SKRect(8, 2, 120, 126), new(SKCubicResampler.Mitchell),
+                    paint);
                 break;
             }
 
