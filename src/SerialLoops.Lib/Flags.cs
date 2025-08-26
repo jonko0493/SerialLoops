@@ -58,7 +58,7 @@ public class Flags
                                                                           flag + 1 >= ((ScriptItem)i).StartReadFlag && flag + 1 < ((ScriptItem)i).StartReadFlag + ((ScriptItem)i).Event.ScriptSections.Count);
         if (script is not null)
         {
-            return string.Format(project.Localize("Script {0} Section {1} Completed (F{2:D2})"), script.DisplayName, script.Event.ScriptSections[flag + 1 - script.StartReadFlag].Name, flag);
+            return string.Format(project.Localize("FlagScriptSectionCompleted"), script.DisplayName, script.Event.ScriptSections[flag + 1 - script.StartReadFlag].Name, flag);
         }
 
         Tutorial tutorial = project.TutorialFile.Tutorials.FirstOrDefault(t => t.Id != 0 && t.Id == flag + 1);
