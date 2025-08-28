@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Input;
 using Avalonia;
 using Avalonia.Media;
+using Avalonia.Media.Immutable;
 using HaruhiChokuretsuLib.Archive.Event;
 using HaruhiChokuretsuLib.Util;
 using ReactiveUI;
@@ -138,7 +139,7 @@ public class ScenarioActivityViewModel : ViewModelBase
         _title = activity.Title;
         _futureDesc = Activity.FutureDesc;
         _pastDesc = Activity.PastDesc;
-        Routes = new(activity.Routes.Select(r => new ScenarioRouteViewModel(selection, r)));
+        Routes = new(activity.Routes.Select(r => new ScenarioRouteViewModel(selection, r, activity.OptimalGroup, activity.WorstGroup)));
 
         _layoutSource = selection.OpenProject.Grp.GetFileByIndex(0xB98).GetImage(transparentIndex: 0);
         BackgroundColor = GetBackgroundColor(index);
@@ -329,7 +330,10 @@ public class ScenarioRouteViewModel : ViewModelBase
         }
     }
 
-    public ScenarioRouteViewModel(GroupSelectionEditorViewModel selection, ScenarioRoute route)
+    public ObservableCollection<CharacterIcon> CharacterIcons { get; }
+
+    public ScenarioRouteViewModel(GroupSelectionEditorViewModel selection, ScenarioRoute route,
+        List<ScenarioActivity.BrigadeMember> goodAssignments, List<ScenarioActivity.BrigadeMember> badAssignments)
     {
         _selection = selection;
         Route = route;
@@ -341,8 +345,26 @@ public class ScenarioRouteViewModel : ViewModelBase
         _script = (ScriptItem)selection.OpenProject.Items.FirstOrDefault(i =>
             i.Type == ItemDescription.ItemType.Script && ((ScriptItem)i).Event.Index == route.ScriptIndex);
 
-        CharacterIcons = new(Route.CharactersInvolved.Select(s => _selection.CharacterPortraits[s]));
+        CharacterIcons = new(Route.CharactersInvolved.Select(s =>
+            new CharacterIcon(_selection.CharacterPortraits[s], s, goodAssignments, badAssignments)));
     }
+}
 
-    public ObservableCollection<SKBitmap> CharacterIcons { get; }
+public class CharacterIcon(SKBitmap bitmap, Speaker character, List<ScenarioActivity.BrigadeMember> goodAssignments, List<ScenarioActivity.BrigadeMember> badAssignments)
+{
+    public SKBitmap Icon { get; } = bitmap;
+    public IImmutableSolidColorBrush DotColor { get; } = goodAssignments.Contains(BrigadeMemberFromSpeaker(character))
+        ? Brushes.LawnGreen
+        : badAssignments.Contains(BrigadeMemberFromSpeaker(character)) ? Brushes.DarkRed : Brushes.Transparent;
+
+    private static ScenarioActivity.BrigadeMember BrigadeMemberFromSpeaker(Speaker speaker)
+    {
+        return speaker switch
+        {
+            Speaker.MIKURU => ScenarioActivity.BrigadeMember.MIKURU,
+            Speaker.NAGATO => ScenarioActivity.BrigadeMember.NAGATO,
+            Speaker.KOIZUMI => ScenarioActivity.BrigadeMember.KOIZUMI,
+            _ => ScenarioActivity.BrigadeMember.ANY,
+        };
+    }
 }
