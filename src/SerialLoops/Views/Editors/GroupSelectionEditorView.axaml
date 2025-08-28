@@ -119,8 +119,12 @@
                                                                MinItemWidth="32" MinItemHeight="32"/>
                                         </ItemsRepeater.Layout>
                                         <ItemsRepeater.ItemTemplate>
-                                            <DataTemplate DataType="sk:SKBitmap">
-                                                <Image Source="{Binding Converter={x:Static utility:SLConverters.SKBitmapToAvaloniaConverter}}"/>
+                                            <DataTemplate DataType="vm:CharacterIcon">
+                                                <Canvas Width="{Binding Icon.Width}" Height="{Binding Icon.Height}">
+                                                    <Image Source="{Binding Icon, Converter={x:Static utility:SLConverters.SKBitmapToAvaloniaConverter}}"
+                                                           Canvas.Top="0" Canvas.Left="0"/>
+                                                    <Ellipse Width="8" Height="8" Fill="{Binding DotColor}" Canvas.Top="0" Canvas.Left="0"/>
+                                                </Canvas>
                                             </DataTemplate>
                                         </ItemsRepeater.ItemTemplate>
                                     </ItemsRepeater>
