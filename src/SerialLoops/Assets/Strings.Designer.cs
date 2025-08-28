@@ -5490,6 +5490,15 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Haruhi Meter.
+        /// </summary>
+        public static string SaveSlotEditorHaruhiMeter {
+            get {
+                return ResourceManager.GetString("SaveSlotEditorHaruhiMeter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Puzzle Interrupt Scenes.
         /// </summary>
         public static string SaveSlotEditorPuzzleInterruptScenes {

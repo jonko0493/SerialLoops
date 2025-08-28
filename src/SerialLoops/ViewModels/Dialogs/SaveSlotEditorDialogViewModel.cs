@@ -144,6 +144,7 @@ public class SaveSlotEditorDialogViewModel : ViewModelBase
             KoizumiFriendshipLevel = _saveSlot.KoizumiFriendshipLevel;
             TsuruyaFriendshipLevel = _saveSlot.TsuruyaFriendshipLevel;
             UnknownFriendshipLevel = _saveSlot.UnknownFriendshipLevel;
+            HaruhiMeter = (short)(_saveSlot.HaruhiMeter + 1);
             RecentObjectives = [new("A", _saveSlot.ObjectiveA), new("B", _saveSlot.ObjectiveB), new("C", _saveSlot.ObjectiveC), new("D", _saveSlot.ObjectiveD)];
         }
         else if (SaveSection is CommonSaveData commonSave)
@@ -340,6 +341,7 @@ public class SaveSlotEditorDialogViewModel : ViewModelBase
             _saveSlot.KoizumiFriendshipLevel = KoizumiFriendshipLevel;
             _saveSlot.TsuruyaFriendshipLevel = TsuruyaFriendshipLevel;
             _saveSlot.UnknownFriendshipLevel = UnknownFriendshipLevel;
+            _saveSlot.HaruhiMeter = (short)(HaruhiMeter - 1);
 
             foreach (LocalizedFlag flag in _flags)
             {
@@ -388,12 +390,12 @@ public class SaveSlotEditorDialogViewModel : ViewModelBase
                     _quickSave.TopScreenChibis |= (CharacterMask)(1 << i);
                 }
             }
-            _quickSave.FirstCharacterSprite = _scriptPreview.Sprites.ElementAtOrDefault(0).Sprite?.Index ?? 0;
-            _quickSave.SecondCharacterSprite = _scriptPreview.Sprites.ElementAtOrDefault(1).Sprite?.Index ?? 0;
-            _quickSave.ThirdCharacterSprite = _scriptPreview.Sprites.ElementAtOrDefault(2).Sprite?.Index ?? 0;
-            _quickSave.Sprite1XOffset = (short)(_scriptPreview.Sprites.ElementAtOrDefault(0).Positioning?.X ?? 0);
-            _quickSave.Sprite2XOffset = (short)(_scriptPreview.Sprites.ElementAtOrDefault(1).Positioning?.X ?? 0);
-            _quickSave.Sprite3XOffset = (short)(_scriptPreview.Sprites.ElementAtOrDefault(2).Positioning?.X ?? 0);
+            _quickSave.FirstCharacterSprite = _scriptPreview.Sprites.ElementAtOrDefault(0)?.Sprite?.Index ?? 0;
+            _quickSave.SecondCharacterSprite = _scriptPreview.Sprites.ElementAtOrDefault(1)?.Sprite?.Index ?? 0;
+            _quickSave.ThirdCharacterSprite = _scriptPreview.Sprites.ElementAtOrDefault(2)?.Sprite?.Index ?? 0;
+            _quickSave.Sprite1XOffset = (short)(_scriptPreview.Sprites.ElementAtOrDefault(0)?.Positioning?.X ?? 0);
+            _quickSave.Sprite2XOffset = (short)(_scriptPreview.Sprites.ElementAtOrDefault(1)?.Positioning?.X ?? 0);
+            _quickSave.Sprite3XOffset = (short)(_scriptPreview.Sprites.ElementAtOrDefault(2)?.Positioning?.X ?? 0);
             _quickSave.ApplyScriptPreview(_scriptPreview, SelectedScriptItem, ScriptCommandIndex, _project, _log);
         }
 
@@ -531,6 +533,8 @@ public class SaveSlotEditorDialogViewModel : ViewModelBase
     [Reactive] public byte KoizumiFriendshipLevel { get; set; }
     [Reactive] public byte TsuruyaFriendshipLevel { get; set; }
     [Reactive] public byte UnknownFriendshipLevel { get; set; }
+
+    [Reactive] public short HaruhiMeter { get; set; }
 
     public List<RecentObjective> RecentObjectives { get; set; }
     public List<ReactivePowerStatus> PowerStatuses { get; set; }
