@@ -80,7 +80,7 @@ public static class ControlGenerator
             ItemDescription.ItemType.Map => Strings.ItemsPanelMaps,
             ItemDescription.ItemType.Place => Strings.ItemsPanelPlaces,
             ItemDescription.ItemType.Puzzle => Strings.ItemsPanelPuzzles,
-            ItemDescription.ItemType.Scenario => Strings.ItemsPanelScenario,
+            ItemDescription.ItemType.Scenario => Strings.ItemsPanelScenarios,
             ItemDescription.ItemType.Script => Strings.ItemsPanelScripts,
             ItemDescription.ItemType.SFX => Strings.ItemsPanelSFXs,
             ItemDescription.ItemType.System_Texture => Strings.ItemsPanelSystemTextures,

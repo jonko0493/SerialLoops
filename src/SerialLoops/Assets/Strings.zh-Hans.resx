@@ -1585,7 +1585,7 @@
   <data name="IcrScaleToFit" xml:space="preserve">
     <value>按比例调整：</value>
   </data>
-  <data name="ItemsPanelScenario" xml:space="preserve">
+  <data name="ItemsPanelScenarios" xml:space="preserve">
     <value>剧情</value>
   </data>
   <data name="SaveEditorScenarioCommandIndex" xml:space="preserve">

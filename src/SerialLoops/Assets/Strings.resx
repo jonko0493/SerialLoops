@@ -1691,7 +1691,7 @@ Please set the path to a Nintendo DS emulator or specify a Nintendo DS emulator 
   <data name="IcrScaleToFit" xml:space="preserve">
     <value>Scale to Fit:</value>
   </data>
-  <data name="ItemsPanelScenario" xml:space="preserve">
+  <data name="ItemsPanelScenarios" xml:space="preserve">
     <value>Scenario</value>
   </data>
   <data name="SaveEditorScenarioCommandIndex" xml:space="preserve">

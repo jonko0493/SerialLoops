@@ -1715,7 +1715,7 @@
   <data name="UiMessage10Label" xml:space="preserve">
     <value>Pannello Info Schermo titolo nuova partita</value>
   </data>
-  <data name="ItemsPanelScenario" xml:space="preserve">
+  <data name="ItemsPanelScenarios" xml:space="preserve">
     <value>Scenario</value>
   </data>
   <data name="UiMessage76Label" xml:space="preserve">

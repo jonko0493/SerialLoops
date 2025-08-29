@@ -3266,9 +3266,9 @@ namespace SerialLoops.Assets {
         /// <summary>
         ///   Looks up a localized string similar to Scenario.
         /// </summary>
-        public static string ItemsPanelScenario {
+        public static string ItemsPanelScenarios {
             get {
-                return ResourceManager.GetString("ItemsPanelScenario", resourceCulture);
+                return ResourceManager.GetString("ItemsPanelScenarios", resourceCulture);
             }
         }
         
