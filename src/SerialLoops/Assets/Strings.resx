@@ -3352,7 +3352,7 @@ item in the dropdown!</value>
     <value>Flag</value><comment>Search scope</comment>
   </data>
   <data name="Conditional" xml:space="preserve">
-    <value>Search scope</value>
+    <value>Conditional</value><comment>Search scope</comment>
   </data>
   <data name="MenuToolsDumpAssets" xml:space="preserve">
     <value>Dump Assets</value>

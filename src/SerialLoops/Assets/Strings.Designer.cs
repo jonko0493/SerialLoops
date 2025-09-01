@@ -1607,7 +1607,7 @@ namespace SerialLoops.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search scope.
+        ///   Looks up a localized string similar to Conditional.
         /// </summary>
         public static string Conditional {
             get {
